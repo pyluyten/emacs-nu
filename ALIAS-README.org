@@ -1,0 +1,3 @@
+Aliases are defined in org mode files.
+This repository provides one example of such files.
+And, as of today, it's loaded as soon as mode is enabled.

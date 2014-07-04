@@ -1,0 +1,108 @@
+*Rationale*
+
+Learning curves suck, having not to forget
+memorized keymaps sucks, modal editing
+is not necessarily compatible with your usage.
+(And modal still requires some learning.)
+
+An alternative to both learning curve
+and modal editing is prompts.
+These are keys displaying a <menu buffer>
+(aka prompter), offering you
+the features you need without effort.
+
+
+-> Keys should be easy to learn, easy to press
+-> Most common operations should be quick
+-> Features should be easy to access
+-> Remembering all of this should not be an issue.
+
+
+You already know a lot of keys : 
+- x, c, v : cut, copy, paste
+- f, r : find, replace
+- s, n, o : save, new, open
+- w, q : close tab, quit
+Why not using it? By the way this is also ErgoEmacs plan.
+
+=> control keys will offer you prompters to select the right feature
+   as you use nu-mode, reading prompt won't be useful
+   {I could even consider, TODO, make prompts optional,
+    either for a single prompt or globablly}
+
+=> alt keys will offer you some speed:
+   - a paddle to navigate with comfort
+   - some magic.
+   The plan is to document alt keys from prompts ;)
+
+
+*.. welcome home to emacs-nu!*
+This mode - essentially, a keymap - is made both for
+intense text editing and casual usage
+(emacs is not your only application, is it?)
+
+<!> Note that emacs-nu does not respect any emacs convention <!>
+    well at least, not voluntarily.
+
+_I need to create a decent Info file to describe these keys deeper..._
+
+* What is done
+
+The paddle to navigate,
+The prompts for:
+Find, Replace,
+"Global / Goto" prompt goes in the right direction
+
+* TODO
+
+Work on minibuffer or other modes,
+Choose for alt d / ctrl d
+evil-find-char
+evil-copy-above / below
+Look at jumps/tags/marks
+Scroll up / down
+
+* on the technical side
+
+
+** Things I currently use
+
+- CUA
+  This is both for: C-v, but I could probably
+                         avoid this
+                    Rectangle, but next release will offer this
+                    Shift selection. Didn't look.
+- Undo-Tree
+
+** Things I looked at
+
+I started looking at lot of stuff and coded some convenient,
+bodhi-evil. And other trials. http://github.com/pyluyten/devil-mode
+
+*** Paddle
+ErgoEmacs ALT + i j k l is delicious.
+It's really easy to learn.
+Having words at u/o is just logical.
+
+
+*** Evil-Mode
+evil-mode brings something simple :
+just do delete + right word, & here you are.
+delete + delete => you killed a row
+Do the same for copy.
+
+We can of course apply this to paddle...
+Everything that works with left car has to go throught to j.
+To right word? o. You got it.
+
+(Having multipliers is not done yet.)
+
+*** God Mode
+ErgoEmacs also looked at some GodMode principle :
+press some magic, and you can repeat function keys
+without their modifiers, like in vim normal mode.
+
+But, this is where it's interesting, God Mode
+do not have a distinct keymap for this.
+Rather, it just avoid using Control.
+(Alt can be emulated, too, but this needs a key-press...)

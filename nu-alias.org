@@ -1,0 +1,13 @@
+| bj  | bookmark-jump              | go to bookmark          |
+| bk  | bookmark-set               | set a bookmark          |
+| one | delete-other-windows       | make this window unique |
+| clo | delete-window              | close this window       |
+| eb  | eval-buffer                | evaluate this buffer    |
+| e!  | revert-buffer              | reload the file         |
+| q   | save-buffers-kill-terminal | quit emacs              |
+| vs  | split-window-right         | vertical split          |
+| w   | save-buffer                | write to file           |
+| wii | nu-win-up                  | move frame up           |
+| wil | nu-win-right               | move frame right        |
+| wik | nu-win-down                | move frame down         |
+| wij | nu-win-left                | move frame left         |

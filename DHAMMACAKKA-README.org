@@ -1,0 +1,13 @@
+This is a simple config file to easier life
+(in order to avoid replicating similar stuff again & again)
+
+No spalsh screen, startup message,
+Line number, Wrap lines,
+Keep only menu bar (no scroll bar, no tool bar)
+Do not autosave, 
+Use recentf mode,
+y-or-n-p rather than yes-or-no,
+Be smart about big files (no font-lock, fundamental-mode)
+
+Currently this also adds marmalade but if ever I'm
+to upload I would give up on this one ;)
