@@ -30,6 +30,11 @@
 Now i should lookup for available keys!!!")))
 
 
+
+(defun nu-light-prompt-for-keymap (keym)
+  ; enter minibuffer
+)
+
 (defun nu-prompt (&optional title message)
  (interactive)
  (setq curb (current-buffer))
@@ -85,7 +90,9 @@ Now i should lookup for available keys!!!")))
      $: next buffer              v: xxx xxx xxx
      o: other window             V: xxx xxx xxx
 
-     j: bookmark-jump            b: bookmark-set"))
+     j: bookmark-jump            b: bookmark-set
+
+     q: quit emacs                              "))
   (cond
    ((eq c ?i)
     (beginning-of-buffer))
@@ -99,6 +106,8 @@ Now i should lookup for available keys!!!")))
     (other-window 1))
    ((eq c ?r)
     (revert-buffer))
+   ((eq c ?q)
+    (save-buffers-kill-emacs))
    ((eq c ?b)
     (call-interactively 'bookmark-set))
    ((eq c ?j)
