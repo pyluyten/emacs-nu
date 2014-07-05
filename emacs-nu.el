@@ -25,17 +25,17 @@
 
    (define-key map (kbd "C-a") 'mark-whole-buffer) ; tbp: mark paragraph/function/...
    (define-key map (kbd "C-s") 'save-buffer)
-   ; C-d is not yet defined. Soon we'll need it.
+   ; C-d is not yet defined. (x to delete, c to copy... remain <D>irect[ion] <D>rill <Do> <Define>...
    (define-key map (kbd "C-f") 'nu-find-prompt)
    (define-key map (kbd "C-g") 'nu-global-prompt)
    (define-key map (kbd "C-j") 'backward-delete-char)
    (define-key map (kbd "C-k") 'kill-visual-line) ; k=kill, but how to advertise it?
    (define-key map (kbd "C-l") 'delete-forward-char)
-   ; C-m stands for enter.
+   ; C-m stands for enter. This is something to study.
 
    (define-key map (kbd "C-z") 'undo-tree-visualize) ; you don't undo 1 thousand times a day. be smart.
-   ; C-x is cua-mode for now (do not work)
-   ; C-c is cua-mode for now (do not work)
+   ; C-x is cua-mode
+   ; C-c is cua-mode
    (define-key map (kbd "C-v") 'yank) ;shall we prompt? alt v is fine but we might need a message to advertise it.
 
 
@@ -79,8 +79,9 @@
            map)
 
 ; minor-mode-body...
+   (set-default 'cursor-type 'bar)
    (undo-tree-mode 1)
-   (cua-mode t))
+   (cua-mode))
 
 
 (provide 'emacs-nu)
