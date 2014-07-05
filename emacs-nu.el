@@ -2,53 +2,52 @@
 (require 'nu-hooks)
 
 
+
 (define-minor-mode nu-mode
   "Simple Emacs keys"
   :global t
   :keymap (let ((map (make-sparse-keymap)))
 
 
-; all _control_ features (mostly, prompts..)
-
-; modern
+;  all _control_ features (mostly, prompts..)
 ;  do not respect _any_ emacs convention. Seriously.
-;  i should just 
+
    (define-key map (kbd "C-q") 'keyboard-escape-quit)
    (define-key map (kbd "C-w") 'nu-close-tab)
-   (define-key map (kbd "C-e") 'nu-copy-from-above)
+   ; e? edit?
    (define-key map (kbd "C-r") 'nu-replace-prompt)
    (define-key map (kbd "C-t") 'nu-new-tab)
-   (define-key map (kbd "C-y") 'nu-copy-from-below)
+   ; y?
    (define-key map (kbd "C-u") 'backward-kill-word)
    ; C-i is tab.
    (define-key map (kbd "C-o") 'find-file)
    (define-key map (kbd "C-p") 'print-buffer)
 
-   (define-key map (kbd "C-a") 'mark-whole-buffer) ; tbp
+   (define-key map (kbd "C-a") 'mark-whole-buffer) ; tbp: mark paragraph/function/...
    (define-key map (kbd "C-s") 'save-buffer)
    ; C-d is not yet defined. Soon we'll need it.
    (define-key map (kbd "C-f") 'nu-find-prompt)
    (define-key map (kbd "C-g") 'nu-global-prompt)
    (define-key map (kbd "C-j") 'backward-delete-char)
-   (define-key map (kbd "C-k") 'kill-visual-line)
+   (define-key map (kbd "C-k") 'kill-visual-line) ; k=kill, but how to advertise it?
    (define-key map (kbd "C-l") 'delete-forward-char)
    ; C-m stands for enter.
 
-   (define-key map (kbd "C-z") 'undo-tree-visualize)
-   ; C-x is cua-mode for now
-   ; C-c is cua-mode for now
-   (define-key map (kbd "C-v") 'yank)
+   (define-key map (kbd "C-z") 'undo-tree-visualize) ; you don't undo 1 thousand times a day. be smart.
+   ; C-x is cua-mode for now (do not work)
+   ; C-c is cua-mode for now (do not work)
+   (define-key map (kbd "C-v") 'yank) ;shall we prompt? alt v is fine but we might need a message to advertise it.
 
 
 
-;  _ alt _ features
+;  all _ alt _ features
 
    (define-key map (kbd "M-q") 'quoted-insert) ; fix minibuf'
-;w
-;e
+;w 
+   (define-key map (kbd "M-e") 'nu-copy-from-above) ; advertise?
 ;r
 ;t
-;y
+   (define-key map (kbd "M-y") 'nu-copy-from-below) ; how to advertise?
    (define-key map (kbd "M-u") 'backward-word)
    (define-key map (kbd "M-i") 'previous-line)
    (define-key map (kbd "M-o") 'forward-word)
@@ -62,12 +61,15 @@
    (define-key map (kbd "M-k") 'next-line)
    (define-key map (kbd "M-l") 'forward-char)
 ;m
-;z
-;x
+   (define-key map (kbd "M-z") 'undo)
+;x let's keep altx for some time here before to decide.
 ;c
    (define-key map (kbd "M-v") 'yank-pop) ; tbi / tbp
 ;b
 ;n
+
+   (define-key map (kbd "²") 'ibuffer) ; to be advertised (global?)
+   (define-key map (kbd "M-²") 'next-buffer) ; to be advertised
    (define-key map (kbd "M-0") 'nu-back-to-bol)
    (define-key map (kbd "M-^") 'nu-back-to-indentation) ; fails here.
    (define-key map (kbd "M-à") 'nu-back-to-indentation)
