@@ -1,3 +1,8 @@
+; todo
+(defun nu-help ()
+  "emacs-nu help"
+)
+
 
 (defun nu-new-tab ()
   (interactive)

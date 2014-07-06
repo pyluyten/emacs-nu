@@ -23,11 +23,12 @@
    (define-key map (kbd "C-o") 'find-file)
    (define-key map (kbd "C-p") 'print-buffer)
 
-   (define-key map (kbd "C-a") 'mark-whole-buffer) ; tbp: mark paragraph/function/...
+   (define-key map (kbd "C-a") 'nu-all-prompt) ; tbp: mark paragraph/function/...
    (define-key map (kbd "C-s") 'save-buffer)
    ; C-d is not yet defined. (x to delete, c to copy... remain <D>irect[ion] <D>rill <Do> <Define>...
    (define-key map (kbd "C-f") 'nu-find-prompt)
    (define-key map (kbd "C-g") 'nu-global-prompt)
+   (define-key map (kbd "C-h") 'nu-help-prompt)
    (define-key map (kbd "C-j") 'backward-delete-char)
    (define-key map (kbd "C-k") 'kill-visual-line) ; k=kill, but how to advertise it?
    (define-key map (kbd "C-l") 'delete-forward-char)
@@ -52,7 +53,7 @@
    (define-key map (kbd "M-i") 'previous-line)
    (define-key map (kbd "M-o") 'forward-word)
 ;p
-;a
+   (define-key map (kbd "M-a") 'mark-whole-buffer)
 ;s
 ;d
 ;f  -- todo : find char a-la-vim

@@ -55,14 +55,6 @@ Now i should lookup for available keys!!!")))
  (setq x x))
 
 
-
-(defun nu-ctl-x-prompt ()
-  (interactive)
-  (nu-prompt-for-keymap 'ctl-x-map)
-  (set-temporary-overlay-map ctl-x-map))
-
-
-
 (defun nu-all-prompt ()
   "Use functions on _all_."
    (interactive)
@@ -71,7 +63,7 @@ Now i should lookup for available keys!!!")))
       a: select all"))
    (cond
    ((eq c ?a)
-    ('mark-whole-buffer))
+    (lambda (transient-mark-mode 1)(call-interactively 'mark-whole-buffer)))
    (t
     (keyboard-quit))))
 
@@ -85,6 +77,7 @@ Now i should lookup for available keys!!!")))
      ==== GOTO ==========        === GLOBAL ===
      i: beginning of buffer      r: xxx xxx xxx
      g: goto line                t: transpose-frame
+        (or, z-g)
      k: end of buffer
                                  n: xxx xxx xxx
      $: next buffer              v: xxx xxx xxx
@@ -92,14 +85,31 @@ Now i should lookup for available keys!!!")))
 
      j: bookmark-jump            b: bookmark-set
 
-     q: quit emacs                              "))
+     1: close all other windows
+     2: horizontal split
+     3: vertical split
+     52: new window
+     50 : close this window
+
+     x: Emacs standard Control-X keymap
+     q: quit emacs                               "))
   (cond
+   ((eq c ?1)
+    (delete-other-windows))
+   ((eq c ?2)
+     (split-window-below))
+   ((eq c ?3)
+     (split-window-right))
+   ((eq c ?4)
+     (set-temporary-overlay-map ctl-x-4-map))
+   ((eq c ?5)
+     (set-temporary-overlay-map ctl-x-5-map))
    ((eq c ?i)
     (beginning-of-buffer))
    ((eq c ?k)
     (end-of-buffer))
    ((eq c ?g)
-    (call-interactively 'goto-line))
+    (set-temporary-overlay-map goto-map))
    ((eq c ?$)
     (next-buffer))
    ((eq c ?o)
@@ -114,17 +124,54 @@ Now i should lookup for available keys!!!")))
     (call-interactively 'bookmark-jump))
    ((eq c ?t)
     (transpose-frame))
+   ((eq c ?x)
+    (set-temporary-overlay-map ctl-x-map))
+   ((eq c ?z)
+    (set-temporary-overlay-map goto-map))
    (t
     (keyboard-quit))))
 
+
+(defun nu-help-prompt ()
+  "Find some documenation"
+  (interactive)
+  (setq c (nu-prompt "Help"
+   "
+   h: emacs-nu help page
+   r: emacs manual
+
+   f: describe-function         d: search in documentation
+   k: describe-key              m: describe-mode
+   
+
+   x: toggle help prefix keympa
+      You might use Alt-H too, directly,
+      rather than Control-h x"))
+  (cond
+  ((eq c ?h)
+    (nu-help))
+  ((eq c ?f)
+    (call-interactively 'describe-function))
+  ((eq c ?d)
+   (call-interactively 'a-propos-documentation))
+  ((eq c ?k)
+    (call-interactively 'describe-key))
+  ((eq c ?m)
+    (describe-mode))
+  ((eq c ?r)
+    (info-emacs-manual))
+  ((eq c ?x)
+    (set-temporary-overlay-map help-map))
+  (t
+   (keyboard-quit))))
 
 
 (defun nu-find-prompt ()
   (interactive)
   (setq c (nu-prompt "Search"
    "
-    f: isearch-forward             l: evil-find-char        v: visit-file
-    j: isearch-backward                                     r: recent files
+    f: isearch-forward                    v: visit-file
+    j: isearch-backward                   r: recent files
 
     i: isearch-backward-regexp
     k: isearch-forward-regexp
@@ -150,9 +197,6 @@ Now i should lookup for available keys!!!")))
 	(call-interactively 'isearch-backward-regexp)
 	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
     (isearch-backward-regexp)))
-   ;((eq c ?l)
-    ;; TODO - don't use evil- in this file.
-    ;(call-interactively 'evil-find-char))
    ((eq c ?b)
     (regexp-builder))
    ((eq c ?v)
