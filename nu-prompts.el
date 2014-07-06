@@ -73,7 +73,8 @@ Now i should lookup for available keys!!!")))
   "Access global functions."
   (interactive)
   (setq c (nu-prompt "Global"
-     "
+     " <!> if you wanted C-g to keyboard-quit, use C-q <!> 
+
      ==== GOTO ==========        === GLOBAL ===
      i: beginning of buffer      r: xxx xxx xxx
      g: goto line                t: transpose-frame
@@ -154,7 +155,7 @@ Now i should lookup for available keys!!!")))
    k: describe-key              m: describe-mode
    v: describe-variable
 
-   x: toggle help prefix keympa
+   x: toggle help prefix keymap (ie emacs vanilla ctrl h
       You might use Alt-H too, directly,
       rather than Control-h x"))
   (cond
@@ -181,7 +182,8 @@ Now i should lookup for available keys!!!")))
 (defun nu-find-prompt ()
   (interactive)
   (setq c (nu-prompt "Search"
-   "
+   "<!> if you wanted to forward char, use M-l <!>
+
     f: isearch-forward                    v: visit-file
     j: isearch-backward                   r: recent files
 
