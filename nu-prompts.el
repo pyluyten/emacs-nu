@@ -85,24 +85,34 @@ Now i should lookup for available keys!!!")))
 
      j: bookmark-jump            b: bookmark-set
 
-     1: close all other windows
-     2: horizontal split
-     3: vertical split
-     52: new window
-     50 : close this window
+     1 (&): close all other windows
+     2 (é): horizontal split
+     3 (\"): vertical split
+     50 ((à): close this window
+     52 ((é): new window
 
      x: Emacs standard Control-X keymap
      q: quit emacs                               "))
   (cond
    ((eq c ?1)
     (delete-other-windows))
+   ((eq c ?&)
+    (delete-other-windows))
    ((eq c ?2)
+     (split-window-below))
+   ((eq c ?é)
      (split-window-below))
    ((eq c ?3)
      (split-window-right))
+   ((eq c 34) ; "
+     (split-window-right))
    ((eq c ?4)
      (set-temporary-overlay-map ctl-x-4-map))
+   ((eq c ?')
+    (set-temporary-overlay-map ctl-x-4-map))
    ((eq c ?5)
+     (set-temporary-overlay-map ctl-x-5-map))
+   ((eq c 40) ; (
      (set-temporary-overlay-map ctl-x-5-map))
    ((eq c ?i)
     (beginning-of-buffer))
@@ -142,7 +152,7 @@ Now i should lookup for available keys!!!")))
 
    f: describe-function         d: search in documentation
    k: describe-key              m: describe-mode
-   
+   v: describe-variable
 
    x: toggle help prefix keympa
       You might use Alt-H too, directly,
@@ -153,13 +163,15 @@ Now i should lookup for available keys!!!")))
   ((eq c ?f)
     (call-interactively 'describe-function))
   ((eq c ?d)
-   (call-interactively 'a-propos-documentation))
+   (call-interactively 'apropos-documentation))
   ((eq c ?k)
     (call-interactively 'describe-key))
   ((eq c ?m)
     (describe-mode))
   ((eq c ?r)
     (info-emacs-manual))
+  ((eq c ?v)
+    (call-interactively 'describe-variable))
   ((eq c ?x)
     (set-temporary-overlay-map help-map))
   (t
