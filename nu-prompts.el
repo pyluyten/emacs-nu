@@ -86,9 +86,10 @@ Now i should lookup for available keys!!!")))
 
      j: bookmark-jump            b: bookmark-set
 
-     1 (&): close all other windows
+     0: (à) : close this window. You can also directly Control-w rather than C-g 0.
+     1 (&): close all other windows. You can also directly Alt-w rather than C-g 1.
      2 (é): horizontal split
-     3 (\"): vertical split
+     3 (\"): vertical split.
      50 ((à): close this window
      52 ((é): new window
 

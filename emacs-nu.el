@@ -44,7 +44,7 @@
 ;  all _ alt _ features
 
    (define-key map (kbd "M-q") 'quoted-insert) ; fix minibuf'
-;w 
+   (define-key map (kbd "M-w") 'delete-other-windows)
    (define-key map (kbd "M-e") 'nu-copy-from-above) ; advertise?
 ;r
 ;t
