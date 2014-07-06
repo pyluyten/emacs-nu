@@ -228,30 +228,34 @@ Now i should lookup for available keys!!!")))
   (setq c (nu-prompt "Search"
    "
     r: query-replace-regexp    j: join-line (following)
-    f: query-replace           J: join-line (previous)
-    i: replace-string          a: revert buffer
-    l: replace-regexp          u: UPCASE-WORD
+    R: query-replace           J: join-line (previous)
+    I: replace-string          
+    i: replace-regexp          t: transpose-lines          
+                               
+    k: overwrite-mode          u: UPCASE-WORD
                                d: downcase-word
-    k: overwrite-mode          c: Capitalize-Word
-    z: zap-to-char
-                               x: rot13-region (if region)"))
+    z: zap-to-char             c: Capitalize-Word
+
+    a: revert buffer           x: rot13-region (if region)"))
   (cond
    ((eq c ?r)
     (call-interactively 'query-replace-regexp))
    ((eq c ?a)
     ('revert-buffer))
-   ((eq c ?f)
+   ((eq c ?R)
     (call-interactively 'query-replace))
    ((eq c ?k)
     (call-interactively 'overwrite-mode))
-   ((eq c ?i)
+   ((eq c ?I)
     (call-interactively 'replace-string))
-   ((eq c ?l)
+   ((eq c ?i)
     (call-interactively 'replace-regexp))
    ((eq c ?j)
     (join-line 1))
    ((eq c ?J)
     (join-line))
+   ((eq c ?t)
+    (call-interactively 'transpose-lines))
    ((eq c ?z)
     (call-interactively 'zap-to-char))
    ((eq c ?u)

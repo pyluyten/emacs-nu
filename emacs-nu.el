@@ -35,8 +35,8 @@
    ; C-m stands for enter. This is something to study.
 
    (define-key map (kbd "C-z") 'undo-tree-visualize) ; you don't undo 1 thousand times a day. be smart.
-   ; C-x is cua-mode
-   ; C-c is cua-mode
+   ; C-x is cua-mode (but already not useful, most keys are available + keymap is available)
+   ; C-c is cua-mode (this needs to be fixed)
    (define-key map (kbd "C-v") 'yank) ;shall we prompt? alt v is fine but we might need a message to advertise it.
 
 
