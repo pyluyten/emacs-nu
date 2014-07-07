@@ -1,3 +1,15 @@
+
+(defun nu-cut-region-or-line ()
+  "If region is selected, cut region.
+   If not, cut line."
+  (interactive)
+  (if (and (transient-mark-mode) (eq mark-active t))
+    (call-interactively 'kill-region)
+    (kill-whole-line))
+  (message "Cut! If you wanted to x keymap, Undo with M-z or C-z then, C-g"))
+
+
+
 ; todo
 (defun nu-help ()
   "emacs-nu help"
