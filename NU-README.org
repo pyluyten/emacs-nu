@@ -19,7 +19,9 @@ the features you need without effort.
 
 
 You already know a lot of keys : 
-- x, c, v : cut, copy, paste
+- x : cut
+- c : copy
+- v : paste
 - f, r : find, replace
 - s, n, o : save, new, open
 - w, q : close tab, quit
@@ -29,12 +31,21 @@ Why not using it? By the way this is also ErgoEmacs plan.
    as you use nu-mode, reading prompt won't be useful
    {I could even consider, TODO, make prompts optional,
     either for a single prompt or globablly}
+  
+  For example with ^r, you can <replace> using regexp,
+  delete stuff before one specific char, revert buffer,
+  Capitalize a word, & much more....
+
+=> There is more. C-z will undo using undo-tree.
+   Also, ^c will copy selection or row. Same for ^x.
+   There is a lot to find...
 
 => alt keys will offer you some speed:
    - a paddle to navigate with comfort
    - some magic.
    The plan is to document alt keys from prompts ;)
-
+   Use control keys you already know,
+   you will discover alt keys....
 
 *.. welcome home to emacs-nu!*
 This mode - essentially, a keymap - is made both for
@@ -48,17 +59,15 @@ _I need to create a decent Info file to describe these keys deeper..._
 
 * What is done
 
-The paddle to navigate,
-The prompts for:
-Find, Replace,
-"Global / Goto" prompt goes in the right direction
+- The paddle to navigate,
+- A good basic for the prompts.
+- Use control-space to toggle mode-specific-map (i mean, C-c)
+
 
 * TODO
 
 Work on minibuffer or other modes,
 Choose for alt d / ctrl d
-evil-find-char
-evil-copy-above / below
 Look at jumps/tags/marks
 Scroll up / down
 
@@ -68,11 +77,13 @@ Scroll up / down
 ** Things I currently use
 
 - CUA
-  This is both for: C-v, but I could probably
-                         avoid this
-                    Rectangle, but next release will offer this
-                    Shift selection. Didn't look.
+  Cua-selection-mode is used (note : alt-space to set mark)
+  This includes rectangles.
+  Cua-keys are _not_ used because of copy-row cut-row behaviour I wish.
+
 - Undo-Tree
+
+- Ace-jump will come soon.
 
 ** Things I looked at
 
