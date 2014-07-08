@@ -1,15 +1,4 @@
 
-(defun nu-cut-region-or-line ()
-  "If region is selected, cut region.
-   If not, cut line."
-  (interactive)
-  (if (and (transient-mark-mode) (eq mark-active t))
-    (call-interactively 'kill-region)
-    (kill-whole-line))
-  (message "Cut! If you wanted to x keymap, Undo with M-z or C-z then, C-g"))
-
-
-
 ; todo
 (defun nu-help ()
   "emacs-nu help"
@@ -126,6 +115,30 @@ If no argument given, copy 1 char."
     (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
 
+(defun nu-trigger-mode-specific-map ()
+  "Set temporary overlay map mode-specific-map"
+  (interactive)
+  (setq prefix-arg current-prefix-arg)
+  ; Avoid infinite loop : we deactivate C-c as a key,
+  ; then run C-c in order to make it a prefix...
+  (define-key nu-keymap (kbd "C-c") nil)
+  (setq unread-command-events
+     (listify-key-sequence "\C-c"))
+  ; Now add back function but after some delay
+  ; or this would intercept C-c!
+  (run-with-timer 0.3 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-line))
+
+
+(defun nu-cut-region-or-line ()
+  "If region is selected, cut region.
+   If not, cut line."
+  (interactive)
+  (if (and (transient-mark-mode) (eq mark-active t))
+   (call-interactively 'kill-region)
+   (kill-whole-line))
+  (message "Cut! If you wanted to x keymap, Undo with M-z or C-z then, C-g"))
+
+
 
 (defun nu-backward-kill-line ()
   "Kill ARG lines backward."
@@ -159,6 +172,7 @@ If window is the only one, kill buffer."
     (if (eq win (next-window))
          (kill-buffer)
          (delete-window))))
+
 
 
 
