@@ -62,8 +62,10 @@ Now i should lookup for available keys!!!")))
      "
       a: select all"))
    (cond
+   ;; curiously, if we mark-whole-buffer right now, this fails
+   ;; using a timer works. ?uh?
    ((eq c ?a)
-    (lambda (transient-mark-mode 1)(call-interactively 'mark-whole-buffer)))
+    (run-with-timer 0.001 nil 'mark-whole-buffer))
    (t
     (keyboard-quit))))
 
