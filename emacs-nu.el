@@ -33,7 +33,7 @@
 
    (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize) ; you don't undo 1 thousand times a day. be smart.
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
-   (define-key nu-keymap (kbd "C-c") 'nu-copy-line)
+   (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
    (define-key nu-keymap (kbd "C-v") 'yank) ;shall we prompt? alt v is fine but we might need a message to advertise it.
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-C = 3

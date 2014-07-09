@@ -115,6 +115,13 @@ If no argument given, copy 1 char."
     (if (and arg (not (= 1 arg))) (message "%d lines copied" arg)))
 
 
+(defun nu-copy-region-or-line ()
+  (interactive)
+  (if (and (transient-mark-mode) (eq mark-active t))
+    (call-interactively 'kill-ring-save)
+    (call-interactively 'nu-copy-line))
+  (message "Copy done! [Use control-space for C-c mode prefix.]"))
+
 (defun nu-trigger-mode-specific-map ()
   "Set temporary overlay map mode-specific-map"
   (interactive)
@@ -126,7 +133,7 @@ If no argument given, copy 1 char."
      (listify-key-sequence "\C-c"))
   ; Now add back function but after some delay
   ; or this would intercept C-c!
-  (run-with-timer 0.3 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-line))
+  (run-with-timer 0.3 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line))
 
 
 (defun nu-cut-region-or-line ()
