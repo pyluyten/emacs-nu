@@ -35,6 +35,8 @@
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
    (define-key nu-keymap (kbd "C-v") 'yank) ;shall we prompt? alt v is fine but we might need a message to advertise it.
+;b
+   (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-C = 3
 
