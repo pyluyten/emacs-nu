@@ -40,7 +40,10 @@
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-C = 3
 
-
+   (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
+   (define-key nu-keymap (kbd "C-<prior>") 'previous-buffer)
+;   (define-key nu-keymap (kbd "M-<next>") ')
+;   (define-key nu-keymap (kbd "M-<prior>") ')
 
 
 
@@ -73,7 +76,7 @@
 ;n
 
    (define-key nu-keymap (kbd "²") 'ibuffer) ; to be advertised (global?)
-   (define-key nu-keymap (kbd "M-²") 'next-buffer) ; to be advertised
+   (define-key nu-keymap (kbd "M-²") 'other-window) ; to be advertised
    (define-key nu-keymap (kbd "M-0") 'nu-back-to-bol)
    (define-key nu-keymap (kbd "M-^") 'nu-back-to-indentation) ; fails here.
    (define-key nu-keymap (kbd "M-à") 'nu-back-to-indentation)
