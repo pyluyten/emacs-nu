@@ -193,7 +193,7 @@ Now i should lookup for available keys!!!")))
     f: isearch-forward-regexp             z: nu-find-char (zap...)
                                           l: ace-jump-line-mode
                                           k: ace-jump-char-mode
-    b: regexp-builder                     m: ace-jump-word-mode"))
+    b: regexp-builder                     w: ace-jump-word-mode"))
   (cond
    ((eq c ?F)
     (if mark-active
@@ -225,7 +225,7 @@ Now i should lookup for available keys!!!")))
     (ace-jump-line-mode))
    ((eq c ?k)
     (call-interactively 'ace-jump-char-mode))
-   ((eq c ?m)
+   ((eq c ?w)
     (call-interactively 'ace-jump-word-mode))
    ((eq c ?z)
     (call-interactively 'nu-find-char))
