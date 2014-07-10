@@ -78,13 +78,13 @@ Now i should lookup for available keys!!!")))
      " <!> if you wanted C-g to keyboard-quit, use C-q <!> 
 
      ==== GOTO ==========        === GLOBAL ===
-     i: beginning of buffer      r: xxx xxx xxx
-     g: goto line                t: transpose-frame
-        (or, z-g)
+     i: beginning of buffer      a: async-shell-command
+     g: goto line                
+        (or, z-g)                t: transpose-frame
      k: end of buffer
-                                 n: xxx xxx xxx
-     $: next buffer              v: xxx xxx xxx
-     o: other window             V: xxx xxx xxx
+
+     $: next buffer
+     o: other window
 
      j: bookmark-jump            b: bookmark-set
 
@@ -98,6 +98,8 @@ Now i should lookup for available keys!!!")))
      x: Emacs standard Control-X keymap
      q: quit emacs                               "))
   (cond
+   ((eq c ?a)
+     (call-interactively 'async-shell-command))
    ((eq c ?1)
     (delete-other-windows))
    ((eq c ?&)
@@ -189,11 +191,12 @@ Now i should lookup for available keys!!!")))
 
     F: isearch-forward                    v: visit-file
     R: isearch-backward                   r: recent files
+                                          m: bookmarks menu
     r: isearch-backward-regexp
     f: isearch-forward-regexp             z: nu-find-char (zap...)
-                                          l: ace-jump-line-mode
+    b: regexp-builder                     l: ace-jump-line-mode
                                           k: ace-jump-char-mode
-    b: regexp-builder                     w: ace-jump-word-mode"))
+                                          w: ace-jump-word-mode"))
   (cond
    ((eq c ?F)
     (if mark-active
@@ -217,6 +220,8 @@ Now i should lookup for available keys!!!")))
     (isearch-backward-regexp)))
    ((eq c ?b)
     (regexp-builder))
+   ((eq c ?m)
+    (call-interactively 'bookmark-bmenu-list))
    ((eq c ?v)
     (call-interactively 'find-file))
    ((eq c ?r)
@@ -238,16 +243,17 @@ Now i should lookup for available keys!!!")))
   (interactive)
   (setq c (nu-prompt "Search"
    "
-    r: query-replace-regexp    j: join-line (following)
-    R: query-replace           J: join-line (previous)
-    I: replace-string          
-    i: replace-regexp          t: transpose-lines          
-                               
-    k: overwrite-mode          u: UPCASE-WORD
-                               d: downcase-word
-    z: zap-to-char             c: Capitalize-Word
-
-    a: revert buffer           x: rot13-region (if region)"))
+    r: query-replace-regexp        j: join-line (following)
+    R: query-replace               J: join-line (previous)
+    I: replace-string               	
+    i: replace-regexp              t: transpose-lines          
+                                    	
+    k: overwrite-mode              u: UPCASE-WORD
+                                   d: downcase-word
+    z: zap-to-char                 c: Capitalize-Word
+    h: delete-horizontal-space      	
+			            	
+    a: revert buffer               x: rot13-region (if region)"))
   (cond
    ((eq c ?r)
     (call-interactively 'query-replace-regexp))
@@ -278,6 +284,8 @@ Now i should lookup for available keys!!!")))
    ((eq c ?x)
     (when mark-active
     (call-interactively 'rot13-region)))
+   ((eq c ?h)
+    (delete-horizontal-space))
    (t
     (keyboard-quit))))
 
