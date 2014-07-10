@@ -11,6 +11,17 @@
 
 
 
+(defun nu-find-char ()
+  "Move forward up to char, up to end of buffer."
+  (interactive)
+  (setq c (read-char-exclusive))
+  (setq b nil)
+  (while (eq b nil)
+  (if (eq (char-after) c)
+    (setq b t)
+    (forward-char))))
+
+
 (defun nu-end-of-line ()
   (interactive)
   (if (= (point) (progn (end-of-line) (point)))

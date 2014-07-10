@@ -187,28 +187,29 @@ Now i should lookup for available keys!!!")))
   (setq c (nu-prompt "Search"
    "<!> if you wanted to forward char, use M-l <!>
 
-    f: isearch-forward                    v: visit-file
-    j: isearch-backward                   r: recent files
-
-    i: isearch-backward-regexp
-    k: isearch-forward-regexp
-    b: regexp-builder"))
+    F: isearch-forward                    v: visit-file
+    R: isearch-backward                   r: recent files
+    r: isearch-backward-regexp
+    f: isearch-forward-regexp             z: nu-find-char (zap...)
+                                          l: ace-jump-line-mode
+                                          k: ace-jump-char-mode
+    b: regexp-builder                     m: ace-jump-word-mode"))
   (cond
-   ((eq c ?f)
+   ((eq c ?F)
     (if mark-active
       (progn
 	(call-interactively 'isearch-forward)
 	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
       (isearch-forward)))
-   ((eq c ?j)
+   ((eq c ?R)
     (isearch-backward))
-   ((eq c ?k)
+   ((eq c ?f)
     (if mark-active
       (progn
 	(call-interactively 'isearch-forward-regexp)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))p
+	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
     (isearch-forward-regexp)))
-   ((eq c ?i)
+   ((eq c ?r)
     (if mark-active
       (progn
 	(call-interactively 'isearch-backward-regexp)
@@ -220,6 +221,14 @@ Now i should lookup for available keys!!!")))
     (call-interactively 'find-file))
    ((eq c ?r)
     (call-interactively 'recentf-open-files))
+   ((eq c ?l)
+    (ace-jump-line-mode))
+   ((eq c ?k)
+    (call-interactively 'ace-jump-char-mode))
+   ((eq c ?m)
+    (call-interactively 'ace-jump-word-mode))
+   ((eq c ?z)
+    (call-interactively 'nu-find-char))
    (t
     (keyboard-quit))))
 

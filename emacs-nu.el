@@ -62,7 +62,7 @@
    (define-key nu-keymap (kbd "M-a") 'mark-whole-buffer)
 ;s
 ;d
-;f  -- todo : find char a-la-vim
+   (define-key nu-keymap (kbd "M-f") 'ace-jump-char-mode)
 ;g
    (define-key nu-keymap (kbd "M-j") 'backward-char)
    (define-key nu-keymap (kbd "M-k") 'next-line)
@@ -92,9 +92,15 @@
   :global t
   :keymap nu-keymap
 
+   ; this is part of a modern keymap because cursor
+   ; is an indicator
    (set-default 'cursor-type 'bar)
+
+   ; a real dependency
    (undo-tree-mode 1)
-;   (cua-mode))
+
+   ; do not use cua-mode because C-x C-c have specific meaning
+   ; TODO: test if the user can enable cua-keys on his .emacs
    (cua-selection-mode 1))
 
 
