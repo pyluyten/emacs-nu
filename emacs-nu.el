@@ -17,7 +17,7 @@
    ; y?
    (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
    ; C-i is tab.
-   (define-key nu-keymap (kbd "C-o") 'find-file)
+   (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
    (define-key nu-keymap (kbd "C-p") 'print-buffer)
 
    (define-key nu-keymap (kbd "C-a") 'nu-all-prompt) ; tbp: mark paragraph/function/...
@@ -39,6 +39,7 @@
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-C = 3
+   (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; well.. this is defintely not the _goal_ but...
 
    (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
    (define-key nu-keymap (kbd "C-<prior>") 'previous-buffer)

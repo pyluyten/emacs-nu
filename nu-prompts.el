@@ -22,6 +22,9 @@
 ;;
 ;;
 
+
+
+
 (defun nu-prompt-for-keymap (keym)
  (setq curb (current-buffer))
  (with-help-window (help-buffer)
@@ -110,11 +113,13 @@ a: select all            f : mark-function
   (setq c (nu-prompt "Global"
      "<!> if you wanted C-g to keyboard-quit, use C-q <!> 
 ==== GOTO ==========     == GLOBAL ===
-i: beginning of buffer	 a: async-shell-command
-g: goto line (M-g)	 t: transpose-frame
-k: end of buffer	      
-$: next buffer	         b: bookmark-set
-o: other window	   
+i  beginning of buffer	 a: async-shell-command
+                    	 t: transpose-frame
+
+k end of buffer
+$ next buffer	         b: bookmark-set
+o other window	         g:    goal column
+                         G: rm goal column
 
 0 (C-w) = close, 1 or & (Alt-w) = this window only
 2  or é = h split,	3  or \ = v split.
@@ -149,7 +154,9 @@ Q: quit emacs				"))
    ((eq c ?k)
     (end-of-buffer))
    ((eq c ?g)
-    (set-temporary-overlay-map goto-map))
+    (call-interactively 'set-goal-column))
+   ((eq c ?G)
+     (progn (setq goal-column nil) (message "No goal column.")))
    ((eq c ?$)
     (next-buffer))
    ((eq c ?o)
@@ -213,12 +220,15 @@ Q: quit emacs				"))
   (setq c (nu-prompt "Search"
    "<!> if you wanted to forward char, use M-l <!>
 
-    F: isearch-forward                    R: isearch-backward                   
-    f: isearch-forward-regexp             r: isearch-backward-regexp
-                                          b: regexp-builder
-    l: ace-jump-line-mode
-    k: ace-jump-char-mode                 z: nu-find-char (zap...)
-    w: ace-jump-word-mode"))
+f: isearch-forward-regexp    r: isearch-backward-regexp		    
+F: isearch-forward	     R: isearch-backward
+			     b: regexp-builder
+l: ace-jump-line-mode
+c: ace-jump-char-mode        z: nu-find-char (zap...)
+w: ace-jump-word-mode
+                             g: goto line
+                             G: goto line (previous-buffer)
+"))
   (cond
    ((eq c ?F)
     (if mark-active
@@ -244,12 +254,18 @@ Q: quit emacs				"))
     (regexp-builder))
    ((eq c ?l)
     (ace-jump-line-mode))
-   ((eq c ?k)
+   ((eq c ?c)
     (call-interactively 'ace-jump-char-mode))
    ((eq c ?w)
     (call-interactively 'ace-jump-word-mode))
    ((eq c ?z)
     (call-interactively 'nu-find-char))
+;  goto-map variable
+;  move-to-column, previous/next error, goto char (?)
+   ((eq c ?g)
+    (call-interactively 'goto-line))
+   ((eq c ?G)
+    (call-interactively 'goto-line (previous-buffer)))
    (t
     (keyboard-quit))))
 
