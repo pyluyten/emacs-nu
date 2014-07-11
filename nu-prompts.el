@@ -88,12 +88,18 @@ a: select all            f : mark-function
   (interactive)
   (setq c (nu-prompt "Open..."
     "
-  o : open file
-  r : recent files
+  f : open file/dir     l: next-buffer
+  r : recent files      j: previous-buffer
+  x : registers         i: ibuffer
+                        I: ibuffer-other-window
+
+  o: other-window (next)
+  O: other-window (previous)
+
   m : bookmarks menu, M : jump to bookmark
-  x : registers"))
+  b : bookmark set"))
   (cond
-    ((eq c ?o)
+    ((eq c ?f)
      (call-interactively 'find-file))
     ((eq c ?r)
      (call-interactively 'recentf-open-files))
@@ -101,8 +107,22 @@ a: select all            f : mark-function
      (call-interactively 'bookmark-bmenu-list))
     ((eq c ?M)
      (call-interactively 'bookmark-jump))
+    ((eq c ?b)
+     (call-interactively 'bookmark-set))
     ((eq c ?x)
      (list-registers))
+    ((eq c ?l)
+      (next-buffer))
+    ((eq c ?j)
+      (previous-buffer))
+    ((eq c ?o)
+     (other-window 1))
+    ((eq c ?O)
+     (other-window -l1))
+    ((eq c ?i)
+     (ibuffer))
+    ((eq c ?I)
+     (ibuffer-other-window))
     (t
      (keyboard-quit))))
 
@@ -111,24 +131,25 @@ a: select all            f : mark-function
   "Access global functions."
   (interactive)
   (setq c (nu-prompt "Global"
-     "<!> if you wanted C-g to keyboard-quit, use C-q <!> 
-==== GOTO ==========     == GLOBAL ===
-i  beginning of buffer	 a: async-shell-command
-                    	 t: transpose-frame
+     "
+ a: async-shell-command     g:    goal column
+ t: transpose-frame         G: rm goal column
+                         
+ 0 or à Close             50 Close frame 
+ 1 or & This window only
+ 2 or é Hsplit	          52 New frame
+ 3 or \" VSplit
+ 4 or ' xxx
 
-k end of buffer
-$ next buffer	         b: bookmark-set
-o other window	         g:    goal column
-                         G: rm goal column
+ x: Emacs standard Control-X keymap
+ Q: quit emacs				
 
-0 (C-w) = close, 1 or & (Alt-w) = this window only
-2  or é = h split,	3  or \ = v split.
-50 or à = close this window, 52 or é = new window
-x: Emacs standard Control-X keymap
-Q: quit emacs				"))
+<!> if you wanted C-g to keyboard-quit, use C-q <!>"))
   (cond
    ((eq c ?a)
      (call-interactively 'async-shell-command))
+   ((eq c ?à)
+    (delete-other-windows))
    ((eq c ?1)
     (delete-other-windows))
    ((eq c ?&)
@@ -149,32 +170,16 @@ Q: quit emacs				"))
      (set-temporary-overlay-map ctl-x-5-map))
    ((eq c 40) ; (
      (set-temporary-overlay-map ctl-x-5-map))
-   ((eq c ?i)
-    (beginning-of-buffer))
-   ((eq c ?k)
-    (end-of-buffer))
    ((eq c ?g)
     (call-interactively 'set-goal-column))
    ((eq c ?G)
      (progn (setq goal-column nil) (message "No goal column.")))
-   ((eq c ?$)
-    (next-buffer))
-   ((eq c ?o)
-    (other-window 1))
-   ((eq c ?r)
-    (revert-buffer))
-   ((eq c ?Q)
+    ((eq c ?Q)
     (save-buffers-kill-emacs))
-   ((eq c ?b)
-    (call-interactively 'bookmark-set))
-   ((eq c ?j)
-    (call-interactively 'bookmark-jump))
    ((eq c ?t)
     (transpose-frame))
    ((eq c ?x)
     (set-temporary-overlay-map ctl-x-map))
-   ((eq c ?z)
-    (set-temporary-overlay-map goto-map))
    (t
     (keyboard-quit))))
 
@@ -226,8 +231,9 @@ F: isearch-forward	     R: isearch-backward
 l: ace-jump-line-mode
 c: ace-jump-char-mode        z: nu-find-char (zap...)
 w: ace-jump-word-mode
-                             g: goto line
-                             G: goto line (previous-buffer)
+
+i: beginning-of-buffer       g: goto line
+k: end-of-buffer             G: goto line (previous-buffer)
 "))
   (cond
    ((eq c ?F)
@@ -250,6 +256,10 @@ w: ace-jump-word-mode
 	(call-interactively 'isearch-backward-regexp)
 	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
     (isearch-backward-regexp)))
+   ((eq c ?i)
+    (beginning-of-buffer))
+   ((eq c ?k)
+    (end-of-buffer))
    ((eq c ?b)
     (regexp-builder))
    ((eq c ?l)
