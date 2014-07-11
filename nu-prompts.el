@@ -44,9 +44,8 @@ Now i should lookup for available keys!!!")))
  (read-only-mode t)
  (funcall (and initial-major-mode))
  (setq message
-   (concat "\n~~~ ☸ ~~~\n" ; U+2638
-           "\n\n\n\n"
-           message))
+   (concat "\n    ~~~ ☸ ~~~\n" ; U+2638 
+            message))
  (insert message)
  (setq x (read-char-exclusive))
  (quit-window)
@@ -60,43 +59,68 @@ Now i should lookup for available keys!!!")))
    (interactive)
    (setq c (nu-prompt "All"
      "
-      a: select all"))
+a: select all            f : mark-function
+                         s : mark sentence
+                         w : mark-word
+                         p : mark-paragraph"))
    (cond
    ;; curiously, if we mark-whole-buffer right now, this fails
    ;; using a timer works. ?uh?
    ((eq c ?a)
-    (run-with-timer 0.001 nil 'mark-whole-buffer))
+    (run-with-timer 0.001 nil  'mark-whole-buffer))
+   ((eq c ?f)
+     (run-with-timer 0.001 nil 'mark-defun))
+   ((eq c ?s)
+     (call-interactively 'mark-end-of-sentence)) ; ko
+   ((eq c ?w)
+     (run-with-timer 0.001 nil 'mark-word))
+   ((eq c ?p)
+     (run-with-timer 0.001 nil 'mark-paragraph))
    (t
     (keyboard-quit))))
 
+
+(defun nu-open-prompt ()
+   "Open"
+  (interactive)
+  (setq c (nu-prompt "Open..."
+    "
+  o : open file
+  r : recent files
+  m : bookmarks menu, M : jump to bookmark
+  x : registers"))
+  (cond
+    ((eq c ?o)
+     (call-interactively 'find-file))
+    ((eq c ?r)
+     (call-interactively 'recentf-open-files))
+    ((eq c ?m)
+     (call-interactively 'bookmark-bmenu-list))
+    ((eq c ?M)
+     (call-interactively 'bookmark-jump))
+    ((eq c ?x)
+     (list-registers))
+    (t
+     (keyboard-quit))))
 
 
 (defun nu-global-prompt ()
   "Access global functions."
   (interactive)
   (setq c (nu-prompt "Global"
-     " <!> if you wanted C-g to keyboard-quit, use C-q <!> 
+     "<!> if you wanted C-g to keyboard-quit, use C-q <!> 
+==== GOTO ==========     == GLOBAL ===
+i: beginning of buffer	 a: async-shell-command
+g: goto line (M-g)	 t: transpose-frame
+k: end of buffer	      
+$: next buffer	         b: bookmark-set
+o: other window	   
 
-     ==== GOTO ==========        === GLOBAL ===
-     i: beginning of buffer      a: async-shell-command
-     g: goto line                
-        (or, z-g)                t: transpose-frame
-     k: end of buffer
-
-     $: next buffer
-     o: other window
-
-     j: bookmark-jump            b: bookmark-set
-
-     0: (à) : close this window. == Control-W ==
-     1 (&): close all other windows. == Alt-W ==
-     2 (é): horizontal split
-     3 (\"): vertical split.
-     50 ((à): close this window
-     52 ((é): new window
-
-     x: Emacs standard Control-X keymap
-     q: quit emacs                               "))
+0 (C-w) = close, 1 or & (Alt-w) = this window only
+2  or é = h split,	3  or \ = v split.
+50 or à = close this window, 52 or é = new window
+x: Emacs standard Control-X keymap
+Q: quit emacs				"))
   (cond
    ((eq c ?a)
      (call-interactively 'async-shell-command))
@@ -132,7 +156,7 @@ Now i should lookup for available keys!!!")))
     (other-window 1))
    ((eq c ?r)
     (revert-buffer))
-   ((eq c ?q)
+   ((eq c ?Q)
     (save-buffers-kill-emacs))
    ((eq c ?b)
     (call-interactively 'bookmark-set))
@@ -189,14 +213,12 @@ Now i should lookup for available keys!!!")))
   (setq c (nu-prompt "Search"
    "<!> if you wanted to forward char, use M-l <!>
 
-    F: isearch-forward                    v: visit-file
-    R: isearch-backward                   r: recent files
-                                          m: bookmarks menu
-    r: isearch-backward-regexp
-    f: isearch-forward-regexp             z: nu-find-char (zap...)
-    b: regexp-builder                     l: ace-jump-line-mode
-                                          k: ace-jump-char-mode
-                                          w: ace-jump-word-mode"))
+    F: isearch-forward                    R: isearch-backward                   
+    f: isearch-forward-regexp             r: isearch-backward-regexp
+                                          b: regexp-builder
+    l: ace-jump-line-mode
+    k: ace-jump-char-mode                 z: nu-find-char (zap...)
+    w: ace-jump-word-mode"))
   (cond
    ((eq c ?F)
     (if mark-active
@@ -220,12 +242,6 @@ Now i should lookup for available keys!!!")))
     (isearch-backward-regexp)))
    ((eq c ?b)
     (regexp-builder))
-   ((eq c ?m)
-    (call-interactively 'bookmark-bmenu-list))
-   ((eq c ?v)
-    (call-interactively 'find-file))
-   ((eq c ?r)
-    (call-interactively 'recentf-open-files))
    ((eq c ?l)
     (ace-jump-line-mode))
    ((eq c ?k)
