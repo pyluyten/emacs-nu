@@ -74,7 +74,7 @@ a: select all            f : mark-function
    ((eq c ?f)
      (run-with-timer 0.001 nil 'mark-defun))
    ((eq c ?s)
-     (call-interactively 'mark-end-of-sentence)) ; ko
+     (run-with-timer 0.001 nil 'mark-end-of-sentence)) ; ko
    ((eq c ?w)
      (run-with-timer 0.001 nil 'mark-word))
    ((eq c ?p)
@@ -231,7 +231,7 @@ F: isearch-forward	     R: isearch-backward
 l: ace-jump-line-mode
 c: ace-jump-char-mode        z: nu-find-char (zap...)
 w: ace-jump-word-mode
-
+                             s: goto previous selection
 i: beginning-of-buffer       g: goto line
 k: end-of-buffer             G: goto line (previous-buffer)
 "))
@@ -262,6 +262,8 @@ k: end-of-buffer             G: goto line (previous-buffer)
     (end-of-buffer))
    ((eq c ?b)
     (regexp-builder))
+   ((eq c ?s)
+    (cua-set-mark 1))
    ((eq c ?l)
     (ace-jump-line-mode))
    ((eq c ?c)
