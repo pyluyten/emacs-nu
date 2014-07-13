@@ -63,10 +63,17 @@
   (setq make-backup-files nil)
   (setq auto-save-default nil)
 
+; we're in 2014
   (require 'recentf)
   (recentf-mode 1)
 
+
   (defalias 'yes-or-no-p 'y-or-n-p)
+
+
+; a sentence has a single dot, sorry
+; why isn't it default???
+(setq sentence-end-double-space nil)
 
 ; do not break on real files
 
