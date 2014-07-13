@@ -5,6 +5,16 @@
 )
 
 
+
+(defun nu-mark-sentence ()
+  "Mark whole sentence.
+
+Sentence uses sentence-end delimiter."
+  (interactive)
+  (backward-sentence)
+  (call-interactively 'mark-end-of-sentence))
+
+
 (defun nu-new-tab ()
   (interactive)
   (ibuffer t "Blank Tab"))

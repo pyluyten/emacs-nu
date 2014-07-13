@@ -56,11 +56,6 @@ Now i should lookup for available keys!!!")))
  (switch-to-buffer curb)
  (setq x x))
 
-
-(defun nu-mark-word-hack ()
-  "Hack."
-  (call-interactively 'mark-end-of-sentence))
-
 (defun nu-all-prompt ()
   "Use functions on _all_."
    (interactive)
@@ -78,7 +73,7 @@ a: select all            f : mark-function
    ((eq c ?f)
      (run-with-timer 0.001 nil 'mark-defun))
    ((eq c ?s)
-     (run-with-timer 0.001 nil 'nu-mark-word-hack))
+     (run-with-timer 0.001 nil 'nu-mark-sentence))
    ((eq c ?w)
      (run-with-timer 0.001 nil 'mark-word))
    ((eq c ?p)
