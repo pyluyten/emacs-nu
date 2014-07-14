@@ -190,6 +190,7 @@ a: select all            f : mark-function
    "
    h: emacs-nu help page
    r: emacs manual
+   i: info
 
    f: describe-function         d: search in documentation
    k: describe-key              m: describe-mode
@@ -213,6 +214,8 @@ a: select all            f : mark-function
     (info-emacs-manual))
   ((eq c ?v)
     (call-interactively 'describe-variable))
+  ((eq ?c i)
+    (call-interactively 'info))
   ((eq c ?x)
     (set-temporary-overlay-map help-map))
   (t
