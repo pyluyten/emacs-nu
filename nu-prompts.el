@@ -304,7 +304,7 @@ k: end-of-buffer             G: goto line (previous-buffer)
     (keyboard-quit))))
 
 
-(defun nu-relace-prompt ()
+(defun nu-replace-prompt ()
   (interactive)
   (if (or (eq overwrite-mode 'overwrite-mode-textual)
 	  (eq overwrite-mode 'overwrite-mode-binary))
