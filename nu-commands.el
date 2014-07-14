@@ -2,7 +2,7 @@
 ; todo
 (defun nu-help ()
   "emacs-nu help"
-)
+  (interactive))
 
 
 

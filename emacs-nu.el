@@ -26,6 +26,8 @@
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-keymap (kbd "C-g") 'nu-global-prompt)
    (define-key nu-keymap (kbd "C-h") 'nu-help-prompt)
+           ; C-h uses help-keymap. Populate this.
+           (define-key help-map (kbd "h") 'nu-help)
    (define-key nu-keymap (kbd "C-j") 'backward-delete-char)
    (define-key nu-keymap (kbd "C-k") 'kill-visual-line) ; k=kill, but how to advertise it?
    (define-key nu-keymap (kbd "C-l") 'delete-forward-char)

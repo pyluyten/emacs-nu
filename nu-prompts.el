@@ -25,18 +25,12 @@
 
 
 
-(defun nu-prompt-for-keymap (keym)
+(defun nu-prompt-for-keymap (keymap prompt)
  (setq curb (current-buffer))
  (with-help-window (help-buffer)
-   (prin1 (symbol-name keym))
-   (princ "\n
-Now i should lookup for available keys!!!")))
+   (prin1 prompt)
+   (set-temporary-overlay-map keymap)))
 
-
-
-(defun nu-light-prompt-for-keymap (keym)
-  ; enter minibuffer
-)
 
 (defun nu-prompt (&optional title message)
  (interactive)
@@ -186,7 +180,7 @@ a: select all            f : mark-function
 (defun nu-help-prompt ()
   "Find some documenation"
   (interactive)
-  (setq c (nu-prompt "Help"
+  (nu-prompt-for-keymap help-map
    "
    h: emacs-nu help page
    r: emacs manual
@@ -194,33 +188,7 @@ a: select all            f : mark-function
 
    f: describe-function         d: search in documentation
    k: describe-key              m: describe-mode
-   v: describe-variable
-
-   x: toggle help prefix keymap (ie emacs vanilla ctrl h
-      You might use Alt-H too, directly,
-      rather than Control-h x"))
-  (cond
-  ((eq c ?h)
-    (nu-help))
-  ((eq c ?f)
-    (call-interactively 'describe-function))
-  ((eq c ?d)
-   (call-interactively 'apropos-documentation))
-  ((eq c ?k)
-    (call-interactively 'describe-key))
-  ((eq c ?m)
-    (describe-mode))
-  ((eq c ?r)
-    (info-emacs-manual))
-  ((eq c ?v)
-    (call-interactively 'describe-variable))
-  ((eq ?c i)
-    (call-interactively 'info))
-  ((eq c ?x)
-    (set-temporary-overlay-map help-map))
-  (t
-   (keyboard-quit))))
-
+   v: describe-variable"))
 
 (defun nu-find-prompt ()
   (interactive)
