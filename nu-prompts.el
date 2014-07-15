@@ -52,6 +52,26 @@
  (setq x x))
 
 
+
+(defun nu-save-prompt ()
+  "Save / Rename stuff"
+  (interactive)
+  (setq c (nu-prompt "Save"
+"
+ =s= Save        =r= Rename buffer
+ =w= Save as     =m= Magit status
+
+
+
+ Use _Alt-s_ to save without prompt"))
+  (cond
+  ((eq c ?s) (save-buffer))
+  ((eq c ?w) (ido-write-file))
+  ((eq c ?r) (call-interactively 'rename-buffer))
+  ((eq c ?m) (call-interactively 'magit-status))
+  (t (keyboard-quit))))
+
+
 (defun nu-all-prompt ()
   "Use functions on _all_."
    (interactive)
@@ -90,11 +110,12 @@ w : mark-word            k : mark current line
   (interactive)
   (setq c (nu-prompt "Open..."
     "
-  =f= open file/dir           =l= next-buffer
-  =r= recent files            =j= previous-buffer
-  =o= other-window (next)     =space= ido-switch-buffer
-  =O= other-window (previous) =i= ibuffer
-                              =I= ibuffer-other-window
+  =f= open file/dir         =l= next-buffer
+  =F= file other window     =j= previous-buffer
+  =r= recent files          =space= ido-switch-buffer 
+  =o= other-window (next)     
+  =O= other-window (prev.)  =i= ibuffer
+                            =I= ibuffer-other-window
   =x= registers
 
   =m= bookmarks menu, =M= jump to bookmark
@@ -102,6 +123,8 @@ w : mark-word            k : mark current line
   (cond
     ((eq c ?f)
      (call-interactively 'find-file))
+    ((eq c ?F)
+      (call-interactively 'find-file-other-window))
     ((eq c ?r)
      (call-interactively 'recentf-open-files))
     ((eq c ?m)

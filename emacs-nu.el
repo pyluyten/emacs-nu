@@ -21,7 +21,7 @@
    (define-key nu-keymap (kbd "C-p") 'print-buffer)
 
    (define-key nu-keymap (kbd "C-a") 'nu-all-prompt) ; tbp: mark paragraph/function/...
-   (define-key nu-keymap (kbd "C-s") 'save-buffer)
+   (define-key nu-keymap (kbd "C-s") 'nu-save-prompt)
    ; C-d is not yet defined. (x to delete, c to copy... remain <D>irect[ion] <D>rill <Do> <Define>...
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-keymap (kbd "C-g") 'nu-global-prompt)
@@ -63,7 +63,7 @@
    (define-key nu-keymap (kbd "M-o") 'forward-word)
 ;p
    (define-key nu-keymap (kbd "M-a") 'mark-whole-buffer)
-;s
+   (define-key nu-keymap (kbd "M-s") 'save-buffer)
 ;d
    (define-key nu-keymap (kbd "M-f") 'ace-jump-char-mode)
 ;g
