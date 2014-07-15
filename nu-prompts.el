@@ -52,6 +52,28 @@
  (setq x x))
 
 
+(defun nu-delete-prompt ()
+  "Delete some <movement>"
+  (interactive)
+  (setq c (nu-prompt "Delete"
+"=i= delete above line 
+ =j= delete previous char
+ =k= delete current line
+ =l= delete next char
+ =u= delete backward word
+ =o= delete forward word
+ =f= delete function
+ =a= delete whole buffer"))
+  (cond
+  ((eq ?c j) (backward-delete-char))
+  ((eq ?c l) (backward-forward-char))
+  ((eq ?c u) (backward-kill-word))
+  ((eq ?c o) (forward-kill-word))
+;  ((eq ?c f) (backward-delete-char))
+;  ((eq ?c a) (backward-delete-char))
+  (t (keyboard-quit))))
+ 
+
 
 (defun nu-insert-prompt ()
   "Paste / Insert stuff"

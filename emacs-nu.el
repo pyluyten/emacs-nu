@@ -41,6 +41,7 @@
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-C = 3
+   (define-key nu-keymap (kbd "C-<RET>") 'repeat)
    (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; well.. this is defintely not the _goal_ but...
 
    (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
@@ -62,9 +63,9 @@
    (define-key nu-keymap (kbd "M-i") 'previous-line)
    (define-key nu-keymap (kbd "M-o") 'forward-word)
 ;p
-   (define-key nu-keymap (kbd "M-a") 'mark-whole-buffer)
+   (define-key nu-keymap (kbd "M-a") 'cua-set-mark)
    (define-key nu-keymap (kbd "M-s") 'save-buffer)
-;d
+   (define-key nu-keymap (kbd "M-d") 'nu-delete-prompt)
    (define-key nu-keymap (kbd "M-f") 'ace-jump-char-mode)
 ;g
    (define-key nu-keymap (kbd "M-j") 'backward-char)
@@ -77,7 +78,6 @@
    (define-key nu-keymap (kbd "M-v") 'nu-yank-pop-or-yank)
 ;b
 ;n
-
    (define-key nu-keymap (kbd "²") 'ibuffer) ; to be advertised (global?)
    (define-key nu-keymap (kbd "M-²") 'other-window) ; to be advertised
    (define-key nu-keymap (kbd "M-0") 'nu-back-to-bol)
@@ -85,7 +85,7 @@
    (define-key nu-keymap (kbd "M-à") 'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-$") 'nu-end-of-line)
 
-   (define-key nu-keymap (kbd "M-<SPC>") 'cua-set-mark) ; instead of c-space
+   (define-key nu-keymap (kbd "M-<SPC>") 'execute-extended-command)
 
 
 
