@@ -58,12 +58,15 @@
   (interactive)
   (setq c (nu-prompt "Insert"
 "
- =v= Yank / *pop*
+ =v= Yank / *pop*   =i= browsekillring
  =k= Yank but *do not*
 
- =b= Insert buffer
- =f= Insert file
+ =b= Insert buffer       =f= Insert file
+
  =c= Insert litterally (~quoted insert~)
+ =o= open line below
+
+ =s= async-shell-command (=S= for sync)
 
  Use _alt v_ to yank pop"))
   (cond
@@ -73,6 +76,9 @@
   ((eq c ?b) (call-interactively 'insert-buffer))
   ((eq c ?f) (call-interactively 'insert-file))
   ((eq c ?c) (call-interactively 'quoted-insert))
+  ((eq c ?o) (call-interactively 'open-line))
+  ((eq c ?s) (call-interactively 'async-shell-command))
+  ((eq c ?S) (call-interactively 'shell-command))
   (t (keyboard-quit))))
 
 
