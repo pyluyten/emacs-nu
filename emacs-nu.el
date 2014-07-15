@@ -36,7 +36,7 @@
    (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize) ; you don't undo 1 thousand times a day. be smart.
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
-   (define-key nu-keymap (kbd "C-v") 'yank) ;shall we prompt? alt v is fine but we might need a message to advertise it.
+   (define-key nu-keymap (kbd "C-v") 'nu-insert-prompt)
 ;b
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
 
@@ -74,7 +74,7 @@
    (define-key nu-keymap (kbd "M-z") 'undo)
 ;x let's keep altx for some time here before to decide.
 ;c
-   (define-key nu-keymap (kbd "M-v") 'yank-pop) ; tbi / tbp
+   (define-key nu-keymap (kbd "M-v") 'nu-yank-pop-or-yank)
 ;b
 ;n
 

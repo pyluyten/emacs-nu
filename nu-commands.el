@@ -5,6 +5,17 @@
   (interactive))
 
 
+(defun nu-yank-pop-or-yank ()
+ "Try to yank pop. Otherwise, yank."
+  (interactive)
+  (if
+    (not 
+        (or
+           (eq last-command 'yank)
+           (eq last-command 'cua-paste-pop)))
+    (yank))
+    (yank-pop)) 
+         
 
 (defun nu-mark-to-end-of-line ()
   "Select up to eol."

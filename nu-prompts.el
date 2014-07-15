@@ -53,6 +53,29 @@
 
 
 
+(defun nu-insert-prompt ()
+  "Paste / Insert stuff"
+  (interactive)
+  (setq c (nu-prompt "Insert"
+"
+ =v= Yank / *pop*
+ =k= Yank but *do not*
+
+ =b= Insert buffer
+ =f= Insert file
+ =c= Insert litterally (~quoted insert~)
+
+ Use _alt v_ to yank pop"))
+  (cond
+  ((eq c ?v) (nu-yank-pop-or-yank))
+  ((eq c ?k) (yank))
+  ((eq c ?i) (call-interactively 'browse-kill-ring))
+  ((eq c ?b) (call-interactively 'insert-buffer))
+  ((eq c ?f) (call-interactively 'insert-file))
+  ((eq c ?c) (call-interactively 'quoted-insert))
+  (t (keyboard-quit))))
+
+
 (defun nu-save-prompt ()
   "Save / Rename stuff"
   (interactive)
