@@ -39,6 +39,7 @@
  (setq buf (generate-new-buffer title))
  (view-buffer-other-window buf)
  (read-only-mode t)
+ (org-mode)
  (funcall (and initial-major-mode))
  (setq message
    (concat "\n    ~~~ ☸ ~~~\n" ; U+2638 
@@ -89,15 +90,15 @@ w : mark-word            k : mark current line
   (interactive)
   (setq c (nu-prompt "Open..."
     "
-  f : open file/dir           l: next-buffer
-  r : recent files            j: previous-buffer
-  o: other-window (next)      <space> : ido-switch-buffer
-  O: other-window (previous)  i: ibuffer
-                              I: ibuffer-other-window
-  x : registers
+  =f= open file/dir           =l= next-buffer
+  =r= recent files            =j= previous-buffer
+  =o= other-window (next)     =space= ido-switch-buffer
+  =O= other-window (previous) =i= ibuffer
+                              =I= ibuffer-other-window
+  =x= registers
 
-  m : bookmarks menu, M : jump to bookmark
-  b : bookmark set"))
+  =m= bookmarks menu, =M= jump to bookmark
+  =b= bookmark set"))
   (cond
     ((eq c ?f)
      (call-interactively 'find-file))
