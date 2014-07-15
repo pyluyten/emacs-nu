@@ -6,6 +6,28 @@
 
 
 
+(defun nu-mark-to-end-of-line ()
+  "Select up to eol."
+  (interactive)
+  (cua-set-mark)
+  (end-of-line))
+
+
+(defun nu-mark-to-beginning-of-line ()
+  "Select up to bol."
+  (interactive)
+  (cua-set-mark)
+  (beginning-of-line))
+
+
+(defun nu-mark-current-line ()
+  "Select current line."
+  (interactive)
+  (beginning-of-line)
+  (cua-set-mark)
+  (end-of-line))
+
+
 (defun nu-mark-sentence ()
   "Mark whole sentence.
 

@@ -44,11 +44,12 @@
    (concat "\n    ~~~ ☸ ~~~\n" ; U+2638 
             message))
  (insert message)
- (setq x (read-char-exclusive))
+ (setq x (read-event))
  (quit-window)
  (kill-buffer buf)
  (switch-to-buffer curb)
  (setq x x))
+
 
 (defun nu-all-prompt ()
   "Use functions on _all_."
@@ -56,9 +57,10 @@
    (setq c (nu-prompt "All"
      "
 a: select all            f : mark-function
-                         s : mark sentence
-                         w : mark-word
-                         p : mark-paragraph"))
+p : mark-paragraph       l : mark to end of line
+s : mark sentence        j : mark to beginning of l
+w : mark-word            k : mark current line
+"))
    (cond
    ;; curiously, if we mark-whole-buffer right now, this fails
    ;; using a timer works. ?uh?
@@ -72,6 +74,12 @@ a: select all            f : mark-function
      (run-with-timer 0.001 nil 'mark-word))
    ((eq c ?p)
      (run-with-timer 0.001 nil 'mark-paragraph))
+   ((eq c ?j)
+     (run-with-timer 0.001 nil 'nu-mark-to-beginning-of-line))
+   ((eq c ?l)
+     (run-with-timer 0.001 nil 'nu-mark-to-end-of-line))
+   ((eq c ?k)
+     (run-with-timer 0.001 nil 'nu-mark-current-line))
    (t
     (keyboard-quit))))
 
@@ -81,13 +89,12 @@ a: select all            f : mark-function
   (interactive)
   (setq c (nu-prompt "Open..."
     "
-  f : open file/dir     l: next-buffer
-  r : recent files      j: previous-buffer
-  x : registers         i: ibuffer
-                        I: ibuffer-other-window
-
-  o: other-window (next)
-  O: other-window (previous)
+  f : open file/dir           l: next-buffer
+  r : recent files            j: previous-buffer
+  o: other-window (next)      <space> : ido-switch-buffer
+  O: other-window (previous)  i: ibuffer
+                              I: ibuffer-other-window
+  x : registers
 
   m : bookmarks menu, M : jump to bookmark
   b : bookmark set"))
@@ -116,6 +123,8 @@ a: select all            f : mark-function
      (ibuffer))
     ((eq c ?I)
      (ibuffer-other-window))
+    ((eq c ?\s)
+     (ido-switch-buffer))
     (t
      (keyboard-quit))))
 
