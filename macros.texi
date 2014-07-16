@@ -1,0 +1,12 @@
+@c -*-texinfo-*-
+@c This is part of the Nu manual.
+
+
+@ifclear macros
+@set macros
+
+@macro authors {}
+Pierre-Yves Luyten
+@end macro
+
+@end ifclear
