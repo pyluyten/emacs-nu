@@ -8,6 +8,7 @@
 
 (defun nu-restore-default-keymap ()
   "Populate nu keymap with defaults."
+  (interactive)
 
    ;  all _control_ features (mostly, prompts..)
    ;  do not respect _any_ emacs convention. Seriously.
@@ -42,7 +43,6 @@
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
-   (define-key nu-keymap (kbd "C-<RET>") 'repeat) ; does not work.
    (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; well.. this is defintely not the _goal_ but...
 
    (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
@@ -74,7 +74,7 @@
    (define-key nu-keymap (kbd "M-l") 'forward-char)
 ;m
    (define-key nu-keymap (kbd "M-z") 'undo)
-;x Now Alt-Space is Mx. for some time.
+;x  execute-extended-command
 ;c
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
 ;b
@@ -86,7 +86,7 @@
    (define-key nu-keymap (kbd "M-à") 'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-$") 'nu-end-of-line)
 
-   (define-key nu-keymap (kbd "M-<SPC>") 'execute-extended-command)
+   (define-key nu-keymap (kbd "M-<SPC>") 'repeat)
 
 ; Function  keys
 
