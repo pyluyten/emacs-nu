@@ -135,10 +135,17 @@
 
 
 (defun nu-all-prompt ()
-  "Use functions on _all_."
+  "Prompt to select several chars (func, word, buffer...)
+
+" ; if region is selected, toggle....
    (interactive)
+; below does not work
+;   (if (and (transient-mark-mode mark-active))
    (setq c (nu-prompt "All"
      "
+ Once mark is set, C-a to exchange point & mark.
+
+
 _space_ set mark         _return_ set rectangle
 
 a: select all            f : mark-function
@@ -165,12 +172,17 @@ w : mark-word            k : mark current line
      (run-with-timer 0.001 nil 'nu-mark-to-end-of-line))
    ((eq c ?k)
      (run-with-timer 0.001 nil 'nu-mark-current-line))
-   ((eq c ?space)
+   ; <SPC>
+   ((eq c ?\s)
      (run-with-timer 0.001 nil 'cua-set-mark))
-   ((eq c ?ret)
-     (run-with-timer 0.001 nil 'cua-set-mark))
+   ; <RET> <C-m>
+   ((eq c ?\r)
+     (call-interactively 'cua-set-rectangle-mark))
    (t
-    (keyboard-quit))))
+    (keyboard-quit)))
+;  ; There is a region. Toggle
+;   ((progn (exchange-point-and-mark) (message "toto")
+)
 
 
 (defun nu-open-prompt ()
