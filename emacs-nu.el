@@ -21,7 +21,7 @@
    (define-key nu-keymap (kbd "C-p") 'print-buffer)
 
    (define-key nu-keymap (kbd "C-a") 'nu-all-prompt) ; tbp: mark paragraph/function/...
-   (define-key nu-keymap (kbd "C-s") 'nu-save-prompt)
+   (define-key nu-keymap (kbd "C-s") 'save-buffer)
    ; C-d is not yet defined. (x to delete, c to copy... remain <D>irect[ion] <D>rill <Do> <Define>...
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-keymap (kbd "C-g") 'nu-global-prompt)
@@ -36,12 +36,12 @@
    (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize) ; you don't undo 1 thousand times a day. be smart.
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
-   (define-key nu-keymap (kbd "C-v") 'nu-insert-prompt)
+   (define-key nu-keymap (kbd "C-v") 'nu-yank-pop-or-yank)
 ;b
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-C = 3
-   (define-key nu-keymap (kbd "C-<RET>") 'repeat)
+   (define-key nu-keymap (kbd "C-<RET>") 'repeat) ; does not work.
    (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; well.. this is defintely not the _goal_ but...
 
    (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
@@ -64,7 +64,7 @@
    (define-key nu-keymap (kbd "M-o") 'forward-word)
 ;p
    (define-key nu-keymap (kbd "M-a") 'cua-set-mark)
-   (define-key nu-keymap (kbd "M-s") 'save-buffer)
+   (define-key nu-keymap (kbd "M-s") 'nu-save-prompt)
    (define-key nu-keymap (kbd "M-d") 'nu-delete-prompt)
    (define-key nu-keymap (kbd "M-f") 'ace-jump-char-mode)
 ;g
@@ -75,7 +75,7 @@
    (define-key nu-keymap (kbd "M-z") 'undo)
 ;x let's keep altx for some time here before to decide.
 ;c
-   (define-key nu-keymap (kbd "M-v") 'nu-yank-pop-or-yank)
+   (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
 ;b
 ;n
    (define-key nu-keymap (kbd "²") 'ibuffer) ; to be advertised (global?)
@@ -87,6 +87,9 @@
 
    (define-key nu-keymap (kbd "M-<SPC>") 'execute-extended-command)
 
+; F keys
+
+   (define-key nu-keymap (kbd "F10") 'tmm-menubar)
 
 
 
