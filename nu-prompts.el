@@ -42,7 +42,7 @@
  (org-mode)
  (funcall (and initial-major-mode))
  (setq message
-   (concat "\n    ~~~ ☸ ~~~\n" ; U+2638 
+   (concat "\n    ~~~ ☸ ~~~\n" ; U+2638
             message))
  (insert message)
  (setq x (read-event))
@@ -55,24 +55,35 @@
 (defun nu-delete-prompt ()
   "Delete some <movement>"
   (interactive)
-  (setq c (nu-prompt "Delete"
-"=i= delete above line 
- =j= delete previous char
- =k= delete current line
- =l= delete next char
- =u= delete backward word
- =o= delete forward word
+  (setq c (nu-prompt "Delete..."
+"=i= above line
+ =j= previous char (C-j)
+ =k= current line (C-k)
+ =l= next char (C-l)
+ =u= backward kill word (C-u)
+ =o= kill word
+
+ =h= horizontal space
+ =t= trailing space
+ =w= whole line (C-x)
+ =b= blank lines
+ =s= kill sexp
  =f= delete function
  =a= delete whole buffer"))
   (cond
-  ((eq ?c j) (backward-delete-char))
-  ((eq ?c l) (backward-forward-char))
-  ((eq ?c u) (backward-kill-word))
-  ((eq ?c o) (forward-kill-word))
-;  ((eq ?c f) (backward-delete-char))
-;  ((eq ?c a) (backward-delete-char))
+  ((eq c ?i) (call-interactively 'nu-delete-above-line))
+  ((eq c ?j) (call-interactively 'backward-delete-char))
+  ((eq c ?k) (call-interactively 'kill-line))
+  ((eq c ?l) (call-interactively 'delete-forward-char))
+  ((eq c ?u) (call-interactively 'backward-kill-word))
+  ((eq c ?o) (call-interactively 'kill-word))
+  ((eq c ?h) (call-interactively 'delete-horizontal-space))
+  ((eq c ?t) (call-interactively 'delete-trailing-whitespace))
+  ((eq c ?b) (call-interactively 'delete-blank-lines))
+  ((eq c ?s) (call-interactively 'kill-sexp))
+  ((eq c ?f) (call-interactively 'nu-delete-defun))
+  ((eq c ?a) (call-interactively 'nu-delete-all))
   (t (keyboard-quit))))
- 
 
 
 (defun nu-insert-prompt ()
@@ -128,6 +139,8 @@
    (interactive)
    (setq c (nu-prompt "All"
      "
+_space_ set mark         _return_ set rectangle
+
 a: select all            f : mark-function
 p : mark-paragraph       l : mark to end of line
 s : mark sentence        j : mark to beginning of l
@@ -152,6 +165,10 @@ w : mark-word            k : mark current line
      (run-with-timer 0.001 nil 'nu-mark-to-end-of-line))
    ((eq c ?k)
      (run-with-timer 0.001 nil 'nu-mark-current-line))
+   ((eq c ?space)
+     (run-with-timer 0.001 nil 'cua-set-mark))
+   ((eq c ?ret)
+     (run-with-timer 0.001 nil 'cua-set-mark))
    (t
     (keyboard-quit))))
 
@@ -163,8 +180,8 @@ w : mark-word            k : mark current line
     "
   =f= open file/dir         =l= next-buffer
   =F= file other window     =j= previous-buffer
-  =r= recent files          =space= ido-switch-buffer 
-  =o= other-window (next)     
+  =r= recent files          =space= ido-switch-buffer
+  =o= other-window (next)
   =O= other-window (prev.)  =i= ibuffer
                             =I= ibuffer-other-window
   =x= registers
@@ -211,15 +228,15 @@ w : mark-word            k : mark current line
      "
  a: async-shell-command     g:    goal column
  t: transpose-frame         G: rm goal column
-                         
- 0 or à Close             50 Close frame 
+
+ 0 or à Close             50 Close frame
  1 or & This window only
  2 or é Hsplit	          52 New frame
  3 or \" VSplit
  4 or ' xxx
 
  x: Emacs standard Control-X keymap
- Q: quit emacs				
+ Q: quit emacs
 
 <!> if you wanted C-g to keyboard-quit, use C-q <!>"))
   (cond
@@ -279,7 +296,7 @@ w : mark-word            k : mark current line
   (setq c (nu-prompt "Search"
    "<!> if you wanted to forward char, use M-l <!>
 
-f: isearch-forward-regexp    r: isearch-backward-regexp		    
+f: isearch-forward-regexp    r: isearch-backward-regexp
 F: isearch-forward	     R: isearch-backward
 			     b: regexp-builder
 l: ace-jump-line-mode
@@ -343,14 +360,14 @@ k: end-of-buffer             G: goto line (previous-buffer)
    "
     r: query-replace-regexp        j: join-line (following)
     R: query-replace               J: join-line (previous)
-    I: replace-string               	
-    i: replace-regexp              t: transpose-lines          
-                                    	
+    I: replace-string
+    i: replace-regexp              t: transpose-lines
+
     k: overwrite-mode              u: UPCASE-WORD
                                    d: downcase-word
     z: zap-to-char                 c: Capitalize-Word
-    h: delete-horizontal-space      	
-			            	
+    h: delete-horizontal-space
+
     a: revert buffer               x: rot13-region (if region)"))
   (cond
    ((eq c ?r)
