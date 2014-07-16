@@ -6,8 +6,11 @@
 
 
 
-;  all _control_ features (mostly, prompts..)
-;  do not respect _any_ emacs convention. Seriously.
+(defun nu-restore-default-keymap ()
+  "Populate nu keymap with defaults."
+
+   ;  all _control_ features (mostly, prompts..)
+   ;  do not respect _any_ emacs convention. Seriously.
 
    (define-key nu-keymap (kbd "C-q") 'keyboard-escape-quit)
    (define-key nu-keymap (kbd "C-w") 'nu-close-tab)
@@ -26,8 +29,6 @@
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-keymap (kbd "C-g") 'nu-global-prompt)
    (define-key nu-keymap (kbd "C-h") 'nu-help-prompt)
-           ; C-h uses help-keymap. Populate this.
-           (define-key help-map (kbd "h") 'nu-help)
    (define-key nu-keymap (kbd "C-j") 'backward-delete-char)
    (define-key nu-keymap (kbd "C-k") 'kill-visual-line) ; k=kill, but how to advertise it?
    (define-key nu-keymap (kbd "C-l") 'delete-forward-char)
@@ -40,7 +41,7 @@
 ;b
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
 
-   (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-C = 3
+   (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
    (define-key nu-keymap (kbd "C-<RET>") 'repeat) ; does not work.
    (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; well.. this is defintely not the _goal_ but...
 
@@ -56,24 +57,24 @@
    (define-key nu-keymap (kbd "M-q") 'quoted-insert) ; fix minibuf'
    (define-key nu-keymap (kbd "M-w") 'delete-other-windows)
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above) ; advertise?
-;r
-;t
+;r  maybe overwrite mode...
+;t  transpose?
    (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below) ; how to advertise?
    (define-key nu-keymap (kbd "M-u") 'backward-word)
    (define-key nu-keymap (kbd "M-i") 'previous-line)
    (define-key nu-keymap (kbd "M-o") 'forward-word)
-;p
+;p  programmer?
    (define-key nu-keymap (kbd "M-a") 'cua-set-mark)
    (define-key nu-keymap (kbd "M-s") 'nu-save-prompt)
    (define-key nu-keymap (kbd "M-d") 'nu-delete-prompt)
    (define-key nu-keymap (kbd "M-f") 'ace-jump-char-mode)
-;g
+;g or use this use for ace-jump, move back M-f to something else.
    (define-key nu-keymap (kbd "M-j") 'backward-char)
    (define-key nu-keymap (kbd "M-k") 'next-line)
    (define-key nu-keymap (kbd "M-l") 'forward-char)
 ;m
    (define-key nu-keymap (kbd "M-z") 'undo)
-;x let's keep altx for some time here before to decide.
+;x Now Alt-Space is Mx. for some time.
 ;c
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
 ;b
@@ -87,10 +88,11 @@
 
    (define-key nu-keymap (kbd "M-<SPC>") 'execute-extended-command)
 
-; F keys
+; Function  keys
 
-   (define-key nu-keymap (kbd "F10") 'tmm-menubar)
-
+   ; default f10 fires a gui menu which sucks.
+   (define-key nu-keymap (kbd "<f10>") 'tmm-menubar)
+)
 
 
 (define-minor-mode nu-mode
@@ -107,10 +109,12 @@
 
    ; do not use cua-mode because C-x C-c have specific meaning
    ; TODO: test if the user can enable cua-keys on his .emacs
-   (cua-selection-mode 1))
+   (cua-selection-mode 1)
 
+   ; C-h uses help-keymap -> Enrich this.
+   (define-key help-map (kbd "h") 'nu-help)
 
-(defun nu-emacs-get-map ()
-  (setq x nu-keymap))
+   (nu-restore-default-keymap))
+
 
 (provide 'emacs-nu)
