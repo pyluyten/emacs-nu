@@ -110,23 +110,22 @@
   (t (keyboard-quit))))
 
 
-(defun nu-save-prompt ()
-  "Save / Rename stuff"
-  (interactive)
-  (setq c (nu-prompt "Save"
-"
- =s= Save        =r= Rename buffer
- =w= Save as     =m= Magit status
+(define-prefix-command 'nu-save-map)
+(define-key nu-save-map (kbd "s") 'save-buffer)
+(define-key nu-save-map (kbd "w") 'ido-write-file)
+(define-key nu-save-map (kbd "r") 'rename-buffer)
+(define-key nu-save-map (kbd "m") 'magit-status)
 
+(make-help-screen nu-save-prompt
+(purecopy "Save")
+"(Use Alt+s to directly save a buffer.)
+Press q to quit or :
 
-
- Use _Alt-s_ to save without prompt"))
-  (cond
-  ((eq c ?s) (save-buffer))
-  ((eq c ?w) (ido-write-file))
-  ((eq c ?r) (call-interactively 'rename-buffer))
-  ((eq c ?m) (call-interactively 'magit-status))
-  (t (keyboard-quit))))
+s: save
+w: save-as
+r: rename buffer
+m: magit-status"
+nu-save-map)
 
 
 (defun nu-all-prompt ()
@@ -288,7 +287,6 @@ w : mark-word            k : mark current line
 
 (define-key help-map (kbd "h") 'nu-help)
 
-
 (make-help-screen nu-help-prompt
 (purecopy "Help")
 "Press q to quit or :
@@ -300,6 +298,7 @@ f: describe-function         d: search in documentation
 k: describe-key              m: describe-mode
 v: describe-variable"
 help-map)
+
 
 (defun nu-find-prompt ()
   (interactive)

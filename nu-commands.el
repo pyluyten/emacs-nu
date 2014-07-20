@@ -1,8 +1,25 @@
 
 ; todo
+
+(defun nu-help-describe-h-map ()
+  (describe-variable 'help-map))
+
 (defun nu-help ()
   "emacs-nu help"
-  (interactive))
+  (interactive)
+  (setq c (nu-prompt "Help!"
+"See there for manual: http://py.luyten.fr/Publique/nu.pdf
+(or be brave enough to visit doc/nu.texi and Mx makeinfo.)
+
+ Manual provides you many information, except it says
+ you cannot where-is. Thus,
+ h: nu-help-prompt
+ s: nu-save-prompt
+
+ q: quit this help."))
+  (cond
+  ((eq c ?h) (nu-help-describe-h-map))))
+
 
 
 (defun nu-yank-pop-or-yank ()
