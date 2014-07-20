@@ -111,9 +111,6 @@
    ; TODO: test if the user can enable cua-keys on his .emacs
    (cua-selection-mode 1)
 
-   ; C-h uses help-keymap -> Enrich this.
-   (define-key help-map (kbd "h") 'nu-help)
-
    (nu-restore-default-keymap))
 
 

@@ -22,14 +22,9 @@
 ;;
 ;;
 
-
-
-
-(defun nu-prompt-for-keymap (keymap prompt)
- (setq curb (current-buffer))
- (with-help-window (help-buffer)
-   (prin1 prompt)
-   (set-temporary-overlay-map keymap)))
+;; Get the macro make-help-screen when this is compiled,
+;; or run interpreted, but not when the compiled code is loaded.
+(eval-when-compile (require 'help-macro))
 
 
 (defun nu-prompt (&optional title message)
@@ -290,18 +285,21 @@ w : mark-word            k : mark current line
     (keyboard-quit))))
 
 
-(defun nu-help-prompt ()
-  "Find some documenation"
-  (interactive)
-  (nu-prompt-for-keymap help-map
-   "
-   h: emacs-nu help page
-   r: emacs manual
-   i: info
 
-   f: describe-function         d: search in documentation
-   k: describe-key              m: describe-mode
-   v: describe-variable"))
+(define-key help-map (kbd "h") 'nu-help)
+
+
+(make-help-screen nu-help-prompt
+(purecopy "Help")
+"Press q to quit or :
+
+h: emacs-nu help page
+r: emacs manual
+i: info
+f: describe-function         d: search in documentation
+k: describe-key              m: describe-mode
+v: describe-variable"
+help-map)
 
 (defun nu-find-prompt ()
   (interactive)
