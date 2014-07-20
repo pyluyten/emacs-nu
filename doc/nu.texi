@@ -1,0 +1,187 @@
+\input texinfo @c -*-texinfo*-*
+@setfilename nu.info
+@documentencoding ISO-8859-1
+@include version.texi
+@settitle Nu-mode manual
+@include macros.texi
+
+
+@copying
+This manual is for Nu (version @value{VERSION} of @value{UPDATED}),
+a modern keybinding for Emacs.
+Copyright @copyright{} 2014 @authors{}.
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the section entitled
+``GNU Free Documentation License''.
+@end quotation
+
+@end copying
+
+@dircategory Emacs
+@direntry
+* Nu: (nu). Modern keybinding for Emacs.
+@end direntry
+
+
+@titlepage
+@title Nu
+@subtitle Modern keybinding for Emacs
+@author @authors()
+@page
+@insertcopying
+@end titlepage
+
+@contents
+
+@ifnottex
+@node Top
+@top Nu
+
+This is the manual for Nu, a modern keybinding for Emacs.
+@end ifnottex
+
+@menu
+* Overview::
+* NU for the power user::
+* View and Edit::
+* Files Buffers Windows::
+* GNU Free Documentation License::
+@end menu
+
+@node Overview
+@chapter Overview
+
+``Nu `` is a modern keybinding for Emacs.
+
+nu-mode is a global minor mode, its keymap,
+and the commands which are not provided in raw Emacs.
+
+Modern, means respecting conventions like 
+- ^f to find
+- ^r to replace
+- ^s to save
+- ^x, ^c, ^v to cut, copy, paste
+
+To preserve access to many functions, nu-mode relies on prompts. For example, Control+f raises a prompt precising which key to press to obtain which function => with Control+f then f start a regexp search, with Control+f then g go-to a line (to be precised), with Control+f then s go to previous selection.
+
+nu-emacs does not only provides nu-mode. There are also two independant parts
+- nu-alias is a simple mechanism to define aliases into org-mode file(s). This way its easier to maintain aliases to be invoked from Mx. See its REAME.
+- dhammacakka is a light set of customization. See its README.
+
+@chapter Help
+
+Use Control-q to quit a sequence or a command in progress.
+Use Alt+z to undo last command.
+
+Prompts are usually triggered using a <Control> modifier and advertise an alternative Alt operating using the same key. Inverse is sometimes true : since <Control+s> invoking a prompt would be irritating, Control+s does not invoke a prompt. It directly saves buffer, while Alt+s is the ``save prompt''.
+
+@node NU for the power user
+@chapter NU for the power user
+
+If you are not used to Emacs, reading this chapter is not necessary. But Emacs veteran should probably start here.
+
+emacs-nu redefines many keys, however two points make learning curve shorter
+
+- For any user, knowing CUA keybinds will make emacs-nu discoverable.
+- For veteran Emacs user, two important sequences remain:
+
+
+Mx is still there. This means, you can probably obtain what you want, just press Mx and you will not be lost.
+Also, C-h for help-prefix is still there.
+
+Now, three things should probably be kept in mind while trying nu-mode
+
+- To repeat a command, use Alt <Space>.
+
+
+- To trigger a major mode sequence, start with Control <Space>. This will invoke vanilla emacs C-c. For example, into org-mode, use C-<SPC> C-n to navigate to next node. If you already defined you own keys starting with C-c, do not amend this definition.
+  define-global-key : C-c <some key>
+  Then press Control+Space then <some key>
+
+
+- You should not rely on C-x, or at least no regularly. However to trigger x prefix, use C-M-<SPC>
+
+
+@node View and Edit
+@chapter Navigate
+
+While arrows still work, Nu uses alt key to navigate.
+The thumb presses Alt key, while finger remains safe.
+Navigate up left right down using Alt and :
+ I
+JKL
+
+Additionally, use Alt u and alt o to move
+to previous/next word.
+U I O
+ JKL
+
+Use Alt$ to go to end of line.
+
+To reach a line, beginning of buffer, end of buffer, use Control+f then the appropriate key. Just read the prompt.
+
+@chapter Selections and Deletions
+
+Use Control-x to cut the current line.
+Use Control + paddle + j,l to delete backward, forward char
+Use Control + u to delete previous word
+
+Use Alt+d to trigger a prompt. This will offer you to delete what you want.
+
+
+The paddle allow to directly select (``mark'') text.
+While other ways are possible, using Alt-Shift-U, for example,
+will select previous word (or extend current selection).
+
+An alternative to select text is to Alt+a to set a mark, then move to extend selection. An alternative is to press Control+a to invoke ``a-'' prompt, allowing to select ``a-'' word, ``a-'' sentence, and so on, or to set the mark, including to start a rectangular selection.
+
+@chapter Cut Copy Paste
+
+When no selection is active, use Control + x to cut current line, or a deletion command since deletions actually cut text.
+
+Use Control + c to copy currrent line, or, while a selection is active, copy this selection.
+
+Use Control + v to paste the current clipboard. Following Control + v will replace this paste with last clipboard item. However, if you need to paste several times, you can use Alt + v to invoke and advanced ``Paste'' prompt.
+
+
+@chapter Undo or Redo
+
+Use Alt+z to undo. Or, use Control+z to invoke undo-tree visualizer to play with discard changes in an advanced way.
+
+@chapter Advanced Edition
+
+Most avdanced editon features rely on Control-r, which will invoke replace prompt, allowing you to replace-regexp, merge-lines, delete spaces, ...
+
+Alt+y will copy to current line char under point (on the below line).
+Alt+e will copy to current line char above point (on the above line).
+
+Control+g global prompt will also propose goal-column feature.
+
+@node Files Buffers Windows
+@chapter Files Buffers Windows
+
+Use Control + s to save current file, Alt + s to invoke a prompt to rename it.
+Control+g ``global'' prompt will allow you to manipulate frames.
+² will invoke buffers list.
+
+Use Control+o to open a file, a window, a buffer, or use bookmarks,...
+Use Control+w to close this frame. Or Alt+w to make this frame the only visible one.
+Use Control+n to open a sracth buffer (blank untitled buffer).
+
+
+@node GNU Free Documentation License
+@appendix GNU Free Documentation License
+@include fdl-1.3.texi
+
+@bye
+ 
+@c Local Variables:
+@c mode: texinfo
+@c TeX-master: t
+@c sentence-end-double-space: t
+@c End:
