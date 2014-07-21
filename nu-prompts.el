@@ -106,8 +106,11 @@ nu-print-map)
 nu-delete-map)
 (defun nu-delete-prompt ()
   (interactive)
-  (nu-delete-prompt-internal)
-  (help-make-xrefs (help-buffer)))
+  (if mark-active
+    (call-interactively 'kill-region)
+    (progn
+      (nu-delete-prompt-internal)
+      (help-make-xrefs (help-buffer)))))
 
 
 (define-prefix-command 'nu-insert-map)
