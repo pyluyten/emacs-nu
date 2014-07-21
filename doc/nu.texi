@@ -50,6 +50,7 @@ This is the manual for Nu, a modern keybinding for Emacs.
 * NU for the power user::
 * View and Edit::
 * Files Buffers Windows::
+* NU & other libraries::
 * GNU Free Documentation License::
 @end menu
 
@@ -72,6 +73,10 @@ To preserve access to many functions, nu-mode relies on prompts. For example, Co
 nu-emacs does not only provides nu-mode. There are also two independant parts
 - nu-alias is a simple mechanism to define aliases into org-mode file(s). This way its easier to maintain aliases to be invoked from Mx. See its REAME.
 - dhammacakka is a light set of customization. See its README.
+
+@chapter Dependencies
+Nu depends on : help-fns+, undo-tree, ace-jump, recentf
+
 
 @chapter Help
 
@@ -173,6 +178,24 @@ Use Control+o to open a file, a window, a buffer, or use bookmarks,...
 Use Control+w to close this frame. Or Alt+w to make this frame the only visible one.
 Use Control+n to open a sracth buffer (blank untitled buffer).
 
+@node NU & other libraries
+@chapter NU & other libraries
+
+How does NU integrate with other libraries?
+
+@chapter evil-mode
+
+While nu-mode is not a modal editor, and aims at being the most efficient keymap, sometimes using lot of modifiers might still be harassing. Using vim keymap is feasible : you can activate evil-mode, then switch from evil-state to emacs-state as you want.
+
+Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, and probably many others. However vim paddle (ijkl) and nu-mode paddle (ijkl) disagree on three of these keys! If you want to have evil with nu-mode paddle,
+simple put below lines on your .emacs:
+
+(define-key evil-normal-state-map (kbd "h") 'evil-insert)
+(define-key evil-normal-state-map (kbd "j") 'evil-backward-char)
+(define-key evil-normal-state-map (kbd "i") 'evil-previous-line)
+(define-key evil-normal-state-map (kbd "k") 'evil-next-line)
+
+This only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
