@@ -158,13 +158,16 @@ nu-save-map)
 
 
 (defun nu-all-prompt ()
-  "Prompt to select several chars (func, word, buffer...)
+  "Prompt to select several chars
+  (func, word, buffer...)
 
-" ; if region is selected, toggle....
+If region is selected, exchange point & mark."
    (interactive)
-; below does not work
-;   (if (and (transient-mark-mode mark-active))
-   (setq c (nu-prompt "All"
+   (if mark-active
+      (exchange-point-and-mark)
+      ;Mark is not active, let's prompt
+      (progn
+        (setq c (nu-prompt "All"
      "
  Once mark is set, C-a to exchange point & mark.
 
@@ -202,10 +205,7 @@ w : mark-word            k : mark current line
    ((eq c ?\r)
      (call-interactively 'cua-set-rectangle-mark))
    (t
-    (keyboard-quit)))
-;  ; There is a region. Toggle
-;   ((progn (exchange-point-and-mark) (message "toto")
-)
+    (keyboard-quit))))))
 
 
 (defun nu-open-prompt ()
