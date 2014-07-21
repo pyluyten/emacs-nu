@@ -81,10 +81,19 @@
   (t (keyboard-quit))))
 
 
-(defun nu-insert-prompt ()
-  "Paste / Insert stuff"
-  (interactive)
-  (setq c (nu-prompt "Insert"
+(define-prefix-command 'nu-insert-map)
+(define-key nu-insert-map (kbd "v") 'nu-yank-pop-or-yank)
+(define-key nu-insert-map (kbd "k") 'yank)
+(define-key nu-insert-map (kbd "i") 'browse-kill-ring)
+(define-key nu-insert-map (kbd "b") 'insert-buffer)
+(define-key nu-insert-map (kbd "f") 'insert-file)
+(define-key nu-insert-map (kbd "c") 'quoted-insert)
+(define-key nu-insert-map (kbd "o") 'open-line)
+(define-key nu-insert-map (kbd "s") 'async-shell-command)
+(define-key nu-insert-map (kbd "S") 'shell-command)
+
+(make-help-screen nu-insert-prompt
+(purecopy "Insert")
 "
  =v= Yank / *pop*   =i= browsekillring
  =k= Yank but *do not*
@@ -96,18 +105,8 @@
 
  =s= async-shell-command (=S= for sync)
 
- Use _alt v_ to yank pop"))
-  (cond
-  ((eq c ?v) (nu-yank-pop-or-yank))
-  ((eq c ?k) (yank))
-  ((eq c ?i) (call-interactively 'browse-kill-ring))
-  ((eq c ?b) (call-interactively 'insert-buffer))
-  ((eq c ?f) (call-interactively 'insert-file))
-  ((eq c ?c) (call-interactively 'quoted-insert))
-  ((eq c ?o) (call-interactively 'open-line))
-  ((eq c ?s) (call-interactively 'async-shell-command))
-  ((eq c ?S) (call-interactively 'shell-command))
-  (t (keyboard-quit))))
+ Use _alt v_ to yank pop"
+nu-insert-map)
 
 
 (define-prefix-command 'nu-save-map)
