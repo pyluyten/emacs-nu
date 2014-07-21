@@ -60,10 +60,10 @@
 (define-key nu-delete-map (kbd "s") 'kill-sexp)
 (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
 (define-key nu-delete-map (kbd "a") 'nu-delete-all)
-(make-help-screen nu-delete-prompt
+(make-help-screen nu-delete-prompt-internal
 (purecopy "Delete")
 "=i= above line
- =j= previous char (C-j)
+ =j= backward-delete-char (C-j)
  =k= current line (C-k)
  =l= next char (C-l)
  =u= backward kill word (C-u)
@@ -73,10 +73,14 @@
  =t= trailing space
  =w= whole line (C-x)
  =b= blank lines
- =s= kill sexp
+ =s= function `kill-sexp'
  =f= delete function
  =a= delete whole buffer"
 nu-delete-map)
+(defun nu-delete-prompt ()
+  (interactive)
+  (nu-delete-prompt-internal)
+  (help-make-xrefs (help-buffer)))
 
 
 (define-prefix-command 'nu-insert-map)
