@@ -279,11 +279,54 @@ k: describe-key              m: describe-mode
 v: describe-variable"
 help-map)
 
-
-(defun nu-find-prompt ()
+(define-prefix-command 'nu-find-map)
+(defun nu-isearch-forward ()
   (interactive)
-  (setq c (nu-prompt "Search"
-   "<!> if you wanted to forward char, use M-l <!>
+  (if mark-active
+      (progn
+	(call-interactively 'isearch-forward)
+	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+      (isearch-forward)))
+(defun nu-isearch-backward ()
+  (interactive)
+    (if mark-active
+      (progn
+	(call-interactively 'isearch-backward)
+	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+    (isearch-backward)))
+(defun nu-isearch-forward-regexp ()
+  (interactive)
+    (if mark-active
+      (progn
+	(call-interactively 'isearch-forward-regexp)
+	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+    (isearch-forward-regexp)))
+(defun nu-isearch-backward-regexp ()
+  (interactive)
+    (if mark-active
+      (progn
+	(call-interactively 'isearch-backward-regexp)
+	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+    (isearch-backward-regexp)))
+(defun nu-set-mark-1 () (interactive) (cua-set-mark 1))
+(defun nu-goto-line-previousbuffer () (interactive) (goto-line (previous-buffer)))
+(define-key nu-find-map (kbd "F") 'nu-isearch-forward)
+(define-key nu-find-map (kbd "R") 'nu-isearch-backward)
+(define-key nu-find-map (kbd "f") 'nu-isearch-forward-regexp)
+(define-key nu-find-map (kbd "r") 'nu-isearch-backward-regexp)
+(define-key nu-find-map (kbd "i") 'beginning-of-buffer)
+(define-key nu-find-map (kbd "k") 'end-of-buffer)
+(define-key nu-find-map (kbd "b") 'regexp-builder)
+(define-key nu-find-map (kbd "s") 'nu-set-mark-1)
+(define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
+(define-key nu-find-map (kbd "c") 'ace-jump-char-mode)
+(define-key nu-find-map (kbd "w") 'ace-jump-word-mode)
+(define-key nu-find-map (kbd "z") 'nu-find-char)
+(define-key nu-find-map (kbd "g") 'goto-line)
+(define-key nu-find-map (kbd "G") 'nu-goto-line-previousbuffer)
+(make-help-screen nu-find-prompt
+(purecopy "Find")
+"<!> if you wanted to forward char, use M-l <!>
 
 f: isearch-forward-regexp    r: isearch-backward-regexp
 F: isearch-forward	     R: isearch-backward
@@ -294,53 +337,8 @@ w: ace-jump-word-mode
                              s: goto previous selection
 i: beginning-of-buffer       g: goto line
 k: end-of-buffer             G: goto line (previous-buffer)
-"))
-  (cond
-   ((eq c ?F)
-    (if mark-active
-      (progn
-	(call-interactively 'isearch-forward)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
-      (isearch-forward)))
-   ((eq c ?R)
-    (isearch-backward))
-   ((eq c ?f)
-    (if mark-active
-      (progn
-	(call-interactively 'isearch-forward-regexp)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
-    (isearch-forward-regexp)))
-   ((eq c ?r)
-    (if mark-active
-      (progn
-	(call-interactively 'isearch-backward-regexp)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
-    (isearch-backward-regexp)))
-   ((eq c ?i)
-    (beginning-of-buffer))
-   ((eq c ?k)
-    (end-of-buffer))
-   ((eq c ?b)
-    (regexp-builder))
-   ((eq c ?s)
-    (cua-set-mark 1))
-   ((eq c ?l)
-    (ace-jump-line-mode))
-   ((eq c ?c)
-    (call-interactively 'ace-jump-char-mode))
-   ((eq c ?w)
-    (call-interactively 'ace-jump-word-mode))
-   ((eq c ?z)
-    (call-interactively 'nu-find-char))
-;  goto-map variable
-;  move-to-column, previous/next error, goto char (?)
-   ((eq c ?g)
-    (call-interactively 'goto-line))
-   ((eq c ?G)
-    (call-interactively 'goto-line (previous-buffer)))
-   (t
-    (keyboard-quit))))
-
+"
+nu-find-map)
 
 
 (defun nu-replace-do-prompt ()
