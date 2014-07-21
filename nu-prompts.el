@@ -225,12 +225,30 @@ w : mark-word            k : mark current line
     (t
      (keyboard-quit))))
 
-
-(defun nu-global-prompt ()
-  "Access global functions."
-  (interactive)
-  (setq c (nu-prompt "Global"
-     "
+(define-prefix-command 'nu-global-map)
+(defun nu-no-goal-column () (interactive) (setq goal-column nil) (message "No goal column"))
+(defun nu-set-x-4-map () (interactive) (set-temporary-overlay-map ctl-x-4-map))
+(defun nu-set-x-5-map () (interactive) (set-temporary-overlay-map ctl-x-5-map))
+(define-key nu-global-map (kbd "a") 'async-shell-command)
+(define-key nu-global-map (kbd "à") 'delete-other-windows)
+(define-key nu-global-map (kbd "1") 'delete-other-windows)
+(define-key nu-global-map (kbd "&") 'delete-other-windows)
+(define-key nu-global-map (kbd "2") 'split-window-below)
+(define-key nu-global-map (kbd "é") 'split-window-below)
+(define-key nu-global-map (kbd "3") 'split-window-right)
+(define-key nu-global-map (kbd "\"") 'split-window-right)
+(define-key nu-global-map (kbd "4")  'nu-set-x-4-map)
+(define-key nu-global-map (kbd "'") 'nu-set-x-4-map)
+(define-key nu-global-map (kbd "5") 'nu-set-x-5-map)
+(define-key nu-global-map (kbd "(") 'nu-set-x-5-map)
+(define-key nu-global-map (kbd "g") 'set-goal-column)
+(define-key nu-global-map (kbd "G") 'nu-no-goal-column)
+(define-key nu-global-map (kbd "\C-q") 'save-buffers-kill-emacs)
+(define-key nu-global-map (kbd "t") 'transpose-frame)
+(define-key nu-global-map (kbd "x") 'Control-X-prefix)
+(make-help-screen nu-global-prompt
+(purecopy "GLOBAL")
+"
  a: async-shell-command     g:    goal column
  t: transpose-frame         G: rm goal column
 
@@ -241,47 +259,10 @@ w : mark-word            k : mark current line
  4 or ' xxx
 
  x: Emacs standard Control-X keymap
- Q: quit emacs
+ Control-q: quit emacs
 
-<!> if you wanted C-g to keyboard-quit, use C-q <!>"))
-  (cond
-   ((eq c ?a)
-     (call-interactively 'async-shell-command))
-   ((eq c ?à)
-    (delete-other-windows))
-   ((eq c ?1)
-    (delete-other-windows))
-   ((eq c ?&)
-    (delete-other-windows))
-   ((eq c ?2)
-     (split-window-below))
-   ((eq c ?é)
-     (split-window-below))
-   ((eq c ?3)
-     (split-window-right))
-   ((eq c 34) ; "
-     (split-window-right))
-   ((eq c ?4)
-     (set-temporary-overlay-map ctl-x-4-map))
-   ((eq c ?')
-    (set-temporary-overlay-map ctl-x-4-map))
-   ((eq c ?5)
-     (set-temporary-overlay-map ctl-x-5-map))
-   ((eq c 40) ; (
-     (set-temporary-overlay-map ctl-x-5-map))
-   ((eq c ?g)
-    (call-interactively 'set-goal-column))
-   ((eq c ?G)
-     (progn (setq goal-column nil) (message "No goal column.")))
-    ((eq c ?Q)
-    (save-buffers-kill-emacs))
-   ((eq c ?t)
-    (transpose-frame))
-   ((eq c ?x)
-    (set-temporary-overlay-map ctl-x-map))
-   (t
-    (keyboard-quit))))
-
+<!> if you wanted C-g to keyboard-quit, use C-q <!>"
+nu-global-map)
 
 
 (define-key help-map (kbd "h") 'nu-help)
