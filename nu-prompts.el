@@ -47,10 +47,21 @@
  (setq x x))
 
 
-(defun nu-delete-prompt ()
-  "Delete some <movement>"
-  (interactive)
-  (setq c (nu-prompt "Delete..."
+(define-prefix-command 'nu-delete-map)
+(define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
+(define-key nu-delete-map (kbd "j") 'backward-delete-char)
+(define-key nu-delete-map (kbd "k") 'kill-line)
+(define-key nu-delete-map (kbd "l") 'delete-forward-char)
+(define-key nu-delete-map (kbd "u") 'backward-kill-word)
+(define-key nu-delete-map (kbd "o") 'kill-word)
+(define-key nu-delete-map (kbd "h") 'delete-horizontal-space)
+(define-key nu-delete-map (kbd "t") 'delete-trailing-whitespace)
+(define-key nu-delete-map (kbd "b") 'delete-blank-lines)
+(define-key nu-delete-map (kbd "s") 'kill-sexp)
+(define-key nu-delete-map (kbd "f") 'nu-delete-defun)
+(define-key nu-delete-map (kbd "a") 'nu-delete-all)
+(make-help-screen nu-delete-prompt
+(purecopy "Delete")
 "=i= above line
  =j= previous char (C-j)
  =k= current line (C-k)
@@ -64,21 +75,8 @@
  =b= blank lines
  =s= kill sexp
  =f= delete function
- =a= delete whole buffer"))
-  (cond
-  ((eq c ?i) (call-interactively 'nu-delete-above-line))
-  ((eq c ?j) (call-interactively 'backward-delete-char))
-  ((eq c ?k) (call-interactively 'kill-line))
-  ((eq c ?l) (call-interactively 'delete-forward-char))
-  ((eq c ?u) (call-interactively 'backward-kill-word))
-  ((eq c ?o) (call-interactively 'kill-word))
-  ((eq c ?h) (call-interactively 'delete-horizontal-space))
-  ((eq c ?t) (call-interactively 'delete-trailing-whitespace))
-  ((eq c ?b) (call-interactively 'delete-blank-lines))
-  ((eq c ?s) (call-interactively 'kill-sexp))
-  ((eq c ?f) (call-interactively 'nu-delete-defun))
-  ((eq c ?a) (call-interactively 'nu-delete-all))
-  (t (keyboard-quit))))
+ =a= delete whole buffer"
+nu-delete-map)
 
 
 (define-prefix-command 'nu-insert-map)
@@ -91,7 +89,6 @@
 (define-key nu-insert-map (kbd "o") 'open-line)
 (define-key nu-insert-map (kbd "s") 'async-shell-command)
 (define-key nu-insert-map (kbd "S") 'shell-command)
-
 (make-help-screen nu-insert-prompt
 (purecopy "Insert")
 "
@@ -114,7 +111,6 @@ nu-insert-map)
 (define-key nu-save-map (kbd "w") 'ido-write-file)
 (define-key nu-save-map (kbd "r") 'rename-buffer)
 (define-key nu-save-map (kbd "m") 'magit-status)
-
 (make-help-screen nu-save-prompt
 (purecopy "Save")
 "(Use Alt+s to directly save a buffer.)
