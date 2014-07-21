@@ -1,15 +1,14 @@
 
-; todo
 
-(defun nu-help-describe-h-map ()
-  (describe-variable 'help-map))
 
 (defun nu-help ()
-  "emacs-nu help"
+  "emacs-nu help
+
+URL `http://py.luyten.fr/Publique/nu.pdf'."
   (interactive)
   (setq c (nu-prompt "Help!"
-"See there for manual: http://py.luyten.fr/Publique/nu.pdf
-(or be brave enough to visit doc/nu.texi and Mx makeinfo.)
+"See there for manual: URL `http://py.luyten.fr/Publique/nu.pdf'
+\(or be brave enough to visit doc/nu.texi and Mx makeinfo.)
 
  Manual provides you many information, except it says
  you cannot where-is. Thus,
@@ -18,7 +17,8 @@
 
  q: quit this help."))
   (cond
-  ((eq c ?h) (nu-help-describe-h-map))))
+  ((eq c ?h) (describe-keymap 'help-map))
+  ((eq c ?s) (describe-keymap 'nu-save-map))))
 
 
 
