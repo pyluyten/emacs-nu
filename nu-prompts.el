@@ -47,6 +47,27 @@
  (setq x x))
 
 
+(define-prefix-command 'nu-print-map)
+(define-key nu-print-map (kbd "p") 'print-buffer)
+(define-key nu-print-map (kbd "s") 'eval-last-sexp)
+(define-key nu-print-map (kbd "b") 'eval-buffer)
+(define-key nu-print-map (kbd "w") 'pwd)
+(define-key nu-print-map (kbd "-") 'negative-argument)
+(define-key nu-print-map (kbd "\C-p") 'universal-argument)
+(define-key nu-print-map (kbd "c") 'compile)
+(make-help-screen nu-print-prompt ; wow notice this sound! =)
+(purecopy "Print")
+"Control+p : universal argument
+ p: Really Print this (hardware)
+ s: eval last sexp
+ b: eval buffer
+ w: pwd
+ -: negative argument
+ m: make
+ c: compile"
+nu-print-map)
+
+
 (define-prefix-command 'nu-delete-map)
 (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
 (define-key nu-delete-map (kbd "j") 'backward-delete-char)

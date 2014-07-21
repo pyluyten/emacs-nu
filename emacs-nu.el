@@ -22,7 +22,7 @@
    (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
    ; C-i is tab.
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
-   (define-key nu-keymap (kbd "C-p") 'print-buffer)
+   (define-key nu-keymap (kbd "C-p") 'nu-print-prompt)
 
    (define-key nu-keymap (kbd "C-a") 'nu-all-prompt) ; tbp: mark paragraph/function/...
    (define-key nu-keymap (kbd "C-s") 'save-buffer)
@@ -63,7 +63,7 @@
    (define-key nu-keymap (kbd "M-u") 'backward-word)
    (define-key nu-keymap (kbd "M-i") 'previous-line)
    (define-key nu-keymap (kbd "M-o") 'forward-word)
-;p  programmer?
+   (define-key nu-keymap (kbd "M-p") 'universal-argument)
    (define-key nu-keymap (kbd "M-a") 'cua-set-mark)
    (define-key nu-keymap (kbd "M-s") 'nu-save-prompt)
    (define-key nu-keymap (kbd "M-d") 'nu-delete-prompt)
