@@ -71,7 +71,9 @@ nu-print-map)
 (define-prefix-command 'nu-delete-map)
 (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
 (define-key nu-delete-map (kbd "j") 'backward-delete-char)
-(define-key nu-delete-map (kbd "k") 'kill-line)
+(define-key nu-delete-map (kbd "$") 'kill-line)
+(define-key nu-delete-map (kbd "x") 'kill-whole-line)
+(define-key nu-delete-map (kbd "k") 'nu-delete-below-line)
 (define-key nu-delete-map (kbd "l") 'delete-forward-char)
 (define-key nu-delete-map (kbd "u") 'backward-kill-word)
 (define-key nu-delete-map (kbd "o") 'kill-word)
@@ -79,16 +81,20 @@ nu-print-map)
 (define-key nu-delete-map (kbd "t") 'delete-trailing-whitespace)
 (define-key nu-delete-map (kbd "b") 'delete-blank-lines)
 (define-key nu-delete-map (kbd "s") 'kill-sexp)
+(define-key nu-delete-map (kbd "e") 'kill-sentence)
 (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
 (define-key nu-delete-map (kbd "a") 'nu-delete-all)
 (make-help-screen nu-delete-prompt-internal
 (purecopy "Delete")
 "=i= above line
  =j= backward-delete-char (C-j)
- =k= current line (C-k)
+ =k= delete below line
+ =$= kill-line
+ =x= kill whole line
  =l= next char (C-l)
  =u= backward kill word (C-u)
  =o= kill word
+ =e= kill sentence
 
  =h= horizontal space
  =t= trailing space

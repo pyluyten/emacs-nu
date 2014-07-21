@@ -216,7 +216,18 @@ If no argument given, copy 1 char."
    (kill-whole-line))
   (message "Cut! If you wanted to x keymap, Undo with M-z or C-z then, C-g"))
 
+(defun nu-delete-above-line ()
+  ""
+  (interactive)
+  (previous-line)
+  (kill-whole-line))
 
+(defun nu-delete-below-line ()
+  ""
+  (interactive)
+  (next-line)
+  (kill-whole-line)
+  (previous-line))
 
 (defun nu-backward-kill-line ()
   "Kill ARG lines backward."
