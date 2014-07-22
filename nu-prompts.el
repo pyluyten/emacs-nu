@@ -157,55 +157,39 @@ m: magit-status"
 nu-save-map)
 
 
-(defun nu-all-prompt ()
-  "Prompt to select several chars
-  (func, word, buffer...)
-
-If region is selected, exchange point & mark."
-   (interactive)
-   (if mark-active
-      (exchange-point-and-mark)
-      ;Mark is not active, let's prompt
-      (progn
-        (setq c (nu-prompt "All"
-     "
+(define-prefix-command 'nu-a-map)
+(define-key nu-a-map (kbd "a") 'mark-whole-buffer)
+(define-key nu-a-map (kbd "f") 'mark-defun)
+(define-key nu-a-map (kbd "s") 'mark-sentence)
+(define-key nu-a-map (kbd "w") 'nu-mark-a-word)
+(define-key nu-a-map (kbd "p") 'mark-paragraph)
+(define-key nu-a-map (kbd "j") 'nu-mark-to-beginning-of-line)
+(define-key nu-a-map (kbd "l") 'nu-mark-to-end-of-line)
+(define-key nu-a-map (kbd "k") 'nu-mark-current-line)
+(define-key nu-a-map (kbd "<SPC>") 'cua-set-mark)
+(define-key nu-a-map (kbd "RET") 'cua-set-rectangle-mark)
+(make-help-screen nu-a-prompt-internal
+(purecopy "A[ll]")
+"Set mark:
  Once mark is set, C-a to exchange point & mark.
 
-
-_space_ set mark         _return_ set rectangle
+_space_ set mark         Use C-return to set rectangle
 
 a: select all            f : mark-function
 p : mark-paragraph       l : mark to end of line
-s : mark sentence        j : mark to beginning of l
+s : mark sentence        j : mark to beginning of line
 w : mark-word            k : mark current line
-"))
-   (cond
-   ;; curiously, if we mark-whole-buffer right now, this fails
-   ;; using a timer works. ?uh?
-   ((eq c ?a)
-    (run-with-timer 0.001 nil  'mark-whole-buffer))
-   ((eq c ?f)
-     (run-with-timer 0.001 nil 'mark-defun))
-   ((eq c ?s)
-     (run-with-timer 0.001 nil 'nu-mark-sentence))
-   ((eq c ?w)
-     (run-with-timer 0.001 nil 'nu-mark-a-word))
-   ((eq c ?p)
-     (run-with-timer 0.001 nil 'mark-paragraph))
-   ((eq c ?j)
-     (run-with-timer 0.001 nil 'nu-mark-to-beginning-of-line))
-   ((eq c ?l)
-     (run-with-timer 0.001 nil 'nu-mark-to-end-of-line))
-   ((eq c ?k)
-     (run-with-timer 0.001 nil 'nu-mark-current-line))
-   ; <SPC>
-   ((eq c ?\s)
-     (run-with-timer 0.001 nil 'cua-set-mark))
-   ; <RET> <C-m>
-   ((eq c ?\r)
-     (call-interactively 'cua-set-rectangle-mark))
-   (t
-    (keyboard-quit))))))
+"
+nu-a-map)
+(defun nu-a-prompt ()
+  "Triggers nu-a-map.
+
+But if mark is active, exchange point and mark."
+     (if mark-active
+      (exchange-point-and-mark)
+      (nu-a-prompt-internal)))
+
+
 
 
 (defun nu-open-prompt ()
