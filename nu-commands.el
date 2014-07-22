@@ -34,6 +34,13 @@ URL `http://py.luyten.fr/Publique/nu.pdf'."
     (yank-pop)) 
          
 
+
+(defun nu-mark-a-word ()
+  "Mark a word."
+  (interactive)
+  (backward-word)
+  (mark-word))
+
 (defun nu-mark-to-end-of-line ()
   "Select up to eol."
   (interactive)

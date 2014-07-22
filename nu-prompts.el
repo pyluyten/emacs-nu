@@ -189,7 +189,7 @@ w : mark-word            k : mark current line
    ((eq c ?s)
      (run-with-timer 0.001 nil 'nu-mark-sentence))
    ((eq c ?w)
-     (run-with-timer 0.001 nil 'mark-word))
+     (run-with-timer 0.001 nil 'nu-mark-a-word))
    ((eq c ?p)
      (run-with-timer 0.001 nil 'mark-paragraph))
    ((eq c ?j)
