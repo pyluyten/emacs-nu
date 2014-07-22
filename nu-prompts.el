@@ -190,54 +190,38 @@ But if mark is active, exchange point and mark."
       (nu-a-prompt-internal)))
 
 
+(defun nu-other-win () (interactive) (other-window 1))
+(defun nu-other-win-minus () (interactive) (other-window -1))
+(define-prefix-command 'nu-open-map)
+(define-key nu-open-map (kbd "f")  'find-file)
+(define-key nu-open-map (kbd "F")  'find-file-other-window)
+(define-key nu-open-map (kbd "r")  'recentf-open-files)
+(define-key nu-open-map (kbd "m")  'bookmark-bmenu-list)
+(define-key nu-open-map (kbd "M")  'bookmark-jump)
+(define-key nu-open-map (kbd "b")  'bookmark-set)
+(define-key nu-open-map (kbd "x")  'list-registers)
+(define-key nu-open-map (kbd "l")  'next-buffer)
+(define-key nu-open-map (kbd "j")   'previous-buffer)
+(define-key nu-open-map (kbd "o")   'nu-other-win)
+(define-key nu-open-map (kbd "O")   'nu-other-win-minus)
+(define-key nu-open-map (kbd "i")   'ibuffer)
+(define-key nu-open-map (kbd "I")   'ibuffer-other-window)
+(define-key nu-open-map (kbd "C-<SPC>") 'ido-switch-buffer)
+(make-help-screen nu-open-prompt
+(purecopy "Open")
+"
+=f= open file/dir         =l= next-buffer
+=F= file other window     =j= previous-buffer
+=r= recent files          =Control+space= ido-switch-buffer
+=o= other-window (next)
+=O= other-window (prev.)  =i= ibuffer
+                          =I= ibuffer-other-window
+=x= registers
 
+=m= bookmarks menu, =M= jump to bookmark
+=b= bookmark set"
+nu-open-map)
 
-(defun nu-open-prompt ()
-   "Open"
-  (interactive)
-  (setq c (nu-prompt "Open..."
-    "
-  =f= open file/dir         =l= next-buffer
-  =F= file other window     =j= previous-buffer
-  =r= recent files          =space= ido-switch-buffer
-  =o= other-window (next)
-  =O= other-window (prev.)  =i= ibuffer
-                            =I= ibuffer-other-window
-  =x= registers
-
-  =m= bookmarks menu, =M= jump to bookmark
-  =b= bookmark set"))
-  (cond
-    ((eq c ?f)
-     (call-interactively 'find-file))
-    ((eq c ?F)
-      (call-interactively 'find-file-other-window))
-    ((eq c ?r)
-     (call-interactively 'recentf-open-files))
-    ((eq c ?m)
-     (call-interactively 'bookmark-bmenu-list))
-    ((eq c ?M)
-     (call-interactively 'bookmark-jump))
-    ((eq c ?b)
-     (call-interactively 'bookmark-set))
-    ((eq c ?x)
-     (list-registers))
-    ((eq c ?l)
-      (next-buffer))
-    ((eq c ?j)
-      (previous-buffer))
-    ((eq c ?o)
-     (other-window 1))
-    ((eq c ?O)
-     (other-window -l1))
-    ((eq c ?i)
-     (ibuffer))
-    ((eq c ?I)
-     (ibuffer-other-window))
-    ((eq c ?\s)
-     (ido-switch-buffer))
-    (t
-     (keyboard-quit))))
 
 (define-prefix-command 'nu-global-map)
 (defun nu-no-goal-column () (interactive) (setq goal-column nil) (message "No goal column"))
