@@ -4,7 +4,7 @@
 
 (defvar nu-keymap (make-sparse-keymap) "Emacs nu keymap")
 
-
+(require 'iso-transl); ^ : still does not work
 
 (defun nu-restore-default-keymap ()
   "Populate nu keymap with defaults."
@@ -24,26 +24,26 @@
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
    (define-key nu-keymap (kbd "C-p") 'nu-print-prompt)
 
-   (define-key nu-keymap (kbd "C-a") 'nu-all-prompt) ; tbp: mark paragraph/function/...
+   (define-key nu-keymap (kbd "C-a") 'nu-a-prompt-internal)
    (define-key nu-keymap (kbd "C-s") 'save-buffer)
-   ; C-d is not yet defined. (x to delete, c to copy... remain <D>irect[ion] <D>rill <Do> <Define>...
+   ; C-d is not yet defined. Currently it is synonym to C-l.
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-keymap (kbd "C-g") 'nu-global-prompt)
    (define-key nu-keymap (kbd "C-h") 'nu-help-prompt)
    (define-key nu-keymap (kbd "C-j") 'backward-delete-char)
-   (define-key nu-keymap (kbd "C-k") 'kill-visual-line) ; k=kill, but how to advertise it?
+   (define-key nu-keymap (kbd "C-k") 'kill-visual-line)
    (define-key nu-keymap (kbd "C-l") 'delete-forward-char)
    ; C-m stands for enter. This is something to study.
 
-   (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize) ; you don't undo 1 thousand times a day. be smart.
+   (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize)
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
    (define-key nu-keymap (kbd "C-v") 'nu-yank-pop-or-yank)
-;b
+   ;b
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
-   (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; well.. this is defintely not the _goal_ but...
+   (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; tmp?
 
    (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
    (define-key nu-keymap (kbd "C-<prior>") 'previous-buffer)
@@ -56,10 +56,10 @@
 
    (define-key nu-keymap (kbd "M-q") 'quoted-insert) ; fix minibuf'
    (define-key nu-keymap (kbd "M-w") 'delete-other-windows)
-   (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above) ; advertise?
-;r  maybe overwrite mode...
-;t  transpose?
-   (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below) ; how to advertise?
+   (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
+   ;r  maybe overwrite mode...
+   ;t  transpose?
+   (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)
    (define-key nu-keymap (kbd "M-u") 'backward-word)
    (define-key nu-keymap (kbd "M-i") 'previous-line)
    (define-key nu-keymap (kbd "M-o") 'forward-word)
@@ -68,21 +68,23 @@
    (define-key nu-keymap (kbd "M-s") 'nu-save-prompt)
    (define-key nu-keymap (kbd "M-d") 'nu-delete-prompt)
    (define-key nu-keymap (kbd "M-f") 'ace-jump-char-mode)
-;g or use this use for ace-jump, move back M-f to something else.
+   ;g : ace-jump?
+   (define-key nu-keymap (kbd "M-h") 'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-j") 'backward-char)
    (define-key nu-keymap (kbd "M-k") 'next-line)
    (define-key nu-keymap (kbd "M-l") 'forward-char)
-;m
+   ;m
    (define-key nu-keymap (kbd "M-z") 'undo)
-;x  execute-extended-command
-;c
+   ;x  execute-extended-command
+   ;c
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
-;b
-;n
-   (define-key nu-keymap (kbd "²") 'ibuffer) ; to be advertised (global?)
-   (define-key nu-keymap (kbd "M-²") 'other-window) ; to be advertised
+   ;b
+   ;n
+   (define-key nu-keymap (kbd "²") 'ibuffer)
+   (define-key nu-keymap (kbd "M-²") 'other-window)
    (define-key nu-keymap (kbd "M-0") 'nu-back-to-bol)
-   (define-key nu-keymap (kbd "M-^") 'nu-back-to-indentation) ; fails here.
+(define-key key-translation-map [dead-circumflex] "^");don't work
+   (define-key nu-keymap (kbd "M-^") 'nu-back-to-indentation); don't work
    (define-key nu-keymap (kbd "M-à") 'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-$") 'nu-end-of-line)
 
