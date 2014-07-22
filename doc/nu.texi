@@ -109,24 +109,24 @@ emacs-nu redefines many keys, however two points make learning curve shorter
 @end enumerate
 
 @kbd{M-x} is still there. This means, you can probably obtain what you want.
-Also, @kbd{C-h} for help-prefix is still there.
+Also, @kbd{Control+h} for help-prefix is still there.
 
 Now, three things should probably be kept in mind while trying nu-mode
 
 @enumerate
 @item
-To repeat a command, use Alt <Space>.
+To repeat a command, use @kbd{Alt+Space}.
 @item
-To trigger a major mode sequence, start with Control <Space>. This will invoke vanilla emacs C-c. For example, into org-mode, use C-<SPC> C-n to navigate to next node. If you already defined you own keys starting with C-c, do not amend this definition.
+To trigger a major mode sequence, start with @kbd{Control+Space}. This will invoke vanilla emacs @kbd{Control+c}. For example, into org-mode, use @kbd{Control+Space Control+n} to navigate to next node. If you already defined you own keys starting with @kbd{Control+c}, do not amend this definition.
 
 @lisp
 (define-key mykeymap kbd("\C-c h") myfunction)
 @end lisp
 
-To invoke above myfunction example, press @kbd{Control-SPC m}
+To invoke above myfunction example, press @kbd{Control-SPC h}.
 
 @item
-You should not rely on C-x, or at least no regularly. However to trigger x prefix, use C-M-<SPC>
+You should not rely on @kbd{Control+x}, or at least no regularly. However to trigger x prefix, use @kbd{Control+Alt+Space}.
 
 @end enumerate
 
@@ -136,40 +136,62 @@ You should not rely on C-x, or at least no regularly. However to trigger x prefi
 
 @section Navigate
 
-While arrows still work, Nu uses alt key to navigate.
-The thumb presses Alt key, while finger remains safe.
-Navigate up left right down using Alt and :
+While arrows still work, Nu uses @key{Alt} key to navigate.
+Hence, the thumb often presses @key{Alt} key, while pinky finger remains safe.
+Navigate up left right down using @key{Alt} and :
 
 
 @w{    }I@*
 @w{     }J@w{ }K@w{ }L
 
 
-Additionally, use Alt u and alt o to move
-to previous/next word.
+Additionally, use @key{Alt} @key{u} and @key{Alt} @key{o} to move to previous, next word.
 
 @w{  }U@w{ }I@w{ }O@*
 @w{     }J@w{ }K@w{ }L
 
 
-Use Alt$ to go to end of line.
+Use @kbd{Alt+$} to go to end of line.
 
 To reach a line, beginning of buffer, end of buffer, use Control+f then the appropriate key. Just read the prompt.
 
 @section Selections and Deletions
 
+Several alternatives offer to delete (cut) text.
+
+@enumerate
+@enumerate
+@item
 Use Control-x to cut the current line.
-Use Control + paddle + j,l to delete backward, forward char
-Use Control + u to delete previous word
-
+@item
+Use Control + j,l to delete backward, forward char.
+@item
+Use Control + u to delete previous word.
+@item
+Use Control + $ to delete up to end of line.
+@end enumerate
+@item
 Use Alt+d to trigger a prompt. This will offer you to delete what you want.
+@item
+Alternatively, first mark (select) text you want to select then use Control+x.
+@end enumerate
 
+Several alternatives offer to select text
 
-The paddle allow to directly select (``mark'') text.
-While other ways are possible, using Alt-Shift-U, for example,
-will select previous word (or extend current selection).
+@enumerate
+@item
+The paddle allow to directly select (``mark'') text : keep shift pressed, then move. While other ways are possible, using Alt-Shift-U, for example,
+will select previous word (or extend current selection to previous word).
 
-An alternative to select text is to Alt+a to set a mark, then move to extend selection. An alternative is to press Control+a to invoke ``a-'' prompt, allowing to select ``a-'' word, ``a-'' sentence, and so on, or to set the mark, including to start a rectangular selection.
+@item
+An alternative in order to select text is to press Alt+a to set a mark, then move to extend selection.
+
+@item
+An alternative is to press Control+a to invoke ``a-'' prompt, allowing to select ``a-'' word, ``a-'' sentence, and so on, or to set the mark.
+
+@item
+To start a rectangular selection, use Control+Return.
+@end enumerate
 
 
 @section Cut Copy Paste
@@ -189,36 +211,49 @@ Use Alt+z to undo. Or, use Control+z to invoke undo-tree visualizer to play with
 
 @section Advanced Edition
 
-Most avdanced editon features rely on Control-r, which will invoke replace prompt, allowing you to replace-regexp, merge-lines, delete spaces, ...
+Most avdanced editon features rely on Control-r, which will invoke replace prompt, allowing you to replace-regexp, merge-lines, delete spaces, or invoke other functions.
 
+@enumerate
+@item
 Alt+y will copy to current line char under point (on the below line).
+@item
 Alt+e will copy to current line char above point (on the above line).
+@end enumerate
 
 Control+g global prompt will also propose goal-column feature.
+
 
 @node Files Buffers Windows
 @chapter Files Buffers Windows
 
 Use Control + s to save current file, Alt + s to invoke a prompt to rename it.
 Control+g ``global'' prompt will allow you to manipulate frames.
+@verbatim
 ² will invoke buffers list.
+@end verbatim
 
+
+@enumerate
+@item
 Use Control+o to open a file, a window, a buffer, or use bookmarks,...
+@item
 Use Control+w to close this frame. Or Alt+w to make this frame the only visible one.
+@item
 Use Control+n to open a sracth buffer (blank untitled buffer).
+@item
+Use Control+t to open another tab.
+@end enumerate 
 
 @node NU & other libraries
 @chapter NU & other libraries
 
 How does NU integrate with other libraries?
 
-
 @section evil-mode
 
 While nu-mode is not a modal editor, and aims at being the most efficient keymap, sometimes using lot of modifiers might still be harassing. Using vim keymap is feasible : you can activate evil-mode, then switch from evil-state to emacs-state as you want.
 
-Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, and probably many others. However vim paddle (ijkl) and nu-mode paddle (ijkl) disagree on three of these keys! If you want to have evil with nu-mode paddle,
-simple put below lines on your .emacs:
+Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, and probably many others. However vim paddle (hjkl for left down up right) and nu-mode paddle (ijkl for up left down right) disagree on three of these four keys! If you want to have evil with nu-mode paddle, I recommend you to make vim paddle similar to nu-mode. Since @key{i} will not be available anymore to insert, use @key{h} for this purpose. Simply put below lines on your .emacs:
 
 @lisp
 (define-key evil-normal-state-map (kbd "h") 'evil-insert)
@@ -227,7 +262,11 @@ simple put below lines on your .emacs:
 (define-key evil-normal-state-map (kbd "k") 'evil-next-line)
 @end lisp
 
-This only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
+Obviously this only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
+
+@section magit
+
+Use Alt+s, ie save-prompt, to gain access to magit-status.
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
