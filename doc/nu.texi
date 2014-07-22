@@ -62,75 +62,101 @@ This is the manual for Nu, a modern keybinding for Emacs.
 nu-mode is a global minor mode, its keymap,
 and the commands which are not provided in raw Emacs.
 
-Modern, means respecting conventions like 
-- ^f to find
-- ^r to replace
-- ^s to save
-- ^x, ^c, ^v to cut, copy, paste
+Modern, means respecting conventions like
+@enumerate
+@item @kbd{Control-f} to find
+@item @kbd{Control-r} to replace
+@item @kbd{Control-s} to save
+@item @kbd{Control-x}, @kbd{Control-c}, @kbd{Control-v} to cut, copy, paste.
+@end enumerate
 
-To preserve access to many functions, nu-mode relies on prompts. For example, Control+f raises a prompt precising which key to press to obtain which function => with Control+f then f start a regexp search, with Control+f then g go-to a line (to be precised), with Control+f then s go to previous selection.
+To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, @kbd{Control-f} raises a prompt precising which key - actually, which sequence - to press in order to execute desired function : once @kbd{Control-f} has been pressed and the ``Find-prompt'' appears, pressing f will start a regexp search, while @kbd{g} will execute goto-line, or @kbd{s} will move point to previous selection.
 
 nu-emacs does not only provides nu-mode. There are also two independant parts
-- nu-alias is a simple mechanism to define aliases into org-mode file(s). This way its easier to maintain aliases to be invoked from Mx. See its REAME.
-- dhammacakka is a light set of customization. See its README.
+@enumerate
+@item nu-alias is a simple mechanism to define aliases into org-mode file(s). This way its easier to maintain aliases to be invoked from Mx. See its REAME.
+@item dhammacakka is a light set of customization. See its README.
+@end enumerate
 
-@chapter Dependencies
-Nu depends on : help-fns+, undo-tree, ace-jump, recentf
+
+@section Dependencies
+Nu depends on several libraries, both native or external ones :
+@enumerate
+@item help-fns+
+@item undo-tree
+@item ace-jump
+@item recentf
+@item cua-selection-mode
+@end enumerate
 
 
-@chapter Help
+@section Help
 
-Use Control-q to quit a sequence or a command in progress.
-Use Alt+z to undo last command.
+Use @kbd{Control-q} to quit a sequence or a command in progress.
+Use @kbd{Alt+z} to undo last command.
 
-Prompts are usually triggered using a <Control> modifier and advertise an alternative Alt operating using the same key. Inverse is sometimes true : since <Control+s> invoking a prompt would be irritating, Control+s does not invoke a prompt. It directly saves buffer, while Alt+s is the ``save prompt''.
+Prompts are usually triggered using a @kbd{Control} modifier and advertise an alternative @kbd{Alt} operating using the same key. Inverse is sometimes true : since @kbd{Control+s} invoking a prompt would be irritating, this sequence directly saves buffer, while @kbd{Alt+s} runs the ``save prompt''.
 
 @node NU for the power user
 @chapter NU for the power user
 
 If you are not used to Emacs, reading this chapter is not necessary. But Emacs veteran should probably start here.
-
 emacs-nu redefines many keys, however two points make learning curve shorter
 
-- For any user, knowing CUA keybinds will make emacs-nu discoverable.
-- For veteran Emacs user, two important sequences remain:
+@enumerate
+@item For any user, knowing CUA keybinds will make emacs-nu discoverable.
+@item For veteran Emacs user, two important sequences remain:
+@end enumerate
 
-
-Mx is still there. This means, you can probably obtain what you want, just press Mx and you will not be lost.
-Also, C-h for help-prefix is still there.
+@kbd{M-x} is still there. This means, you can probably obtain what you want.
+Also, @kbd{C-h} for help-prefix is still there.
 
 Now, three things should probably be kept in mind while trying nu-mode
 
-- To repeat a command, use Alt <Space>.
+@enumerate
+@item
+To repeat a command, use Alt <Space>.
+@item
+To trigger a major mode sequence, start with Control <Space>. This will invoke vanilla emacs C-c. For example, into org-mode, use C-<SPC> C-n to navigate to next node. If you already defined you own keys starting with C-c, do not amend this definition.
 
+@lisp
+(define-key mykeymap kbd("\C-c h") myfunction)
+@end lisp
 
-- To trigger a major mode sequence, start with Control <Space>. This will invoke vanilla emacs C-c. For example, into org-mode, use C-<SPC> C-n to navigate to next node. If you already defined you own keys starting with C-c, do not amend this definition.
-  define-global-key : C-c <some key>
-  Then press Control+Space then <some key>
+To invoke above myfunction example, press @kbd{Control-SPC m}
 
+@item
+You should not rely on C-x, or at least no regularly. However to trigger x prefix, use C-M-<SPC>
 
-- You should not rely on C-x, or at least no regularly. However to trigger x prefix, use C-M-<SPC>
-
+@end enumerate
 
 @node View and Edit
-@chapter Navigate
+@chapter View and Edit
+
+
+@section Navigate
 
 While arrows still work, Nu uses alt key to navigate.
 The thumb presses Alt key, while finger remains safe.
 Navigate up left right down using Alt and :
- I
-JKL
+
+
+@w{    }I@*
+@w{     }J@w{ }K@w{ }L
+
 
 Additionally, use Alt u and alt o to move
 to previous/next word.
-U I O
- JKL
+
+@w{  }U@w{ }I@w{ }O@*
+@w{     }J@w{ }K@w{ }L
+
 
 Use Alt$ to go to end of line.
 
 To reach a line, beginning of buffer, end of buffer, use Control+f then the appropriate key. Just read the prompt.
 
-@chapter Selections and Deletions
+@section Selections and Deletions
 
 Use Control-x to cut the current line.
 Use Control + paddle + j,l to delete backward, forward char
@@ -145,7 +171,8 @@ will select previous word (or extend current selection).
 
 An alternative to select text is to Alt+a to set a mark, then move to extend selection. An alternative is to press Control+a to invoke ``a-'' prompt, allowing to select ``a-'' word, ``a-'' sentence, and so on, or to set the mark, including to start a rectangular selection.
 
-@chapter Cut Copy Paste
+
+@section Cut Copy Paste
 
 When no selection is active, use Control + x to cut current line, or a deletion command since deletions actually cut text.
 
@@ -154,11 +181,13 @@ Use Control + c to copy currrent line, or, while a selection is active, copy thi
 Use Control + v to paste the current clipboard. Following Control + v will replace this paste with last clipboard item. However, if you need to paste several times, you can use Alt + v to invoke and advanced ``Paste'' prompt.
 
 
-@chapter Undo or Redo
+
+@section Undo or Redo
 
 Use Alt+z to undo. Or, use Control+z to invoke undo-tree visualizer to play with discard changes in an advanced way.
 
-@chapter Advanced Edition
+
+@section Advanced Edition
 
 Most avdanced editon features rely on Control-r, which will invoke replace prompt, allowing you to replace-regexp, merge-lines, delete spaces, ...
 
@@ -183,17 +212,20 @@ Use Control+n to open a sracth buffer (blank untitled buffer).
 
 How does NU integrate with other libraries?
 
-@chapter evil-mode
+
+@section evil-mode
 
 While nu-mode is not a modal editor, and aims at being the most efficient keymap, sometimes using lot of modifiers might still be harassing. Using vim keymap is feasible : you can activate evil-mode, then switch from evil-state to emacs-state as you want.
 
 Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, and probably many others. However vim paddle (ijkl) and nu-mode paddle (ijkl) disagree on three of these keys! If you want to have evil with nu-mode paddle,
 simple put below lines on your .emacs:
 
+@lisp
 (define-key evil-normal-state-map (kbd "h") 'evil-insert)
 (define-key evil-normal-state-map (kbd "j") 'evil-backward-char)
 (define-key evil-normal-state-map (kbd "i") 'evil-previous-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-next-line)
+@end lisp
 
 This only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
 
