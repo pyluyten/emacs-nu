@@ -7,17 +7,31 @@
 URL `http://py.luyten.fr/Publique/nu.pdf'."
   (interactive)
   (setq c (nu-prompt "Help!"
-"See there for manual: URL `http://py.luyten.fr/Publique/nu.pdf'
-\(or be brave enough to visit doc/nu.texi and Mx makeinfo.)
+"See there for manual: URL `https://github.com/pyluyten/emacs-nu/blob/master/doc/nu.pdf?raw=true'
 
- Manual provides you many information, except it says
- you cannot where-is. Thus,
- h: nu-help-prompt
- s: nu-save-prompt
+ Manual provides you many information. However the fact nu-mode uses prompt make where-is usage impossible. You can find below a list of prompts and their keymaps.
+
+ Control Key : press associated key to describe keymap
+ h: nu-help-prompt     a: nu-a-prompt
+ p: nu-print-prompt    r: nu-replace-prompt
+ f: nu-find-prompt     g: nu-global-prompt
+ o: nu-open-prompt
+
+ Alt Key : press associated key to describe keymap
+ s: nu-save-prompt     d: nu-delete-prompt (alt)
+ v: nu-insert-prompt
 
  q: quit this help."))
   (cond
   ((eq c ?h) (describe-keymap 'help-map))
+  ((eq c ?a) (describe-keymap 'nu-a-map))
+  ((eq c ?p) (describe-keymap 'nu-print-map))
+  ((eq c ?r) (describe-keymap 'nu-replace-map))
+  ((eq c ?o) (describe-keymap 'nu-open-map))
+  ((eq c ?f) (describe-keymap 'nu-find-map))
+  ((eq c ?g) (describe-keymap 'nu-global-map))
+  ((eq c ?d) (describe-keymap 'nu-delete-map))
+  ((eq c ?v) (describe-keymap 'nu-insert-map))
   ((eq c ?s) (describe-keymap 'nu-save-map))))
 
 
