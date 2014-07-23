@@ -2,13 +2,22 @@
 (require 'nu-hooks)
 
 
+; we have the real keymap for real ("nu-keymap").
+; menu-map is only there for where-is sake.
+; thus we define things twice :
+; once a grand tragedy. Once as a farce.
 (defvar nu-keymap (make-sparse-keymap) "Emacs nu keymap")
+(defvar nu-menu-map (make-sparse-keymap) "Nu Menu Keymap")
+
 
 (require 'iso-transl); ^ : still does not work
 
 (defun nu-restore-default-keymap ()
   "Populate nu keymap with defaults."
   (interactive)
+
+   ; <menu> is not a modifier. We need a map.
+   (define-key nu-keymap (kbd "<menu>") nu-menu-map)
 
    ;  all _control_ features (mostly, prompts..)
    ;  do not respect _any_ emacs convention. Seriously.
@@ -22,14 +31,19 @@
    (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
    ; C-i is tab.
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
+   (define-key nu-menu-map (kbd "o") 'nu-open-map)
    (define-key nu-keymap (kbd "C-p") 'nu-print-prompt)
 
    (define-key nu-keymap (kbd "C-a") 'nu-a-prompt-internal)
+   (define-key nu-menu-map (kbd "a") 'nu-a-map)
    (define-key nu-keymap (kbd "C-s") 'save-buffer)
    ; C-d is not yet defined. Currently it is synonym to C-l.
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
+   (define-key nu-menu-map (kbd "f") 'nu-find-map)
    (define-key nu-keymap (kbd "C-g") 'nu-global-prompt)
+   (define-key nu-menu-map (kbd "g") 'nu-global-map)
    (define-key nu-keymap (kbd "C-h") 'nu-help-prompt)
+   (define-key nu-menu-map (kbd "h") 'help-map)
    (define-key nu-keymap (kbd "C-j") 'backward-delete-char)
    (define-key nu-keymap (kbd "C-k") 'kill-visual-line)
    (define-key nu-keymap (kbd "C-l") 'delete-forward-char)
@@ -43,7 +57,7 @@
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
-   (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; tmp?
+   ;(define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; tmp?
 
    (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
    (define-key nu-keymap (kbd "C-<prior>") 'previous-buffer)
@@ -66,6 +80,7 @@
    (define-key nu-keymap (kbd "M-p") 'universal-argument)
    (define-key nu-keymap (kbd "M-a") 'cua-set-mark)
    (define-key nu-keymap (kbd "M-s") 'nu-save-prompt)
+   (define-key nu-menu-map (kbd "s") 'nu-save-map)
    (define-key nu-keymap (kbd "M-d") 'nu-delete-prompt)
    (define-key nu-keymap (kbd "M-f") 'ace-jump-char-mode)
    ;g : ace-jump?
@@ -78,6 +93,7 @@
    ;x  execute-extended-command
    ;c
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
+   (define-key nu-menu-map (kbd "v") 'nu-insert-map)
    ;b
    ;n
    (define-key nu-keymap (kbd "²") 'ibuffer)
