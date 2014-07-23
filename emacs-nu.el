@@ -57,7 +57,7 @@
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
-   ;(define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; tmp?
+   (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; tmp?
 
    (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
    (define-key nu-keymap (kbd "C-<prior>") 'previous-buffer)
