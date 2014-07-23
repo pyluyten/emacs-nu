@@ -70,7 +70,9 @@ Modern, means respecting conventions like
 @item @kbd{Control-x}, @kbd{Control-c}, @kbd{Control-v} to cut, copy, paste.
 @end enumerate
 
-To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, @kbd{Control-f} raises a prompt precising which key - actually, which sequence - to press in order to execute desired function : once @kbd{Control-f} has been pressed and the ``Find-prompt'' appears, pressing f will start a regexp search, while @kbd{g} will execute goto-line, or @kbd{s} will move point to previous selection.
+To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, @kbd{Control-f} raises a prompt precising which key - actually, which sequence - to press in order to execute desired function : once @kbd{Control-f} has been pressed and the ``Find-prompt'' appears, pressing @key{f} will start a regexp search, while @kbd{g} will execute goto-line, or @kbd{s} will move point to previous selection.
+
+Inverse is sometimes true : since @kbd{Control+s} invoking a prompt would be irritating, this sequence directly saves buffer, while @kbd{Alt+s} runs the ``save prompt''.
 
 nu-emacs does not only provides nu-mode. There are also two independant parts
 @enumerate
@@ -94,8 +96,11 @@ Nu depends on several libraries, both native or external ones :
 
 Use @kbd{Control-q} to quit a sequence or a command in progress.
 Use @kbd{Alt+z} to undo last command.
+Use @kbd{Control+h} to gain access to help functions. This includes the usual shortcuts to describe what a key does, or what a function does.
 
-Prompts are usually triggered using a @kbd{Control} modifier and advertise an alternative @kbd{Alt} operating using the same key. Inverse is sometimes true : since @kbd{Control+s} invoking a prompt would be irritating, this sequence directly saves buffer, while @kbd{Alt+s} runs the ``save prompt''.
+Prompts are usually triggered using a @kbd{Control} modifier and advertise a function using the same key, but with @kbd{Alt} modifier. For example, @kbd{Control-f} will pop-up a find-prompt, while @kbd{Alt-f} will directly allow you to `ace-jump` to a char.
+
+These prompts offer you to quickly learn where functions are.
 
 @node NU for the power user
 @chapter NU for the power user
@@ -128,6 +133,17 @@ To invoke above myfunction example, press @kbd{Control-SPC h}.
 @item
 You should not rely on @kbd{Control+x}, or at least no regularly. However to trigger x prefix, use @kbd{Control+Alt+Space}.
 
+@end enumerate
+
+
+Note that `where-is` function, which sometimes advertises shortcuts, will not really work, since a prompt is not a keymap : where is do not know how to invoke @kbd{Control-f} then @kbd{k} to reach end of buffer.
+
+Two features make this drawback acceptable :
+@enumerate
+@item
+From the help prompt (@kbd{Control-h}), run @key{h} to invoke nu-help. This function will present you all prompts, and will offer you to describe their keymaps - that is, all the functions you can access from these prompts.
+@item
+For each function accessible from a prompt, an additional shortcut is created, accessible from @kbd{menu} plus the same @kbd{key} than the prompt, in order to make where-is advertise. Hence, if you read `You can run this command with <menu> f k`, please understand, despite it is true, that you can run the command with @kbd{Control-f-k}.
 @end enumerate
 
 @node View and Edit
