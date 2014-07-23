@@ -1,15 +1,31 @@
 
-
-
-(defun nu-help ()
-  "emacs-nu help
-
-URL `http://py.luyten.fr/Publique/nu.pdf'."
-  (interactive)
-  (setq c (nu-prompt "Help!"
+(define-prefix-command 'nu-help-map)
+(defun nu-describe-help () (interactive) (describe-keymap 'help-map))
+(define-key nu-help-map (kbd "h") 'nu-describe-help)
+(defun nu-describe-a () (interactive) (describe-keymap 'nu-a-map))
+(define-key nu-help-map (kbd "a") 'nu-describe-a)
+(defun nu-describe-print () (interactive) (describe-keymap 'nu-print-map))
+(define-key nu-help-map (kbd "p") 'nu-describe-print)
+(defun nu-describe-replace () (interactive) (describe-keymap 'nu-replace-map))
+(define-key nu-help-map (kbd "r") 'nu-describe-replace)
+(defun nu-describe-open () (interactive) (describe-keymap 'nu-open-map))
+(define-key nu-help-map (kbd "o") 'nu-describe-open)
+(defun nu-describe-find () (interactive) (describe-keymap 'nu-find-map))
+(define-key nu-help-map (kbd "f") 'nu-describe-find)
+(defun nu-describe-global () (interactive) (describe-keymap 'nu-global-map))
+(define-key nu-help-map (kbd "g") 'nu-describe-global)
+(defun nu-describe-delete () (interactive) (describe-keymap 'nu-delete-map))
+(define-key nu-help-map (kbd "d") 'nu-describe-delete)
+(defun nu-describe-insert () (interactive) (describe-keymap 'nu-insert-map))
+(define-key nu-help-map (kbd "v") 'nu-describe-insert)
+(defun nu-describe-save () (interactive) (describe-keymap 'nu-save-map))
+(define-key nu-help-map (kbd "s") 'nu-describe-save)
+(make-help-screen nu-help
+(purecopy "emacs-NU help")
 "See there for manual: URL `https://github.com/pyluyten/emacs-nu/blob/master/doc/nu.pdf?raw=true'
 
- Manual provides you many information. However the fact nu-mode uses prompt make where-is usage impossible. You can find below a list of prompts and their keymaps.
+ Manual provides you many information. Remember where-is will tell you to use <menu> <somekey>,
+ while you can use <control> or <alt> some key. See below for relevant keymaps.
 
  Control Key : press associated key to describe keymap
  h: nu-help-prompt     a: nu-a-prompt
@@ -21,19 +37,8 @@ URL `http://py.luyten.fr/Publique/nu.pdf'."
  s: nu-save-prompt     d: nu-delete-prompt (alt)
  v: nu-insert-prompt
 
- q: quit this help."))
-  (cond
-  ((eq c ?h) (describe-keymap 'help-map))
-  ((eq c ?a) (describe-keymap 'nu-a-map))
-  ((eq c ?p) (describe-keymap 'nu-print-map))
-  ((eq c ?r) (describe-keymap 'nu-replace-map))
-  ((eq c ?o) (describe-keymap 'nu-open-map))
-  ((eq c ?f) (describe-keymap 'nu-find-map))
-  ((eq c ?g) (describe-keymap 'nu-global-map))
-  ((eq c ?d) (describe-keymap 'nu-delete-map))
-  ((eq c ?v) (describe-keymap 'nu-insert-map))
-  ((eq c ?s) (describe-keymap 'nu-save-map))))
-
+ q: quit this help."
+nu-help-map)
 
 
 (defun nu-yank-pop-or-yank ()
