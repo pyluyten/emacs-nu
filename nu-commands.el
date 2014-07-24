@@ -1,5 +1,9 @@
 
 (define-prefix-command 'nu-help-map)
+(define-key nu-help-map (kbd "<RET>") '(lambda ()
+  (interactive) (describe-keymap 'nu-keymap)))
+(define-key nu-help-map (kbd "m") '(lambda ()
+  (interactive) (describe-keymap 'nu-menu-map)))
 (defun nu-describe-help () (interactive) (describe-keymap 'help-map))
 (define-key nu-help-map (kbd "h") 'nu-describe-help)
 (defun nu-describe-a () (interactive) (describe-keymap 'nu-a-map))
@@ -23,21 +27,25 @@
 (make-help-screen nu-help
 (purecopy "emacs-NU help")
 "See there for manual: URL `https://github.com/pyluyten/emacs-nu/blob/master/doc/nu.pdf?raw=true'
+ Space / Backspace to scroll this help screen.
+ (Like any other NU prompt)
 
- Manual provides you many information. Remember where-is will tell you to use <menu> <somekey>,
- while you can use <control> or <alt> some key. See below for relevant keymaps.
+ Enter a key to describe NU shorcuts.
 
- Control Key : press associated key to describe keymap
+ Enter <Return> to see _the full_ keymap.
+ m: describe the menu-map, ie, all the prompts.
+
+ // Control Key Prompts
  h: nu-help-prompt     a: nu-a-prompt
  p: nu-print-prompt    r: nu-replace-prompt
  f: nu-find-prompt     g: nu-global-prompt
  o: nu-open-prompt
 
- Alt Key : press associated key to describe keymap
+ // Alt Key Prompts
  s: nu-save-prompt     d: nu-delete-prompt (alt)
  v: nu-insert-prompt
 
- q: quit this help."
+ q: quit this help. Works for any NU prompt."
 nu-help-map)
 
 
