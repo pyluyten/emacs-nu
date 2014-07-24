@@ -190,8 +190,7 @@ But if mark is active, exchange point and mark."
       (nu-a-prompt-internal)))
 
 
-(defun nu-other-win () (interactive) (other-window 1))
-(defun nu-other-win-minus () (interactive) (other-window -1))
+
 (define-prefix-command 'nu-open-map)
 (define-key nu-open-map (kbd "f")  'find-file)
 (define-key nu-open-map (kbd "F")  'find-file-other-window)
@@ -202,8 +201,8 @@ But if mark is active, exchange point and mark."
 (define-key nu-open-map (kbd "x")  'list-registers)
 (define-key nu-open-map (kbd "l")  'next-buffer)
 (define-key nu-open-map (kbd "j")   'previous-buffer)
-(define-key nu-open-map (kbd "o")   'nu-other-win)
-(define-key nu-open-map (kbd "O")   'nu-other-win-minus)
+(define-key nu-open-map (kbd "o")   '(lambda () (interactive) (other-window 1)))
+(define-key nu-open-map (kbd "O")   '(lambda () (interactive) (other-window -1)))
 (define-key nu-open-map (kbd "i")   'ibuffer)
 (define-key nu-open-map (kbd "I")   'ibuffer-other-window)
 (define-key nu-open-map (kbd "C-<SPC>") 'ido-switch-buffer)
@@ -341,7 +340,6 @@ nu-find-map)
 
 
 (define-prefix-command 'nu-replace-map)
-(defun nu-join-line () (interactive) (join-line 1))
 (defun nu-rot-reg-or-toggle-rot () (interative) (if mark-active (rot13-region) (toggle-rot13-mode)))
 (define-key nu-replace-map (kbd "r")  'query-replace-regexp)
 (define-key nu-replace-map (kbd "a")  'revert-buffer)
@@ -349,7 +347,7 @@ nu-find-map)
 (define-key nu-replace-map (kbd "k")  'overwrite-mode)
 (define-key nu-replace-map (kbd "I")  'replace-string)
 (define-key nu-replace-map (kbd "i")  'replace-regexp)
-(define-key nu-replace-map (kbd "j")   'nu-join-line)
+(define-key nu-replace-map (kbd "j")   '(lambda () (interactive) (join-line 1)))
 (define-key nu-replace-map (kbd "J")   'join-line)
 (define-key nu-replace-map (kbd "t")   'transpose-lines)
 (define-key nu-replace-map (kbd "z")   'zap-to-char)
