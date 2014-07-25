@@ -54,7 +54,7 @@
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
    (define-key nu-keymap (kbd "C-v") 'nu-yank-pop-or-yank)
    ;b
-   (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
+   (define-key nu-keymap (kbd "C-n") 'nu-new-prompt)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
    (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; tmp?

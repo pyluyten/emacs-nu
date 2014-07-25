@@ -144,22 +144,40 @@ nu-insert-map)
 (define-key nu-save-map (kbd "s") 'save-buffer)
 (define-key nu-save-map (kbd "w") 'ido-write-file)
 (define-key nu-save-map (kbd "r") 'rename-buffer)
+(define-key nu-save-map (kbd "l") 'org-store-link)
 (define-key nu-save-map (kbd "m") 'magit-status)
 (make-help-screen nu-save-prompt
 (purecopy "Save")
 "(Use Alt+s to directly save a buffer.)
 Press q to quit or :
 
-s: save
+s: save               l: org-store-link
 w: save-as
 r: rename buffer
 m: magit-status"
 nu-save-map)
 
 
+
+(define-prefix-command 'nu-new-map)
+(define-key nu-new-map (kbd "b") 'nu-new-empty-buffer)
+(define-key nu-new-map (kbd "w") 'make-frame-command)
+(define-key nu-new-map (kbd "v") 'split-window-below)
+(define-key nu-new-map (kbd "h") 'split-window-right)
+(define-key nu-new-map (kbd "i")   'ibuffer-other-window)
+(make-help-screen nu-new-prompt
+(purecopy "New")
+"New:
+ b, buffer ('Untitled')
+ i, ibuffer other window
+ w, new Xwindow
+ v, new vertical frame
+ h, new horizontal frame"
+nu-new-map)
+
 (define-prefix-command 'nu-a-map)
 (define-key nu-a-map (kbd "a") '(lambda () (interactive) (run-with-timer 0.01 nil 'mark-whole-buffer)))
-(define-key nu-a-map (kbd "f") '(lambda () (interactive) (run-with-timer 0.01 nil 'mark-defun)))
+(define-key nu-a-map (kbd "f") '(lambda () (interkactive) (run-with-timer 0.01 nil 'mark-defun)))
 (define-key nu-a-map (kbd "s") (lambda () (interactive) (run-with-timer 0.01 nil 'mark-sentence)))
 (define-key nu-a-map (kbd "w") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-a-word)))
 (define-key nu-a-map (kbd "p") (lambda () (interactive) (run-with-timer 0.01 nil 'mark-paragraph)))
@@ -201,21 +219,25 @@ But if mark is active, exchange point and mark."
 (define-key nu-open-map (kbd "x")  'list-registers)
 (define-key nu-open-map (kbd "l")  'next-buffer)
 (define-key nu-open-map (kbd "j")   'previous-buffer)
+(define-key nu-open-map (kbd "c")   'org-capture)
+(define-key nu-open-map (kbd "a")   'org-agenda)
 (define-key nu-open-map (kbd "o")   '(lambda () (interactive) (other-window 1)))
 (define-key nu-open-map (kbd "O")   '(lambda () (interactive) (other-window -1)))
 (define-key nu-open-map (kbd "i")   'ibuffer)
-(define-key nu-open-map (kbd "I")   'ibuffer-other-window)
+(define-key nu-open-map (kbd "C-i")   'org-iswitchb)
 (define-key nu-open-map (kbd "C-<SPC>") 'ido-switch-buffer)
 (make-help-screen nu-open-prompt
 (purecopy "Open")
 "
 =f= open file/dir         =l= next-buffer
 =F= file other window     =j= previous-buffer
-=r= recent files          =Control+space= ido-switch-buffer
-=o= other-window (next)
+=r= recent files          Control+Space > ido-switch-buffer
+=o= other-window (next)   Control+i > org-iswitchb
 =O= other-window (prev.)  =i= ibuffer
-                          =I= ibuffer-other-window
-=x= registers
+                          
+=x= registers             
+=c= task (org-capture)
+=a= org-agenda
 
 =m= bookmarks menu, =M= jump to bookmark
 =b= bookmark set"
