@@ -62,6 +62,20 @@ nu-help-map)
          
 
 
+(defun nu-select-a-block ()
+  "Select a block
+\(What vim calls a 'word')
+
+A contigent amount of chars different than <space>."
+   (interactive)
+   (while (not (eq (char-before) ?\s))
+          (backward-char))
+   (cua-set-mark)
+   (while (not (or
+                   (eq (char-after) ?\s)
+                   (eq (char-after) ?\n)))
+          (forward-char)))
+
 (defun nu-mark-a-word ()
   "Mark a word."
   (interactive)
@@ -105,7 +119,7 @@ Sentence uses sentence-end delimiter."
 
 
 
-(defun nu-find-char ()
+(defun nu-find-char (&optional backward)
   "Move forward up to char, up to end of buffer."
   (interactive)
   (setq c (read-char-exclusive))
@@ -113,7 +127,9 @@ Sentence uses sentence-end delimiter."
   (while (eq b nil)
   (if (eq (char-after) c)
     (setq b t)
-    (forward-char))))
+    (if backward
+      (backward-char)
+      (forward-char)))))
 
 
 (defun nu-end-of-line ()

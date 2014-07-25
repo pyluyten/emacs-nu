@@ -163,6 +163,7 @@ nu-insert-map)
 
 (define-prefix-command 'nu-save-map)
 (define-key nu-save-map (kbd "s") 'save-buffer)
+(define-key nu-save-map (kbd "b") 'bookmark-set)
 (define-key nu-save-map (kbd "w") 'ido-write-file)
 (define-key nu-save-map (kbd "r") 'rename-buffer)
 (define-key nu-save-map (kbd "l") 'org-store-link)
@@ -172,10 +173,10 @@ nu-insert-map)
 "
 Press q to quit or :
 
-s: save (\\[save-buffer])              l: org-store-link
-w: save-as
-r: rename buffer
-m: magit-status"
+s: save (\\[save-buffer])     l: org-store-link
+w: save-as                      m: magit-status
+r: rename buffer                b: save bookmark
+"
 nu-save-map)
 
 
@@ -199,11 +200,15 @@ nu-save-map)
 nu-new-map)
 
 
+
+
+
 (define-prefix-command 'nu-a-map)
 (define-key nu-a-map (kbd "a") '(lambda () (interactive) (run-with-timer 0.01 nil 'mark-whole-buffer)))
 (define-key nu-a-map (kbd "f") '(lambda () (interkactive) (run-with-timer 0.01 nil 'mark-defun)))
 (define-key nu-a-map (kbd "s") (lambda () (interactive) (run-with-timer 0.01 nil 'mark-sentence)))
 (define-key nu-a-map (kbd "w") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-a-word)))
+(define-key nu-a-map (kbd "C-w") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-select-a-block)))
 (define-key nu-a-map (kbd "p") (lambda () (interactive) (run-with-timer 0.01 nil 'mark-paragraph)))
 (define-key nu-a-map (kbd "j") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-to-beginning-of-line)))
 (define-key nu-a-map (kbd "l") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-to-end-of-line)))
@@ -225,6 +230,7 @@ a: select all            f : mark-function
 p : mark-paragraph       l : mark to end of line
 s : mark sentence        j : mark to beginning of line
 w : mark-word            k : mark current line
+C-w: mark-WORD (block)
 "
 nu-a-map)
 (defun nu-a-prompt ()
