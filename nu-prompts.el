@@ -59,16 +59,17 @@
 (make-help-screen nu-window-prompt
 (purecopy "Window!")
 "
+To copy, C-c. To  cut, C-x. You should know that!
+
 w: close tab - ie, this buffer
 Control+w : close this Xwindow
-d: delete other frames
+d: delete other frames (\\[delete-other-windows])
 
 == ROTATE FRAMES ==
-i: up
-j: left
-k: down
-l: right"
+i: up       j: left
+k: down     l: right"
 nu-window-map)
+
 
 (define-prefix-command 'nu-print-map)
 (define-key nu-print-map (kbd "p") 'print-buffer)
@@ -80,12 +81,12 @@ nu-window-map)
 (define-key nu-print-map (kbd "c") 'compile)
 (make-help-screen nu-print-prompt ; wow notice this sound! =)
 (purecopy "Print")
-"Control+p : universal argument
+"\\[universal-argument] : universal argument
  p: Really Print this (hardware)
  s: eval last sexp
  b: eval buffer
  w: pwd
- -: negative argument
+ -: negative argument (\\[negative-argument])
  m: make
  c: compile"
 nu-print-map)
@@ -109,23 +110,21 @@ nu-print-map)
 (define-key nu-delete-map (kbd "a") 'nu-delete-all)
 (make-help-screen nu-delete-prompt-internal
 (purecopy "Delete")
-"=i= above line
- =j= backward-delete-char (C-j)
- =k= delete below line
- =$= kill-line
- =x= kill whole line
- =l= next char (C-l)
- =u= backward kill word (C-u)
- =o= kill word
- =e= kill sentence
+"
+=i= above line                      =h= horizontal space
+=j= backward-delete-char (\\[backward-delete-char])      =t= trailing space
+=k= delete below line               =b= blank lines
+=$= kill-line
+=x= kill whole line
+=l= next char (\\[delete-char])
+=u= backward kill word (\\[backward-kill-word])
+=o= kill word
+=e= kill sentence
 
- =h= horizontal space
- =t= trailing space
- =w= whole line (C-x)
- =b= blank lines
- =s= function `kill-sexp'
- =f= delete function
- =a= delete whole buffer"
+=w= whole line  (\\[kill-visual-line])
+=s= function `kill-sexp'
+=f= delete function
+=a= delete whole buffer"
 nu-delete-map)
 (defun nu-delete-prompt ()
   (interactive)
@@ -149,7 +148,7 @@ nu-delete-map)
 (make-help-screen nu-insert-prompt
 (purecopy "Insert")
 "
- =v= Yank / *pop*   =i= browsekillring
+ =v= Yank / *pop* (\\[nu-yank-pop-or-yank])     =i= browsekillring
  =k= Yank but *do not*
 
  =b= Insert buffer       =f= Insert file
@@ -158,8 +157,7 @@ nu-delete-map)
  =o= open line below
 
  =s= async-shell-command (=S= for sync)
-
- Use _alt v_ to yank pop"
+"
 nu-insert-map)
 
 
@@ -171,10 +169,10 @@ nu-insert-map)
 (define-key nu-save-map (kbd "m") 'magit-status)
 (make-help-screen nu-save-prompt
 (purecopy "Save")
-"(Use Alt+s to directly save a buffer.)
+"
 Press q to quit or :
 
-s: save               l: org-store-link
+s: save (\\[save-buffer])              l: org-store-link
 w: save-as
 r: rename buffer
 m: magit-status"
@@ -190,13 +188,16 @@ nu-save-map)
 (define-key nu-new-map (kbd "i")   'ibuffer-other-window)
 (make-help-screen nu-new-prompt
 (purecopy "New")
-"New:
- b, buffer ('Untitled')
+"
+ (next-line is \\[next-line])
+
+ b, buffer ('Untitled', \\[nu-new-empty-buffer])
  i, ibuffer other window
  w, new Xwindow
  v, new vertical frame
  h, new horizontal frame"
 nu-new-map)
+
 
 (define-prefix-command 'nu-a-map)
 (define-key nu-a-map (kbd "a") '(lambda () (interactive) (run-with-timer 0.01 nil 'mark-whole-buffer)))
@@ -211,10 +212,14 @@ nu-new-map)
 ;(define-key nu-a-map (kbd "C-<RET>") (lambda () (interactive) (run-with-timer 0.01 nil 'cua-set-rectangle-mark)))
 (make-help-screen nu-a-prompt-internal
 (purecopy "A[ll]")
-"Set mark:
+"
+ back-to-indentation is \\[nu-back-to-indentation]
+
+ Set mark:
  Once mark is set, C-a to exchange point & mark.
 
-_space_ set mark         Use C-return to set rectangle
+_space_ set mark  (\\[cua-set-mark])
+Use \\[cua-set-rectangle-mark] to set rectangle
 
 a: select all            f : mark-function
 p : mark-paragraph       l : mark to end of line
@@ -263,7 +268,9 @@ But if mark is active, exchange point and mark."
 =a= org-agenda
 
 =m= bookmarks menu, =M= jump to bookmark
-=b= bookmark set"
+=b= bookmark set
+
+\(if you wanted to insert line: \\[insert-line])"
 nu-open-map)
 
 
@@ -303,7 +310,7 @@ nu-open-map)
  x: Emacs standard Control-X keymap
  Control-q: quit emacs
 
-<!> if you wanted C-g to keyboard-quit, use C-q <!>"
+<!> if you wanted C-g to keyboard-quit, use \\[keyboard-quit] <!>"
 nu-global-map)
 
 
@@ -355,7 +362,9 @@ help-map)
 (define-key nu-find-map (kbd "F") 'nu-isearch-forward)
 (define-key nu-find-map (kbd "R") 'nu-isearch-backward)
 (define-key nu-find-map (kbd "f") 'nu-isearch-forward-regexp)
+(define-key nu-find-map (kbd "C-f") 'search-forward-regexp)
 (define-key nu-find-map (kbd "r") 'nu-isearch-backward-regexp)
+(define-key nu-find-map (kbd "C-r") 'search-backward-regexp)
 (define-key nu-find-map (kbd "i") 'beginning-of-buffer)
 (define-key nu-find-map (kbd "k") 'end-of-buffer)
 (define-key nu-find-map (kbd "b") 'regexp-builder)
@@ -368,13 +377,13 @@ help-map)
 (define-key nu-find-map (kbd "G") 'nu-goto-line-previousbuffer)
 (make-help-screen nu-find-prompt
 (purecopy "Find")
-"<!> if you wanted to forward char, use M-l <!>
+"<!> if you wanted to forward char, use \\[forward-char] <!>
 
 f: isearch-forward-regexp    r: isearch-backward-regexp
 F: isearch-forward	     R: isearch-backward
 			     b: regexp-builder
 l: ace-jump-line-mode
-c: ace-jump-char-mode        z: nu-find-char (zap...)
+c: ace-jump-char-mode        z: nu-find-char (\\[nu-find-char])
 w: ace-jump-word-mode
                              s: goto previous selection
 i: beginning-of-buffer       g: goto line
