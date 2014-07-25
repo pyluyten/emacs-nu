@@ -216,7 +216,7 @@ nu-new-map)
  back-to-indentation is \\[nu-back-to-indentation]
 
  Set mark:
- Once mark is set, C-a to exchange point & mark.
+ Once mark is set, \\[nu-a-prompt] to exchange point & mark.
 
 _space_ set mark  (\\[cua-set-mark])
 Use \\[cua-set-rectangle-mark] to set rectangle
@@ -231,6 +231,7 @@ nu-a-map)
   "Triggers nu-a-map.
 
 But if mark is active, exchange point and mark."
+  (interactive)
      (if mark-active
       (exchange-point-and-mark)
       (nu-a-prompt-internal)))

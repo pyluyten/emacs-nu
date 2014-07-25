@@ -34,7 +34,7 @@
    (define-key nu-menu-map (kbd "o") 'nu-open-map)
    (define-key nu-keymap (kbd "C-p") 'nu-print-prompt)
 
-   (define-key nu-keymap (kbd "C-a") 'nu-a-prompt-internal)
+   (define-key nu-keymap (kbd "C-a") 'nu-a-prompt)
    (define-key nu-menu-map (kbd "a") 'nu-a-map)
    (define-key nu-keymap (kbd "C-s") 'save-buffer)
    ; C-d is not yet defined. Currently it is synonym to C-l.
