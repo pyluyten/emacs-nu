@@ -266,6 +266,23 @@ If no argument given, copy 1 char."
    (kill-whole-line))
   (message "Cut! If you wanted to x keymap, Undo with M-z or C-z then, C-g"))
 
+
+(defun nu-delete-a-block ()
+  "Select a block
+\(What vim calls a 'word')
+
+A contigent amount of chars different than <space>."
+   (interactive)
+   (while (not (or
+                   (eq (char-before) ?\s)
+                   (eq (char-before) ?\n)))
+          (backward-char))
+   (while (not (or
+                   (eq (char-after) ?\s)
+                   (eq (char-after) ?\n)))
+          (delete-char 1)))
+
+
 (defun nu-delete-above-line ()
   ""
   (interactive)

@@ -101,6 +101,7 @@ nu-print-map)
 (define-key nu-delete-map (kbd "l") 'delete-forward-char)
 (define-key nu-delete-map (kbd "u") 'backward-kill-word)
 (define-key nu-delete-map (kbd "o") 'kill-word)
+(define-key nu-delete-map (kbd "M-o") 'nu-delete-a-block)
 (define-key nu-delete-map (kbd "h") 'delete-horizontal-space)
 (define-key nu-delete-map (kbd "t") 'delete-trailing-whitespace)
 (define-key nu-delete-map (kbd "b") 'delete-blank-lines)
@@ -118,7 +119,7 @@ nu-print-map)
 =x= kill whole line
 =l= next char (\\[delete-char])
 =u= backward kill word (\\[backward-kill-word])
-=o= kill word
+=o= kill word, \\[nu-delete-a-block] nu-delete-a-block
 =e= kill sentence
 
 =w= whole line  (\\[kill-visual-line])
