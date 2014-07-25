@@ -51,23 +51,28 @@
 (define-prefix-command 'nu-window-map)
 (define-key nu-window-map (kbd "w") 'nu-close-tab)
 (define-key nu-window-map (kbd "d") 'delete-other-windows)
-(define-key nu-window-map (kbd "d") 'delete-frame)
+;(define-key nu-window-map (kbd "d") 'delete-frame)
 (define-key nu-window-map (kbd "i") '(lambda () (interactive) (nu-swap-with 'up)))
 (define-key nu-window-map (kbd "j") '(lambda () (interactive) (nu-swap-with 'left)))
 (define-key nu-window-map (kbd "k") '(lambda () (interactive) (nu-swap-with 'down)))
 (define-key nu-window-map (kbd "l") '(lambda () (interactive) (nu-swap-with 'right)))
+(define-key nu-window-map (kbd "t") 'transpose-frame)
+(define-key nu-window-map (kbd "C-q") 'save-buffers-kill-emacs)
 (make-help-screen nu-window-prompt
 (purecopy "Window!")
 "
-To copy, C-c. To  cut, C-x. You should know that!
+If every you wanted to cut, use C-x.
 
-w: close tab - ie, this buffer
+w:          close tab - ie, this buffer
 Control+w : close this Xwindow
-d: delete other frames (\\[delete-other-windows])
+d:          delete other frames (\\[delete-other-windows])
+Control+q : quit emacs.
 
-== ROTATE FRAMES ==
-i: up       j: left
-k: down     l: right"
+t:          transpose-frame
+i:          up
+j:          left
+k:          down
+l:          right"
 nu-window-map)
 
 
@@ -337,40 +342,10 @@ v: describe-variable"
 help-map)
 
 (define-prefix-command 'nu-find-map)
-(defun nu-isearch-forward ()
-  (interactive)
-  (if mark-active
-      (progn
-	(call-interactively 'isearch-forward)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
-      (isearch-forward)))
-(defun nu-isearch-backward ()
-  (interactive)
-    (if mark-active
-      (progn
-	(call-interactively 'isearch-backward)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
-    (isearch-backward)))
-(defun nu-isearch-forward-regexp ()
-  (interactive)
-    (if mark-active
-      (progn
-	(call-interactively 'isearch-forward-regexp)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
-    (isearch-forward-regexp)))
-(defun nu-isearch-backward-regexp ()
-  (interactive)
-    (if mark-active
-      (progn
-	(call-interactively 'isearch-backward-regexp)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
-    (isearch-backward-regexp)))
-(defun nu-set-mark-1 () (interactive) (cua-set-mark 1))
-(defun nu-goto-line-previousbuffer () (interactive) (goto-line (previous-buffer)))
 (define-key nu-find-map (kbd "F") 'nu-isearch-forward)
 (define-key nu-find-map (kbd "R") 'nu-isearch-backward)
 (define-key nu-find-map (kbd "f") 'nu-isearch-forward-regexp)
-(define-key nu-find-map (kbd "C-f") 'search-forward-regexp)
+(define-key nu-find-map (kbd "C-F") 'search-forward-regexp)
 (define-key nu-find-map (kbd "r") 'nu-isearch-backward-regexp)
 (define-key nu-find-map (kbd "C-r") 'search-backward-regexp)
 (define-key nu-find-map (kbd "i") 'beginning-of-buffer)
@@ -378,21 +353,22 @@ help-map)
 (define-key nu-find-map (kbd "b") 'regexp-builder)
 (define-key nu-find-map (kbd "s") 'nu-set-mark-1)
 (define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
-(define-key nu-find-map (kbd "c") 'ace-jump-char-mode)
+(define-key nu-find-map (kbd "C-f") 'ace-jump-char-mode)
 (define-key nu-find-map (kbd "w") 'ace-jump-word-mode)
 (define-key nu-find-map (kbd "z") 'nu-find-char)
+(define-key nu-find-map (kbd "\C-z") '(lambda () (interactive) (nu-find-char t)))
 (define-key nu-find-map (kbd "g") 'goto-line)
 (define-key nu-find-map (kbd "G") 'nu-goto-line-previousbuffer)
 (make-help-screen nu-find-prompt
 (purecopy "Find")
 "<!> if you wanted to forward char, use \\[forward-char] <!>
 
-f: isearch-forward-regexp    r: isearch-backward-regexp
+f: isearch-forward-regexp  r: isearch-backward-regexp
 F: isearch-forward	     R: isearch-backward
 			     b: regexp-builder
 l: ace-jump-line-mode
-c: ace-jump-char-mode        z: nu-find-char (\\[nu-find-char])
-w: ace-jump-word-mode
+C-f: ace-jump-char-mode      z: nu-find-char (\\[nu-find-char])
+w: ace-jump-word-mode        C-z : find-char backward
                              s: goto previous selection
 i: beginning-of-buffer       g: goto line
 k: end-of-buffer             G: goto line (previous-buffer)

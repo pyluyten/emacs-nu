@@ -1,3 +1,54 @@
+; sometimes even simple interactive command need to be defined here
+; this is because describe-keymap need some definition
+; lambda function appear as ?
+
+
+(defun nu-isearch-forward ()
+"Search forward interactively.
+
+If region is selected, use this as a search string."
+  (interactive)
+  (if mark-active
+      (progn
+	(call-interactively 'isearch-forward)
+	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+      (isearch-forward)))
+
+(defun nu-isearch-backward ()
+"Search backward interactively.
+
+If region is selected, use this as a search string."
+  (interactive)
+    (if mark-active
+      (progn
+	(call-interactively 'isearch-backward)
+	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+    (isearch-backward)))
+
+(defun nu-isearch-forward-regexp ()
+"Search forward interactively (regexp).
+
+If region is selected, use this as a search string."
+  (interactive)
+    (if mark-active
+      (progn
+	(call-interactively 'isearch-forward-regexp)
+	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+    (call-interactively 'isearch-forward-regexp)))
+
+(defun nu-isearch-backward-regexp ()
+"Search backward interactively (regexp).
+
+If region is selected, use this as a search string."
+  (interactive)
+    (if mark-active
+      (progn
+	(call-interactively 'isearch-backward-regexp)
+	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+    (isearch-backward-regexp)))
+(defun nu-set-mark-1 () (interactive) (cua-set-mark 1))
+(defun nu-goto-line-previousbuffer () (interactive) (goto-line (previous-buffer)))
+
 
 (define-prefix-command 'nu-help-map)
 (define-key nu-help-map (kbd "<RET>") '(lambda ()
@@ -59,7 +110,7 @@ nu-help-map)
            (eq last-command 'cua-paste-pop)))
     (yank))
     (yank-pop)) 
-         
+
 
 
 (defun nu-select-a-block ()
@@ -114,6 +165,7 @@ Sentence uses sentence-end delimiter."
 
 
 (defun nu-new-tab ()
+"Open a new tab. Show ibuffer."
   (interactive)
   (ibuffer t "Blank Tab"))
 
@@ -122,10 +174,11 @@ Sentence uses sentence-end delimiter."
 (defun nu-find-char (&optional backward)
   "Move forward up to char, up to end of buffer."
   (interactive)
-  (setq c (read-char-exclusive))
+  (setq c (read-char-exclusive "Enter char to move point to:"))
   (setq b nil)
   (while (eq b nil)
-  (if (eq (char-after) c)
+  (if (eq 
+         (if backward (char-before) (char-after)) c)
     (setq b t)
     (if backward
       (backward-char)
