@@ -23,7 +23,7 @@
    ;  do not respect _any_ emacs convention. Seriously.
 
    (define-key nu-keymap (kbd "C-q") 'keyboard-escape-quit)
-   (define-key nu-keymap (kbd "C-w") 'nu-close-tab)
+   (define-key nu-keymap (kbd "C-w") 'nu-window-prompt)
    ; e? edit?
    (define-key nu-keymap (kbd "C-r") 'nu-replace-prompt)
    (define-key nu-keymap (kbd "C-t") 'nu-new-tab)
@@ -69,7 +69,7 @@
 ;  all _ alt _ features
 
    (define-key nu-keymap (kbd "M-q") 'quoted-insert) ; fix minibuf'
-   (define-key nu-keymap (kbd "M-w") 'delete-other-windows)
+   (define-key nu-keymap (kbd "M-w") 'nu-close-tab)
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
    ;r  maybe overwrite mode...
    ;t  transpose?
@@ -95,7 +95,7 @@
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
    (define-key nu-menu-map (kbd "v") 'nu-insert-map)
    ;b
-   ;n
+   (define-key nu-keymap (kbd "M-n") 'nu-new-empty-buffer)
    (define-key nu-keymap (kbd "²") 'ibuffer)
    (define-key nu-keymap (kbd "M-²") 'other-window)
    (define-key nu-keymap (kbd "M-0") 'nu-back-to-bol)

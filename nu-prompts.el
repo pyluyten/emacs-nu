@@ -47,10 +47,33 @@
  (setq x x))
 
 
+
+(define-prefix-command 'nu-window-map)
+(define-key nu-window-map (kbd "w") 'nu-close-tab)
+(define-key nu-window-map (kbd "d") 'delete-other-windows)
+(define-key nu-window-map (kbd "d") 'delete-frame)
+(define-key nu-window-map (kbd "i") '(lambda () (interactive) (nu-swap-with 'up)))
+(define-key nu-window-map (kbd "j") '(lambda () (interactive) (nu-swap-with 'left)))
+(define-key nu-window-map (kbd "k") '(lambda () (interactive) (nu-swap-with 'down)))
+(define-key nu-window-map (kbd "l") '(lambda () (interactive) (nu-swap-with 'right)))
+(make-help-screen nu-window-prompt
+(purecopy "Window!")
+"
+w: close tab - ie, this buffer
+Control+w : close this Xwindow
+d: delete other frames
+
+== ROTATE FRAMES ==
+i: up
+j: left
+k: down
+l: right"
+nu-window-map)
+
 (define-prefix-command 'nu-print-map)
 (define-key nu-print-map (kbd "p") 'print-buffer)
 (define-key nu-print-map (kbd "s") 'eval-last-sexp)
-(define-key nu-print-map (kbd "b") 'eval-buffer)
+(define-key nu-print-map (kbd "b") '(lambda () (interactive) (run-with-timer 0.1 nil 'eval-buffer)))
 (define-key nu-print-map (kbd "w") 'pwd)
 (define-key nu-print-map (kbd "-") 'negative-argument)
 (define-key nu-print-map (kbd "\C-p") 'universal-argument)
