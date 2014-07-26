@@ -377,6 +377,7 @@ nu-find-map)
 
 
 (define-prefix-command 'nu-replace-map)
+(defun nu-join-with-following-line () (interactive) (join-line 1))
 (defun nu-rot-reg-or-toggle-rot () (interative) (if mark-active (rot13-region) (toggle-rot13-mode)))
 (define-key nu-replace-map (kbd "r")  'query-replace-regexp)
 (define-key nu-replace-map (kbd "a")  'revert-buffer)
@@ -384,7 +385,7 @@ nu-find-map)
 (define-key nu-replace-map (kbd "k")  'overwrite-mode)
 (define-key nu-replace-map (kbd "I")  'replace-string)
 (define-key nu-replace-map (kbd "i")  'replace-regexp)
-(define-key nu-replace-map (kbd "j")   '(lambda () (interactive) (join-line 1)))
+(define-key nu-replace-map (kbd "j")   'nu-join-with-following-line)
 (define-key nu-replace-map (kbd "J")   'join-line)
 (define-key nu-replace-map (kbd "t")   'transpose-lines)
 (define-key nu-replace-map (kbd "z")   'zap-to-char)
@@ -395,18 +396,7 @@ nu-find-map)
 (define-key nu-replace-map (kbd "h") 'delete-horizontal-space)
 (make-help-screen nu-replace-do-prompt
 (purecopy "Replace")
-"
-  r: query-replace-regexp	 j: join-line (following)
-  R: query-replace		 J: join-line (previous)
-  I: replace-string
-  i: replace-regexp		 t: transpose-lines
-
-  k: overwrite-mode		 u: UPCASE-WORD
-				 d: downcase-word
-  z: zap-to-char		 c: Capitalize-Word
-  h: delete-horizontal-space
-
-  a: revert buffer		 x: rot13-region (if region)"
+"\\{nu-replace-map}"
 nu-replace-map)
 
 (defun nu-replace-prompt ()
