@@ -51,11 +51,10 @@
 (define-prefix-command 'nu-window-map)
 (define-key nu-window-map (kbd "w") 'nu-close-tab)
 (define-key nu-window-map (kbd "d") 'delete-other-windows)
-;(define-key nu-window-map (kbd "d") 'delete-frame)
-(define-key nu-window-map (kbd "i") '(lambda () (interactive) (nu-swap-with 'up)))
-(define-key nu-window-map (kbd "j") '(lambda () (interactive) (nu-swap-with 'left)))
-(define-key nu-window-map (kbd "k") '(lambda () (interactive) (nu-swap-with 'down)))
-(define-key nu-window-map (kbd "l") '(lambda () (interactive) (nu-swap-with 'right)))
+(define-key nu-window-map (kbd "i") 'windmove-up)
+(define-key nu-window-map (kbd "j") 'windmove-left)
+(define-key nu-window-map (kbd "k") 'windmove-down)
+(define-key nu-window-map (kbd "l") 'windmove-right)
 (define-key nu-window-map (kbd "t") 'transpose-frame)
 (define-key nu-window-map (kbd "C-q") 'save-buffers-kill-emacs)
 (make-help-screen nu-window-prompt
@@ -69,10 +68,10 @@ d:          delete other frames (\\[delete-other-windows])
 Control+q : quit emacs.
 
 t:          transpose-frame
-i:          up
-j:          left
-k:          down
-l:          right"
+i:          Move point win up
+j:          Move point win left
+k:          Move point win down
+l:          Move point win right"
 nu-window-map)
 
 
