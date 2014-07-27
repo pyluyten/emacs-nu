@@ -3,6 +3,13 @@
 ; lambda function appear as ?
 
 
+(defun nu-toggle-goal-column ()
+ "Toggle goal column."
+ (interactive)
+ (if (eq goal-column nil)
+     (call-interactively 'set-goal-column)
+     (nu-no-goal-column)))     
+
 (defun nu-isearch-forward ()
 "Search forward interactively.
 
