@@ -50,7 +50,7 @@
 
 (define-prefix-command 'nu-window-map)
 (define-key nu-window-map (kbd "w") 'nu-close-tab)
-(define-key nu-window-map (kbd "d") 'delete-other-windows)
+(define-key nu-window-map (kbd "\C-w") 'delete-other-windows)
 (define-key nu-window-map (kbd "i") 'windmove-up)
 (define-key nu-window-map (kbd "j") 'windmove-left)
 (define-key nu-window-map (kbd "k") 'windmove-down)
@@ -59,19 +59,9 @@
 (define-key nu-window-map (kbd "C-q") 'save-buffers-kill-emacs)
 (make-help-screen nu-window-prompt
 (purecopy "Window!")
-"
-If every you wanted to cut, use C-x.
+"\\[nu-close-tab] - nu-close-tab
 
-w:          close tab - ie, this buffer
-Control+w : close this Xwindow
-d:          delete other frames (\\[delete-other-windows])
-Control+q : quit emacs.
-
-t:          transpose-frame
-i:          Move point win up
-j:          Move point win left
-k:          Move point win down
-l:          Move point win right"
+\\{nu-window-map}"
 nu-window-map)
 
 
@@ -164,7 +154,6 @@ nu-delete-map)
  =s= async-shell-command (=S= for sync)
 "
 nu-insert-map)
-
 
 (define-prefix-command 'nu-save-map)
 (define-key nu-save-map (kbd "s") 'save-buffer)
@@ -357,12 +346,12 @@ nu-find-map)
 (define-prefix-command 'nu-replace-map)
 (defun nu-join-with-following-line () (interactive) (join-line 1))
 (defun nu-rot-reg-or-toggle-rot () (interative) (if mark-active (rot13-region) (toggle-rot13-mode)))
-(define-key nu-replace-map (kbd "r")  'query-replace-regexp)
+(define-key nu-replace-map (kbd "\C-r")  'query-replace-regexp)
 (define-key nu-replace-map (kbd "a")  'revert-buffer)
 (define-key nu-replace-map (kbd "R")  'query-replace)
 (define-key nu-replace-map (kbd "k")  'overwrite-mode)
 (define-key nu-replace-map (kbd "I")  'replace-string)
-(define-key nu-replace-map (kbd "i")  'replace-regexp)
+(define-key nu-replace-map (kbd "r")  'replace-regexp)
 (define-key nu-replace-map (kbd "j")   'nu-join-with-following-line)
 (define-key nu-replace-map (kbd "J")   'join-line)
 (define-key nu-replace-map (kbd "t")   'transpose-lines)
