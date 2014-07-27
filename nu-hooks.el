@@ -3,6 +3,7 @@
   (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
   (define-key isearch-mode-map (kbd "C-r") 'isearch-repeat-backward)
   (define-key isearch-mode-map (kbd "C-j") 'isearch-repeat-backward)
+  (define-key isearch-mode-map (kbd "C-v") 'isearch-yank-kill)
   (define-key isearch-mode-map (kbd "C-q") 'isearch-cancel))
 
 (defun nu-prepare-for-ibuffer ()
