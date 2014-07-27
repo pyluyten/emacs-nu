@@ -172,16 +172,14 @@ nu-insert-map)
 (define-key nu-save-map (kbd "w") 'ido-write-file)
 (define-key nu-save-map (kbd "r") 'rename-buffer)
 (define-key nu-save-map (kbd "l") 'org-store-link)
+;------------------------------------------------
 (define-key nu-save-map (kbd "m") 'magit-status)
+(define-key nu-save-map (kbd "d") 'magit-diff)
+(define-key nu-save-map (kbd "c") 'magit-commit)
+(define-key nu-save-map (kbd "p") 'magit-push)
 (make-help-screen nu-save-prompt
 (purecopy "Save")
-"
-Press q to quit or :
-
-s: save (\\[save-buffer])     l: org-store-link
-w: save-as                      m: magit-status
-r: rename buffer                b: save bookmark
-"
+"\\{nu-save-map}"
 nu-save-map)
 
 
