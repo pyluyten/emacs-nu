@@ -13,15 +13,23 @@
 
 
 
+; stock M-i & M-k functions to restore them
+; while leaving minibuffer
+
+(defvar nu-m-i-sname nil)
+(defvar nu-m-k-sname nil)
+
 (defun nu-prepare-for-minibuffer ()
+  (setq nu-m-i-sname (symbol-name (lookup-key nu-keymap (kbd "M-i"))))
+  (setq nu-m-k-sname (symbol-name (lookup-key nu-keymap (kbd "M-k"))))
   (define-key nu-keymap (kbd "M-i") 'previous-history-element)
   (define-key nu-keymap (kbd "M-k") 'next-history-element))
 
 
 (defun nu-leave-minibuffer ()
   "Restore tab for previous."
-  (define-key nu-keymap (kbd "M-i") 'previous-line)
-  (define-key nu-keymap (kbd "M-k") 'next-line))
+  (define-key nu-keymap (kbd "M-i") (intern-soft nu-m-i-sname))
+  (define-key nu-keymap (kbd "M-k") (intern-soft nu-m-k-sname)))
 
 
 (defun nu-prepare-for-dired ()
