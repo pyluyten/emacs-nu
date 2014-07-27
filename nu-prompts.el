@@ -200,7 +200,7 @@ nu-new-map)
 
 (define-prefix-command 'nu-a-map)
 (define-key nu-a-map (kbd "a") '(lambda () (interactive) (run-with-timer 0.01 nil 'mark-whole-buffer)))
-(define-key nu-a-map (kbd "f") '(lambda () (interkactive) (run-with-timer 0.01 nil 'mark-defun)))
+(define-key nu-a-map (kbd "f") '(lambda () (interactive) (run-with-timer 0.01 nil 'mark-defun)))
 (define-key nu-a-map (kbd "s") (lambda () (interactive) (run-with-timer 0.01 nil 'mark-sentence)))
 (define-key nu-a-map (kbd "w") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-a-word)))
 (define-key nu-a-map (kbd "C-w") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-select-a-block)))
