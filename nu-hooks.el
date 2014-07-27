@@ -15,7 +15,7 @@
 
 (defun nu-prepare-for-minibuffer ()
   (define-key nu-keymap (kbd "M-i") 'previous-history-element)
-  (define-key nu-keymap (kbd "M-i") 'next-history-element))
+  (define-key nu-keymap (kbd "M-k") 'next-history-element))
 
 
 (defun nu-leave-minibuffer ()
