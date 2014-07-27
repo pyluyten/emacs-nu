@@ -23,9 +23,11 @@
    ;  do not respect _any_ emacs convention. Seriously.
 
    (define-key nu-keymap (kbd "C-q") 'keyboard-escape-quit)
+   (define-key nu-menu-map (kbd "w") 'nu-window-map)
    (define-key nu-keymap (kbd "C-w") 'nu-window-prompt)
    ; e? edit?
    (define-key nu-keymap (kbd "C-r") 'nu-replace-prompt)
+   (define-key nu-menu-map (kbd "r") 'nu-replace-map)
    (define-key nu-keymap (kbd "C-t") 'nu-new-tab)
    ; y?
    (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
