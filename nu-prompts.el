@@ -177,6 +177,7 @@ nu-insert-map)
 (define-key nu-save-map (kbd "d") 'magit-diff)
 (define-key nu-save-map (kbd "c") 'magit-commit)
 (define-key nu-save-map (kbd "p") 'magit-push)
+(define-key nu-save-map (kbd "x") 'git-commit-commit)
 (make-help-screen nu-save-prompt
 (purecopy "Save")
 "\\{nu-save-map}"
