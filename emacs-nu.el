@@ -129,7 +129,12 @@
 
    ; do not use cua-mode because C-x C-c have specific meaning
    ; TODO: test if the user can enable cua-keys on his .emacs
+   ;
+   ; do not keep cua modifier on 'meta
+   ; otherwise their rectangle is broken...
+
    (cua-selection-mode 1)
+   (setq cua--rectangle-modifier-key 'control)
 
    (nu-restore-default-keymap))
 
