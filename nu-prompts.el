@@ -67,23 +67,24 @@ nu-window-map)
 
 
 (define-prefix-command 'nu-print-map)
-(define-key nu-print-map (kbd "p") 'print-buffer)
+(define-key nu-print-map (kbd "P") 'print-buffer)
+(define-key nu-print-map (kbd "p") 'async-shell-command)
 (define-key nu-print-map (kbd "s") 'eval-last-sexp)
 (define-key nu-print-map (kbd "b") '(lambda () (interactive) (run-with-timer 0.1 nil 'eval-buffer)))
 (define-key nu-print-map (kbd "w") 'pwd)
 (define-key nu-print-map (kbd "-") 'negative-argument)
 (define-key nu-print-map (kbd "\C-p") 'universal-argument)
-(define-key nu-print-map (kbd "c") 'compile)
+(define-key nu-print-map (kbd "m") 'compile)
 (make-help-screen nu-print-prompt ; wow notice this sound! =)
 (purecopy "Print")
 "\\[universal-argument] : universal argument
- p: Really Print this (hardware)
+ P: Really Print this (hardware)
  s: eval last sexp
  b: eval buffer
  w: pwd
  -: negative argument (\\[negative-argument])
  m: make
- c: compile"
+ p: async shell command"
 nu-print-map)
 
 
