@@ -110,6 +110,7 @@ nu-print-map)
 "
 =i= above line                      =h= horizontal space
 =j= backward-delete-char (\\[backward-delete-char])      =t= trailing space
+=M-j= backward-kill-line
 =k= delete below line               =b= blank lines
 =$= kill-line
 =x= kill whole line
