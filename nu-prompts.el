@@ -50,11 +50,12 @@
 
 (define-prefix-command 'nu-window-map)
 (define-key nu-window-map (kbd "w") 'nu-close-tab)
+(define-key nu-window-map (kbd "k") 'kill-buffer)
 (define-key nu-window-map (kbd "\C-w") 'delete-other-windows)
-(define-key nu-window-map (kbd "i") 'windmove-up)
-(define-key nu-window-map (kbd "j") 'windmove-left)
-(define-key nu-window-map (kbd "k") 'windmove-down)
-(define-key nu-window-map (kbd "l") 'windmove-right)
+(define-key nu-window-map (kbd "\C-i") 'windmove-up)
+(define-key nu-window-map (kbd "\C-j") 'windmove-left)
+(define-key nu-window-map (kbd "\C-k") 'windmove-down)
+(define-key nu-window-map (kbd "\C-l") 'windmove-right)
 (define-key nu-window-map (kbd "t") 'transpose-frame)
 (define-key nu-window-map (kbd "C-q") 'save-buffers-kill-emacs)
 (make-help-screen nu-window-prompt
