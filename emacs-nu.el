@@ -90,7 +90,7 @@
    (define-key nu-keymap (kbd "M-j") 'backward-char)
    (define-key nu-keymap (kbd "M-k") 'next-line)
    (define-key nu-keymap (kbd "M-l") 'forward-char)
-   ;m
+   (define-key nu-keymap (kbd "M-m") 'newline-and-indent)
    (define-key nu-keymap (kbd "M-z") 'undo)
    ;x  execute-extended-command
    ;c
