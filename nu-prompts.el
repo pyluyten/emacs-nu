@@ -92,10 +92,12 @@ nu-print-map)
 
 (define-prefix-command 'nu-delete-map)
 (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
+(define-key nu-delete-map (kbd "M-i") 'org-table-delete-column)
 (define-key nu-delete-map (kbd "j") 'backward-delete-char)
 (define-key nu-delete-map (kbd "M-j") 'nu-backward-kill-line)
 (define-key nu-delete-map (kbd "x") 'kill-whole-line)
 (define-key nu-delete-map (kbd "k") 'nu-delete-below-line)
+(define-key nu-delete-map (kbd "M-k") 'org-table-delete-row)
 (define-key nu-delete-map (kbd "l") 'delete-forward-char)
 (define-key nu-delete-map (kbd "$") 'kill-line)
 (define-key nu-delete-map (kbd "M-l") 'kill-line)
@@ -112,21 +114,7 @@ nu-print-map)
 (make-help-screen nu-delete-prompt-internal
 (purecopy "Delete")
 "
-=i= above line                      =h= horizontal space
-=j= backward-delete-char (\\[backward-delete-char])      =t= trailing space
-=M-j= backward-kill-line
-=k= delete below line               =b= blank lines
-=$= kill-line
-=x= kill whole line
-=l= next char (\\[delete-char])
-=u= backward kill word (\\[backward-kill-word])
-=o= kill word, \\[nu-delete-a-block] nu-delete-a-block
-=e= kill sentence
-
-=w= whole line  (\\[kill-visual-line])
-=s= function `kill-sexp'
-=f= delete function
-=a= delete whole buffer"
+\\{nu-delete-map}"
 nu-delete-map)
 (defun nu-delete-prompt ()
   (interactive)
@@ -143,8 +131,10 @@ nu-delete-map)
 (define-key nu-insert-map (kbd "i") 'browse-kill-ring)
 (define-key nu-insert-map (kbd "b") 'insert-buffer)
 (define-key nu-insert-map (kbd "f") 'insert-file)
+(define-key nu-insert-map (kbd "o") 'org-table-insert-column)
+(define-key nu-insert-map (kbd "M-o") 'org-table-insert-row)
 (define-key nu-insert-map (kbd "c") 'quoted-insert)
-(define-key nu-insert-map (kbd "o") 'open-line)
+(define-key nu-insert-map (kbd "l") 'open-line)
 (define-key nu-insert-map (kbd "s") 'async-shell-command)
 (define-key nu-insert-map (kbd "S") 'shell-command)
 (make-help-screen nu-insert-prompt
@@ -156,11 +146,17 @@ nu-delete-map)
  =b= Insert buffer       =f= Insert file
 
  =c= Insert litterally (~quoted insert~)
- =o= open line below
+ =l= open line below
 
  =s= async-shell-command (=S= for sync)
+
+o: org-table-insert-column
+M-o : org-table-insert-row
 "
 nu-insert-map)
+
+
+
 
 (define-prefix-command 'nu-save-map)
 (define-key nu-save-map (kbd "s") 'save-buffer)
