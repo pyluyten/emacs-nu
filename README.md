@@ -28,3 +28,22 @@ with a quick intro
   attention to split things, so dhamacakka is compatible
   with thinks like evil-mode, ergo-emacs mode, or emacs
   vanilla keybinding,...
+
+
+* How to install emacs-nu?
+
+
+well it depends; but basically:
+
+1/ Install emacs. (Some packages are built in : recentf, cua)
+2/ package-list-package. Undo tree. You don't need to change .emacs.
+3/ (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+4/ Now you can install ace-jump, magit
+   You do not need to change .emacs
+5/ (add-to-list 'package-archives
+             '("melpa" . "http://melpa.milkbox.net/packages/") t)
+   Now you can install help-fns+
+6/ github : add to list emacs-nu.
+   (nu-mode)
+   (require 'dhammacakka)
+   
