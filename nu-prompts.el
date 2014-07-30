@@ -111,6 +111,7 @@ nu-print-map)
 (define-key nu-delete-map (kbd "e") 'kill-sentence)
 (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
 (define-key nu-delete-map (kbd "a") 'nu-delete-all)
+(define-key nu-delete-map (kbd "*") 'org-cut-special)
 (make-help-screen nu-delete-prompt-internal
 (purecopy "Delete")
 "
