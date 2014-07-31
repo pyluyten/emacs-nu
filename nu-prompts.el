@@ -72,21 +72,17 @@ nu-window-map)
 (define-key nu-print-map (kbd "P") 'print-buffer)
 (define-key nu-print-map (kbd "p") 'async-shell-command)
 (define-key nu-print-map (kbd "s") 'eval-last-sexp)
-(define-key nu-print-map (kbd "b") '(lambda () (interactive) (run-with-timer 0.1 nil 'eval-buffer)))
+(define-key nu-print-map (kbd "d") 'ediff)
+(define-key nu-insert-map (kbd "M-f") 'find-grep)
+(define-key nu-insert-map (kbd "g") 'grep)
+(define-key nu-print-map (kbd "b") 'eval-current-buffer)
 (define-key nu-print-map (kbd "w") 'pwd)
 (define-key nu-print-map (kbd "-") 'negative-argument)
 (define-key nu-print-map (kbd "\C-p") 'universal-argument)
 (define-key nu-print-map (kbd "m") 'compile)
 (make-help-screen nu-print-prompt ; wow notice this sound! =)
 (purecopy "Print")
-"\\[universal-argument] : universal argument
- P: Really Print this (hardware)
- s: eval last sexp
- b: eval buffer
- w: pwd
- -: negative argument (\\[negative-argument])
- m: make
- p: async shell command"
+"\\{nu-print-map}"
 nu-print-map)
 
 
@@ -140,20 +136,7 @@ nu-delete-map)
 (define-key nu-insert-map (kbd "S") 'shell-command)
 (make-help-screen nu-insert-prompt
 (purecopy "Insert")
-"
- =v= Yank / *pop* (\\[nu-yank-pop-or-yank])     =i= browsekillring
- =k= Yank but *do not*
-
- =b= Insert buffer       =f= Insert file
-
- =c= Insert litterally (~quoted insert~)
- =l= open line below
-
- =s= async-shell-command (=S= for sync)
-
-o: org-table-insert-column
-M-o : org-table-insert-row
-"
+"\\{nu-insert-map}"
 nu-insert-map)
 
 
@@ -328,7 +311,7 @@ help-map)
 (define-key nu-find-map (kbd "z") 'nu-find-char)
 (define-key nu-find-map (kbd "\C-z") '(lambda () (interactive) (nu-find-char t)))
 (define-key nu-find-map (kbd "g") 'goto-line)
-(define-key nu-find-map (kbd "G") 'nu-goto-line-previousbuffer)
+(define-key nu-find-map (kbd "C-g") 'nu-goto-line-previousbuffer)
 (make-help-screen nu-find-prompt
 (purecopy "Find")
 "<!> if you wanted to forward char, use \\[forward-char] <!>
@@ -341,7 +324,7 @@ C-f: ace-jump-char-mode      z: nu-find-char (\\[nu-find-char])
 w: ace-jump-word-mode        C-z : find-char backward
                              s: goto previous selection
 i: beginning-of-buffer       g: goto line
-k: end-of-buffer             G: goto line (previous-buffer)
+k: end-of-buffer             C-g: goto line (previous-buffer)
 "
 nu-find-map)
 
