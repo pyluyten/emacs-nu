@@ -66,6 +66,8 @@
 ;   (define-key nu-keymap (kbd "M-<next>") ')
 ;   (define-key nu-keymap (kbd "M-<prior>") ')
 
+   (define-key nu-keymap (kbd "C-<return>") 'repeat) ; do not work.
+
 
 
 ;  all _ alt _ features
@@ -107,6 +109,12 @@
    (define-key nu-keymap (kbd "M-$") 'nu-end-of-line)
 
    (define-key nu-keymap (kbd "M-<SPC>") 'repeat)
+   
+;  hyper keys - todo: have an arg on these...
+;  maybe hyper / super.
+
+   (define-key nu-keymap (kbd "s-k") 'scroll-down)
+   (define-key nu-keymap (kbd "s-i") 'scroll-up)
 
 ; Function  keys
 

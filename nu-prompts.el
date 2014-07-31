@@ -194,7 +194,7 @@ nu-new-map)
 (define-key nu-a-map (kbd "l") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-to-end-of-line)))
 (define-key nu-a-map (kbd "k") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-current-line)))
 (define-key nu-a-map (kbd "C-<SPC>") (lambda () (interactive) (run-with-timer 0.01 nil 'cua-set-mark)))
-;(define-key nu-a-map (kbd "C-<RET>") (lambda () (interactive) (run-with-timer 0.01 nil 'cua-set-rectangle-mark)))
+(define-key nu-a-map (kbd "r") (lambda () (interactive) (run-with-timer 0.01 nil 'cua-set-rectangle-mark)))
 (make-help-screen nu-a-prompt-internal
 (purecopy "A[ll]")
 "
@@ -210,7 +210,7 @@ a: select all            f : mark-function
 p : mark-paragraph       l : mark to end of line
 s : mark sentence        j : mark to beginning of line
 w : mark-word            k : mark current line
-C-w: mark-WORD (block)
+C-w: mark-WORD (block)   r : set rectangular mark
 "
 nu-a-map)
 (defun nu-a-prompt ()
