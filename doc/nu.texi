@@ -220,7 +220,7 @@ When no selection is active, use @kbd{Control + x} to cut current line, or a del
 
 Use @kbd{Control + c} to copy currrent line, or, while a selection is active, copy this selection.
 
-Use @kbd{Control + v} to paste the current clipboard. Following @kbd{Control + v} will replace this paste with precedent clipboard item. However, if you need to paste several times, you can use @kbd{Alt + v} to invoke an advanced ``Paste'' prompt.
+Use @kbd{Control + v} to paste the current clipboard. Following @kbd{Control + v} will replace this paste with precedent clipboard item. However, if you need to paste several times, first invoke a numeric prefix argument to specify how many times to paste, then type @kbd{Control+v}. Or, you can use @kbd{Alt + v} to invoke an advanced ``Paste'' prompt.
 
 
 @section Undo or Redo
