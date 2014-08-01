@@ -108,8 +108,8 @@
    (define-key nu-keymap (kbd "M-à") 'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-$") 'nu-end-of-line)
 
-   (define-key nu-keymap (kbd "M-<SPC>") 'scroll-down)
-   (define-key nu-keymap (kbd "M-<backspace>") 'scroll-up)
+   (define-key nu-keymap (kbd "M-<SPC>") 'scroll-up)
+   (define-key nu-keymap (kbd "M-<backspace>") 'scroll-down)
  
 ;  hyper keys - todo: have an arg on these...
 ;  maybe hyper / super.
