@@ -119,11 +119,9 @@ emacs-nu redefines many keys, however two points make learning curve shorter
 @kbd{M-x} is still there. This means, you can probably obtain what you want.
 Also, @kbd{Control+h} for help-prefix is still there.
 
-Now, three things should probably be kept in mind while trying nu-mode
+Now, two things should probably be kept in mind while trying nu-mode
 
 @enumerate
-@item
-To repeat a command, use @kbd{Alt+Space}.
 @item
 To trigger a major mode sequence, start with @kbd{Control+Space}. This will invoke vanilla emacs @kbd{Control+c}. For example, into org-mode, use @kbd{Control+Space Control+n} to navigate to next node. If you already defined you own keys starting with @kbd{Control+c}, do not amend this definition.
 
@@ -138,6 +136,7 @@ You should not rely on @kbd{Control+x}, or at least no regularly. However to tri
 
 @end enumerate
 
+`Repeat' did not work fine with prompts. As of today it is hard to trigger. However prefix arguments (numeric-argument, negative-argument) should do fine with prompts.
 
 Note that `where-is` function, which sometimes advertises shortcuts, will not really work, since a prompt is not a keymap : `where-is` do not know how to invoke @kbd{Control-f} then @kbd{k} to reach end of buffer. (Did you try where-is git push in magit?)
 
@@ -173,9 +172,12 @@ Additionally, use @key{Alt} @key{u} and @key{Alt} @key{o} to move to previous, n
 
 Use @kbd{Alt+$} to go to end of line, or @kbd{Alt+h} to go beginning of line. To reach a line or a specific character, or the beginning of buffer, or the end of the buffer, use @kbd{Control+f} then the appropriate key. Just read the prompt. Or use @kbd{Alt+f} if you just want to find-char.
 
-Notice that f key, used both with `control' and `alt' modifiers, offers find-related features. One of these keys is direct : it directly executes a command, & maybe a very common one. The other key does raise a prompt to offer more features.
+Notice that f key, used both with `control' and `alt' modifiers, offers find-related features. One of these keys is direct : it directly executes a command, & maybe a very common one. The other key does raise a prompt to offer more features. This principle to have one 'alt' modifier plus one 'control' modifier applies to other keys, as well.
 
-@section Selections and Deletions
+
+However - let's finish with navigation. Use @kbd{Alt+Space} to scroll (to the bottom), and @kbd{Alt+Backspace} to go back to the top. Emacs vanilla keybindings for `help-mode' and some other offer Space and Backspace to do this - this is one of the few conventions respected into Emacs-nu. Yup.
+
+@section Selections and Deletion
 
 Several alternatives offer to delete (cut) text.
 
@@ -191,32 +193,28 @@ Use @kbd{Control + u} to delete previous word.
 Use @kbd{Control + $} to delete up to end of line.
 @end enumerate
 @item
-Use @kbd{Alt+d} to trigger a prompt. This will offer you to delete what you want.
+Use @kbd{Alt+d} to trigger a prompt. This will offer you to delete what you want (function, org-node, sentence, ...).
 @item
 Alternatively, first mark (select) text you want to select then use @kbd{Control+x}.
 @end enumerate
 
-Right, but how to select? Once again, several alternatives offer.. bla.. bla...
+Right, but how to select? Once again, several alternatives...here we go
 
 @enumerate
 @item
-The paddle allow to directly select (``mark'') text : keep @kbd{shift} pressed, then move either with arrows or @kbd{Alt+<some key of the paddle>}. While other ways are possible, using @Kbd{Alt-Shift-u}, for example,
-will select previous word (or extend current selection to previous word).
+The paddle allow to directly select (``mark'') text : keep @kbd{shift} pressed, then move either with arrows or @kbd{Alt+<some key of the paddle>}. Using @kbd{Alt-Shift-u}, for example, will select previous word (or extend current selection to previous word).
 
 @item
 An alternative in order to select text is to press @kbd{Alt+a} to set a mark, then move to extend selection.
 
 @item
-An alternative is to press @kbd{Control+a} to invoke ``a-'' prompt, allowing to select ``a-'' word, ``a-'' sentence, and so on, or to set the mark.
+An alternative is to press @kbd{Control+a} to invoke ``a-'' prompt, allowing to select ``a-'' word, ``a-'' sentence, and so on, or to set the mark. Or, to set a rectangular mark.
 
-@item
-Finally, to start a rectangular selection, use @Kbd{Control+Return}. This is now cua rectangular selection.
 @end enumerate
-
 
 @section Cut Copy Paste
 
-When no selection is active, use @kbd{Control + x} to cut current line, or a deletion command since deletions actually cut text (as a reminder, emacs `kill-' commands will copy to kill-ring, while emacs `delete-' commands will not).
+When no selection is active, use @kbd{Control + x} to cut current line, or a deletion command since deletions actually cut text (as a reminder : emacs `kill-' commands will copy to kill-ring, while emacs `delete-' commands will not).
 
 Use @kbd{Control + c} to copy currrent line, or, while a selection is active, copy this selection.
 
@@ -230,9 +228,9 @@ Use @kbd{Alt+z} to undo. Or, use @kbd{Control+z} to invoke undo-tree visualizer 
 
 @section Advanced Edition
 
-Most avdanced editon features rely on @kbd{Control-r}, which will invoke replace prompt, allowing you to replace-regexp, merge-lines, delete spaces, or invoke other functions.
+Some avdanced editon features rely on @kbd{Control-r}, which will invoke replace prompt, allowing you to replace-regexp, merge-lines, delete spaces, or invoke other functions.
 
-@enumeratek
+@enumerate
 @item
 @kbd{Alt+y} will copy to current line char under point (on the below line).
 @item
@@ -260,7 +258,7 @@ Use @kbd{Control+t} to open another tab. It directly shows up an ibuffer list.
 @end enumerate 
 
 @verbatim
-² will invoke buffers list.
+² will invoke buffers list on the current frame. The tab invokes on another one.
 @end verbatim
 
 
@@ -269,11 +267,21 @@ Use @kbd{Control+t} to open another tab. It directly shows up an ibuffer list.
 
 The print buffer, invoked from @kbd{Control+p}, will offer you to eval things or make (compile). The insert prompt, invoked from @kbd{Alt+v}, will allow you to insert a file, or the result of an async shell command into a new buffer. The save buffer, from @kbd{Alt+s}, offers to use git power to save cats or so.
 
+@kbd{Control+p} also offers to grep, find-grep or ediff.
+
 
 @node NU & other libraries
 @chapter NU & other libraries
 
 How does NU integrate with other libraries?
+
+@section org
+
+As of today, NU has few features related to org.  @kbd{Alt+s} prompt will allow you to org-store-link. @kbd{Alt+v} prompt will allow you to org-table-insert-column or row. More will come later ; as usual help is welcomed!
+
+@section magit
+
+Use Alt+s, ie save-prompt, to gain access to magit-status.
 
 @section evil-mode
 
@@ -290,9 +298,6 @@ Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, 
 
 Obviously this only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
 
-@section magit
-
-Use Alt+s, ie save-prompt, to gain access to magit-status.
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License

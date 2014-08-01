@@ -29,6 +29,7 @@ This is the manual for Nu, a modern keybinding for Emacs.
 * NU for the power user::
 * View and Edit::
 * Files Buffers Windows::
+* Hacking::
 * NU & other libraries::
 * GNU Free Documentation License::
 
@@ -53,8 +54,12 @@ are not provided in raw Emacs.
 prompts.  For example, 'Control-f' raises a prompt precising which key -
 actually, which sequence - to press in order to execute desired function
 : once 'Control-f' has been pressed and the "Find-prompt" appears,
-pressing f will start a regexp search, while 'g' will execute goto-line,
-or 's' will move point to previous selection.
+pressing <f> will start a regexp search, while 'g' will execute
+goto-line, or 's' will move point to previous selection.
+
+   Inverse is sometimes true : since 'Control+s' invoking a prompt would
+be irritating, this sequence directly saves buffer, while 'Alt+s' runs
+the "save prompt".
 
    nu-emacs does not only provides nu-mode.  There are also two
 independant parts
@@ -72,38 +77,23 @@ Nu depends on several libraries, both native or external ones :
   3. ace-jump
   4. recentf
   5. cua-selection-mode
+  6. magit is optional
 
 1.2 Help
 ========
 
 Use 'Control-q' to quit a sequence or a command in progress.  Use
-'Alt+z' to undo last command.
+'Alt+z' to undo last command.  Use 'Control+h' to gain access to help
+functions.  This includes the usual shortcuts to describe what a key
+does, or what a function does.  If you messed up, use 'Control+w' then
+'Control+q' to quit.
 
    Prompts are usually triggered using a 'Control' modifier and
 advertise a function using the same key, but with 'Alt' modifier.  For
 example, 'Control-f' will pop-up a find-prompt, while 'Alt-f' will
 directly allow you to 'ace-jump' to a char.
 
-   Inverse is sometimes true : since 'Control+s' invoking a prompt would
-be irritating, this sequence directly saves buffer, while 'Alt+s' runs
-the "save prompt".
-
-   These prompts offer you to quickly learn where functions are.  Note
-however that 'where-is' function, which sometimes advertises shortcuts,
-will not really work, since a prompt is not a keymap : where is do not
-know how to invoke 'Control-f' then 'k' to reach end of buffer.
-
-   Two features make this drawback acceptable :
-  1. From the help prompt ('Control-h'), run <h> to invoke nu-help.
-     This function will present you all prompts, and will offer you to
-     describe their keymaps - that is, all the functions you can access
-     from these prompts.
-  2. For each function accessible from a prompt, an additional shortcut
-     is created, accessible from 'menu' plus the same 'key' than the
-     prompt, in order to make where-is advertise.  Hence, if you read
-     'You can run this command with <menu> f k', please understand,
-     despite it is true, that you can run the command with
-     'Control-f-k'.
+   These prompts offer you to quickly learn where functions are.
 
 
 File: nu.info,  Node: NU for the power user,  Next: View and Edit,  Prev: Overview,  Up: Top
@@ -121,11 +111,9 @@ keys, however two points make learning curve shorter
    'M-x' is still there.  This means, you can probably obtain what you
 want.  Also, 'Control+h' for help-prefix is still there.
 
-   Now, three things should probably be kept in mind while trying
-nu-mode
+   Now, two things should probably be kept in mind while trying nu-mode
 
-  1. To repeat a command, use 'Alt+Space'.
-  2. To trigger a major mode sequence, start with 'Control+Space'.  This
+  1. To trigger a major mode sequence, start with 'Control+Space'.  This
      will invoke vanilla emacs 'Control+c'.  For example, into org-mode,
      use 'Control+Space Control+n' to navigate to next node.  If you
      already defined you own keys starting with 'Control+c', do not
@@ -135,14 +123,39 @@ nu-mode
 
      To invoke above myfunction example, press 'Control-SPC h'.
 
-  3. You should not rely on 'Control+x', or at least no regularly.
+  2. You should not rely on 'Control+x', or at least no regularly.
      However to trigger x prefix, use 'Control+Alt+Space'.
+
+   'Repeat' did not work fine with prompts.  As of today it is hard to
+trigger.  However prefix arguments (numeric-argument, negative-argument)
+should do fine with prompts.
+
+   Note that 'where-is' function, which sometimes advertises shortcuts,
+will not really work, since a prompt is not a keymap : 'where-is' do not
+know how to invoke 'Control-f' then 'k' to reach end of buffer.  (Did
+you try where-is git push in magit?)
+
+   Thus :
+  1. For each function accessible from a prompt, an additional shortcut
+     is created, accessible from 'menu' plus the same 'key' than the
+     prompt, in order to make where-is advertise.  Hence, if you read
+     'You can run this command with <menu> f k', please understand,
+     despite it is also true, that you can also run the command with
+     'Control-f-k'.
+  2. From the help prompt ('Control-h'), run <h> to invoke nu-help.
+     This function will present you all prompts, and will offer you to
+     describe their keymaps - that is, all the functions you can access
+     from these prompts.
 
 
 File: nu.info,  Node: View and Edit,  Next: Files Buffers Windows,  Prev: NU for the power user,  Up: Top
 
 3 View and Edit
 ***************
+
+Obviously just type keys to input text.  With slight notes : 'Alt+m' to
+carriage return + indent.  Use 'Alt+v' + c to insert literally a
+character.
 
 3.1 Navigate
 ============
@@ -160,102 +173,147 @@ word.
      U I O
      J K L
 
-   Use 'Alt+$' to go to end of line.
+   Use 'Alt+$' to go to end of line, or 'Alt+h' to go beginning of line.
+To reach a line or a specific character, or the beginning of buffer, or
+the end of the buffer, use 'Control+f' then the appropriate key.  Just
+read the prompt.  Or use 'Alt+f' if you just want to find-char.
 
-   To reach a line, beginning of buffer, end of buffer, use Control+f
-then the appropriate key.  Just read the prompt.
+   Notice that f key, used both with 'control' and 'alt' modifiers,
+offers find-related features.  One of these keys is direct : it directly
+executes a command, & maybe a very common one.  The other key does raise
+a prompt to offer more features.  This principle to have one 'alt'
+modifier plus one 'control' modifier applies to other keys, as well.
 
-3.2 Selections and Deletions
-============================
+   However - let's finish with navigation.  Use 'Alt+Space' to scroll
+(to the bottom), and 'Alt+Backspace' to go back to the top.  Emacs
+vanilla keybindings for 'help-mode' and some other offer Space and
+Backspace to do this - this is one of the few conventions respected into
+Emacs-nu.  Yup.
+
+3.2 Selections and Deletion
+===========================
 
 Several alternatives offer to delete (cut) text.
 
-       1. Use Control-x to cut the current line.
-       2. Use Control + j,l to delete backward, forward char.
-       3. Use Control + u to delete previous word.
-       4. Use Control + $ to delete up to end of line.
-  1. Use Alt+d to trigger a prompt.  This will offer you to delete what
-     you want.
+       1. Use 'Control-x' to cut the current line.
+       2. Use 'Control+j','Control+l' to delete backward, forward char.
+       3. Use 'Control + u' to delete previous word.
+       4. Use 'Control + $' to delete up to end of line.
+  1. Use 'Alt+d' to trigger a prompt.  This will offer you to delete
+     what you want (function, org-node, sentence, ...).
   2. Alternatively, first mark (select) text you want to select then use
-     Control+x.
+     'Control+x'.
 
-   Several alternatives offer to select text
+   Right, but how to select?  Once again, several alternatives...here we
+go
 
-  1. The paddle allow to directly select ("mark") text : keep shift
-     pressed, then move.  While other ways are possible, using
-     Alt-Shift-U, for example, will select previous word (or extend
-     current selection to previous word).
+  1. The paddle allow to directly select ("mark") text : keep 'shift'
+     pressed, then move either with arrows or 'Alt+<some key of the
+     paddle>'.  Using 'Alt-Shift-u', for example, will select previous
+     word (or extend current selection to previous word).
 
-  2. An alternative in order to select text is to press Alt+a to set a
+  2. An alternative in order to select text is to press 'Alt+a' to set a
      mark, then move to extend selection.
 
-  3. An alternative is to press Control+a to invoke "a-" prompt,
+  3. An alternative is to press 'Control+a' to invoke "a-" prompt,
      allowing to select "a-" word, "a-" sentence, and so on, or to set
-     the mark.
-
-  4. To start a rectangular selection, use Control+Return.
+     the mark.  Or, to set a rectangular mark.
 
 3.3 Cut Copy Paste
 ==================
 
-When no selection is active, use Control + x to cut current line, or a
-deletion command since deletions actually cut text.
+When no selection is active, use 'Control + x' to cut current line, or a
+deletion command since deletions actually cut text (as a reminder :
+emacs 'kill-' commands will copy to kill-ring, while emacs 'delete-'
+commands will not).
 
-   Use Control + c to copy currrent line, or, while a selection is
+   Use 'Control + c' to copy currrent line, or, while a selection is
 active, copy this selection.
 
-   Use Control + v to paste the current clipboard.  Following Control +
-v will replace this paste with last clipboard item.  However, if you
-need to paste several times, you can use Alt + v to invoke and advanced
-"Paste" prompt.
+   Use 'Control + v' to paste the current clipboard.  Following 'Control
++ v' will replace this paste with precedent clipboard item.  However, if
+you need to paste several times, first invoke a numeric prefix argument
+to specify how many times to paste, then type 'Control+v'.  Or, you can
+use 'Alt + v' to invoke an advanced "Paste" prompt.
 
 3.4 Undo or Redo
 ================
 
-Use Alt+z to undo.  Or, use Control+z to invoke undo-tree visualizer to
-play with discard changes in an advanced way.
+Use 'Alt+z' to undo.  Or, use 'Control+z' to invoke undo-tree visualizer
+to play with discard changes in an advanced way.
 
 3.5 Advanced Edition
 ====================
 
-Most avdanced editon features rely on Control-r, which will invoke
+Some avdanced editon features rely on 'Control-r', which will invoke
 replace prompt, allowing you to replace-regexp, merge-lines, delete
 spaces, or invoke other functions.
 
-  1. Alt+y will copy to current line char under point (on the below
+  1. 'Alt+y' will copy to current line char under point (on the below
      line).
-  2. Alt+e will copy to current line char above point (on the above
+  2. 'Alt+e' will copy to current line char above point (on the above
      line).
 
-   Control+g global prompt will also propose goal-column feature.
+   'Alt+v' prompt to open a line.  'Control+g' global prompt will also
+propose goal-column feature.  (This prompt is hard to reached ; it won't
+offer really much.)
 
 
-File: nu.info,  Node: Files Buffers Windows,  Next: NU & other libraries,  Prev: View and Edit,  Up: Top
+File: nu.info,  Node: Files Buffers Windows,  Next: Hacking,  Prev: View and Edit,  Up: Top
 
 4 Files Buffers Windows
 ***********************
 
-Use Control + s to save current file, Alt + s to invoke a prompt to
-rename it.  Control+g "global" prompt will allow you to manipulate
-frames.
-² will invoke buffers list.
+Use 'Control + s' to save current file, 'Alt + s' to invoke a prompt to
+rename it.
+  1. Use 'Control+o' to open a file, a window, a buffer, or use
+     bookmarks,...  Or move to another frame...or buffers list...
+  2. Use 'Control+w' to raise a prompt offering to close this frame, or
+     move to another frame, ....  Or 'Alt+w' to make this frame the only
+     visible one.
+  3. Use 'Control+n' to open a sracth buffer (blank untitled buffer) or
+     split current frame.
+  4. Use 'Control+t' to open another tab.  It directly shows up an
+     ibuffer list.
 
-  1. Use Control+o to open a file, a window, a buffer, or use
-     bookmarks,...
-  2. Use Control+w to close this frame.  Or Alt+w to make this frame the
-     only visible one.
-  3. Use Control+n to open a sracth buffer (blank untitled buffer).
-  4. Use Control+t to open another tab.
+² will invoke buffers list on the current frame. The tab invokes on another one.
 
 
-File: nu.info,  Node: NU & other libraries,  Next: GNU Free Documentation License,  Prev: Files Buffers Windows,  Up: Top
+File: nu.info,  Node: Hacking,  Next: NU & other libraries,  Prev: Files Buffers Windows,  Up: Top
 
-5 NU & other libraries
+5 Hacking
+*********
+
+The print buffer, invoked from 'Control+p', will offer you to eval
+things or make (compile).  The insert prompt, invoked from 'Alt+v', will
+allow you to insert a file, or the result of an async shell command into
+a new buffer.  The save buffer, from 'Alt+s', offers to use git power to
+save cats or so.
+
+   'Control+p' also offers to grep, find-grep or ediff.
+
+
+File: nu.info,  Node: NU & other libraries,  Next: GNU Free Documentation License,  Prev: Hacking,  Up: Top
+
+6 NU & other libraries
 **********************
 
 How does NU integrate with other libraries?
 
-5.1 evil-mode
+6.1 org
+=======
+
+As of today, NU has few features related to org.  'Alt+s' prompt will
+allow you to org-store-link.  'Alt+v' prompt will allow you to
+org-table-insert-column or row.  More will come later ; as usual help is
+welcomed!
+
+6.2 magit
+=========
+
+Use Alt+s, ie save-prompt, to gain access to magit-status.
+
+6.3 evil-mode
 =============
 
 While nu-mode is not a modal editor, and aims at being the most
@@ -278,11 +336,6 @@ purpose.  Simply put below lines on your .emacs:
 
    Obviously this only fixes the basic paddle.  Backward and Foward word
 are different, but fixing the paddle is fine.
-
-5.2 magit
-=========
-
-Use Alt+s, ie save-prompt, to gain access to magit-status.
 
 
 File: nu.info,  Node: GNU Free Documentation License,  Prev: NU & other libraries,  Up: Top
@@ -770,12 +823,13 @@ their use in free software.
 
 Tag Table:
 Node: Top691
-Node: Overview968
-Node: NU for the power user3761
-Node: View and Edit5044
-Node: Files Buffers Windows7875
-Node: NU & other libraries8491
-Node: GNU Free Documentation License9932
+Node: Overview980
+Node: NU for the power user3143
+Node: View and Edit5423
+Node: Files Buffers Windows9588
+Node: Hacking10376
+Node: NU & other libraries10860
+Node: GNU Free Documentation License12521
 
 End Tag Table
 
