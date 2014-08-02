@@ -58,6 +58,9 @@
    ;b
    (define-key nu-keymap (kbd "C-n") 'nu-new-prompt)
 
+
+   (define-key nu-keymap (kbd "C-$") 'kill-line)
+
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
    (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; tmp?
 
