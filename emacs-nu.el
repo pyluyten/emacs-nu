@@ -141,6 +141,7 @@
    ; do not keep cua modifier on 'meta
    ; otherwise their rectangle is broken...
 
+   (setq cua-rectangle-mark-key (kbd "C-S-<return>"))
    (cua-selection-mode 1)
    (setq cua--rectangle-modifier-key 'control)
 
