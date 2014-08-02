@@ -1,6 +1,6 @@
 This is nu.info, produced by makeinfo version 5.1 from nu.texi.
 
-This manual is for Nu (version 0.1 of 2014-07-15), a modern keybinding
+This manual is for Nu (version 0.2 of 2014-08-03), a modern keybinding
 for Emacs.  Copyright © 2014 Pierre-Yves Luyten.
 
      Permission is granted to copy, distribute and/or modify this
@@ -126,8 +126,10 @@ want.  Also, 'Control+h' for help-prefix is still there.
   2. You should not rely on 'Control+x', or at least no regularly.
      However to trigger x prefix, use 'Control+Alt+Space'.
 
-   'Repeat' did not work fine with prompts.  As of today it is hard to
-trigger.  However prefix arguments (numeric-argument, negative-argument)
+   'Repeat' does not work really fine with prompts : one can trigger
+'Repeat' with 'Control+Return', however if last command was invoked from
+a prompt, repeat will execute this prompt rather than the final command
+itself.  However prefix arguments (numeric-argument, negative-argument)
 should do fine with prompts.
 
    Note that 'where-is' function, which sometimes advertises shortcuts,
@@ -825,11 +827,11 @@ Tag Table:
 Node: Top691
 Node: Overview980
 Node: NU for the power user3143
-Node: View and Edit5423
-Node: Files Buffers Windows9588
-Node: Hacking10376
-Node: NU & other libraries10860
-Node: GNU Free Documentation License12521
+Node: View and Edit5565
+Node: Files Buffers Windows9730
+Node: Hacking10518
+Node: NU & other libraries11002
+Node: GNU Free Documentation License12663
 
 End Tag Table
 

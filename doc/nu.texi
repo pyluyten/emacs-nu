@@ -136,7 +136,7 @@ You should not rely on @kbd{Control+x}, or at least no regularly. However to tri
 
 @end enumerate
 
-`Repeat' did not work fine with prompts. As of today it is hard to trigger. However prefix arguments (numeric-argument, negative-argument) should do fine with prompts.
+`Repeat' does not work really fine with prompts : one can trigger 'Repeat' with @kbd{Control+Return}, however if last command was invoked from a prompt, repeat will execute this prompt rather than the final command itself. However prefix arguments (numeric-argument, negative-argument) should do fine with prompts.
 
 Note that `where-is` function, which sometimes advertises shortcuts, will not really work, since a prompt is not a keymap : `where-is` do not know how to invoke @kbd{Control-f} then @kbd{k} to reach end of buffer. (Did you try where-is git push in magit?)
 
