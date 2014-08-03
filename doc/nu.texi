@@ -174,8 +174,25 @@ Use @kbd{Alt+$} to go to end of line, or @kbd{Alt+h} to go beginning of line. To
 
 Notice that f key, used both with `control' and `alt' modifiers, offers find-related features. One of these keys is direct : it directly executes a command, & maybe a very common one. The other key does raise a prompt to offer more features. This principle to have one 'alt' modifier plus one 'control' modifier applies to other keys, as well.
 
+Numeric arguments can apply to navigation. Press @kbd{Alt+1} then @kbd{Alt+5} to input 15 as a numeric argument ; now input @kbd{Alt+k} to go down one line : this will go down 15 lines.
+
+`Repeat' also applies to navigation. Enter @kbd{Control+Return} to repeat a navigation.
 
 However - let's finish with navigation. Use @kbd{Alt+Space} to scroll (to the bottom), and @kbd{Alt+Backspace} to go back to the top. Emacs vanilla keybindings for `help-mode' and some other offer Space and Backspace to do this - this is one of the few conventions respected into Emacs-nu. Yup.
+
+This navigation chapter is meant as a general introduction to emacs-nu ; because navigation is a basis, but also because we saw many emacs-nu principles :
+@enumerate
+@item
+Direct keys for most common operations.
+@item
+Prompts for slighly less common to rare operations.
+@item
+Numeric arguments.
+@item
+Repeat.
+@item
+Few emacs convention respected, but some.
+@end enumerate
 
 @section Selections and Deletion
 
@@ -205,12 +222,14 @@ Right, but how to select? Once again, several alternatives...here we go
 The paddle allow to directly select (``mark'') text : keep @kbd{shift} pressed, then move either with arrows or @kbd{Alt+<some key of the paddle>}. Using @kbd{Alt-Shift-u}, for example, will select previous word (or extend current selection to previous word).
 
 @item
-An alternative in order to select text is to press @kbd{Alt+a} to set a mark, then move to extend selection.
+An alternative in order to select text is to press @kbd{Alt+a} to set a mark, then move to extend selection. You can also use a direct key to set a rectangular mark : @kbd{Control+S}, ie @kbd{Control+Shift+s}.
 
 @item
-An alternative is to press @kbd{Control+a} to invoke ``a-'' prompt, allowing to select ``a-'' word, ``a-'' sentence, and so on, or to set the mark. Or, to set a rectangular mark.
+An alternative is to press @kbd{Control+a} to invoke ``a-'' prompt, allowing to select ``a-'' word, ``a-'' sentence, and so on, or to set the mark. Or, to set a rectangular mark. Read the prompt!
 
 @end enumerate
+
+Once some text is selected you can ``toggle the point and mark'' using @kbd{Control+a}, or deactivate the selectio using @kbd{Alt+a}, or cut the text using @kbd{Control+x} (or @kbd{Alt+d} might be nice depending on your fingers position).
 
 @section Cut Copy Paste
 
