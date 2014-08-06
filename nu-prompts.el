@@ -27,6 +27,8 @@
 (eval-when-compile (require 'help-macro))
 
 
+(require 'nu-help)
+
 (defun nu-prompt (&optional title message)
  (interactive)
  (setq curb (current-buffer))
@@ -86,7 +88,9 @@ nu-window-map)
 nu-print-map)
 
 
-(define-prefix-command 'nu-delete-map)
+;(define-prefix-command 'nu-delete-map)
+;(define-key nu-delete-map (kbd "?") 'nu-help-about-prompts)
+(nu-define-prefix 'nu-delete-map)
 (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
 (define-key nu-delete-map (kbd "M-i") 'org-table-delete-column)
 (define-key nu-delete-map (kbd "j") 'backward-delete-char)
@@ -109,11 +113,17 @@ nu-print-map)
 (define-key nu-delete-map (kbd "a") 'nu-delete-all)
 (define-key nu-delete-map (kbd "*") 'org-cut-special)
 (define-key nu-delete-map (kbd "M-f") 'delete-file)
-(make-help-screen nu-delete-prompt-internal
-(purecopy "Delete")
-"
-\\{nu-delete-map}"
-nu-delete-map)
+;(make-help-screen nu-delete-prompt-internal
+;(purecopy "Delete")
+;"
+;\\{nu-delete-map}"
+;nu-delete-map)
+
+(defun nu-delete-prompt-internal ()
+  (interactive)
+  (nu-prompt-for-keymap nu-delete-map))
+
+
 (defun nu-delete-prompt ()
   (interactive)
   (if mark-active

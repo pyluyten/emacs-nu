@@ -89,6 +89,7 @@
    (define-key nu-keymap (kbd "M-s") 'nu-save-prompt)
    (define-key nu-menu-map (kbd "s") 'nu-save-map)
    (define-key nu-keymap (kbd "M-d") 'nu-delete-prompt)
+   (define-key nu-menu-map (kbd "d") 'nu-delete-map)
    (define-key nu-keymap (kbd "M-f") 'ace-jump-char-mode)
    ;g : ace-jump?
    (define-key nu-keymap (kbd "M-h") 'nu-back-to-indentation)

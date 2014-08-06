@@ -365,6 +365,19 @@ A contigent amount of chars different than <space>."
           (delete-char 1)))
 
 
+(defun nu-delete-all ()
+ "Deletes the current buffer text."
+ (interactive)
+ (mark-whole-buffer)
+ (kill-region))
+
+
+(defun nu-delete-defun ()
+ "Deletes a function."
+ (interactive)
+ (backward-sexp)
+ (kill-sexp))
+
 (defun nu-delete-above-line ()
   ""
   (interactive)
