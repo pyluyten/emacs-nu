@@ -52,7 +52,7 @@
 (require 'windmove)
 
 
-(define-prefix-command 'nu-window-map)
+(nu-define-prefix 'nu-window-map)
 (define-key nu-window-map (kbd "w") 'nu-close-tab)
 (define-key nu-window-map (kbd "\C-k") 'kill-buffer)
 (define-key nu-window-map (kbd "\C-w") 'delete-other-windows)
@@ -62,12 +62,9 @@
 (define-key nu-window-map (kbd "l") 'windmove-right)
 (define-key nu-window-map (kbd "t") 'transpose-frame)
 (define-key nu-window-map (kbd "C-q") 'save-buffers-kill-emacs)
-(make-help-screen nu-window-prompt
-(purecopy "Window!")
-"\\[nu-close-tab] - nu-close-tab
-
-\\{nu-window-map}"
-nu-window-map)
+(defun nu-window-prompt ()
+  (interactive)
+  (nu-prompt-for-keymap nu-window-map))
 
 
 (define-prefix-command 'nu-print-map)
@@ -82,14 +79,13 @@ nu-window-map)
 (define-key nu-print-map (kbd "-") 'negative-argument)
 (define-key nu-print-map (kbd "\C-p") 'universal-argument)
 (define-key nu-print-map (kbd "m") 'compile)
-(make-help-screen nu-print-prompt ; wow notice this sound! =)
-(purecopy "Print")
-"\\{nu-print-map}"
-nu-print-map)
+(defun nu-print-prompt ()
+  (interactive)
+  (nu-prompt-for-keymap nu-print-map))
 
 
-;(define-prefix-command 'nu-delete-map)
-;(define-key nu-delete-map (kbd "?") 'nu-help-about-prompts)
+
+
 (nu-define-prefix 'nu-delete-map)
 (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
 (define-key nu-delete-map (kbd "M-i") 'org-table-delete-column)
@@ -113,15 +109,11 @@ nu-print-map)
 (define-key nu-delete-map (kbd "a") 'nu-delete-all)
 (define-key nu-delete-map (kbd "*") 'org-cut-special)
 (define-key nu-delete-map (kbd "M-f") 'delete-file)
-;(make-help-screen nu-delete-prompt-internal
-;(purecopy "Delete")
-;"
-;\\{nu-delete-map}"
-;nu-delete-map)
 
 (defun nu-delete-prompt-internal ()
   (interactive)
   (nu-prompt-for-keymap nu-delete-map))
+
 
 
 (defun nu-delete-prompt ()
@@ -133,7 +125,7 @@ nu-print-map)
       (help-make-xrefs (help-buffer)))))
 
 
-(define-prefix-command 'nu-insert-map)
+(nu-define-prefix 'nu-insert-map)
 (define-key nu-insert-map (kbd "v") 'nu-yank-pop-or-yank)
 (define-key nu-insert-map (kbd "k") 'yank)
 (define-key nu-insert-map (kbd "i") 'browse-kill-ring)
@@ -145,10 +137,10 @@ nu-print-map)
 (define-key nu-insert-map (kbd "l") 'open-line)
 (define-key nu-insert-map (kbd "s") 'async-shell-command)
 (define-key nu-insert-map (kbd "S") 'shell-command)
-(make-help-screen nu-insert-prompt
-(purecopy "Insert")
-"\\{nu-insert-map}"
-nu-insert-map)
+(defun nu-insert-prompt ()
+  (interactive)
+  (nu-prompt-for-keymap nu-delete-map))
+
 
 
 
@@ -237,7 +229,7 @@ But if mark is active, exchange point and mark."
 
 
 
-(define-prefix-command 'nu-open-map)
+(nu-define-prefix 'nu-open-map)
 (define-key nu-open-map (kbd "f")  'find-file)
 (define-key nu-open-map (kbd "F")  'find-file-other-window)
 (define-key nu-open-map (kbd "r")  'recentf-open-files)
@@ -254,24 +246,11 @@ But if mark is active, exchange point and mark."
 (define-key nu-open-map (kbd "i")   'ibuffer)
 (define-key nu-open-map (kbd "C-i")   'org-iswitchb)
 (define-key nu-open-map (kbd "C-<SPC>") 'ido-switch-buffer)
-(make-help-screen nu-open-prompt
-(purecopy "Open")
-"
-=f= open file/dir         =l= next-buffer
-=F= file other window     =j= previous-buffer
-=r= recent files          Control+Space > ido-switch-buffer
-=o= other-window (next)   Control+i > org-iswitchb
-=O= other-window (prev.)  =i= ibuffer
-                          
-=x= registers             
-=c= task (org-capture)
-=a= org-agenda
+(defun nu-open-prompt ()
+  (interactive)
+  (nu-prompt-for-keymap nu-open-map))
 
-=m= bookmarks menu, =M= jump to bookmark
-=b= bookmark set
 
-\(if you wanted to insert line: \\[insert-line])"
-nu-open-map)
 
 
 (define-prefix-command 'nu-global-map)
