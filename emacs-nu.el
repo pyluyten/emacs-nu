@@ -139,12 +139,13 @@
    ; a real dependency
    (undo-tree-mode 1)
 
-   ; do not use cua-mode because C-x / C-c have specific meaning
+   ; do not use cua-mode because C-x C-c have specific meaning
    ; TODO: test if the user can enable cua-keys on his .emacs
    ;
    ; do not keep cua modifier on 'meta
    ; otherwise their rectangle is broken...
 
+   (setq cua-rectangle-mark-key (kbd "C-S-<return>"))
    (cua-selection-mode 1)
    (setq cua--rectangle-modifier-key 'control)
 
