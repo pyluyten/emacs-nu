@@ -164,6 +164,7 @@ then enter the function you want to describe."))))
         (insert "\n"))))
 
 
+;; not used
 (defun nu-describe-keymap (keym)
  "Creates a description of keymap."
   (generate-new-buffer "*Nu*")
@@ -175,7 +176,8 @@ then enter the function you want to describe."))))
 
 
 
-
+; keep the code here temp.
+; just for inspiration.
 (defmacro make-help-screen2 (fname help-line help-text helped-map)
   "Construct help-menu function name FNAME.
 When invoked, FNAME shows HELP-LINE and reads a command using HELPED-MAP.
@@ -262,7 +264,7 @@ and then returns."
 					    (if (pos-visible-in-window-p
 						 (point-max))
 						"" ", or SPACE or DEL to scroll")))
-			       char (aref key 0)))
+			       char (aref key 0)))k
 
 		       ;; If this is a scroll bar command, just run it.
 		       (when (eq char 'vertical-scroll-bar)

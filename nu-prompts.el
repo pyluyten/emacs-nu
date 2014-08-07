@@ -173,7 +173,7 @@
 
 
 (define-prefix-command 'nu-a-map)
-(define-key nu-a-map (kbd "a") '(lambda () (interactive) (run-with-timer 0.01 nil 'mark-whole-buffer)))
+(define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
 (define-key nu-a-map (kbd "f") '(lambda () (interactive) (run-with-timer 0.01 nil 'mark-defun)))
 (define-key nu-a-map (kbd "C-f") 'cd)
 (define-key nu-a-map (kbd "s") (lambda () (interactive) (run-with-timer 0.01 nil 'mark-sentence)))
@@ -241,7 +241,7 @@ But if mark is active, exchange point and mark."
 
 
 
-(define-prefix-command 'nu-global-map)
+(nu-define-prefix 'nu-global-map)
 (defun nu-no-goal-column () (interactive) (setq goal-column nil) (message "No goal column"))
 (defun nu-set-x-4-map () (interactive) (set-temporary-overlay-map ctl-x-4-map))
 (defun nu-set-x-5-map () (interactive) (set-temporary-overlay-map ctl-x-5-map))
@@ -252,16 +252,19 @@ But if mark is active, exchange point and mark."
 (define-key nu-global-map (kbd "\C-q") 'save-buffers-kill-emacs)
 (define-key nu-global-map (kbd "t") 'transpose-frame)
 (define-key nu-global-map (kbd "x") 'Control-X-prefix)
-(make-help-screen nu-global-prompt
-(purecopy "GLOBAL")
-"\\<nu-keymap>(\\[keyboard-escape-quit] to keyboard-escape-quit)
-
-\\{nu-global-map}"
-nu-global-map)
+(defun nu-global-prompt ()
+  (interactive)
+  (nu-prompt-for-keymap nu-global-map))
 
 
+
+; we do use native help-map.
+; this is an exception : we do not want
+; to print the _entire_ help map.
+; still, we use this.
+;
+; this is why a specific prompt is there.
 (define-key help-map (kbd "h") 'nu-help)
-
 (make-help-screen nu-help-prompt
 (purecopy "Help")
 "Press q to quit or :
@@ -274,7 +277,9 @@ k: describe-key              m: describe-mode
 v: describe-variable"
 help-map)
 
-(define-prefix-command 'nu-find-map)
+
+(nu-define-prefix 'nu-find-map)
+(defun nu-find-char-backward () (interactive) (nu-find-char t))
 (define-key nu-find-map (kbd "F") 'nu-isearch-forward)
 (define-key nu-find-map (kbd "R") 'nu-isearch-backward)
 (define-key nu-find-map (kbd "f") 'nu-isearch-forward-regexp)
@@ -289,28 +294,16 @@ help-map)
 (define-key nu-find-map (kbd "C-f") 'ace-jump-char-mode)
 (define-key nu-find-map (kbd "w") 'ace-jump-word-mode)
 (define-key nu-find-map (kbd "z") 'nu-find-char)
-(define-key nu-find-map (kbd "\C-z") '(lambda () (interactive) (nu-find-char t)))
+(define-key nu-find-map (kbd "\C-z") 'nu-find-char-backward)
 (define-key nu-find-map (kbd "g") 'goto-line)
 (define-key nu-find-map (kbd "C-g") 'nu-goto-line-previousbuffer)
-(make-help-screen nu-find-prompt
-(purecopy "Find")
-"<!> if you wanted to forward char, use \\[forward-char] <!>
-
-f: isearch-forward-regexp  r: isearch-backward-regexp
-F: isearch-forward	     R: isearch-backward
-			     b: regexp-builder
-l: ace-jump-line-mode
-C-f: ace-jump-char-mode      z: nu-find-char (\\[nu-find-char])
-w: ace-jump-word-mode        C-z : find-char backward
-                             s: goto previous selection
-i: beginning-of-buffer       g: goto line
-k: end-of-buffer             C-g: goto line (previous-buffer)
-"
-nu-find-map)
+(defun nu-find-prompt ()
+  (interactive)
+  (nu-prompt-for-keymap nu-find-map))
 
 
 
-(define-prefix-command 'nu-replace-map)
+(nu-define-prefix 'nu-replace-map)
 (defun nu-join-with-following-line () (interactive) (join-line 1))
 (defun nu-rot-reg-or-toggle-rot () (interative) (if mark-active (rot13-region) (toggle-rot13-mode)))
 (define-key nu-replace-map (kbd "\C-r")  'query-replace-regexp)
@@ -328,10 +321,11 @@ nu-find-map)
 (define-key nu-replace-map (kbd "c") 'capitalize-word)
 (define-key nu-replace-map (kbd "x") 'nu-rot-reg-or-toggle-rot)
 (define-key nu-replace-map (kbd "h") 'delete-horizontal-space)
-(make-help-screen nu-replace-do-prompt
-(purecopy "Replace")
-"\\{nu-replace-map}"
-nu-replace-map)
+
+(defun nu-replace-do-prompt ()
+  (interactive)
+  (nu-prompt-for-keymap nu-replace-map))
+
 
 (defun nu-replace-prompt ()
   (interactive)
