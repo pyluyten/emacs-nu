@@ -141,6 +141,41 @@ a browse-kill-ring function."
 
 
 
+(defun nu-mark-whole-buffer ()
+  (interactive)
+  (run-with-timer 0.01 nil 'mark-whole-buffer))
+(defun nu-mark-defun ()
+  (interactive)
+  (run-with-timer 0.01 nil 'mark-defun))
+(defun nu-mark-sentence ()
+  (interactive)
+  (run-with-timer 0.01 nil 'mark-sentence))
+(defun _nu-mark-a-word ()
+  (interactive)
+  (run-with-timer 0.01 nil 'nu-mark-a-word))
+(defun _nu-select-a-block ()
+  (interactive)
+  (run-with-timer 0.01 nil 'nu-select-a-block))
+(defun nu-mark-paragraph ()
+  (interactive)
+  (run-with-timer 0.01 nil 'mark-paragraph))
+(defun nu-mark-to-bol ()
+  (interactive)
+  (run-with-timer 0.01 nil 'nu-mark-to-beginning-of-line))
+(defun nu-mark-to-eol ()
+  (interactive)
+  (run-with-timer 0.01 nil 'nu-mark-to-end-of-line))
+(defun _nu-mark-current-line ()
+  (interactive)
+  (run-with-timer 0.01 nil 'nu-mark-current-line))
+(defun nu-set-mark ()
+  (interactive)
+  (run-with-timer 0.01 nil 'cua-set-mark))
+(defun nu-set-rectangle-mark ()
+  (interactive)
+  (run-with-timer 0.01 nil 'cua-set-rectangle-mark))
+
+
 
 (defun nu-select-a-block ()
   "Select a block

@@ -171,38 +171,25 @@
 
 
 
-
-(define-prefix-command 'nu-a-map)
+(nu-define-prefix 'nu-a-map)
 (define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
-(define-key nu-a-map (kbd "f") '(lambda () (interactive) (run-with-timer 0.01 nil 'mark-defun)))
+(define-key nu-a-map (kbd "f") 'nu-mark-defun)
 (define-key nu-a-map (kbd "C-f") 'cd)
-(define-key nu-a-map (kbd "s") (lambda () (interactive) (run-with-timer 0.01 nil 'mark-sentence)))
-(define-key nu-a-map (kbd "w") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-a-word)))
-(define-key nu-a-map (kbd "C-w") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-select-a-block)))
-(define-key nu-a-map (kbd "p") (lambda () (interactive) (run-with-timer 0.01 nil 'mark-paragraph)))
-(define-key nu-a-map (kbd "j") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-to-beginning-of-line)))
-(define-key nu-a-map (kbd "l") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-to-end-of-line)))
-(define-key nu-a-map (kbd "k") (lambda () (interactive) (run-with-timer 0.01 nil 'nu-mark-current-line)))
-(define-key nu-a-map (kbd "C-<SPC>") (lambda () (interactive) (run-with-timer 0.01 nil 'cua-set-mark)))
-(define-key nu-a-map (kbd "r") (lambda () (interactive) (run-with-timer 0.01 nil 'cua-set-rectangle-mark)))
-(make-help-screen nu-a-prompt-internal
-(purecopy "A[ll]")
-"
- back-to-indentation is \\[nu-back-to-indentation]
+(define-key nu-a-map (kbd "s") 'nu-mark-sentence)
+(define-key nu-a-map (kbd "w") '_nu-mark-a-word)
+(define-key nu-a-map (kbd "C-w") '_nu-select-a-block)
+(define-key nu-a-map (kbd "p") 'nu-mark-paragraph)
+(define-key nu-a-map (kbd "j") 'nu-mark-to-bol)
+(define-key nu-a-map (kbd "l") 'nu-mark-to-eol)
+(define-key nu-a-map (kbd "k") '_nu-mark-current-line)
+(define-key nu-a-map (kbd "C-<SPC>") 'nu-set-mark)
+(define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)
 
- Set mark:
- Once mark is set, \\[nu-a-prompt] to exchange point & mark.
+(defun nu-a-prompt-internal ()
+  (interactive)
+  (nu-prompt-for-keymap nu-a-map))
 
-_space_ set mark  (\\[cua-set-mark])
-Use \\[cua-set-rectangle-mark] to set rectangle
 
-a: select all            f : mark-function
-p : mark-paragraph       l : mark to end of line
-s : mark sentence        j : mark to beginning of line
-w : mark-word            k : mark current line
-C-w: mark-WORD (block)   r : set rectangular mark
-"
-nu-a-map)
 (defun nu-a-prompt ()
   "Triggers nu-a-map.
 
