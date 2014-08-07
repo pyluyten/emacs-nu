@@ -205,7 +205,7 @@ But if mark is active, exchange point and mark."
 
 (nu-define-prefix 'nu-open-map)
 (define-key nu-open-map (kbd "f")  'find-file)
-(define-key nu-open-map (kbd "F")  'find-file-other-window)
+(define-key nu-open-map (kbd "\C-f")  'find-file-other-window)
 (define-key nu-open-map (kbd "r")  'recentf-open-files)
 (define-key nu-open-map (kbd "m")  'bookmark-bmenu-list)
 (define-key nu-open-map (kbd "M")  'bookmark-jump)
