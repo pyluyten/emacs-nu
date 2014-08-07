@@ -155,20 +155,27 @@
 
 
 
+(defun nu-populate-save-map ()
+ "Populate save map."
+  (nu-define-prefix 'nu-save-map)
+  (define-key nu-save-map (kbd "s") 'save-buffer)
+  (define-key nu-save-map (kbd "b") 'bookmark-set)
+  (define-key nu-save-map (kbd "w") 'ido-write-file)
+  (define-key nu-save-map (kbd "r") 'rename-buffer)
+  (define-key nu-save-map (kbd "l") 'org-store-link)
+  (define-key nu-save-map (kbd "m") 'magit-status)
+  ;(if (boundp 'magit-diff)
+    (define-key nu-save-map (kbd "d") 'magit-diff)
+  ;(if (equal major-mode 'Magit)
+    (define-key nu-save-map (kbd "c") 'magit-commit)
+  ;(if (equal major-mode 'Magit)
+    (define-key nu-save-map (kbd "p") 'magit-push)
+  ;(if (boundp 'git-commit-commit)
+    (define-key nu-save-map (kbd "x") 'git-commit-commit))
 
-(nu-define-prefix 'nu-save-map)
-(define-key nu-save-map (kbd "s") 'save-buffer)
-(define-key nu-save-map (kbd "b") 'bookmark-set)
-(define-key nu-save-map (kbd "w") 'ido-write-file)
-(define-key nu-save-map (kbd "r") 'rename-buffer)
-(define-key nu-save-map (kbd "l") 'org-store-link)
-(define-key nu-save-map (kbd "m") 'magit-status)
-(define-key nu-save-map (kbd "d") 'magit-diff)
-(define-key nu-save-map (kbd "c") 'magit-commit)
-(define-key nu-save-map (kbd "p") 'magit-push)
-(define-key nu-save-map (kbd "x") 'git-commit-commit)
 (defun nu-save-prompt ()
   (interactive)
+  (nu-populate-save-map)
   (nu-prompt-for-keymap nu-save-map))
 
 
