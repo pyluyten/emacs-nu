@@ -40,6 +40,14 @@ Use control+h then f to trigger describe-function,
 then enter the function you want to describe."))))
 
 
+ ; map-keymap has no way to receive
+ ; more than two args
+ ; we cannot easily communicate
+ ; to this the keymap we are parsing (!)
+ ; thus, use a global var
+(setq nu-current-keymap nil)
+
+
 
 (defun nu-define-prefix (arg)
 "Define a prefix command, assign ? key."
@@ -57,6 +65,7 @@ then enter the function you want to describe."))))
 ; for a given binding, display stuff...
 (defun nu-insert-binding-row (ev bind)
  "insert some link, the binding, the global binding, CR."
+
  (if (symbolp bind)
  ; if this is directly a binding, just print it.
       (progn
@@ -67,13 +76,16 @@ then enter the function you want to describe."))))
 ; make-text-button ((point) nil 
         ;(insert-button (symbol-name bind) 'help-function (symbol-function bind))
                                      ;match-number 1 , type 'help-button, arg "def" ie symbol-function
-        (insert-button (symbol-name bind) 'help-function (symbol-function bind))
-        (if (not (eq nil (where-is-internal bind nu-keymap)))
-          (insert
-          (format ", %s"
-            (mapconcat 'key-description
-              (where-is-internal bind nu-keymap) ", "))))
-        (insert "\n"))))
+;        (insert-button (symbol-name bind) 'help-function (symbol-function bind))
+        (insert "`" (symbol-name bind) "'")
+;        (if (not (eq nil (where-is-internal bind nu-keymap)))
+        (setq help-string (where-is-internal bind (list nu-current-keymap)))
+        (if (not (eq nil help-string))
+           (progn
+             (insert
+               (format ", %s"
+                 (mapconcat 'key-description help-string ", ")))
+              (insert "\n"))))))
   ; if bind is itself a nested keymap,
   ; first print modifier, then run self.
   ;    (progn
@@ -82,6 +94,13 @@ then enter the function you want to describe."))))
   ;        (map-keymap 'nu-insert-binding-row bind))))
 
 
+(defun nu-insert-binding-all (ev bind)
+ (if (symbolp bind)
+  (progn
+   (insert (symbol-name bind) " : ")
+   (insert (format ", %s" (mapconcat 'key-description
+   (where-is-internal bind) ", ")))
+   (insert "\n"))))
 
 (defun nu-prompt-for-keymap-old (nukeymap)
  "display a prompter with buttons."
@@ -96,6 +115,14 @@ then enter the function you want to describe."))))
 
 (defun nu-prompt-for-keymap (keymap)
  "Help to choose a key from a keymap."
+
+ ; map-keymap has no way to receive
+ ; more than two args
+ ; we cannot easily communicate
+ ; to this the keymap we are parsing (!)
+ ; thus, use a global var
+ (setq nu-current-keymap keymap)
+
  (setq prev-frame (selected-frame))
  (setq config (current-window-configuration))
  (setq local-map (make-sparse-keymap))
@@ -105,7 +132,9 @@ then enter the function you want to describe."))))
  (with-help-window (help-buffer)
   (with-current-buffer "*Help*"
    (insert "Press one of the below key, or ?\n" )
-   (map-keymap 'nu-insert-binding-row keymap)))
+   (map-keymap 'nu-insert-binding-row keymap)
+   (insert "\n\n\n")
+   (map-keymap 'nu-insert-binding-all keymap)))
 
  (switch-to-buffer-other-window "*Help*")
  (setq new-frame (window-frame (selected-window)))

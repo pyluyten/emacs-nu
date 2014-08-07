@@ -84,8 +84,6 @@
   (nu-prompt-for-keymap nu-print-map))
 
 
-
-
 (nu-define-prefix 'nu-delete-map)
 (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
 (define-key nu-delete-map (kbd "M-i") 'org-table-delete-column)
