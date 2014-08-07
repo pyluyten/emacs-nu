@@ -44,7 +44,7 @@
  (insert message)
  (setq x (read-event))
  (quit-window)
- (kill-buffer buf)
+ (kill-buffer buf)q
  (switch-to-buffer curb)
  (setq x x))
 
@@ -67,7 +67,7 @@
   (nu-prompt-for-keymap nu-window-map))
 
 
-(define-prefix-command 'nu-print-map)
+(nu-define-prefix 'nu-print-map)
 (define-key nu-print-map (kbd "P") 'print-buffer)
 (define-key nu-print-map (kbd "p") 'async-shell-command)
 (define-key nu-print-map (kbd "s") 'eval-last-sexp)
@@ -201,8 +201,7 @@ But if mark is active, exchange point and mark."
 
 
 
-(defun nu-next-window () (interactive) (other-window 1))
-(defun nu-previous-window () (interactive) (other-window -1))
+
 
 (nu-define-prefix 'nu-open-map)
 (define-key nu-open-map (kbd "f")  'find-file)
@@ -229,7 +228,6 @@ But if mark is active, exchange point and mark."
 
 
 (nu-define-prefix 'nu-global-map)
-(defun nu-no-goal-column () (interactive) (setq goal-column nil) (message "No goal column"))
 (defun nu-set-x-4-map () (interactive) (set-temporary-overlay-map ctl-x-4-map))
 (defun nu-set-x-5-map () (interactive) (set-temporary-overlay-map ctl-x-5-map))
 (define-key nu-global-map (kbd "a") 'async-shell-command)
@@ -266,7 +264,6 @@ help-map)
 
 
 (nu-define-prefix 'nu-find-map)
-(defun nu-find-char-backward () (interactive) (nu-find-char t))
 (define-key nu-find-map (kbd "F") 'nu-isearch-forward)
 (define-key nu-find-map (kbd "R") 'nu-isearch-backward)
 (define-key nu-find-map (kbd "f") 'nu-isearch-forward-regexp)
@@ -291,8 +288,6 @@ help-map)
 
 
 (nu-define-prefix 'nu-replace-map)
-(defun nu-join-with-following-line () (interactive) (join-line 1))
-(defun nu-rot-reg-or-toggle-rot () (interative) (if mark-active (rot13-region) (toggle-rot13-mode)))
 (define-key nu-replace-map (kbd "\C-r")  'query-replace-regexp)
 (define-key nu-replace-map (kbd "a")  'revert-buffer)
 (define-key nu-replace-map (kbd "R")  'query-replace)
