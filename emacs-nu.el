@@ -35,6 +35,7 @@
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
    (define-key nu-menu-map (kbd "o") 'nu-open-map)
    (define-key nu-keymap (kbd "C-p") 'nu-print-prompt)
+   (define-key nu-menu-map (kbd "p") 'nu-print-map)
 
    (define-key nu-keymap (kbd "C-a") 'nu-a-prompt)
    (define-key nu-menu-map (kbd "a") 'nu-a-map)

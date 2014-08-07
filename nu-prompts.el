@@ -142,45 +142,32 @@
 
 
 
-
-(define-prefix-command 'nu-save-map)
+(nu-define-prefix 'nu-save-map)
 (define-key nu-save-map (kbd "s") 'save-buffer)
 (define-key nu-save-map (kbd "b") 'bookmark-set)
 (define-key nu-save-map (kbd "w") 'ido-write-file)
 (define-key nu-save-map (kbd "r") 'rename-buffer)
 (define-key nu-save-map (kbd "l") 'org-store-link)
-;------------------------------------------------
 (define-key nu-save-map (kbd "m") 'magit-status)
 (define-key nu-save-map (kbd "d") 'magit-diff)
 (define-key nu-save-map (kbd "c") 'magit-commit)
 (define-key nu-save-map (kbd "p") 'magit-push)
 (define-key nu-save-map (kbd "x") 'git-commit-commit)
-(make-help-screen nu-save-prompt
-(purecopy "Save")
-"\\{nu-save-map}"
-nu-save-map)
+(defun nu-save-prompt ()
+  (interactive)
+  (nu-prompt-for-keymap nu-save-map))
 
 
-
-(define-prefix-command 'nu-new-map)
+(nu-define-prefix 'nu-new-map)
 (define-key nu-new-map (kbd "b") 'nu-new-empty-buffer)
 (define-key nu-new-map (kbd "w") 'make-frame-command)
 (define-key nu-new-map (kbd "v") 'split-window-below)
 (define-key nu-new-map (kbd "h") 'split-window-right)
 (define-key nu-new-map (kbd "i") 'ibuffer-other-window)
 (define-key nu-new-map (kbd "f") 'makedir)
-(make-help-screen nu-new-prompt
-(purecopy "New")
-"
- (next-line is \\[next-line])
-
- b, buffer ('Untitled', \\[nu-new-empty-buffer])
- i, ibuffer other window
- w, new Xwindow
- v, new vertical frame
- h, new horizontal frame"
-nu-new-map)
-
+(defun nu-new-prompt ()
+  (interactive)
+  (nu-prompt-for-keymap nu-new-map))
 
 
 
@@ -227,6 +214,9 @@ But if mark is active, exchange point and mark."
 
 
 
+(defun nu-next-window () (interactive) (other-window 1))
+(defun nu-previous-window () (interactive) (other-window -1))
+
 (nu-define-prefix 'nu-open-map)
 (define-key nu-open-map (kbd "f")  'find-file)
 (define-key nu-open-map (kbd "F")  'find-file-other-window)
@@ -239,8 +229,8 @@ But if mark is active, exchange point and mark."
 (define-key nu-open-map (kbd "j")   'previous-buffer)
 (define-key nu-open-map (kbd "c")   'org-capture)
 (define-key nu-open-map (kbd "a")   'org-agenda)
-(define-key nu-open-map (kbd "o")   '(lambda () (interactive) (other-window 1)))
-(define-key nu-open-map (kbd "O")   '(lambda () (interactive) (other-window -1)))
+(define-key nu-open-map (kbd "o")   'nu-next-window)
+(define-key nu-open-map (kbd "O")   'nu-previous-window)
 (define-key nu-open-map (kbd "i")   'ibuffer)
 (define-key nu-open-map (kbd "C-i")   'org-iswitchb)
 (define-key nu-open-map (kbd "C-<SPC>") 'ido-switch-buffer)
