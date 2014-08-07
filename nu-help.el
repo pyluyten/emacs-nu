@@ -147,14 +147,14 @@ then enter the function you want to describe."))))
  (setq key (read-key-sequence "Enter a key or ? :"))
  (setq defn (lookup-key local-map key))
  (message "")
+ (set-window-configuration config)
   (if defn
     (progn
-      (set-window-configuration config)
       ;(delete-window (get-buffer-window (help-buffer)))
       (setq nu-last-command defn)
       (call-interactively defn))
-    (delete-window (get-buffer-window (help-buffer)))))
-
+;    (delete-window (get-buffer-window (help-buffer)))))
+))
 
 (defadvice repeat (before nu-repeat-last-prompt ())
   (if

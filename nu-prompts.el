@@ -54,8 +54,10 @@
 
 (nu-define-prefix 'nu-window-map)
 (define-key nu-window-map (kbd "w") 'nu-close-tab)
-(define-key nu-window-map (kbd "\C-k") 'kill-buffer)
-(define-key nu-window-map (kbd "\C-w") 'delete-other-windows)
+(define-key nu-window-map (kbd "C-k") 'kill-buffer)
+(define-key nu-window-map (kbd "C-w") 'delete-other-windows)
+(define-key nu-window-map (kbd "C-<space>") 'scroll-other-window)
+(define-key nu-window-map (kbd "C-<backspace>") 'scroll-other-window-down)
 (define-key nu-window-map (kbd "i") 'windmove-up)
 (define-key nu-window-map (kbd "j") 'windmove-left)
 (define-key nu-window-map (kbd "k") 'windmove-down)
