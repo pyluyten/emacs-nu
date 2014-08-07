@@ -107,9 +107,8 @@
    (define-key nu-keymap (kbd "M-n") 'nu-new-empty-buffer)
    (define-key nu-keymap (kbd "²") 'ibuffer)
    (define-key nu-keymap (kbd "M-²") 'other-window)
-   (define-key nu-keymap (kbd "M-0") 'nu-back-to-bol)
-(define-key key-translation-map [dead-circumflex] "^");don't work
-   (define-key nu-keymap (kbd "M-^") 'nu-back-to-indentation); don't work
+   ;(define-key nu-keymap (kbd "M-0") 'nu-back-to-bol) hmm keep num!
+   (define-key nu-keymap (kbd "M-<dead-circumflex>")'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-à") 'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-$") 'nu-end-of-line)
 
