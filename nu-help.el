@@ -1,25 +1,20 @@
 ;
-; les pistes par rapport au "define func"
-; 1. créer un help bouton à l'aide d'une fonction déjà existante
-;    ou encore un clickable text.
-; 2. créer une référence `ma-fonc' et demander au help buffer de faire
-;    le travail
-; 3. proposer une autre manière de consulter les fonctions...
-;    par exemple la touche . est réservée à l'actuel ?
-;    et le ? sert à describe-func sur la keymap en cours
-;    
-;
-; TODO
-; (fix bugs)
-; clickable functions
-; 
-; 
-;  "27" is ^[ is escape but is actually meta. Uh?
+; prompts:
+; i need to make func clickable
+; 1) create a help button (or clickable text) with already existing func
+; 2) or, create a `ref' & ask help-xref-something
+; 3) and/or, add another way to access my func:
+;    maybe a key to change point of view:
+;    when following key is pressed, keymap is looked up,
+;    & describe func runs
 ;
 ;
-; on ne peut pas "advice" une 'map'. Seulement une fonction stricto sensu.
+;
+;  "27" is ^[ which is escape but is actually meta. Uh?
+;
+;
+; note : one cannot "advice" a 'map'
 
-;(require 'button)
 
 
 
@@ -67,17 +62,16 @@ then enter the function you want to describe."))))
  "insert some link, the binding, the global binding, CR."
 
  (if (symbolp bind)
- ; if this is directly a binding, just print it.
-      (progn
-    ;    (insert ev "  : ") ; for now we insert only
-    ;    (insert-button (symbol-name bind)
+       (progn
+        (insert-button (symbol-name bind))
+    ;    (insert ev "  : ")
     ;           'action 'nu-describe-function)
 ;        (insert (symbol-name bind))
 ; make-text-button ((point) nil 
         ;(insert-button (symbol-name bind) 'help-function (symbol-function bind))
                                      ;match-number 1 , type 'help-button, arg "def" ie symbol-function
 ;        (insert-button (symbol-name bind) 'help-function (symbol-function bind))
-        (insert "`" (symbol-name bind) "'")
+;        (insert "`" (symbol-name bind) "'")
 ;        (if (not (eq nil (where-is-internal bind nu-keymap)))
         (setq help-string (where-is-internal bind (list nu-current-keymap)))
         (if (not (eq nil help-string))
@@ -102,13 +96,14 @@ then enter the function you want to describe."))))
    (where-is-internal bind) ", ")))
    (insert "\n"))))
 
-(defun nu-prompt-for-keymap-old (nukeymap)
- "display a prompter with buttons."
- (with-help-window (help-buffer)
-  (with-current-buffer "*Help*"
-   (insert "Press one of the below key, or ?\n" )
-   (map-keymap 'nu-insert-binding-row nukeymap)))
- (set-temporary-overlay-map nukeymap))
+;
+;(defun nu-prompt-for-keymap-old (nukeymap)
+; "display a prompter with buttons."
+; (with-help-window (help-buffer)
+;  (with-current-buffer "*Help*"
+;   (insert "Press one of the below key, or ?\n" )
+;   (map-keymap 'nu-insert-binding-row nukeymap)))
+; (set-temporary-overlay-map nukeymap))
 
 
 
@@ -135,6 +130,7 @@ then enter the function you want to describe."))))
    (map-keymap 'nu-insert-binding-row keymap)
    (insert "\n\n\n")
    (map-keymap 'nu-insert-binding-all keymap)))
+ ;(help-make-xrefs (help-buffer))
 
  (switch-to-buffer-other-window "*Help*")
  (setq new-frame (window-frame (selected-window)))
@@ -151,27 +147,30 @@ then enter the function you want to describe."))))
     (delete-window (get-buffer-window (help-buffer)))))
 
 
-(defun nu-insert-binding-desc (ev bind)
- "insert some link, the binding, the global binding, CR."
- (if (symbolp bind)
-    (progn
-     (insert "`" (symbol-name bind) "'")
-      (if (not (eq nil (where-is-internal bind nu-keymap)))
-        (insert
-         (format ", %s"
-            (mapconcat 'key-description
-              (where-is-internal bind nu-keymap) ", "))))
-        (insert "\n"))))
+;; not used
+;(defun nu-insert-binding-desc (ev bind)
+; "insert some link, the binding, the global binding, CR."
+; (if (symbolp bind)
+;    (progn
+;     (insert "`" (symbol-name bind) "'")
+;      ;(insert-button (symbol-name bind)
+;      (if (not (eq nil (where-is-internal bind nu-keymap)))
+;        (insert
+;         (format ", %s"
+;            (mapconcat 'key-description
+;              (where-is-internal bind nu-keymap) ", "))))
+;        (insert "\n"))))
 
 
 ;; not used
-(defun nu-describe-keymap (keym)
- "Creates a description of keymap."
-  (generate-new-buffer "*Nu*")
-  (with-current-buffer "*Nu*"
-  (insert "Press one of the below key, or ?\n")
-  (map-keymap 'nu-insert-binding-desc keym)
-  (buffer-string)))
+;(defun nu-describe-keymap (keym)
+; "Creates a description of keymap."
+;  (generate-new-buffer "*Nu*")
+;  (with-current-buffer "*Nu*"
+;  (insert "Press one of the below key, or ?\n")
+;  (map-keymap 'nu-insert-binding-desc keym)
+;  (help-make-xrefs (help-buffer))
+;  (buffer-string)))
 
 
 
