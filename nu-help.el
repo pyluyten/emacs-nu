@@ -40,8 +40,16 @@ then enter the function you want to describe."))))
  ; we cannot easily communicate
  ; to this the keymap we are parsing (!)
  ; thus, use a global var
-(setq nu-current-keymap nil)
+(defvar nu-current-keymap nil)
 
+
+; repeat does not work
+; as we would like with prompts
+; below fixes this.
+;
+; (you can see repeat advice and nu-prompt-for-keymap but
+; you already got the idea)
+(defvar nu-last-command nil)
 
 
 (defun nu-define-prefix (arg)
@@ -143,9 +151,29 @@ then enter the function you want to describe."))))
     (progn
       (set-window-configuration config)
       ;(delete-window (get-buffer-window (help-buffer)))
+      (setq nu-last-command defn)
       (call-interactively defn))
     (delete-window (get-buffer-window (help-buffer)))))
 
+
+(defadvice repeat (before nu-repeat-last-prompt ())
+  (if
+   (or
+    (eq last-repeatable-command 'nu-delete-prompt)
+    (eq last-repeatable-command 'nu-replace-prompt)
+    (eq last-repeatable-command 'nu-window-prompt)
+    (eq last-repeatable-command 'nu-open-prompt)
+    (eq last-repeatable-command 'nu-a-prompt)
+    (eq last-repeatable-command 'nu-find-prompt)
+    (eq last-repeatable-command 'nu-global-prompt)
+    (eq last-repeatable-command 'nu-help-prompt)
+    (eq last-repeatable-command 'nu-new-prompt)
+    (eq last-repeatable-command 'nu-save-prompt)
+    (eq last-repeatable-command 'nu-insert-prompt)
+    (eq last-repeatable-command 'nu-print-prompt))
+   (setq last-repeatable-command nu-last-command)))
+
+(ad-activate 'repeat)
 
 ;; not used
 ;(defun nu-insert-binding-desc (ev bind)
@@ -177,6 +205,7 @@ then enter the function you want to describe."))))
 
 ; keep the code here temp.
 ; just for inspiration.
+; i'm still missing scroll & maybe %THIS-KEY%
 (defmacro make-help-screen2 (fname help-line help-text helped-map)
   "Construct help-menu function name FNAME.
 When invoked, FNAME shows HELP-LINE and reads a command using HELPED-MAP.
