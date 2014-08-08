@@ -57,37 +57,25 @@ then enter the function you want to describe."))))
  (define-prefix-command arg)
  (define-key arg (kbd "?") 'nu-help-about-prompts))
 
-;(defun nu-insert-button (nu-function some-keymap)
-;  "insert a button describing function!"
-;  (insert-button nu-function 'action
-;    (lambda (x) 
-;       (describe-function (intern x)))))
-
 
 
 ; for a given binding, display stuff...
 (defun nu-insert-binding-row (ev bind)
  "insert some link, the binding, the global binding, CR."
-
  (if (symbolp bind)
        (progn
+  ; insert the button
         (insert-button (symbol-name bind))
-    ;    (insert ev "  : ")
-    ;           'action 'nu-describe-function)
-;        (insert (symbol-name bind))
-; make-text-button ((point) nil 
-        ;(insert-button (symbol-name bind) 'help-function (symbol-function bind))
-                                     ;match-number 1 , type 'help-button, arg "def" ie symbol-function
-;        (insert-button (symbol-name bind) 'help-function (symbol-function bind))
-;        (insert "`" (symbol-name bind) "'")
-;        (if (not (eq nil (where-is-internal bind nu-keymap)))
+
+  ; insert shortcuts from the prompt
         (setq help-string (where-is-internal bind (list nu-current-keymap)))
         (if (not (eq nil help-string))
-           (progn
-             (insert
-               (format ", %s"
-                 (mapconcat 'key-description help-string ", ")))
-              (insert "\n"))))))
+             (progn
+               (insert
+                 (format " %s"
+                   (mapconcat 'key-description help-string ", ")))))
+
+
   ; if bind is itself a nested keymap,
   ; first print modifier, then run self.
   ;    (progn
@@ -96,22 +84,16 @@ then enter the function you want to describe."))))
   ;        (map-keymap 'nu-insert-binding-row bind))))
 
 
-(defun nu-insert-binding-all (ev bind)
- (if (symbolp bind)
-  (progn
-   (insert (symbol-name bind) " : ")
-   (insert (format ", %s" (mapconcat 'key-description
-   (where-is-internal bind) ", ")))
+  ;; print the direct keys
+   (setq all
+      (replace-regexp-in-string "<menu>.*@" ""
+        (format "%s@"
+          (mapconcat 'key-description (where-is-internal bind) "@"))))
+   (if (> (string-width all) 1)
+   (progn
+     (setq all (replace-regexp-in-string "@" " " all))
+     (insert " - or " all)))
    (insert "\n"))))
-
-;
-;(defun nu-prompt-for-keymap-old (nukeymap)
-; "display a prompter with buttons."
-; (with-help-window (help-buffer)
-;  (with-current-buffer "*Help*"
-;   (insert "Press one of the below key, or ?\n" )
-;   (map-keymap 'nu-insert-binding-row nukeymap)))
-; (set-temporary-overlay-map nukeymap))
 
 
 
@@ -137,7 +119,8 @@ then enter the function you want to describe."))))
    (insert "Press one of the below key, or ?\n" )
    (map-keymap 'nu-insert-binding-row keymap)
    (insert "\n\n\n")
-   (map-keymap 'nu-insert-binding-all keymap)))
+   ;(map-keymap 'nu-insert-binding-all keymap)))
+))
  ;(help-make-xrefs (help-buffer))
 
  (switch-to-buffer-other-window "*Help*")
