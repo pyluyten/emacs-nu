@@ -75,11 +75,6 @@ then enter the function you want to describe."))))
                  (format " %s"
                    (mapconcat 'key-description help-string ", ")))))
 
-
-  ; if bind is itself a nested keymap,
-  ; (map-keymap 'nu-insert-binding-row bind))))
-
-
   ;; print the direct keys
    (setq all
       (replace-regexp-in-string "<menu>.*@" ""
@@ -121,14 +116,23 @@ then enter the function you want to describe."))))
  (setq new-frame (window-frame (selected-window)))
 
  (setq cursor-in-echo-area t)
- (setq key (read-key-sequence "Enter a key or ? :"))
- (setq defn (lookup-key local-map key))
- (message "")
- (set-window-configuration config)
-  (if defn
-    (progn
-      (setq nu-last-command defn)
-      (call-interactively defn))))
+ (setq input nil)
+ (setq defn nil)
+   (while (not input)
+      (setq key (read-key-sequence "Enter a key or ? :"))
+      (if (eq (aref key 0) ?\d)
+               (scroll-down)
+          (if (eq (aref key 0) ?\s)
+               (scroll-up)
+             (progn
+                (setq defn (lookup-key local-map key))
+                (message "")
+                (set-window-configuration config)
+                (setq input t))))
+      (if defn
+          (progn
+          (setq nu-last-command defn)
+          (call-interactively defn)))))
 
 
 (defadvice repeat (before nu-repeat-last-prompt ())
@@ -240,7 +244,7 @@ and then returns."
 					    (if (pos-visible-in-window-p
 						 (point-max))
 						"" ", or SPACE or DEL to scroll")))
-			       char (aref key 0)))k
+			       char (aref key 0)))
 
 		       ;; If this is a scroll bar command, just run it.
 		       (when (eq char 'vertical-scroll-bar)
