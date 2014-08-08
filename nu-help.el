@@ -77,11 +77,7 @@ then enter the function you want to describe."))))
 
 
   ; if bind is itself a nested keymap,
-  ; first print modifier, then run self.
-  ;    (progn
-  ;        (if (eq ev 27)
-  ;            (insert "Alt+"))
-  ;        (map-keymap 'nu-insert-binding-row bind))))
+  ; (map-keymap 'nu-insert-binding-row bind))))
 
 
   ;; print the direct keys
@@ -118,10 +114,8 @@ then enter the function you want to describe."))))
   (with-current-buffer "*Help*"
    (insert "Press one of the below key, or ?\n" )
    (map-keymap 'nu-insert-binding-row keymap)
-   (insert "\n\n\n")
-   ;(map-keymap 'nu-insert-binding-all keymap)))
-))
- ;(help-make-xrefs (help-buffer))
+   (insert "\n\n\n")))
+
 
  (switch-to-buffer-other-window "*Help*")
  (setq new-frame (window-frame (selected-window)))
@@ -133,11 +127,9 @@ then enter the function you want to describe."))))
  (set-window-configuration config)
   (if defn
     (progn
-      ;(delete-window (get-buffer-window (help-buffer)))
       (setq nu-last-command defn)
-      (call-interactively defn))
-;    (delete-window (get-buffer-window (help-buffer)))))
-))
+      (call-interactively defn))))
+
 
 (defadvice repeat (before nu-repeat-last-prompt ())
   (if
@@ -148,7 +140,6 @@ then enter the function you want to describe."))))
     (eq last-repeatable-command 'nu-open-prompt)
     (eq last-repeatable-command 'nu-a-prompt)
     (eq last-repeatable-command 'nu-find-prompt)
-    (eq last-repeatable-command 'nu-global-prompt)
     (eq last-repeatable-command 'nu-help-prompt)
     (eq last-repeatable-command 'nu-new-prompt)
     (eq last-repeatable-command 'nu-save-prompt)
@@ -157,32 +148,6 @@ then enter the function you want to describe."))))
    (setq last-repeatable-command nu-last-command)))
 
 (ad-activate 'repeat)
-
-;; not used
-;(defun nu-insert-binding-desc (ev bind)
-; "insert some link, the binding, the global binding, CR."
-; (if (symbolp bind)
-;    (progn
-;     (insert "`" (symbol-name bind) "'")
-;      ;(insert-button (symbol-name bind)
-;      (if (not (eq nil (where-is-internal bind nu-keymap)))
-;        (insert
-;         (format ", %s"
-;            (mapconcat 'key-description
-;              (where-is-internal bind nu-keymap) ", "))))
-;        (insert "\n"))))
-
-
-;; not used
-;(defun nu-describe-keymap (keym)
-; "Creates a description of keymap."
-;  (generate-new-buffer "*Nu*")
-;  (with-current-buffer "*Nu*"
-;  (insert "Press one of the below key, or ?\n")
-;  (map-keymap 'nu-insert-binding-desc keym)
-;  (help-make-xrefs (help-buffer))
-;  (buffer-string)))
-
 
 
 

@@ -44,7 +44,7 @@
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-menu-map (kbd "f") 'nu-find-map)
    (define-key nu-keymap (kbd "C-g") 'nu-global-prompt)
-   (define-key nu-menu-map (kbd "g") 'nu-global-map)
+;   (define-key nu-menu-map (kbd "g") 'nu-global-map)
    (define-key nu-keymap (kbd "C-h") 'nu-help-prompt)
    (define-key nu-menu-map (kbd "h") 'help-map)
    (define-key nu-keymap (kbd "C-j") 'backward-delete-char)
@@ -63,7 +63,6 @@
    (define-key nu-keymap (kbd "C-$") 'kill-line)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
-   (define-key nu-keymap (kbd "C-M-<SPC>") 'Control-X-prefix) ; tmp?
 
    (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
    (define-key nu-keymap (kbd "C-<prior>") 'previous-buffer)

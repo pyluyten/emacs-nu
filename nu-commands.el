@@ -80,8 +80,6 @@ If region is selected, use this as a search string."
 (define-key nu-help-map (kbd "o") 'nu-describe-open)
 (defun nu-describe-find () (interactive) (describe-keymap 'nu-find-map))
 (define-key nu-help-map (kbd "f") 'nu-describe-find)
-(defun nu-describe-global () (interactive) (describe-keymap 'nu-global-map))
-(define-key nu-help-map (kbd "g") 'nu-describe-global)
 (defun nu-describe-delete () (interactive) (describe-keymap 'nu-delete-map))
 (define-key nu-help-map (kbd "d") 'nu-describe-delete)
 (defun nu-describe-insert () (interactive) (describe-keymap 'nu-insert-map))
@@ -102,8 +100,7 @@ If region is selected, use this as a search string."
  // Control Key Prompts
  h: nu-help-prompt     a: nu-a-prompt
  p: nu-print-prompt    r: nu-replace-prompt
- f: nu-find-prompt     g: nu-global-prompt
- o: nu-open-prompt
+ f: nu-find-prompt     o: nu-open-prompt
 
  // Alt Key Prompts
  s: nu-save-prompt     d: nu-delete-prompt (alt)

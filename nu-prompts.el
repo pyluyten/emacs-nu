@@ -1,4 +1,4 @@
-;;
+
 ;;
 ;;   Pierre-Yves Luyten
 ;;   2014
@@ -159,6 +159,7 @@
  "Populate save map."
   (nu-define-prefix 'nu-save-map)
   (define-key nu-save-map (kbd "s") 'save-buffer)
+  (define-key nu-save-map (kbd "g") 'nu-toggle-goal-column)
   (define-key nu-save-map (kbd "b") 'bookmark-set)
   (define-key nu-save-map (kbd "w") 'ido-write-file)
   (define-key nu-save-map (kbd "r") 'rename-buffer)
@@ -248,19 +249,9 @@ But if mark is active, exchange point and mark."
 
 
 
-(nu-define-prefix 'nu-global-map)
-(defun nu-set-x-4-map () (interactive) (set-temporary-overlay-map ctl-x-4-map))
-(defun nu-set-x-5-map () (interactive) (set-temporary-overlay-map ctl-x-5-map))
-(define-key nu-global-map (kbd "a") 'async-shell-command)
-(define-key nu-global-map (kbd "4")  'nu-set-x-4-map)
-(define-key nu-global-map (kbd "5") 'nu-set-x-5-map)
-(define-key nu-global-map (kbd "g") 'nu-toggle-goal-column)
-(define-key nu-global-map (kbd "\C-q") 'save-buffers-kill-emacs)
-(define-key nu-global-map (kbd "t") 'transpose-frame)
-(define-key nu-global-map (kbd "x") 'Control-X-prefix)
 (defun nu-global-prompt ()
   (interactive)
-  (nu-prompt-for-keymap nu-global-map))
+  (nu-prompt-for-keymap ctl-x-map))
 
 
 
