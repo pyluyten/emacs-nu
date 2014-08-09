@@ -31,6 +31,8 @@
    (define-key nu-keymap (kbd "C-t") 'nu-new-tab)
    ; y?
    (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
+   (define-key universal-argument-map (kbd "C-u") 'backward-kill-word) ; fix c-u with prefix.
+   (define-key universal-argument-map (kbd "M-p") 'universal-argument-more)
    ; C-i is tab.
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
    (define-key nu-menu-map (kbd "o") 'nu-open-map)
