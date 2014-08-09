@@ -1,6 +1,6 @@
 This is nu.info, produced by makeinfo version 5.1 from nu.texi.
 
-This manual is for Nu (version 0.2 of 2014-08-03), a modern keybinding
+This manual is for Nu (version 0.3 of 2014-08-03), a modern keybinding
 for Emacs.  Copyright © 2014 Pierre-Yves Luyten.
 
      Permission is granted to copy, distribute and/or modify this
@@ -31,6 +31,7 @@ This is the manual for Nu, a modern keybinding for Emacs.
 * Files Buffers Windows::
 * Hacking::
 * NU & other libraries::
+* Contributing::
 * GNU Free Documentation License::
 
 
@@ -54,12 +55,15 @@ are not provided in raw Emacs.
 prompts.  For example, 'Control-f' raises a prompt precising which key -
 actually, which sequence - to press in order to execute desired function
 : once 'Control-f' has been pressed and the "Find-prompt" appears,
-pressing <f> will start a regexp search, while 'g' will execute
-goto-line, or 's' will move point to previous selection.
+pressing <f> will toggle ace-jump-char-mode, <C-f> will start a regexp
+search, while 'g' will execute goto-line, or 's' will move point to
+previous selection.
 
-   Inverse is sometimes true : since 'Control+s' invoking a prompt would
-be irritating, this sequence directly saves buffer, while 'Alt+s' runs
-the "save prompt".
+   Most common shortcuts - ie, common to most applications - respect
+this guideline.  Thus, there is a prompt for 's', 'v', 'a'...  Almost
+all prompts rely on Control modifier to be run.  There are exceptions.
+Since 'Control+s' invoking a prompt would be irritating, this sequence
+directly saves buffer, while 'Alt+s' runs the "save prompt".
 
    nu-emacs does not only provides nu-mode.  There are also two
 independant parts
@@ -124,18 +128,19 @@ want.  Also, 'Control+h' for help-prefix is still there.
      To invoke above myfunction example, press 'Control-SPC h'.
 
   2. You should not rely on 'Control+x', or at least no regularly.
-     However to trigger x prefix, use 'Control+Alt+Space'.
+     However to trigger x prefix, use 'Control+g'.  This will raise a
+     prompt to trigger Control-X-Prefix.
 
-   'Repeat' does not work really fine with prompts : one can trigger
-'Repeat' with 'Control+Return', however if last command was invoked from
-a prompt, repeat will execute this prompt rather than the final command
-itself.  However prefix arguments (numeric-argument, negative-argument)
-should do fine with prompts.
+   'Repeat' is invoked from 'Control+Return'.  It was hacked to work
+with prompts : thus, you can repeat a command ran from a prompt.  Prefix
+arguments (numeric-argument, negative-argument) can work : first trigger
+the argument, then call the prompt.  The command will consume the
+argument (not the prompt).
 
    Note that 'where-is' function, which sometimes advertises shortcuts,
-will not really work, since a prompt is not a keymap : 'where-is' do not
-know how to invoke 'Control-f' then 'k' to reach end of buffer.  (Did
-you try where-is git push in magit?)
+will not work as usual, since a prompt is not a keymap : 'where-is' do
+not know how to invoke 'Control-f' then 'k' to reach end of buffer.
+(Did you try where-is git push in magit?)
 
    Thus :
   1. For each function accessible from a prompt, an additional shortcut
@@ -155,7 +160,7 @@ File: nu.info,  Node: View and Edit,  Next: Files Buffers Windows,  Prev: NU for
 3 View and Edit
 ***************
 
-Obviously just type keys to input text.  With slight notes : 'Alt+m' to
+Obviously just type keys to input text.  With slight notes : 'Alt+m'to
 carriage return + indent.  Use 'Alt+v' + c to insert literally a
 character.
 
@@ -163,8 +168,9 @@ character.
 ============
 
 While arrows still work, Nu uses <Alt> key to navigate.  Hence, the
-thumb often presses <Alt> key, while pinky finger remains safe.
-Navigate up left right down using <Alt> and :
+thumb often presses <Alt> key, while pinky finger remains safe.  This is
+exactly the same principle than ErgoEmacs applies.  Navigate up left
+right down using <Alt> and :
 
        I
      J K L
@@ -186,16 +192,35 @@ executes a command, & maybe a very common one.  The other key does raise
 a prompt to offer more features.  This principle to have one 'alt'
 modifier plus one 'control' modifier applies to other keys, as well.
 
+   Numeric arguments can apply to navigation.  Press 'Alt+1' then
+'Alt+5' to input 15 as a numeric argument ; now input 'Alt+k' to go down
+one line : this will go down 15 lines.
+
+   'Repeat' also applies to navigation.  Enter 'Control+Return' to
+repeat a navigation.
+
    However - let's finish with navigation.  Use 'Alt+Space' to scroll
 (to the bottom), and 'Alt+Backspace' to go back to the top.  Emacs
 vanilla keybindings for 'help-mode' and some other offer Space and
 Backspace to do this - this is one of the few conventions respected into
 Emacs-nu.  Yup.
 
+   This navigation chapter is meant as a general introduction to
+emacs-nu ; because navigation is a basis, but also because we saw many
+emacs-nu principles :
+  1. Direct keys for most common operations.
+  2. Prompts for slighly less common to rare operations.
+  3. Numeric arguments.
+  4. Repeat.
+  5. Few emacs convention respected, but some.
+
+   These same principles apply to other prompts.
+
 3.2 Selections and Deletion
 ===========================
 
-Several alternatives offer to delete (cut) text.
+Now that you can input text plus navigate, let's examine several
+alternatives to delete (cut) text.
 
        1. Use 'Control-x' to cut the current line.
        2. Use 'Control+j','Control+l' to delete backward, forward char.
@@ -215,11 +240,17 @@ go
      word (or extend current selection to previous word).
 
   2. An alternative in order to select text is to press 'Alt+a' to set a
-     mark, then move to extend selection.
+     mark, then move to extend selection.  You can also use a direct key
+     to set a rectangular mark : 'Control+S', ie 'Control+Shift+s'.
 
   3. An alternative is to press 'Control+a' to invoke "a-" prompt,
      allowing to select "a-" word, "a-" sentence, and so on, or to set
-     the mark.  Or, to set a rectangular mark.
+     the mark.  Or, to set a rectangular mark.  Read the prompt!
+
+   Once some text is selected you can "toggle the point and mark" using
+'Control+a', or deactivate the selection using 'Alt+a', or cut the text
+using 'Control+x' (or 'Alt+d' might be nice depending on your fingers
+position).
 
 3.3 Cut Copy Paste
 ==================
@@ -242,12 +273,14 @@ use 'Alt + v' to invoke an advanced "Paste" prompt.
 ================
 
 Use 'Alt+z' to undo.  Or, use 'Control+z' to invoke undo-tree visualizer
-to play with discard changes in an advanced way.
+to play with discard changes in an advanced way.  This screen displays
+last changes, and you can navigate these using the paddle ('Alt+i',
+'Alt+j', 'Alt+k', 'Alt+l').  Press <q> to quit this screen.
 
 3.5 Advanced Edition
 ====================
 
-Some avdanced editon features rely on 'Control-r', which will invoke
+Some advanced editon features rely on 'Control-r', which will invoke
 replace prompt, allowing you to replace-regexp, merge-lines, delete
 spaces, or invoke other functions.
 
@@ -256,9 +289,9 @@ spaces, or invoke other functions.
   2. 'Alt+e' will copy to current line char above point (on the above
      line).
 
-   'Alt+v' prompt to open a line.  'Control+g' global prompt will also
-propose goal-column feature.  (This prompt is hard to reached ; it won't
-offer really much.)
+   'Alt+v' prompt to open a line.  'Alt+s' prompt allows you to save
+current column as a goal-column.  While you move next and previous
+lines, cursor will try to reach this column as far as possibe.
 
 
 File: nu.info,  Node: Files Buffers Windows,  Next: Hacking,  Prev: View and Edit,  Up: Top
@@ -266,7 +299,7 @@ File: nu.info,  Node: Files Buffers Windows,  Next: Hacking,  Prev: View and Edi
 4 Files Buffers Windows
 ***********************
 
-Use 'Control + s' to save current file, 'Alt + s' to invoke a prompt to
+Use 'Control+s' to save current file, 'Alt+s' to invoke a prompt to
 rename it.
   1. Use 'Control+o' to open a file, a window, a buffer, or use
      bookmarks,...  Or move to another frame...or buffers list...
@@ -295,7 +328,7 @@ save cats or so.
    'Control+p' also offers to grep, find-grep or ediff.
 
 
-File: nu.info,  Node: NU & other libraries,  Next: GNU Free Documentation License,  Prev: Hacking,  Up: Top
+File: nu.info,  Node: NU & other libraries,  Next: Contributing,  Prev: Hacking,  Up: Top
 
 6 NU & other libraries
 **********************
@@ -340,7 +373,16 @@ purpose.  Simply put below lines on your .emacs:
 are different, but fixing the paddle is fine.
 
 
-File: nu.info,  Node: GNU Free Documentation License,  Prev: NU & other libraries,  Up: Top
+File: nu.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: NU & other libraries,  Up: Top
+
+7 Contributing
+**************
+
+As of today nu-mode only has one author, & contribution is more than
+welcomed.  Please look at github.
+
+
+File: nu.info,  Node: GNU Free Documentation License,  Prev: Contributing,  Up: Top
 
 Appendix A GNU Free Documentation License
 *****************************************
@@ -825,13 +867,14 @@ their use in free software.
 
 Tag Table:
 Node: Top691
-Node: Overview980
-Node: NU for the power user3143
-Node: View and Edit5565
-Node: Files Buffers Windows9730
-Node: Hacking10518
-Node: NU & other libraries11002
-Node: GNU Free Documentation License12663
+Node: Overview997
+Node: NU for the power user3377
+Node: View and Edit5845
+Node: Files Buffers Windows11312
+Node: Hacking12096
+Node: NU & other libraries12580
+Node: Contributing14223
+Node: GNU Free Documentation License14474
 
 End Tag Table
 

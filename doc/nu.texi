@@ -52,6 +52,7 @@ This is the manual for Nu, a modern keybinding for Emacs.
 * Files Buffers Windows::
 * Hacking::
 * NU & other libraries::
+* Contributing::
 * GNU Free Documentation License::
 @end menu
 
@@ -71,9 +72,9 @@ Modern, means respecting conventions like
 @item @kbd{Control-x}, @kbd{Control-c}, @kbd{Control-v} to cut, copy, paste.
 @end enumerate
 
-To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, @kbd{Control-f} raises a prompt precising which key - actually, which sequence - to press in order to execute desired function : once @kbd{Control-f} has been pressed and the ``Find-prompt'' appears, pressing @key{f} will start a regexp search, while @kbd{g} will execute goto-line, or @kbd{s} will move point to previous selection.
+To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, @kbd{Control-f} raises a prompt precising which key - actually, which sequence - to press in order to execute desired function : once @kbd{Control-f} has been pressed and the ``Find-prompt'' appears, pressing @key{f} will toggle ace-jump-char-mode, @key{C-f} will start a regexp search, while @kbd{g} will execute goto-line, or @kbd{s} will move point to previous selection.
 
-Inverse is sometimes true : since @kbd{Control+s} invoking a prompt would be irritating, this sequence directly saves buffer, while @kbd{Alt+s} runs the ``save prompt''.
+Most common shortcuts - ie, common to most applications - respect this guideline. Thus, there is a prompt for @kbd{s}, @kbd{v}, @kbd{a}... Almost all prompts rely on Control modifier to be run. There are exceptions. Since @kbd{Control+s} invoking a prompt would be irritating, this sequence directly saves buffer, while @kbd{Alt+s} runs the ``save prompt''.
 
 nu-emacs does not only provides nu-mode. There are also two independant parts
 @enumerate
@@ -132,13 +133,13 @@ To trigger a major mode sequence, start with @kbd{Control+Space}. This will invo
 To invoke above myfunction example, press @kbd{Control-SPC h}.
 
 @item
-You should not rely on @kbd{Control+x}, or at least no regularly. However to trigger x prefix, use @kbd{Control+Alt+Space}.
+You should not rely on @kbd{Control+x}, or at least no regularly. However to trigger x prefix, use @kbd{Control+g}. This will raise a prompt to trigger Control-X-Prefix.
 
 @end enumerate
 
-`Repeat' does not work really fine with prompts : one can trigger 'Repeat' with @kbd{Control+Return}, however if last command was invoked from a prompt, repeat will execute this prompt rather than the final command itself. However prefix arguments (numeric-argument, negative-argument) should do fine with prompts.
+`Repeat' is invoked from @kbd{Control+Return}. It was hacked to work with prompts : thus, you can repeat a command ran from a prompt. Prefix arguments (numeric-argument, negative-argument) can work : first trigger the argument, then call the prompt. The command will consume the argument (not the prompt).
 
-Note that `where-is` function, which sometimes advertises shortcuts, will not really work, since a prompt is not a keymap : `where-is` do not know how to invoke @kbd{Control-f} then @kbd{k} to reach end of buffer. (Did you try where-is git push in magit?)
+Note that `where-is` function, which sometimes advertises shortcuts, will not work as usual, since a prompt is not a keymap : `where-is` do not know how to invoke @kbd{Control-f} then @kbd{k} to reach end of buffer. (Did you try where-is git push in magit?)
 
 Thus :
 @enumerate
@@ -151,12 +152,12 @@ From the help prompt (@kbd{Control-h}), run @key{h} to invoke nu-help. This func
 @node View and Edit
 @chapter View and Edit
 
-Obviously just type keys to input text. With slight notes : @kbd{Alt+m} to carriage return + indent. Use @kbd{Alt+v} + c to insert literally a character.
+Obviously just type keys to input text. With slight notes : @kbd{Alt+m}to carriage return + indent. Use @kbd{Alt+v} + c to insert literally a character.
 
 @section Navigate
 
 While arrows still work, Nu uses @key{Alt} key to navigate.
-Hence, the thumb often presses @key{Alt} key, while pinky finger remains safe.
+Hence, the thumb often presses @key{Alt} key, while pinky finger remains safe. This is exactly the same principle than ErgoEmacs applies.
 Navigate up left right down using @key{Alt} and :
 
 
@@ -194,9 +195,11 @@ Repeat.
 Few emacs convention respected, but some.
 @end enumerate
 
+These same principles apply to other prompts.
+
 @section Selections and Deletion
 
-Several alternatives offer to delete (cut) text.
+Now that you can input text plus navigate, let's examine several alternatives to delete (cut) text.
 
 @enumerate
 @enumerate
@@ -229,7 +232,7 @@ An alternative is to press @kbd{Control+a} to invoke ``a-'' prompt, allowing to 
 
 @end enumerate
 
-Once some text is selected you can ``toggle the point and mark'' using @kbd{Control+a}, or deactivate the selectio using @kbd{Alt+a}, or cut the text using @kbd{Control+x} (or @kbd{Alt+d} might be nice depending on your fingers position).
+Once some text is selected you can ``toggle the point and mark'' using @kbd{Control+a}, or deactivate the selection using @kbd{Alt+a}, or cut the text using @kbd{Control+x} (or @kbd{Alt+d} might be nice depending on your fingers position).
 
 @section Cut Copy Paste
 
@@ -242,12 +245,12 @@ Use @kbd{Control + v} to paste the current clipboard. Following @kbd{Control + v
 
 @section Undo or Redo
 
-Use @kbd{Alt+z} to undo. Or, use @kbd{Control+z} to invoke undo-tree visualizer to play with discard changes in an advanced way.
+Use @kbd{Alt+z} to undo. Or, use @kbd{Control+z} to invoke undo-tree visualizer to play with discard changes in an advanced way. This screen displays last changes, and you can navigate these using the paddle (@kbd{Alt+i}, @kbd{Alt+j}, @kbd{Alt+k}, @kbd{Alt+l}). Press @key{q} to quit this screen.
 
 
 @section Advanced Edition
 
-Some avdanced editon features rely on @kbd{Control-r}, which will invoke replace prompt, allowing you to replace-regexp, merge-lines, delete spaces, or invoke other functions.
+Some advanced editon features rely on @kbd{Control-r}, which will invoke replace prompt, allowing you to replace-regexp, merge-lines, delete spaces, or invoke other functions.
 
 @enumerate
 @item
@@ -258,13 +261,13 @@ Some avdanced editon features rely on @kbd{Control-r}, which will invoke replace
 
 
 @kbd{Alt+v} prompt to open a line.
-@kbd{Control+g} global prompt will also propose goal-column feature. (This prompt is hard to reached ; it won't offer really much.)
+@kbd{Alt+s} prompt allows you to save current column as a goal-column. While you move next and previous lines, cursor will try to reach this column as far as possibe.
 
 
 @node Files Buffers Windows
 @chapter Files Buffers Windows
 
-Use @kbd{Control + s} to save current file, @kbd{Alt + s} to invoke a prompt to rename it.
+Use @kbd{Control+s} to save current file, @kbd{Alt+s} to invoke a prompt to rename it.
 @enumerate
 @item
 Use @kbd{Control+o} to open a file, a window, a buffer, or use bookmarks,... Or move to another frame...or buffers list...
@@ -317,6 +320,10 @@ Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, 
 
 Obviously this only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
 
+@node Contributing
+@chapter Contributing
+
+As of today nu-mode only has one author, & contribution is more than welcomed. Please look at github.
 
 @node GNU Free Documentation License
 @appendix GNU Free Documentation License
