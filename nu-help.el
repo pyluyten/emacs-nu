@@ -1,38 +1,7 @@
-;
-; prompts:
-; i need to make func clickable
-; 1) create a help button (or clickable text) with already existing func
-; 2) or, create a `ref' & ask help-xref-something
-; 3) and/or, add another way to access my func:
-;    maybe a key to change point of view:
-;    when following key is pressed, keymap is looked up,
-;    & describe func runs
-;
-;
-;
-;  "27" is ^[ which is escape but is actually meta. Uh?
-;
+
 ;
 ; note : one cannot "advice" a 'map'
 
-
-
-
-(defun nu-help-about-prompts ()
-"Provides some information about prompts."
- (interactive)
- (with-help-window (help-buffer)
-  (with-current-buffer "*Help*"
-    (insert
-"A prompt appears when you press a `prefix' command.
-
-You can enter a key to trigger a function. The prompts
-informs you about which keys are available.
-
-Use <space> / <backspace> to scroll the prompt.
-
-Use control+h then f to trigger describe-function,
-then enter the function you want to describe."))))
 
 
  ; map-keymap has no way to receive
@@ -50,6 +19,12 @@ then enter the function you want to describe."))))
 ; (you can see repeat advice and nu-prompt-for-keymap but
 ; you already got the idea)
 (defvar nu-last-command nil)
+
+
+
+(defun nu-help-about-prompts ()
+ (interactive)
+ (nu-prompt-for-keymap nu-current-keymap t))
 
 
 (defun nu-define-prefix (arg)
@@ -89,8 +64,10 @@ then enter the function you want to describe."))))
 
 
 
-(defun nu-prompt-for-keymap (keymap)
- "Help to choose a key from a keymap."
+(defun nu-prompt-for-keymap (keymap &optional describe)
+ "Help to choose a key from a keymap
+
+If describe arg is t, only describe-function."
 
  ; map-keymap has no way to receive
  ; more than two args
@@ -107,7 +84,16 @@ then enter the function you want to describe."))))
 
  (with-help-window (help-buffer)
   (with-current-buffer "*Help*"
-   (insert "Press one of the below key, or ?\n" )
+   (if describe
+       (insert
+"In a standard prompt, press the associated key to run the function.
+Use space or del to scroll down or up.
+Press ? to obtain this screen.
+
+From this prompt, press the associated key
+to describe the function.\n")
+       (insert
+"Press ? for help or to describe function\n"))
    (map-keymap 'nu-insert-binding-row keymap)
    (insert "\n\n\n")))
 
@@ -131,8 +117,11 @@ then enter the function you want to describe."))))
                 (setq input t))))
       (if defn
           (progn
-          (setq nu-last-command defn)
-          (call-interactively defn)))))
+              (if describe
+                    (describe-function defn)
+                    (progn
+                          (setq nu-last-command defn)
+                          (call-interactively defn)))))))
 
 
 (defadvice repeat (before nu-repeat-last-prompt ())
