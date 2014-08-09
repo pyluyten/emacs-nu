@@ -261,18 +261,22 @@ But if mark is active, exchange point and mark."
 ; still, we use this.
 ;
 ; this is why a specific prompt is there.
-(define-key help-map (kbd "h") 'nu-help)
-(make-help-screen nu-help-prompt
-(purecopy "Help")
-"Press q to quit or :
-
-h: emacs-nu help page
-r: emacs manual
-i: info
-f: describe-function         d: search in documentation
-k: describe-key              m: describe-mode
-v: describe-variable"
-help-map)
+;(make-help-screen nu-help-prompt
+;(purecopy "Help")
+;"Press q to quit or :
+; 
+;h: emacs-nu help page
+;r: emacs manual
+;i: info
+;f: describe-function         d: search in documentation
+;k: describe-key              m: describe-mode
+;v: describe-variable"
+;help-map)
+(defun nu-help-prompt ()
+ (interactive)
+ (define-key help-map (kbd "*") 'nu-help)
+ ;(define-key help-map (kbd "h") 'nu-help)
+ (nu-prompt-for-keymap help-map))
 
 
 (nu-define-prefix 'nu-find-map)

@@ -49,8 +49,8 @@
  "insert some link, the binding, the global binding, CR.
 
   Do not document digit-argument."
- (if (and (symbolp bind) (not (or (eq bind 'digit-argument))
-                              (or (eq bind 'nu-help-about-prompts))))
+ (if (and (symbolp bind) (not (eq bind 'digit-argument))
+                         (not (eq bind 'nu-help-about-prompts)))
        (progn
   ; insert the button
         (insert-button (symbol-name bind))
@@ -65,7 +65,7 @@
 
   ;; print the direct keys
    (setq all
-      (replace-regexp-in-string "<menu>.*@" ""
+      (replace-regexp-in-string "[<menu>][<f.>].*@" ""
         (format "%s@"
           (mapconcat 'key-description (where-is-internal bind) "@"))))
    (if (> (string-width all) 1)
