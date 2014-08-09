@@ -329,7 +329,11 @@ help-map)
   (define-key nu-replace-map (kbd "d") 'downcase-word)
   (define-key nu-replace-map (kbd "c") 'capitalize-word)
   (define-key nu-replace-map (kbd "x") 'nu-rot-reg-or-toggle-rot)
-  (define-key nu-replace-map (kbd "h") 'delete-horizontal-space))
+  (define-key nu-replace-map (kbd "h") 'delete-horizontal-space)
+  (if (eq major-mode 'org-mode)
+      (progn
+          (define-key nu-replace-map (kbd "C-i") 'org-metaup)
+          (define-key nu-replace-map (kbd "C-k") 'org-metadown))))
 
 
 (defun nu-replace-do-prompt ()
