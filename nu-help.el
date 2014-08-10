@@ -31,6 +31,7 @@
 "Define a prefix command, assign ? key."
  (define-prefix-command arg)
  (define-key arg (kbd "?") 'nu-help-about-prompts)
+
  (define-key arg (kbd "1") 'digit-argument)
  (define-key arg (kbd "2") 'digit-argument)
  (define-key arg (kbd "3") 'digit-argument)
@@ -119,22 +120,43 @@ to describe the function.\n")
  (setq defn nil)
    (while (not input)
       (setq key (read-key-sequence "Enter a key or ? :"))
+      (message (format "key is %s" (key-description key)))
+
+; check if the user needs to scroll the help. Do not break loop.
       (if (eq (aref key 0) ?\d)
                (scroll-down)
           (if (eq (aref key 0) ?\s)
                (scroll-up)
-             (progn
-                (setq defn (lookup-key local-map key))
-                (message "")
-                (set-window-configuration config)
-                (setq input t))))
+
+; check for digit-argument. Do not use native function since
+; last-command-key or something is broken.
+; (string-to-number) would return 0, so don't look for this (infinite loop)
+; string match seems correct.
+
+               (if ;(memq (string-to-number (key-description key)) (list 1 2 3 4 5 6 7 8 9))
+                   (and (stringp (key-description key))
+                        (string-match (key-description key) "[0123456789]"))
+                   (setq current-prefix-arg (string-to-number (key-description key)))
+
+; now, break the loop, no matter a func has been found or not.
+; eg the user can type not-mapped key to quit. "q" is never boundp.
+                    (progn
+                       (setq defn (lookup-key local-map key))
+                       (message "")
+                       (set-window-configuration config)
+                       (setq input t))))))
+
+; run the func.
       (if defn
           (progn
               (if describe
                     (describe-function defn)
                     (progn
                           (setq nu-last-command defn)
-                          (call-interactively defn)))))))
+                          (call-interactively defn))))))
+
+
+
 
 
 (defadvice repeat (before nu-repeat-last-prompt ())
