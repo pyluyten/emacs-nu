@@ -137,7 +137,7 @@ You should not rely on @kbd{Control+x}, or at least no regularly. However to tri
 
 @end enumerate
 
-`Repeat' is invoked from @kbd{Control+Return}. It was hacked to work with prompts : thus, you can repeat a command ran from a prompt. Prefix arguments (numeric-argument, negative-argument) can work : first trigger the argument, then call the prompt. The command will consume the argument (not the prompt).
+`Repeat' is invoked from @kbd{Control+Return}. It was hacked to work with prompts : thus, you can repeat a command ran from a prompt. Prefix arguments (numeric-argument, negative-argument) can work : either use standard @kbd{Alt+1}, @kbd{Alt+2} ... shortcuts plus one command. Or, from a prompts, directly type a figure (not a number) then choose the command (eg, from delete prompt, type @key{3} then invoke kill-word to kill 3 words). Alternatively, first trigger the argument from standard shortcuts, then call the prompt. What is invoked from the prompt will make use of that argument.
 
 Note that `where-is` function, which sometimes advertises shortcuts, will not work as usual, since a prompt is not a keymap : `where-is` do not know how to invoke @kbd{Control-f} then @kbd{k} to reach end of buffer. (Did you try where-is git push in magit?)
 

@@ -133,9 +133,13 @@ want.  Also, 'Control+h' for help-prefix is still there.
 
    'Repeat' is invoked from 'Control+Return'.  It was hacked to work
 with prompts : thus, you can repeat a command ran from a prompt.  Prefix
-arguments (numeric-argument, negative-argument) can work : first trigger
-the argument, then call the prompt.  The command will consume the
-argument (not the prompt).
+arguments (numeric-argument, negative-argument) can work : either use
+standard 'Alt+1', 'Alt+2' ...  shortcuts plus one command.  Or, from a
+prompts, directly type a figure (not a number) then choose the command
+(eg, from delete prompt, type <3> then invoke kill-word to kill 3
+words).  Alternatively, first trigger the argument from standard
+shortcuts, then call the prompt.  What is invoked from the prompt will
+make use of that argument.
 
    Note that 'where-is' function, which sometimes advertises shortcuts,
 will not work as usual, since a prompt is not a keymap : 'where-is' do
@@ -869,12 +873,12 @@ Tag Table:
 Node: Top691
 Node: Overview997
 Node: NU for the power user3377
-Node: View and Edit5845
-Node: Files Buffers Windows11312
-Node: Hacking12096
-Node: NU & other libraries12580
-Node: Contributing14223
-Node: GNU Free Documentation License14474
+Node: View and Edit6120
+Node: Files Buffers Windows11587
+Node: Hacking12371
+Node: NU & other libraries12855
+Node: Contributing14498
+Node: GNU Free Documentation License14749
 
 End Tag Table
 

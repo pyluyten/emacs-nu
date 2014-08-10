@@ -1,0 +1,24 @@
+* Prompts related feature
+
+Prompts should be more dynamic. Depending on the current context, more keys could be changed.
+
+** Customization
+
+Some friendly customization might be offered.
+
+for example
+
+- alt f is a direct shortcut *for one of the control f prompts commands*. The user could assign, *from the prompt*, which function to run from alt f. This, for all prompts.
+
+- alt f is a direct shortcut, control f a prompt. The user could decide to 1) always use control for prompts, 2) always use alt for prompts, 3) decide for each single key.
+  Appart coding, this needs some thinking, since not all keys are both prompts + direct shortcuts.
+
+
+* Integration
+
+Integration with modes could be improved.
+- I almost skipped ido.
+- Org-mode integration is very basic.
+- There is no way to use clang to parse symbols and build a tag table as of today. 
+  This point is crucial for IDE.
+- Inserting snippets will be necessary, too.
