@@ -135,16 +135,17 @@ want.  Also, 'Control+h' for help-prefix is still there.
 with prompts : thus, you can repeat a command ran from a prompt.  Prefix
 arguments (numeric-argument, negative-argument) can work : either use
 standard 'Alt+1', 'Alt+2' ...  shortcuts plus one command.  Or, from a
-prompts, directly type a figure (not a number) then choose the command
-(eg, from delete prompt, type <3> then invoke kill-word to kill 3
-words).  Alternatively, first trigger the argument from standard
-shortcuts, then call the prompt.  What is invoked from the prompt will
-make use of that argument.
+prompts, directly type a figure (or, a number) then choose the command
+(eg, from delete prompt, type <3> then invoke kill-word to kill 3 words
+; or type <2> then <3> to input 23).  Alternatively, first trigger the
+argument from standard shortcuts, then call the prompt.  What is invoked
+from the prompt will make use of that argument.
 
    Note that 'where-is' function, which sometimes advertises shortcuts,
 will not work as usual, since a prompt is not a keymap : 'where-is' do
 not know how to invoke 'Control-f' then 'k' to reach end of buffer.
-(Did you try where-is git push in magit?)
+(Did you try 'where-is git push' in magit?  this does not work.  What is
+acceptable for maggit is not for a full keymap.)
 
    Thus :
   1. For each function accessible from a prompt, an additional shortcut
@@ -873,12 +874,12 @@ Tag Table:
 Node: Top691
 Node: Overview997
 Node: NU for the power user3377
-Node: View and Edit6120
-Node: Files Buffers Windows11587
-Node: Hacking12371
-Node: NU & other libraries12855
-Node: Contributing14498
-Node: GNU Free Documentation License14749
+Node: View and Edit6235
+Node: Files Buffers Windows11702
+Node: Hacking12486
+Node: NU & other libraries12970
+Node: Contributing14613
+Node: GNU Free Documentation License14864
 
 End Tag Table
 

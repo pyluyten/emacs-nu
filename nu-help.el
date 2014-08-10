@@ -7,7 +7,7 @@
  ; map-keymap has no way to receive
  ; more than two args
  ; we cannot easily communicate
- ; to this the keymap we are parsing (!)
+ ; to this function which keymap it is parsing (!)
  ; thus, use a global var
 (defvar nu-current-keymap nil)
 
@@ -23,12 +23,17 @@
 
 
 (defun nu-help-about-prompts ()
+"Displays a prompt to choose a function,
+but rather than executing the function,
+describes it."
  (interactive)
  (nu-prompt-for-keymap nu-current-keymap t))
 
 
 (defun nu-define-prefix (arg)
-"Define a prefix command, assign ? key."
+"Define a prefix command, assign ? key.
+
+This is a common key to _all_ prompts."
  (define-prefix-command arg)
  (define-key arg (kbd "?") 'nu-help-about-prompts))
 
@@ -125,7 +130,10 @@ to describe the function.\n")
                (if ;(memq (string-to-number (key-description key)) (list 1 2 3 4 5 6 7 8 9))
                    (and (stringp (key-description key))
                         (string-match (key-description key) "[0123456789]"))
-                   (setq current-prefix-arg (string-to-number (key-description key)))
+                   (if (eq current-prefix-arg nil)
+                       (setq current-prefix-arg (string-to-number (key-description key)))
+                       (setq current-prefix-arg (+ (string-to-number (key-description key))
+                                                   (* current-prefix-arg 10))))
 
 ; now, break the loop, no matter a func has been found or not.
 ; eg the user can type not-mapped key to quit. "q" is never boundp.
@@ -143,9 +151,6 @@ to describe the function.\n")
                     (progn
                           (setq nu-last-command defn)
                           (call-interactively defn))))))
-
-
-
 
 
 (defadvice repeat (before nu-repeat-last-prompt ())
