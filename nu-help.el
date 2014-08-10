@@ -65,7 +65,7 @@
 
   ;; print the direct keys
    (setq all
-      (replace-regexp-in-string "[<menu>][<f.>].*@" ""
+      (replace-regexp-in-string "\\(<menu>\\|<f.>\\|<help>\\).*@" ""
         (format "%s@"
           (mapconcat 'key-description (where-is-internal bind) "@"))))
    (if (> (string-width all) 1)
