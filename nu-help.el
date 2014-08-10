@@ -30,18 +30,7 @@
 (defun nu-define-prefix (arg)
 "Define a prefix command, assign ? key."
  (define-prefix-command arg)
- (define-key arg (kbd "?") 'nu-help-about-prompts)
-
- (define-key arg (kbd "1") 'digit-argument)
- (define-key arg (kbd "2") 'digit-argument)
- (define-key arg (kbd "3") 'digit-argument)
- (define-key arg (kbd "4") 'digit-argument)
- (define-key arg (kbd "5") 'digit-argument)
- (define-key arg (kbd "6") 'digit-argument)
- (define-key arg (kbd "7") 'digit-argument)
- (define-key arg (kbd "8") 'digit-argument)
- (define-key arg (kbd "9") 'digit-argument)
- (define-key arg (kbd "0") 'digit-argument))
+ (define-key arg (kbd "?") 'nu-help-about-prompts))
 
 
 
