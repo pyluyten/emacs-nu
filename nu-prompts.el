@@ -110,8 +110,8 @@
   (define-key nu-delete-map (kbd "M-f") 'delete-file)
   (if (equal major-mode 'org-mode)
       (progn
-        (define-key nu-delete-map (kbd "M-i") 'org-table-delete-column)
-        (define-key nu-delete-map (kbd "M-k") 'org-table-delete-row)
+        (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
+        (define-key nu-delete-map (kbd "-") 'org-table-kill-row)
         (define-key nu-delete-map (kbd "*") 'org-cut-special))))
 
 (defun nu-delete-prompt-internal ()
