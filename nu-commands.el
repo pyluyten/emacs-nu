@@ -367,14 +367,30 @@ If no argument given, copy 1 char."
   "Set temporary overlay map mode-specific-map"
   (interactive)
   (setq prefix-arg current-prefix-arg)
+
   ; Avoid infinite loop : we deactivate C-c as a key,
-  ; then run C-c in order to make it a prefix...
   (define-key nu-keymap (kbd "C-c") nil)
+
+  ; special case : look at C-c C-c
+  ; if possible, use Control Space to toggle this.
+  (setq defn-target
+       (local-key-binding (kbd "\C-c \C-c")))
+  (message (format "C-c active. Assigning %s" (symbol-name defn-target)))
+  (setq defn-obstruct
+       (local-key-binding (kbd "\C-c C-SPC")))
+  (if (and (eq nil defn-obstruct)
+           (commandp defn-target))
+      (define-key nu-keymap (kbd "\C-c C-SPC") defn-target))
+
+  ; then run C-c in order to make it a prefix...
   (setq unread-command-events
      (listify-key-sequence "\C-c"))
+
+
   ; Now add back function but after some delay
   ; or this would intercept C-c!
   (run-with-timer 0.3 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line))
+
 
 
 (defun nu-cut-region-or-line ()
