@@ -63,7 +63,10 @@
 (define-key nu-window-map (kbd "k") 'windmove-down)
 (define-key nu-window-map (kbd "l") 'windmove-right)
 (define-key nu-window-map (kbd "t") 'transpose-frame)
+(define-key nu-window-map (kbd "o")   'nu-next-window)
+(define-key nu-window-map (kbd "O")   'nu-previous-window)
 (define-key nu-window-map (kbd "C-q") 'save-buffers-kill-emacs)
+
 (defun nu-window-prompt ()
   (interactive)
   (nu-prompt-for-keymap nu-window-map))
