@@ -336,6 +336,10 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "h") 'delete-horizontal-space)
   (if (eq major-mode 'org-mode)
       (progn
+          (define-key nu-replace-map (kbd "\C-u") 'org-shiftleft)
+          (define-key nu-replace-map (kbd "\C-o") 'org-shiftright)
+          (define-key nu-replace-map (kbd "C-j") 'org-metaleft)
+          (define-key nu-replace-map (kbd "C-l") 'org-metaright)
           (define-key nu-replace-map (kbd "C-i") 'org-metaup)
           (define-key nu-replace-map (kbd "C-k") 'org-metadown))))
 
