@@ -144,8 +144,9 @@
   (define-key nu-insert-map (kbd "S") 'shell-command)
   (if (eq major-mode 'org-mode)
     (progn
+      (define-key nu-insert-map (kbd "L") 'org-insert-link)
       (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
-      (define-key nu-insert-map (kbd "M-o") 'org-table-insert-row)
+      (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
       (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading))))
 
 (defun nu-insert-prompt ()
@@ -224,26 +225,33 @@ But if mark is active, exchange point and mark."
 
 
 
+(defun nu-populate-open-map ()
+"Populate open map."
+  (setq nu-open-map nil)
+  (nu-define-prefix 'nu-open-map)
+  (define-key nu-open-map (kbd "f")  'find-file)
+  (define-key nu-open-map (kbd "\C-f")  'find-file-other-window)
+  (define-key nu-open-map (kbd "r")  'recentf-open-files)
+  (define-key nu-open-map (kbd "m")  'bookmark-bmenu-list)
+  (define-key nu-open-map (kbd "M")  'bookmark-jump)
+  (define-key nu-open-map (kbd "b")  'bookmark-set)
+  (define-key nu-open-map (kbd "x")  'list-registers)
+  (define-key nu-open-map (kbd "l")  'next-buffer)
+  (define-key nu-open-map (kbd "j")   'previous-buffer)
+  (define-key nu-open-map (kbd "c")   'org-capture)
+  (define-key nu-open-map (kbd "a")   'org-agenda)
+  (define-key nu-open-map (kbd "o")   'nu-next-window)
+  (define-key nu-open-map (kbd "O")   'nu-previous-window)
+  (define-key nu-open-map (kbd "i")   'ibuffer)
+  (define-key nu-open-map (kbd "C-i")   'org-iswitchb)
+  (define-key nu-open-map (kbd "C-<SPC>") 'ido-switch-buffer)
+  (if (eq major-mode 'org-mode)
+      (progn
+         (define-key nu-open-map (kbd "L") 'org-open-at-point))))
 
-(nu-define-prefix 'nu-open-map)
-(define-key nu-open-map (kbd "f")  'find-file)
-(define-key nu-open-map (kbd "\C-f")  'find-file-other-window)
-(define-key nu-open-map (kbd "r")  'recentf-open-files)
-(define-key nu-open-map (kbd "m")  'bookmark-bmenu-list)
-(define-key nu-open-map (kbd "M")  'bookmark-jump)
-(define-key nu-open-map (kbd "b")  'bookmark-set)
-(define-key nu-open-map (kbd "x")  'list-registers)
-(define-key nu-open-map (kbd "l")  'next-buffer)
-(define-key nu-open-map (kbd "j")   'previous-buffer)
-(define-key nu-open-map (kbd "c")   'org-capture)
-(define-key nu-open-map (kbd "a")   'org-agenda)
-(define-key nu-open-map (kbd "o")   'nu-next-window)
-(define-key nu-open-map (kbd "O")   'nu-previous-window)
-(define-key nu-open-map (kbd "i")   'ibuffer)
-(define-key nu-open-map (kbd "C-i")   'org-iswitchb)
-(define-key nu-open-map (kbd "C-<SPC>") 'ido-switch-buffer)
 (defun nu-open-prompt ()
   (interactive)
+  (nu-populate-open-map)
   (nu-prompt-for-keymap nu-open-map))
 
 
