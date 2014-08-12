@@ -1,3 +1,9 @@
+* Implement nu-mode on top of...
+
+- Implement a nu-mode-evil.el to evil-define-keys.
+- Implement an 'on top of ErgoEmacs' nu-mode.
+
+
 * Prompts related feature
 
 Prompts should be more dynamic. Depending on the current context, more keys could be changed.
