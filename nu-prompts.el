@@ -22,6 +22,10 @@
 ;;
 ;;
 
+
+(require 'windmove)
+
+
 ;; Get the macro make-help-screen when this is compiled,
 ;; or run interpreted, but not when the compiled code is loaded.
 (eval-when-compile (require 'help-macro))
@@ -47,9 +51,6 @@
  (kill-buffer buf)q
  (switch-to-buffer curb)
  (setq x x))
-
-
-(require 'windmove)
 
 
 (nu-define-prefix 'nu-window-map)
@@ -84,6 +85,7 @@
 (define-key nu-print-map (kbd "-") 'negative-argument)
 (define-key nu-print-map (kbd "\C-p") 'universal-argument)
 (define-key nu-print-map (kbd "m") 'compile)
+(define-key nu-print-map (kbd "k") 'kmacro-end-or-call-macro)
 (defun nu-print-prompt ()
   (interactive)
   (nu-prompt-for-keymap nu-print-map))
@@ -169,6 +171,7 @@
   (define-key nu-save-map (kbd "r") 'rename-buffer)
   (define-key nu-save-map (kbd "l") 'org-store-link)
   (define-key nu-save-map (kbd "m") 'magit-status)
+  (define-key nu-save-map (kbd "k") 'kmacro-start-macro-or-insert-counter)
   ;(if (boundp 'magit-diff)
     (define-key nu-save-map (kbd "d") 'magit-diff)
   ;(if (equal major-mode 'Magit)
