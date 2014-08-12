@@ -1,119 +1,73 @@
-*Rationale*
+* Rationale
 
-Learning curves suck, having not to forget
-memorized keymaps sucks, modal editing
-is not necessarily compatible with your usage.
-(And modal still requires some learning.)
+/Learning curves suck./
 
-An alternative to both learning curve
-and modal editing is prompts.
-These are keys displaying a <menu buffer>
-(aka prompter), offering you
-the features you need without effort.
+*Emacs has to be easy to learn*. The way is to adhere to standard keybinding & conventions.
+
+*Emacs has to be easy to use*. Standard keybinding are not usable.
+
+*Emacs has to be self-advertising*. OK, Emacs is self documenting : but Emacs users spend hours reading blogs.
+
+/The solution is to improve prefix keys/. To Evil users : modal editing is compatible with NU-MODE.
+
+* Welcome to NU-MODE
+
+** One prefix key , many functions
+
+Prompts are enhanced prefix keys : a standard shortcut raises an informative *Help* frame which allows user to discover many available functions.
+
+Prompts are not pretty, but useful.
+1. Prompts are automatically populated from keymaps.
+2. They rely on standard keys to be invoked, then inform the user - thus, no learning curve.
+3. Prompts advertise while direct shortcuts could have produce the invoked function.
+4. This is way more ergonomic. Key sequences are the way to go.
+5. Prompts are discoverable.
+6. Prompts feature context sensitivity. Some functions will not appear depending on the context. Or, toggling the "replace" prompts while in read-only-mode will toggle read-only only.
+7. Prompts allows to use arguments comfortably (directly input a number, then invoke the function).
+8. Prompts conveniently offer to describe-function.
+9. NU-MODE prompts work with repeat command.
 
 
--> Keys should be easy to learn, easy to press
--> Most common operations should be quick
--> Features should be easy to access
--> Remembering all of this should not be an issue.
+Technically, a prompt is a function associated with a keymap (which is regenerated while prompts is called, in order for example to check for major/minor modes). It will check for user input. It will offer to scroll up/down or enter digits. Functionaly, prompts serve as methaphor.
 
 
-You already know a lot of keys : 
-- x : cut
-- c : copy
-- v : paste
-- f, r : find, replace
-- s, n, o : save, new, open
-- w, q : close tab, quit
-Why not using it? By the way this is also ErgoEmacs plan.
+FIND (ctrl+f): also to move.
+OPEN (ctrl+o) : files obviously, but also agenda, recent files, bookmark, buffers...
+REPLACE (ctrl+r): actually this is "change" : transpose, join lines, upcase,...
+PASTE (alt+v) : more largely "insert".
+SAVE (alt+s) : you can also save bookmark, goal-column, keyboard macro...
+PRINT (ctrl+p) : printing is evaluating! last-sexp, async shell, make,...
+SELECT-ALL (ctrl+a) : select (sentence, word, defun, rectangle) / cd
+CLOSE (ctrl+w) : close document standard shortcut is extended to "window" management.
+DELETE (alt+d) : this one is for comfort =)
 
-=> control keys will offer you prompters to select the right feature
-   as you use nu-mode, reading prompt won't be useful
-   {I could even consider, TODO, make prompts optional,
-    either for a single prompt or globablly}
-  
-  For example with ^r, you can <replace> using regexp,
-  delete stuff before one specific char, revert buffer,
-  Capitalize a word, & much more....
 
-=> There is more. C-z will undo using undo-tree.
-   Also, ^c will copy selection or row. Same for ^x.
-   There is a lot to find...
 
-=> alt keys will offer you some speed:
-   - a paddle to navigate with comfort
-   - some magic.
-   The plan is to document alt keys from prompts ;)
-   Use control keys you already know,
-   you will discover alt keys....
+** A bit of speed
 
-*.. welcome home to emacs-nu!*
-This mode - essentially, a keymap - is made both for
-intense text editing and casual usage
-(emacs is not your only application, is it?)
+Obviously, while key sequences can solve learning curve for hundred(s) of functions, the most common one should be accessible directly. Imagine you need 15 keys for your prompts. You still have many keys to directly move (char, line, word), delete (char, line, word), cut, copy, paste, undo, find, select, ... Since, appart from the paddle, *direct keys also rely on standard shortcuts*, you're free from learning curve.
 
-<!> Note that emacs-nu does not respect any emacs convention <!>
-    well at least, not voluntarily.
+The only part you have to learn is the paddle : ijkl to move up left down right. That's all. 
 
-_I need to create a decent Info file to describe these keys deeper..._
 
-* What is done
+* Relationships
 
-- The paddle to navigate,
-- A good basic for the prompts.
-- Use control-space to toggle mode-specific-map (i mean, C-c)
+** What NU-MODE uses
 
+NU-MODE uses cua-selection-mode (& temporarily cua-rectangle, but this is going to disappear with 24.4), recetnf, undo-tree, ace-jump. It is capable to invoke functions from magit or org-mode. help-fns+ is there to describe-keymap but its not really leverared.
+
+Prompts are inspired from make-help-screen.
+
+** How is that different from?
+
+evil : modal editing is compatible with NU-MODE.
+
+makey.el : these are customed prompts, not automatic.
+
+The keybind part /could/ use ErgoEmacs.
+
+god-mode : this one is technically compatible, but functionaly NOT. (inversing god-mode control/alt would solve this.)
 
 * TODO
 
-Work on minibuffer or other modes,
-Choose for alt d / ctrl d
-Look at jumps/tags/marks
-Scroll up / down
-
-* on the technical side
-
-
-** Things I currently use
-
-- CUA
-  Cua-selection-mode is used (note : alt-space to set mark)
-  This includes rectangles.
-  Cua-keys are _not_ used because of copy-row cut-row behaviour I wish.
-
-- Undo-Tree
-
-- Ace-jump will come soon.
-
-** Things I looked at
-
-I started looking at lot of stuff and coded some convenient,
-bodhi-evil. And other trials. http://github.com/pyluyten/devil-mode
-
-*** Paddle
-ErgoEmacs ALT + i j k l is delicious.
-It's really easy to learn.
-Having words at u/o is just logical.
-
-
-*** Evil-Mode
-evil-mode brings something simple :
-just do delete + right word, & here you are.
-delete + delete => you killed a row
-Do the same for copy.
-
-We can of course apply this to paddle...
-Everything that works with left car has to go throught to j.
-To right word? o. You got it.
-
-(Having multipliers is not done yet.)
-
-*** God Mode
-ErgoEmacs also looked at some GodMode principle :
-press some magic, and you can repeat function keys
-without their modifiers, like in vim normal mode.
-
-But, this is where it's interesting, God Mode
-do not have a distinct keymap for this.
-Rather, it just avoid using Control.
-(Alt can be emulated, too, but this needs a key-press...)
+well, see TODO!
