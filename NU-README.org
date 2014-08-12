@@ -31,15 +31,15 @@ Prompts are not pretty, but useful.
 Technically, a prompt is a function associated with a keymap (which is regenerated while prompts is called, in order for example to check for major/minor modes). It will check for user input. It will offer to scroll up/down or enter digits. Functionaly, prompts serve as methaphor.
 
 
-FIND (ctrl+f): also to move.
-OPEN (ctrl+o) : files obviously, but also agenda, recent files, bookmark, buffers...
-REPLACE (ctrl+r): actually this is "change" : transpose, join lines, upcase,...
-PASTE (alt+v) : more largely "insert".
-SAVE (alt+s) : you can also save bookmark, goal-column, keyboard macro...
-PRINT (ctrl+p) : printing is evaluating! last-sexp, async shell, make,...
-SELECT-ALL (ctrl+a) : select (sentence, word, defun, rectangle) / cd
-CLOSE (ctrl+w) : close document standard shortcut is extended to "window" management.
-DELETE (alt+d) : this one is for comfort =)
+- FIND (ctrl+f): also to move.
+- OPEN (ctrl+o) : files obviously, but also agenda, recent files, bookmark, buffers...
+- REPLACE (ctrl+r): actually this is "change" : transpose, join lines, upcase,...
+- PASTE (alt+v) : more largely "insert".
+- SAVE (alt+s) : you can also save bookmark, goal-column, keyboard macro...
+- PRINT (ctrl+p) : printing is evaluating! last-sexp, async shell, make,...
+- SELECT-ALL (ctrl+a) : select (sentence, word, defun, rectangle) / cd
+- CLOSE (ctrl+w) : close document standard shortcut is extended to "window" management.
+- DELETE (alt+d) : this one is for comfort =)
 
 
 
@@ -68,6 +68,3 @@ The keybind part /could/ use ErgoEmacs.
 
 god-mode : this one is technically compatible, but functionaly NOT. (inversing god-mode control/alt would solve this.)
 
-* TODO
-
-well, see TODO!
