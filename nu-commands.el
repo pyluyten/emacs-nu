@@ -392,14 +392,13 @@ If no argument given, copy 1 char."
   (run-with-timer 0.3 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line))
 
 
-
-(defun nu-cut-region-or-line ()
+(defun nu-cut-region-or-line (&optional arg)
   "If region is selected, cut region.
    If not, cut line."
-  (interactive)
+  (interactive "p")
   (if (and (transient-mark-mode) (eq mark-active t))
    (call-interactively 'kill-region)
-   (kill-whole-line))
+   (kill-whole-line arg))
   (message "Cut! If you wanted to x keymap, Undo with M-z or C-z then, C-g"))
 
 
