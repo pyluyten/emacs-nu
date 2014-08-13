@@ -128,9 +128,9 @@ Press ? to obtain this screen.
 From this prompt, press the associated key
 to describe the function.\n")
        (insert
-         (format "Prefix = %s.\nPress ? for help or to describe function\n" prefixhelp))
+         (format "Prefix = %s.\nPress ? for help or to describe function\n" prefixhelp)))
    (map-keymap 'nu-insert-binding-row keymap)
-   (insert "\n\n\n")))
+   (insert "\n\n\n"))
 
 
  (switch-to-buffer-other-window "*Help*")
