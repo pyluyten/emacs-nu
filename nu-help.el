@@ -140,41 +140,55 @@ to describe the function.\n")
       (setq key (read-key-sequence "Enter a key or ? :"))
       (message (format "key is %s" (key-description key)))
 
-; check if the user needs to scroll the help. Do not break loop.
-      (if (eq (aref key 0) ?\d)
-               (scroll-down)
-          (if (eq (aref key 0) ?\s)
-               (scroll-up)
+      (cond
 
-; check for digit-argument. Do not use native function since
-; last-command-key or something is broken.
-; (string-to-number) would return 0, so don't look for this (infinite loop)
-; string match seems correct.
+       ; check if the user needs to scroll the help. Do not break loop.
+       ; FIXME - if scroll fails, loop fails!
+       ((eq (aref key 0) ?\d)
+        (scroll-down))
+       ((eq (aref key 0) ?\s)
+        (scroll-up))
 
-               (if ;(memq (string-to-number (key-description key)) (list 1 2 3 4 5 6 7 8 9))
-                   (and (stringp (key-description key))
-                        (string-match (key-description key) "[0123456789]"))
-                   (if (eq current-prefix-arg nil)
-                       (setq current-prefix-arg (string-to-number (key-description key)))
-                       (setq current-prefix-arg (+ (string-to-number (key-description key))
-                                                   (* current-prefix-arg 10))))
 
-; now, break the loop, no matter a func has been found or not.
-; eg the user can type not-mapped key to quit. "q" is never boundp.
-                    (progn
-                       (setq defn (lookup-key local-map key))
-                       (message "")
-                       (set-window-configuration config)
-                       (setq input t))))))
+       ; check for negative / digit-argument.
+       ((string= (key-description key) "-")
+        (cond ((integerp current-prefix-arg)
+	       (setq current-prefix-arg (- current-prefix-arg)))
+	      ((eq current-prefix-arg '-)
+	       (setq current-prefix-arg nil))
+	      (t
+	       (setq current-prefix-arg '-))))
 
-; run the func.
-      (if defn
-          (progn
-              (if describe
-                    (describe-function defn)
-                    (progn
-                          (setq nu-last-command defn)
-                          (call-interactively defn))))))
+
+       ((and (stringp (key-description key))
+             (string-match (key-description key) "[0123456789]"))
+          (cond
+            ((eq current-prefix-arg '-)
+             (setq current-prefix-arg (- (string-to-number (key-description key)))))
+            ((integerp current-prefix-arg)
+             (setq current-prefix-arg (+ (string-to-number (key-description key))
+                                         (* current-prefix-arg 10))))
+             (t
+              (setq current-prefix-arg (string-to-number (key-description key))))))
+
+        ; now, break the loop, no matter a func has been found or not.
+        ; eg the user can type not-mapped key to quit. "q" is never boundp.
+
+       (t
+         (progn
+         (setq defn (lookup-key local-map key))
+         (message "")
+         (set-window-configuration config)
+         (setq input t)))))
+
+  ; run the func.
+  (if defn
+    (progn
+	(if describe
+	   (describe-function defn)
+	   (progn
+	     (setq nu-last-command defn)
+	     (call-interactively defn))))))
 
 
 (defadvice repeat (before nu-repeat-last-prompt ())
