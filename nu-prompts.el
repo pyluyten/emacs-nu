@@ -86,6 +86,7 @@
 (define-key nu-print-map (kbd "\C-p") 'universal-argument)
 (define-key nu-print-map (kbd "m") 'compile)
 (define-key nu-print-map (kbd "k") 'kmacro-end-or-call-macro)
+(define-key nu-print-map (kbd "c") 'subword-mode)
 (defun nu-print-prompt ()
   (interactive)
   (nu-prompt-for-keymap nu-print-map))
