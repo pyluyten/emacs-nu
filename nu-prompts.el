@@ -339,7 +339,7 @@ But if mark is active, exchange point and mark."
 (define-key nu-find-map (kbd "i") 'beginning-of-buffer)
 (define-key nu-find-map (kbd "k") 'end-of-buffer)
 (define-key nu-find-map (kbd "b") 'regexp-builder)
-(define-key nu-find-map (kbd "s") 'nu-set-mark-1)
+(define-key nu-find-map (kbd "s") 'nu-find-previous-mark)
 (define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
 (define-key nu-find-map (kbd "f") 'ace-jump-char-mode)
 (define-key nu-find-map (kbd "w") 'ace-jump-word-mode)
