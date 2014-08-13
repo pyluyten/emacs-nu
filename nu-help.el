@@ -116,6 +116,9 @@ If describe arg is t, only describe-function."
 
  (with-help-window (help-buffer)
   (with-current-buffer "*Help*"
+      (if (eq nil current-prefix-arg) 
+          (setq prefixhelp "X")
+          (setq prefixhelp current-prefix-arg))
    (if describe
        (insert
 "In a standard prompt, press the associated key to run the function.
@@ -125,13 +128,13 @@ Press ? to obtain this screen.
 From this prompt, press the associated key
 to describe the function.\n")
        (insert
-"Press ? for help or to describe function\n"))
+         (format "Prefix = %s.\nPress ? for help or to describe function\n" prefixhelp))
    (map-keymap 'nu-insert-binding-row keymap)
    (insert "\n\n\n")))
 
 
  (switch-to-buffer-other-window "*Help*")
- (setq new-frame (window-frame (selected-window)))
+ (setq new-frame (window-frame (selected-window))))
 
  (setq cursor-in-echo-area t)
  (setq input nil)
@@ -157,8 +160,12 @@ to describe the function.\n")
 	      ((eq current-prefix-arg '-)
 	       (setq current-prefix-arg nil))
 	      (t
-	       (setq current-prefix-arg '-))))
-
+	       (setq current-prefix-arg '-)))
+       (with-current-buffer "*Help*"
+         (goto-char (point-min))
+         (read-only-mode -1)
+         (while (re-search-forward "\\`Prefix = .*?\n" nil t)
+         (replace-match (format "Prefix = %s\n" current-prefix-arg)))))
 
        ((and (stringp (key-description key))
              (string-match (key-description key) "[0123456789]"))
@@ -169,7 +176,12 @@ to describe the function.\n")
              (setq current-prefix-arg (+ (string-to-number (key-description key))
                                          (* current-prefix-arg 10))))
              (t
-              (setq current-prefix-arg (string-to-number (key-description key))))))
+              (setq current-prefix-arg (string-to-number (key-description key)))))
+       (with-current-buffer "*Help*"
+         (goto-char (point-min))
+         (read-only-mode -1)
+         (while (re-search-forward "\\`Prefix = .*?\n" nil t)
+         (replace-match (format "Prefix = %s\n" current-prefix-arg)))))
 
         ; now, break the loop, no matter a func has been found or not.
         ; eg the user can type not-mapped key to quit. "q" is never boundp.
@@ -189,7 +201,6 @@ to describe the function.\n")
 	   (progn
 	     (setq nu-last-command defn)
 	     (call-interactively defn))))))
-
 
 (defadvice repeat (before nu-repeat-last-prompt ())
   (if
