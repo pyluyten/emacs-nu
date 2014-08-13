@@ -93,7 +93,8 @@
    (define-key nu-keymap (kbd "M-d") 'nu-delete-prompt)
    (define-key nu-menu-map (kbd "d") 'nu-delete-map)
    (define-key nu-keymap (kbd "M-f") 'ace-jump-char-mode)
-   ;g : ace-jump?
+   (define-key nu-keymap (kbd "M-g") 'nu-goto-prompt)
+   (define-key nu-menu-map (kbd "g") 'nu-goto-map)
    (define-key nu-keymap (kbd "M-h") 'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-j") 'backward-char)
    (define-key nu-keymap (kbd "M-k") 'next-line)

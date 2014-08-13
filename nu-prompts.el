@@ -255,7 +255,9 @@ But if mark is active, exchange point and mark."
       (progn
          (define-key nu-open-map (kbd "L") 'org-open-at-point))))
 
+
 (defun nu-open-prompt ()
+"Maybe temporary prompt."
   (interactive)
   (nu-populate-open-map)
   (nu-prompt-for-keymap nu-open-map))
@@ -263,7 +265,40 @@ But if mark is active, exchange point and mark."
 
 
 
+(defun nu-populate-goto-map ()
+"Populate goto map."
+  (setq nu-goto-map nil)
+  (nu-define-prefix 'nu-goto-map)
+  (define-key nu-goto-map (kbd "l") 'forward-char)
+  (define-key nu-goto-map (kbd "j") 'backward-char)
+  (define-key nu-goto-map (kbd "i") 'previous-line)
+  (define-key nu-goto-map (kbd "k") 'forward-line)
+  (define-key nu-goto-map (kbd "u") 'backward-word)
+  (define-key nu-goto-map (kbd "o") 'forward-word)
+  (define-key nu-goto-map (kbd "h") 'back-to-indentation)
+  (define-key nu-goto-map (kbd "m") 'end-of-line)
+  (define-key nu-goto-map (kbd "p") 'forward-paragraph)
+  (define-key nu-goto-map (kbd "P") 'backward-paragraph)
+  (define-key nu-goto-map (kbd "f") 'end-of-defun)
+  (define-key nu-goto-map (kbd "F") 'beginning-of-defun)
+  (define-key nu-goto-map (kbd "s") 'forward-sentence)
+  (define-key nu-goto-map (kbd "S") 'backward-sentence)
+  (define-key nu-goto-map (kbd "e") 'next-error)
+  (define-key nu-goto-map (kbd "E") 'previous-error)
+  (define-key nu-goto-map (kbd "f") 'end-of-defun)
+  (define-key nu-goto-map (kbd "t") 'forward-list)
+  (define-key nu-goto-map (kbd "T") 'backward-list))
+
+
+(defun nu-goto-prompt ()
+"Offer to goto wherever wished."
+  (interactive)
+  (nu-populate-goto-map)
+  (nu-prompt-for-keymap nu-goto-map))
+
+
 (defun nu-global-prompt ()
+"Offer x keymap. Temporary function."
   (interactive)
   (nu-prompt-for-keymap ctl-x-map))
 
