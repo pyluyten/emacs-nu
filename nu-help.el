@@ -10,7 +10,7 @@
  ; to this function which keymap it is parsing (!)
  ; thus, use a global var
 (defvar nu-current-keymap nil)
-
+(defvar nu-current-major-mode nil)
 
 ; repeat does not work
 ; as we would like with prompts
@@ -38,8 +38,12 @@ This is a common key to _all_ prompts."
  (define-key arg (kbd "?") 'nu-help-about-prompts))
 
 
+(defun nu-prompt-describe (arg)
+ "describe the nu prompt function point is at."
+ (describe-function (function-called-at-point)))
 
-; for a given binding, display stuff...
+
+
 (defun nu-insert-binding-row (ev bind)
  "insert some link, the binding, the global binding, CR.
 
@@ -48,9 +52,9 @@ This is a common key to _all_ prompts."
                          (not (eq bind 'nu-help-about-prompts)))
        (progn
   ; insert the button
-        (insert-button (symbol-name bind))
+        (insert-button (symbol-name bind) 'action 'nu-prompt-describe)
 
-  ; insert shortcuts from the prompt
+  ; insert shortcuts _from the prompt_
         (setq help-string (where-is-internal bind (list nu-current-keymap)))
         (if (not (eq nil help-string))
              (progn
@@ -58,18 +62,35 @@ This is a common key to _all_ prompts."
                  (format " %s"
                    (mapconcat 'key-description help-string ", ")))))
 
-  ;; print the direct keys
+   ;; print the _direct keys_
+   ;; remove menu, menu-bar, f1, help, ..
+   ;; use non-greedy "*?"
+  (setq major-keymap (eval (intern-soft 
+          (concat (symbol-name nu-current-major-mode) "-map"))))
+
+
+   ;; TODO : make the regexp replace one or two C-c at beginning only
+   ;; (since where-is-internal does not know our sorcery)
+
+  (if (not (keymapp major-keymap))
+      (setq majorkeys "")
+      (setq majorkeys
+           (replace-regexp-in-string "\\(C-c\\)" "C-<SPC>"
+               (mapconcat 'key-description (where-is-internal
+                     bind (list major-keymap)) "@"))))
+
    (setq all
-      (replace-regexp-in-string "\\(<menu>\\|<f.>\\|<help>\\).*@" ""
+      (replace-regexp-in-string "\\(<menu>\\|<menu-bar>\\|<f.>\\|<help>\\).*?@" ""
         (format "%s@"
-          (mapconcat 'key-description (where-is-internal bind) "@"))))
+          (concat
+           (mapconcat 'key-description (where-is-internal bind nu-keymap) "@")
+            "@"
+            majorkeys))))
    (if (> (string-width all) 1)
    (progn
      (setq all (replace-regexp-in-string "@" " " all))
      (insert " - or " all)))
    (insert "\n"))))
-
-
 
 
 (defun nu-prompt-for-keymap (keymap &optional describe)
@@ -82,7 +103,10 @@ If describe arg is t, only describe-function."
  ; we cannot easily communicate
  ; to this the keymap we are parsing (!)
  ; thus, use a global var
+ ;
+ ; also, include major mode keys.
  (setq nu-current-keymap keymap)
+ (setq nu-current-major-mode major-mode)
 
  (setq prev-frame (selected-frame))
  (setq config (current-window-configuration))
