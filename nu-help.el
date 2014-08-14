@@ -58,7 +58,7 @@ and drect keys from both nu-keymap / major-mode."
 
   ; insert shortcuts _from the prompt_
         (setq keyvect (where-is-internal bind (list nu-current-keymap)))
-        (if (not (eq nil help-string))
+        (if (not (eq nil keyvect))
              (progn
                (insert
                  (format " %s"
