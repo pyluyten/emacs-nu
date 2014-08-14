@@ -44,23 +44,25 @@ This is a common key to _all_ prompts."
 
 
 
-(defun nu-insert-binding-row (ev bind)
- "insert some link, the binding, the global binding, CR.
+(defun nu-describe-bind (bind)
+"Insert into *Help* Buffer a prompt row for bind.
 
-  Do not document digit-argument."
- (if (and (symbolp bind) (not (eq bind 'digit-argument))
+This includes symbol name, key(s) from prompt,
+and drect keys from both nu-keymap / major-mode."
+  ; once bind sanitized, start printing help
+  (if (and (symbolp bind) (not (eq bind 'digit-argument))
                          (not (eq bind 'nu-help-about-prompts)))
        (progn
   ; insert the button
         (insert-button (symbol-name bind) 'action 'nu-prompt-describe)
 
   ; insert shortcuts _from the prompt_
-        (setq help-string (where-is-internal bind (list nu-current-keymap)))
+        (setq keyvect (where-is-internal bind (list nu-current-keymap)))
         (if (not (eq nil help-string))
              (progn
                (insert
                  (format " %s"
-                   (mapconcat 'key-description help-string ", ")))))
+                   (mapconcat 'key-description keyvect ", ")))))
 
    ;; print the _direct keys_
    ;; remove menu, menu-bar, f1, help, ..
@@ -91,6 +93,25 @@ This is a common key to _all_ prompts."
      (setq all (replace-regexp-in-string "@" " " all))
      (insert " - or " all)))
    (insert "\n"))))
+
+
+(defun nu-insert-binding-row (ev bind)
+ "If bind is a function, insert into *Help* its doc.
+If bind is a Meta char list bound keys,
+call insert description for each bind."
+
+  ; keymap has different format.
+  ; immediate below code should implement this
+  ; sanitize bind whenever it makes sense
+
+  ; for now, handle M- shortcuts...
+  (if (symbolp bind)
+      (nu-describe-bind bind)
+      (progn
+        (setq bind (cdr bind)) ; bind is now a list
+        (while (not (eq nil (car bind)))
+             (nu-describe-bind (cdr (car bind)))
+             (setq bind (cdr bind))))))
 
 
 (defun nu-prompt-for-keymap (keymap &optional describe)
