@@ -167,12 +167,12 @@ to describe the function.\n")
       (cond
 
        ; check if the user needs to scroll the help. Do not break loop.
-       ; FIXME - if scroll fails, loop fails!
        ((eq (aref key 0) ?\d)
-        (scroll-down))
+        (ignore-errors
+          (scroll-down nil)))
        ((eq (aref key 0) ?\s)
-        (scroll-up))
-
+        (ignore-errors
+          (scroll-up nil)))
 
        ; check for negative / digit-argument.
        ((string= (key-description key) "-")
