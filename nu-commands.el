@@ -9,6 +9,17 @@
 (defun nu-join-with-following-line () (interactive) (join-line 1))
 (defun nu-rot-reg-or-toggle-rot () (interative) (if mark-active (rot13-region) (toggle-rot13-mode)))
 
+
+(defun nu-create-tags (dir-name)
+ "Create exhuberant ctags.
+
+Interactively specify a directory.
+Output will be standard TAGS file."
+ (interactive "DDirectory: ")
+ (shell-command
+   (format "ctags -e -R %s" (directory-file-name dir-name))))
+
+
 (defun nu-toggle-goal-column ()
  "Toggle goal column."
  (interactive)
