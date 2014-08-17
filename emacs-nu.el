@@ -79,8 +79,8 @@
    (define-key nu-keymap (kbd "M-q") 'quoted-insert) ; fix minibuf'
    (define-key nu-keymap (kbd "M-w") 'other-window)
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
-   ;r  maybe overwrite mode...
-   ;t  transpose?
+   (define-key nu-keymap (kbd "M-r") 'transpose-chars)
+   ;t  ?
    (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)
    (define-key nu-keymap (kbd "M-u") 'backward-word)
    (define-key nu-keymap (kbd "M-i") 'previous-line)
