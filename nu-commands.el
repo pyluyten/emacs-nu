@@ -433,7 +433,7 @@ A contigent amount of chars different than <space>."
  "Deletes the current buffer text."
  (interactive)
  (mark-whole-buffer)
- (kill-region))
+ (call-interactively 'kill-region))
 
 
 (defun nu-delete-defun ()
