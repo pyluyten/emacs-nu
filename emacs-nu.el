@@ -27,7 +27,7 @@
    ; e? edit?
    (define-key nu-keymap (kbd "C-r") 'nu-replace-prompt)
    (define-key nu-menu-map (kbd "r") 'nu-replace-map)
-   (define-key nu-keymap (kbd "C-t") 'nu-new-tab)
+   (define-key nu-keymap (kbd "C-t") 'ido-switch-buffer-other-window)
    ; y?
    (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
    (define-key universal-argument-map (kbd "C-u") 'backward-kill-word) ; fix c-u with prefix.
@@ -35,13 +35,14 @@
    ; C-i is tab.
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
    (define-key nu-menu-map (kbd "o") 'nu-open-map)
+   (define-key nu-keymap (kbd "C-S-o") 'ido-switch-buffer)
    (define-key nu-keymap (kbd "C-p") 'nu-print-prompt)
    (define-key nu-menu-map (kbd "p") 'nu-print-map)
 
    (define-key nu-keymap (kbd "C-a") 'nu-a-prompt)
    (define-key nu-menu-map (kbd "a") 'nu-a-map)
    (define-key nu-keymap (kbd "C-s") 'save-buffer)
-   ; C-d is not yet defined. Currently it is synonym to C-l.
+   (define-key nu-keymap (kbd "C-d") 'kill-word)
    (define-key nu-keymap (kbd "C-f") 'nu-isearch-forward-regexp)
    (define-key nu-keymap (kbd "C-g") 'nu-global-prompt)
 ;   (define-key nu-menu-map (kbd "g") 'nu-global-map)
@@ -50,7 +51,7 @@
    (define-key nu-keymap (kbd "C-j") 'backward-delete-char)
    (define-key nu-keymap (kbd "C-k") 'kill-visual-line)
    (define-key nu-keymap (kbd "C-l") 'delete-forward-char)
-   ; C-m stands for enter. This is something to study.
+   ; C-m stands for enter.
 
    (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize)
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
@@ -107,8 +108,8 @@
    (define-key nu-menu-map (kbd "v") 'nu-insert-map)
    ;b
    (define-key nu-keymap (kbd "M-n") 'delete-other-windows)
-   (define-key nu-keymap (kbd "²") 'ibuffer)
-   (define-key nu-keymap (kbd "M-²") 'other-window)
+   (define-key nu-keymap (kbd "²") 'ido-switch-buffer)
+   (define-key nu-keymap (kbd "³") 'ibuffer)
    (define-key nu-keymap (kbd "M-<dead-circumflex>")'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-à") 'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-$") 'nu-end-of-line)

@@ -237,7 +237,7 @@ But if mark is active, exchange point and mark."
   (setq nu-open-map nil)
   (nu-define-prefix 'nu-open-map)
   (define-key nu-open-map (kbd "f")  'find-file)
-  (define-key nu-open-map (kbd "\C-f")  'find-file-other-window)
+  (define-key nu-open-map (kbd "C-f")  'find-file-other-window)
   (define-key nu-open-map (kbd "r")  'recentf-open-files)
   (define-key nu-open-map (kbd "m")  'bookmark-bmenu-list)
   (define-key nu-open-map (kbd "M")  'bookmark-jump)
@@ -251,7 +251,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "O")   'nu-previous-window)
   (define-key nu-open-map (kbd "i")   'ibuffer)
   (define-key nu-open-map (kbd "C-i")   'org-iswitchb)
-  (define-key nu-open-map (kbd "C-<SPC>") 'ido-switch-buffer)
+  (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer)
   (if (eq major-mode 'org-mode)
       (progn
          (define-key nu-open-map (kbd "L") 'org-open-at-point))))
