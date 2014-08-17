@@ -23,8 +23,7 @@
    ;  do not respect _any_ emacs convention. Seriously.
 
    (define-key nu-keymap (kbd "C-q") 'keyboard-escape-quit)
-   (define-key nu-menu-map (kbd "w") 'nu-window-map)
-   (define-key nu-keymap (kbd "C-w") 'nu-window-prompt)
+   (define-key nu-keymap (kbd "C-w") 'delete-window)
    ; e? edit?
    (define-key nu-keymap (kbd "C-r") 'nu-replace-prompt)
    (define-key nu-menu-map (kbd "r") 'nu-replace-map)
@@ -77,10 +76,11 @@
 ;  all _ alt _ features
 
    (define-key nu-keymap (kbd "M-q") 'quoted-insert) ; fix minibuf'
-   (define-key nu-keymap (kbd "M-w") 'other-window)
+   (define-key nu-keymap (kbd "M-w") 'nu-window-prompt)
+   (define-key nu-menu-map (kbd "w") 'nu-window-map)
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
    (define-key nu-keymap (kbd "M-r") 'transpose-chars)
-   ;t  ?
+   (define-key nu-keymap (kbd "M-t") 'other-window)
    (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)
    (define-key nu-keymap (kbd "M-u") 'backward-word)
    (define-key nu-keymap (kbd "M-i") 'previous-line)
@@ -106,22 +106,19 @@
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
    (define-key nu-menu-map (kbd "v") 'nu-insert-map)
    ;b
-   (define-key nu-keymap (kbd "M-n") 'nu-new-empty-buffer)
+   (define-key nu-keymap (kbd "M-n") 'delete-other-windows)
    (define-key nu-keymap (kbd "²") 'ibuffer)
    (define-key nu-keymap (kbd "M-²") 'other-window)
    (define-key nu-keymap (kbd "M-<dead-circumflex>")'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-à") 'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-$") 'nu-end-of-line)
 
+   ; a la view-mode scroll.
    (define-key nu-keymap (kbd "M-<SPC>") 'scroll-up)
    (define-key nu-keymap (kbd "M-<backspace>") 'scroll-down)
+   (define-key nu-keymap (kbd "C-M-<SPC>") 'scroll-other-window)
  
-;  hyper keys - todo: have an arg on these...
-;  maybe hyper / super.
-;   (define-key nu-keymap (kbd "s-k") 'scroll-down)
-;   (define-key nu-keymap (kbd "s-i") 'scroll-up)
-
-; Function  keys
+   ; Function  keys
 
    ; default f10 fires a gui menu which sucks.
    (define-key nu-keymap (kbd "<f10>") 'tmm-menubar)
