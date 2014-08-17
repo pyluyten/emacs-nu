@@ -47,10 +47,10 @@ This is the manual for Nu, a modern keybinding for Emacs.
 
 @menu
 * Overview::
-* NU for the power user::
 * View and Edit::
 * Files Buffers Windows::
 * Hacking::
+* NU for the power user::
 * NU & other libraries::
 * Contributing::
 * GNU Free Documentation License::
@@ -72,7 +72,7 @@ Modern, means respecting conventions like
 @item @kbd{Control-x}, @kbd{Control-c}, @kbd{Control-v} to cut, copy, paste.
 @end enumerate
 
-To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, @kbd{Control-f} raises a prompt precising which key - actually, which sequence - to press in order to execute desired function : once @kbd{Control-f} has been pressed and the ``Find-prompt'' appears, pressing @key{f} will toggle ace-jump-char-mode, @key{C-f} will start a regexp search, while @kbd{g} will execute goto-line, or @kbd{s} will move point to previous selection.
+To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, @kbd{Control-r} raises a prompt precising which key - actually, which sequence - to press in order to execute desired function : once @kbd{Control-r} has been pressed and the ``Replace-prompt'' appears, pressing @key{r} will offer to replace-regexp, @key{a} will revert buffer, while @kbd{k} will trigger overwrite-mode, or @kbd{j} will join current line with following line.
 
 Most common shortcuts - ie, common to most applications - respect this guideline. Thus, there is a prompt for @kbd{s}, @kbd{v}, @kbd{a}... Almost all prompts rely on Control modifier to be run. There are exceptions. Since @kbd{Control+s} invoking a prompt would be irritating, this sequence directly saves buffer, while @kbd{Alt+s} runs the ``save prompt''.
 
@@ -102,52 +102,9 @@ Use @kbd{Alt+z} to undo last command.
 Use @kbd{Control+h} to gain access to help functions. This includes the usual shortcuts to describe what a key does, or what a function does.
 If you messed up, use @kbd{Control+w} then @kbd{Control+q} to quit.
 
-Prompts are usually triggered using a @kbd{Control} modifier and advertise a function using the same key, but with @kbd{Alt} modifier. For example, @kbd{Control-f} will pop-up a find-prompt, while @kbd{Alt-f} will directly allow you to `ace-jump` to a char.
+Prompts are usually triggered using a @kbd{Control} modifier and advertise a function using the same key, but with @kbd{Alt} modifier. For example, @kbd{Control-n} will pop-up a new-prompt, while @kbd{Alt-n} will directly create some new untitled buffer.
 
 These prompts offer you to quickly learn where functions are.
-
-@node NU for the power user
-@chapter NU for the power user
-
-If you are not used to Emacs, reading this chapter is not necessary. But Emacs veteran should probably start here.
-emacs-nu redefines many keys, however two points make learning curve shorter
-
-@enumerate
-@item For any user, knowing CUA keybinds will make emacs-nu discoverable.
-@item For veteran Emacs user, two important sequences remain:
-@end enumerate
-
-@kbd{M-x} is still there. This means, you can probably obtain what you want.
-Also, @kbd{Control+h} for help-prefix is still there.
-
-Now, two things should probably be kept in mind while trying nu-mode
-
-@enumerate
-@item
-To trigger a major mode sequence, start with @kbd{Control+Space}. This will invoke vanilla emacs @kbd{Control+c}. For example, into org-mode, use @kbd{Control+Space Control+n} to navigate to next node. If you already defined you own keys starting with @kbd{Control+c}, do not amend this definition.
-
-@lisp
-(define-key mykeymap kbd("\C-c h") myfunction)
-@end lisp
-
-To invoke above myfunction example, press @kbd{Control-SPC h}.
-
-@item
-You should not rely on @kbd{Control+x}, or at least no regularly. However to trigger x prefix, use @kbd{Control+g}. This will raise a prompt to trigger Control-X-Prefix.
-
-@end enumerate
-
-`Repeat' is invoked from @kbd{Control+Return}. It was hacked to work with prompts : thus, you can repeat a command ran from a prompt. Prefix arguments (numeric-argument, negative-argument) can work : either use standard @kbd{Alt+1}, @kbd{Alt+2} ... shortcuts plus one command. Or, from a prompts, directly type a figure (or, a number) then choose the command (eg, from delete prompt, type @key{3} then invoke kill-word to kill 3 words ; or type @key{2} then @key{3} to input 23). Alternatively, first trigger the argument from standard shortcuts, then call the prompt. What is invoked from the prompt will make use of that argument.
-
-Note that `where-is` function, which sometimes advertises shortcuts, will not work as usual, since a prompt is not a keymap : `where-is` do not know how to invoke @kbd{Control-f} then @kbd{k} to reach end of buffer. (Did you try `where-is git push' in magit? this does not work. What is acceptable for maggit is not for a full keymap.)
-
-Thus :
-@enumerate
-@item
-For each function accessible from a prompt, an additional shortcut is created, accessible from @kbd{menu} plus the same @kbd{key} than the prompt, in order to make where-is advertise. Hence, if you read `You can run this command with <menu> f k`, please understand, despite it is also true, that you can also run the command with @kbd{Control-f-k}.
-@item
-From the help prompt (@kbd{Control-h}), run @key{h} to invoke nu-help. This function will present you all prompts, and will offer you to describe their keymaps - that is, all the functions you can access from these prompts.
-@end enumerate
 
 @node View and Edit
 @chapter View and Edit
@@ -171,7 +128,7 @@ Additionally, use @key{Alt} @key{u} and @key{Alt} @key{o} to move to previous, n
 @w{     }J@w{ }K@w{ }L
 
 
-Use @kbd{Alt+$} to go to end of line, or @kbd{Alt+h} to go beginning of line. To reach a line or a specific character, or the beginning of buffer, or the end of the buffer, use @kbd{Control+f} then the appropriate key. Just read the prompt. Or use @kbd{Alt+f} if you just want to find-char.
+Use @kbd{Alt+$} to go to end of line, or @kbd{Alt+h} to go beginning of line. To reach a line, or the beginning of buffer, or the end of the buffer, use @kbd{Alt+g} then the appropriate key. Just read this goto-prompt. To find a char, a string, a line starting with a specific letter, use @kbd{Alt+f}. To directly trigger a regexp-search, use @kbd{Control+f}.
 
 Notice that f key, used both with `control' and `alt' modifiers, offers find-related features. One of these keys is direct : it directly executes a command, & maybe a very common one. The other key does raise a prompt to offer more features. This principle to have one 'alt' modifier plus one 'control' modifier applies to other keys, as well.
 
@@ -206,7 +163,7 @@ Now that you can input text plus navigate, let's examine several alternatives to
 @item
 Use @kbd{Control-x} to cut the current line.
 @item
-Use @kbd{Control+j},@kbd{Control+l} to delete backward, forward char.
+Use @kbd{Control+j},@kbd{Control+l} to delete backward, forward char. Backspace / Delete are still available.
 @item
 Use @kbd{Control + u} to delete previous word.
 @item
@@ -292,6 +249,51 @@ The print buffer, invoked from @kbd{Control+p}, will offer you to eval things or
 @kbd{Control+p} also offers to grep, find-grep or ediff.
 
 
+
+@node NU for the power user
+@chapter NU for the power user
+
+If you are not used to Emacs, reading this chapter is not necessary. But Emacs veteran should probably start here.
+emacs-nu redefines many keys, however two points make learning curve shorter
+
+@enumerate
+@item For any user, knowing CUA keybinds will make emacs-nu discoverable.
+@item For veteran Emacs user, two important sequences remain:
+@end enumerate
+
+@kbd{M-x} is still there. This means, you can probably obtain what you want.
+Also, @kbd{Control+h} for help-prefix is still there.
+
+Now, two things should probably be kept in mind while trying nu-mode
+
+@enumerate
+@item
+To trigger a major mode sequence, start with @kbd{Control+Space}. This will invoke vanilla emacs @kbd{Control+c}. For example, into org-mode, use @kbd{Control+Space Control+n} to navigate to next node. If you already defined you own keys starting with @kbd{Control+c}, do not amend this definition.
+
+@lisp
+(define-key mykeymap kbd("\C-c h") myfunction)
+@end lisp
+
+To invoke above myfunction example, press @kbd{Control-SPC h}.
+
+@item
+You should not rely on @kbd{Control+x}, or at least no regularly. However to trigger x prefix, use @kbd{Control+g}. This will raise a prompt to trigger Control-X-Prefix.
+
+@end enumerate
+
+`Repeat' is invoked from @kbd{Control+Return}. It was hacked to work with prompts : thus, you can repeat a command ran from a prompt. Prefix arguments (numeric-argument, negative-argument) can work : either use standard @kbd{Alt+1}, @kbd{Alt+2} ... shortcuts plus one command. Or, from a prompts, directly type a figure (or, a number) then choose the command (eg, from delete prompt, type @key{3} then invoke kill-word to kill 3 words ; or type @key{2} then @key{3} to input 23). Alternatively, first trigger the argument from standard shortcuts, then call the prompt. What is invoked from the prompt will make use of that argument.
+
+Note that `where-is` function, which sometimes advertises shortcuts, will not work as usual, since a prompt is not a keymap : `where-is` do not know how to invoke @kbd{Control-r} then @kbd{r} to invoke replace-regexp. (Did you try `where-is git push' in magit? this does not work. What is acceptable for maggit is not for a full keymap.)
+
+Thus :
+@enumerate
+@item
+For each function accessible from a prompt, an additional shortcut is created, accessible from @kbd{menu} plus the same @kbd{key} than the prompt, in order to make where-is advertise. Hence, if you read `You can run this command with <menu> r k`, please understand, despite it is also true, that you can also run the command with @kbd{Control-r-k}.
+@item
+From the help prompt (@kbd{Control-h}), run @key{h} to invoke nu-help. This function will present you all prompts, and will offer you to describe their keymaps - that is, all the functions you can access from these prompts.
+@end enumerate
+
+
 @node NU & other libraries
 @chapter NU & other libraries
 
@@ -319,6 +321,10 @@ Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, 
 @end lisp
 
 Obviously this only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
+
+@section god-mode
+
+I'm currently waiting for a patch to be integrated, in order to allow god-mode to allow configuring which modifier is added to keys. This patch will allow to use god-mode with alt automatically triggered. Forward / Backward char / line / word will be one key distant, while delete prompts becomes nicer. Commands relying on @kbd{Control} modifier will be triggered with @key{g} key.
 
 @node Contributing
 @chapter Contributing
