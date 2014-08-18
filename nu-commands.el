@@ -10,6 +10,32 @@
 (defun nu-rot-reg-or-toggle-rot () (interative) (if mark-active (rot13-region) (toggle-rot13-mode)))
 
 
+
+
+(defun nu-next-buffer (&optional previous)
+  "next-buffer, skip some.
+
+Messages, Backtrace, Completions, Help."
+  (interactive)
+  (if (eq previous nil)
+      (next-buffer)
+      (previous-buffer))
+  (while (or (string= "*Messages*" (buffer-name))
+             (string= "*Backtrace*" (buffer-name))
+             (string= "*Completions*" (buffer-name))
+             (string= "*scratch*" (buffer-name))
+             (string= "*Help*" (buffer-name)))
+          (if (eq previous nil)
+              (next-buffer)
+              (previous-buffer))))
+
+(defun nu-previous-buffer ()
+  "Calls nu nu-next-buffer with arg."
+  (interactive)
+  (nu-next-buffer '-))
+
+
+
 (defun nu-create-tags (dir-name)
  "Create exhuberant ctags.
 
