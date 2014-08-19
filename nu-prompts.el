@@ -55,7 +55,9 @@
 
 (nu-define-prefix 'nu-window-map)
 (define-key nu-window-map (kbd "x") 'nu-close-document)
-(define-key nu-window-map (kbd "k") 'kill-buffer)
+(define-key nu-window-map (kbd "C-x") 'nu-close-document)
+(define-key nu-window-map (kbd "C-k") 'kill-buffer)
+(define-key nu-window-map (kbd "K") 'kill-buffer)
 (define-key nu-window-map (kbd "w") 'delete-other-windows)
 (define-key nu-window-map (kbd "C-<space>") 'scroll-other-window)
 (define-key nu-window-map (kbd "C-<backspace>") 'scroll-other-window-down)
