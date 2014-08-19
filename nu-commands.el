@@ -503,15 +503,15 @@ A contigent amount of chars different than <space>."
 
 
 
-(defun nu-close-tab ()
-  "Closes Current tab.
+(defun nu-close-document ()
+  "Closes current document.
 If tab is the only one, closes window.
 If window is the only one, kill buffer."
   (interactive)
   (setq win (next-window (next-window)))
   (if win
     (if (eq win (next-window))
-         (kill-buffer)
+         (bury-buffer)
          (delete-window))))
 
 

@@ -54,18 +54,18 @@
 
 
 (nu-define-prefix 'nu-window-map)
-(define-key nu-window-map (kbd "w") 'nu-close-tab)
-(define-key nu-window-map (kbd "M-k") 'kill-buffer)
-(define-key nu-window-map (kbd "M-w") 'delete-other-windows)
-(define-key nu-window-map (kbd "M-<space>") 'scroll-other-window)
-(define-key nu-window-map (kbd "M-<backspace>") 'scroll-other-window-down)
+(define-key nu-window-map (kbd "x") 'nu-close-document)
+(define-key nu-window-map (kbd "k") 'kill-buffer)
+(define-key nu-window-map (kbd "w") 'delete-other-windows)
+(define-key nu-window-map (kbd "C-<space>") 'scroll-other-window)
+(define-key nu-window-map (kbd "C-<backspace>") 'scroll-other-window-down)
 (define-key nu-window-map (kbd "i") 'windmove-up)
 (define-key nu-window-map (kbd "j") 'windmove-left)
 (define-key nu-window-map (kbd "k") 'windmove-down)
 (define-key nu-window-map (kbd "l") 'windmove-right)
-(define-key nu-window-map (kbd "t") 'transpose-frame)
-(define-key nu-window-map (kbd "o")   'nu-next-window)
-(define-key nu-window-map (kbd "M-o")   'nu-previous-window)
+(define-key nu-window-map (kbd "f") 'transpose-frame)
+(define-key nu-window-map (kbd "n")   'nu-next-window)
+(define-key nu-window-map (kbd "p")   'nu-previous-window)
 (define-key nu-window-map (kbd "Q") 'save-buffers-kill-emacs)
 
 (defun nu-window-prompt ()
@@ -190,7 +190,7 @@
 
 
 (nu-define-prefix 'nu-new-map)
-(define-key nu-new-map (kbd "b") 'nu-new-empty-buffer)
+(define-key nu-new-map (kbd "n") 'nu-new-empty-buffer)
 (define-key nu-new-map (kbd "w") 'make-frame-command)
 (define-key nu-new-map (kbd "v") 'split-window-below)
 (define-key nu-new-map (kbd "h") 'split-window-right)
