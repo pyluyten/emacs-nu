@@ -53,6 +53,7 @@
  (setq x x))
 
 
+
 (nu-define-prefix 'nu-window-map)
 (define-key nu-window-map (kbd "x") 'nu-close-document)
 (define-key nu-window-map (kbd "C-x") 'nu-close-document)
@@ -120,7 +121,8 @@
       (progn
         (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
         (define-key nu-delete-map (kbd "-") 'org-table-kill-row)
-        (define-key nu-delete-map (kbd "*") 'org-cut-special))))
+        (define-key nu-delete-map (kbd "*") 'org-cut-special)
+        (define-key nu-delete-map (kbd "M-k") 'org-cut-subtree))))
 
 (defun nu-delete-prompt-internal ()
   (interactive)
@@ -155,6 +157,8 @@
       (define-key nu-insert-map (kbd "L") 'org-insert-link)
       (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
       (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
+      (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
+      (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
       (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading))))
 
 (defun nu-insert-prompt ()
@@ -173,6 +177,8 @@
   (define-key nu-save-map (kbd "w") 'ido-write-file)
   (define-key nu-save-map (kbd "r") 'rename-buffer)
   (define-key nu-save-map (kbd "l") 'org-store-link)
+  (if (eq major-mode 'org-mode)
+      (define-key nu-save-map (kbd "o") 'org-refile))
   (define-key nu-save-map (kbd "m") 'magit-status)
   (define-key nu-save-map (kbd "k") 'kmacro-start-macro-or-insert-counter)
   (define-key nu-save-map (kbd "f") 'nu-create-tags)
