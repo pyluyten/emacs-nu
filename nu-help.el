@@ -114,6 +114,10 @@ call insert description for each bind."
              (setq bind (cdr bind))))))
 
 
+
+(defvar nu-repeat-prompt nil)
+
+
 (defun nu-prompt-for-keymap (keymap &optional describe)
  "Help to choose a key from a keymap
 
@@ -174,6 +178,10 @@ to describe the function.\n")
         (ignore-errors
           (scroll-up nil)))
 
+       ; allow to repeat prompt
+       ((string= key "+")
+        (setq nu-repeat-prompt t))
+
        ; check for negative / digit-argument.
        ((string= (key-description key) "-")
         (cond ((integerp current-prefix-arg)
@@ -214,14 +222,17 @@ to describe the function.\n")
          (set-window-configuration config)
          (setq input t)))))
 
-  ; run the func.
+  ; run the func. Repeat if asked.
   (if defn
-    (progn
-	(if describe
+      (if describe
 	   (describe-function defn)
-	   (progn
-	     (setq nu-last-command defn)
-	     (call-interactively defn))))))
+	   (setq nu-last-command defn)
+	   (call-interactively defn)
+           (if nu-repeat-prompt
+                 (nu-prompt-for-keymap keymap)))
+  ; if no func, make sure not to repeat.
+      (setq nu-repeat-prompt nil)))
+
 
 (defadvice repeat (before nu-repeat-last-prompt ())
   (if
