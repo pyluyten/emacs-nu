@@ -180,7 +180,8 @@ to describe the function.\n")
 
        ; allow to repeat prompt
        ((string= key "+")
-        (setq nu-repeat-prompt t))
+        (progn (message "plus")
+               (setq nu-repeat-prompt t)))
 
        ; check for negative / digit-argument.
        ((string= (key-description key) "-")
@@ -190,6 +191,7 @@ to describe the function.\n")
 	       (setq current-prefix-arg nil))
 	      (t
 	       (setq current-prefix-arg '-)))
+
        (with-current-buffer "*Help*"
          (goto-char (point-min))
          (read-only-mode -1)
@@ -220,18 +222,17 @@ to describe the function.\n")
          (setq defn (lookup-key local-map key))
          (message "")
          (set-window-configuration config)
-         (setq input t)))))
 
-  ; run the func. Repeat if asked.
-  (if defn
-      (if describe
-	   (describe-function defn)
-	   (setq nu-last-command defn)
-	   (call-interactively defn)
-           (if nu-repeat-prompt
-                 (nu-prompt-for-keymap keymap)))
-  ; if no func, make sure not to repeat.
-      (setq nu-repeat-prompt nil)))
+         ; run the func. Repeat if asked.
+         (if (not nu-repeat-prompt)
+           (setq input t))
+         (if defn
+            (if describe
+	        (describe-function defn)
+	        (setq nu-last-command defn)
+	        (call-interactively defn))
+           ; if no func, make sure not to repeat.
+            (setq nu-repeat-prompt nil)))))))
 
 
 (defadvice repeat (before nu-repeat-last-prompt ())
