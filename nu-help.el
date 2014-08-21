@@ -231,7 +231,7 @@ to describe the function.\n")
 	        (describe-function defn)
 	        (setq nu-last-command defn)
 	        (call-interactively defn))
-           ; if no func, make sure not to repeat.
+             ; if no func, make sure not to repeat.
             (setq nu-repeat-prompt nil)))))))
 
 
