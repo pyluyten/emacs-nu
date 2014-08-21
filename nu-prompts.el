@@ -159,6 +159,7 @@
       (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
       (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
       (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
+      (define-key nu-insert-map (kbd ",") 'org-time-stamp)
       (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading))))
 
 (defun nu-insert-prompt ()
