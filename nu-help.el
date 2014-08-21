@@ -224,13 +224,15 @@ to describe the function.\n")
          (set-window-configuration config)
 
          ; run the func. Repeat if asked.
-         (if (not nu-repeat-prompt)
+         (if (or (not nu-repeat-prompt)
+                 (eq defn nil))
            (setq input t))
          (if defn
             (if describe
 	        (describe-function defn)
 	        (setq nu-last-command defn)
-	        (call-interactively defn))
+                (ignore-errors
+                   (call-interactively defn)))
              ; if no func, make sure not to repeat.
             (setq nu-repeat-prompt nil)))))))
 
