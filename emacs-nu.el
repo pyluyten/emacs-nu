@@ -34,6 +34,7 @@
    (define-key universal-argument-map (kbd "C-u") 'backward-kill-word) ; fix c-u with prefix.
    (define-key universal-argument-map (kbd "M-p") 'universal-argument-more)
    ; C-i is tab.
+   (define-key nu-keymap (kbd "C-S-i") 'nu-next-buffer)
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
    (define-key nu-menu-map (kbd "o") 'nu-open-map)
    (define-key nu-keymap (kbd "C-S-o") 'ido-switch-buffer)
@@ -56,6 +57,7 @@
    ; C-m stands for enter.
 
    (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize)
+   (define-key nu-keymap (kbd "C-S-z") 'undo-tree-redo)
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
    (define-key nu-keymap (kbd "C-S-x") 'nu-global-prompt)
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
@@ -99,7 +101,7 @@
    (define-key nu-keymap (kbd "M-k") 'next-line)
    (define-key nu-keymap (kbd "M-l") 'forward-char)
    (define-key nu-keymap (kbd "M-m") 'newline-and-indent)
-   (define-key nu-keymap (kbd "M-z") 'undo)
+   (define-key nu-keymap (kbd "M-z") 'undo-tree-undo)
    ;x  execute-extended-command
    ;c
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
