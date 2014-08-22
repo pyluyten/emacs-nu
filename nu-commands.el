@@ -28,6 +28,22 @@
     (message "nu-bold : no action"))))
 
 
+(defun nu-zap-up-to-char (arg char)
+  "Kill up to, but not including ARGth occurrence of CHAR.
+Case is ignored if `case-fold-search' is non-nil in the current buffer.
+Goes backward if ARG is negative; error if CHAR not found.
+Ignores CHAR at point."
+  (interactive "p\ncZap up to char: ")
+  (let ((direction (if (>= arg 0) 1 -1)))
+    (kill-region (point)
+                 (progn
+                   (forward-char direction)
+                   (unwind-protect
+                       (search-forward (char-to-string char) nil nil arg)
+                     (backward-char direction))
+                   (point)))))
+
+
 (defun nu-next-buffer (&optional previous)
   "next-buffer, skip some.
 
@@ -36,14 +52,11 @@ Messages, Backtrace, Completions, Help."
   (if (eq previous nil)
       (next-buffer)
       (previous-buffer))
-  (while (or (string= "*Messages*" (buffer-name))
-             (string= "*Backtrace*" (buffer-name))
-             (string= "*Completions*" (buffer-name))
-             (string= "*scratch*" (buffer-name))
-             (string= "*Help*" (buffer-name)))
-          (if (eq previous nil)
-              (next-buffer)
-              (previous-buffer))))
+  (while (string-match "\*.*\*" (buffer-name))
+      (if (eq previous nil)
+          (next-buffer)
+          (previous-buffer))))
+
 
 (defun nu-previous-buffer ()
   "Calls nu nu-next-buffer with arg."

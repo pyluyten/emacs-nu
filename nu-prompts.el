@@ -408,7 +408,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "j")	  'nu-join-with-following-line)
   (define-key nu-replace-map (kbd "J")	  'join-line)
   (define-key nu-replace-map (kbd "t")	  'transpose-lines)
-  (define-key nu-replace-map (kbd "z")	  'zap-to-char)
+  (define-key nu-replace-map (kbd "z")	  'nu-zap-up-to-char)
   (define-key nu-replace-map (kbd "u")	  'upcase-word)
   (define-key nu-replace-map (kbd "d") 'downcase-word)
   (define-key nu-replace-map (kbd "c") 'capitalize-word)
@@ -424,7 +424,6 @@ But if mark is active, exchange point and mark."
           (define-key nu-replace-map (kbd "C-l") 'org-metaright)
           (define-key nu-replace-map (kbd "C-i") 'org-metaup)
           (define-key nu-replace-map (kbd "C-k") 'org-metadown))))
-
 
 (defun nu-replace-do-prompt ()
   (interactive)
