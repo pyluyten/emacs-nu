@@ -30,6 +30,7 @@ This is the manual for Nu, a modern keybinding for Emacs.
 * Files Buffers Windows::
 * Hacking::
 * NU for the power user::
+* NU and some specific modes::
 * NU & other libraries::
 * Contributing::
 * GNU Free Documentation License::
@@ -98,6 +99,51 @@ example, 'Control-n' will pop-up a new-prompt, while 'Alt-n' will
 directly create some new untitled buffer.
 
    These prompts offer you to quickly learn where functions are.
+
+1.3 Prompts
+===========
+
+Prompts are basically a window showing several possible keys, and which
+functions are to be run given this input.  However some features deserve
+some deeper explanation.
+
+   First, as explained below a prompt will explain how to use it,
+however prompt will also advertise direct shortcuts to commands : ie,
+shortcuts that would have directly run some function without going
+through the prompts.  This does not mean using the prompt was wrong.  It
+is rather meant as a way to discover and as a reminder, since nu-mode
+has many alternatives.
+
+   Second, a prompt allows you to use arguments in two ways.  The first
+way, is to use standard Emacs keys to trigger an argument (eg,
+'Control+1', or 'Alt+1', or 'Alt+-', or use the universal argument which
+is bound in nu-mode to 'Alt+p'), then run the prompt, then choose the
+command that will be affected by the argument.  The second way to use
+arguments is to first run the prompt, then directly press a digit or -
+to increment the argument.  Then, press the relevant key to run the
+desired function.
+
+   Third, a prompt also allows to get some help about functions.  Run
+the prompt, press ?, then the same keymap as usual will not run
+functions but describe functions.  For example, while 'replace-prompt'
+ususally run 'revert-buffer' on <a> press, once ?  has been pressed, <a>
+will instead describe function 'revert-buffer'.
+
+   Fourth, a prompt can be toggled to some 'repeat' state.  Run a
+prompt, then press <+>.  You can then use the prompt as usual, except
+that after running the function, prompt will ask you again for a key,
+with the same keymap.  Escape the prompt pressing any unbound key.  You
+might notice is does allow some sort of modal editing, but this is not
+really the intented behaviour.  This feature is rather made to make some
+commands easier, for example deleting a paragraph then two word then a
+character.  Modal editing is possible using nu-mode, see below.
+
+   Fifth, a prompt can be scrolled using <space> and <backspace>.
+
+   Sixth, a prompt can always be escaped using 'q'.  This letter is
+never bound.  You can always use it.  Note that 'Control+q' and 'Alt+q'
+are neither bound.  However, <Q> -ie, shift plus q - might be bound,
+because 'Shift+q' cannot be a mistake.
 
 
 File: nu.info,  Node: View and Edit,  Next: Files Buffers Windows,  Prev: Overview,  Up: Top
@@ -229,6 +275,8 @@ to play with discard changes in an advanced way.  This screen displays
 last changes, and you can navigate these using the paddle ('Alt+i',
 'Alt+j', 'Alt+k', 'Alt+l').  Press <q> to quit this screen.
 
+   It is also possible to directly redo using 'Control+Shift+z'.
+
 2.5 Advanced Edition
 ====================
 
@@ -245,6 +293,11 @@ spaces, or invoke other functions.
 current column as a goal-column.  While you move next and previous
 lines, cursor will try to reach this column as far as possibe.
 
+   'Control+b' will run nu-bold, which will act differently according to
+major-mode.  This try to emphasis, which might have a different meaning
+given the mode.  'Alt+b' will run an emphasis (bold) prompt, allowing to
+indent, fill-paragraph, and so on.
+
 
 File: nu.info,  Node: Files Buffers Windows,  Next: Hacking,  Prev: View and Edit,  Up: Top
 
@@ -254,7 +307,10 @@ File: nu.info,  Node: Files Buffers Windows,  Next: Hacking,  Prev: View and Edi
 Use 'Control+s' to save current file, 'Alt+s' to invoke a prompt to
 rename it.
   1. Use 'Control+o' to open a file, a window, a buffer, or use
-     bookmarks,...  Or move to another frame...or buffers list...
+     bookmarks,...  Or move to another frame...or buffers list...  You
+     can use 'Control+Shift+o' to directly be prompted for a buffer to
+     open.  Or, 'Control+Shift+i' to direclty open next buffer, skipping
+     *Messages* or *Backtrace* and the like.
   2. Use 'Control+w' to close current window.  Note that 'Alt+w' raises
      a prompt with far more options.
   3. Use 'Control+n' to raise a prompt in order to create a new untitled
@@ -280,8 +336,12 @@ save cats or so.
 
    'Control+p' also offers to grep, find-grep or ediff.
 
+   As seen above, 'Alt+b' will run an emphasis-prompt, which allows to
+comment.  Onto c-mode or various lisp-mode, 'Control+b' will toggle
+comments.
+
 
-File: nu.info,  Node: NU for the power user,  Next: NU & other libraries,  Prev: Hacking,  Up: Top
+File: nu.info,  Node: NU for the power user,  Next: NU and some specific modes,  Prev: Hacking,  Up: Top
 
 5 NU for the power user
 ***********************
@@ -341,27 +401,61 @@ acceptable for maggit is not for a full keymap.)
      from these prompts.
 
 
-File: nu.info,  Node: NU & other libraries,  Next: Contributing,  Prev: NU for the power user,  Up: Top
+File: nu.info,  Node: NU and some specific modes,  Next: NU & other libraries,  Prev: NU for the power user,  Up: Top
 
-6 NU & other libraries
+6 NU and some specific modes
+****************************
+
+term is perfectly usable with nu-mode.  Just press Control+Space then
+Control+c to run a sigstop.  Or, Control+Space then Control+b to open
+another buffer.  The vanilla x keymap is used.  As of today there is no
+prompt however.
+
+
+File: nu.info,  Node: NU & other libraries,  Next: Contributing,  Prev: NU and some specific modes,  Up: Top
+
+7 NU & other libraries
 **********************
 
 How does NU integrate with other libraries?
 
-6.1 org
+7.1 org
 =======
 
-As of today, NU has few features related to org.  'Alt+s' prompt will
+As of today, NU has some features related to org.  'Alt+s' prompt will
 allow you to org-store-link.  'Alt+v' prompt will allow you to
-org-table-insert-column or row.  More will come later ; as usual help is
-welcomed!
+org-table-insert-column or row.  It is possible to insert a timestamp.
+The Control+Space Control+Space shortcut will trigger what would have
+been Control+c Control+c.  'Control+b' will run org-emphasis.  Using
+open-prompt, it is possible to open agenda.
 
-6.2 magit
+   It is also possible to delete a node from the delete prompt.  As you
+see, rather than storing all org-related features in one place, nu-mode
+does enrich its usual prompts or even commands given the org-mode
+context.
+
+7.2 magit
 =========
 
 Use Alt+s, ie save-prompt, to gain access to magit-status.
 
-6.3 evil-mode
+7.3 god-mode
+============
+
+god-mode is one possible modal editing.  See below about evil-mode.
+god-mode can be toggled using 'Control+g'.  Using vanilla god-mode, it
+is then possible to quit god-mode pressing 'Control+g' again (the
+modifier is necessary).
+
+   I'm currently waiting for a patch to be integrated, in order to allow
+god-mode to allow configuring which modifier is added to keys.  This
+patch will allow to use god-mode with alt automatically triggered.
+Forward / Backward char / line / word will be one key distant, while
+delete prompts becomes nicer.  Commands relying on 'Control' modifier
+will be triggered with <g> key.  Using this, quitting god-mode is 'gg',
+since first g will toggle Control modifier.
+
+7.4 evil-mode
 =============
 
 While nu-mode is not a modal editor, and aims at being the most
@@ -385,20 +479,10 @@ purpose.  Simply put below lines on your .emacs:
    Obviously this only fixes the basic paddle.  Backward and Foward word
 are different, but fixing the paddle is fine.
 
-6.4 god-mode
-============
-
-I'm currently waiting for a patch to be integrated, in order to allow
-god-mode to allow configuring which modifier is added to keys.  This
-patch will allow to use god-mode with alt automatically triggered.
-Forward / Backward char / line / word will be one key distant, while
-delete prompts becomes nicer.  Commands relying on 'Control' modifier
-will be triggered with <g> key.
-
 
 File: nu.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: NU & other libraries,  Up: Top
 
-7 Contributing
+8 Contributing
 **************
 
 As of today nu-mode only has one author, & contribution is more than
@@ -890,14 +974,15 @@ their use in free software.
 
 Tag Table:
 Node: Top691
-Node: Overview997
-Node: View and Edit3367
-Node: Files Buffers Windows9204
-Node: Hacking10080
-Node: NU for the power user10565
-Node: NU & other libraries13431
-Node: Contributing15493
-Node: GNU Free Documentation License15744
+Node: Overview1028
+Node: View and Edit5671
+Node: Files Buffers Windows11828
+Node: Hacking12898
+Node: NU for the power user13533
+Node: NU and some specific modes16405
+Node: NU & other libraries16814
+Node: Contributing19590
+Node: GNU Free Documentation License19841
 
 End Tag Table
 

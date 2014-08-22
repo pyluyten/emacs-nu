@@ -51,6 +51,7 @@ This is the manual for Nu, a modern keybinding for Emacs.
 * Files Buffers Windows::
 * Hacking::
 * NU for the power user::
+* NU and some specific modes::
 * NU & other libraries::
 * Contributing::
 * GNU Free Documentation License::
@@ -105,6 +106,23 @@ If you messed up, use @kbd{Control+w} then @kbd{Control+q} to quit.
 Prompts are usually triggered using a @kbd{Control} modifier and advertise a function using the same key, but with @kbd{Alt} modifier. For example, @kbd{Control-n} will pop-up a new-prompt, while @kbd{Alt-n} will directly create some new untitled buffer.
 
 These prompts offer you to quickly learn where functions are.
+
+
+@section Prompts
+
+Prompts are basically a window showing several possible keys, and which functions are to be run given this input. However some features deserve some deeper explanation.
+
+First, as explained below a prompt will explain how to use it, however prompt will also advertise direct shortcuts to commands : ie, shortcuts that would have directly run some function without going through the prompts. This does not mean using the prompt was wrong. It is rather meant as a way to discover and as a reminder, since nu-mode has many alternatives.
+
+Second, a prompt allows you to use arguments in two ways. The first way, is to use standard Emacs keys to trigger an argument (eg, @kbd{Control+1}, or @kbd{Alt+1}, or @kbd{Alt+-}, or use the universal argument which is bound in nu-mode to @kbd{Alt+p}), then run the prompt, then choose the command that will be affected by the argument. The second way to use arguments is to first run the prompt, then directly press a digit or - to increment the argument. Then, press the relevant key to run the desired function.
+
+Third, a prompt also allows to get some help about functions. Run the prompt, press ?, then the same keymap as usual will not run functions but describe functions. For example, while `replace-prompt' ususally run `revert-buffer' on @key{a} press, once ? has been pressed, @key{a} will instead describe function `revert-buffer'.
+
+Fourth, a prompt can be toggled to some `repeat' state. Run a prompt, then press @key{+}. You can then use the prompt as usual, except that after running the function, prompt will ask you again for a key, with the same keymap. Escape the prompt pressing any unbound key. You might notice is does allow some sort of modal editing, but this is not really the intented behaviour. This feature is rather made to make some commands easier, for example deleting a paragraph then two word then a character. Modal editing is possible using nu-mode, see below.
+
+Fifth, a prompt can be scrolled using <space> and <backspace>.
+
+Sixth, a prompt can always be escaped using `q'. This letter is never bound. You can always use it. Note that @kbd{Control+q} and @kbd{Alt+q} are neither bound. However, @key{Q} -ie, shift plus q - might be bound, because @kbd{Shift+q} cannot be a mistake.
 
 @node View and Edit
 @chapter View and Edit
@@ -206,6 +224,7 @@ Use @kbd{Control + v} to paste the current clipboard. Following @kbd{Control + v
 
 Use @kbd{Alt+z} to undo. Or, use @kbd{Control+z} to invoke undo-tree visualizer to play with discard changes in an advanced way. This screen displays last changes, and you can navigate these using the paddle (@kbd{Alt+i}, @kbd{Alt+j}, @kbd{Alt+k}, @kbd{Alt+l}). Press @key{q} to quit this screen.
 
+It is also possible to directly redo using @kbd{Control+Shift+z}.
 
 @section Advanced Edition
 
@@ -222,6 +241,9 @@ Some advanced editon features rely on @kbd{Control-r}, which will invoke replace
 @kbd{Alt+v} prompt to open a line.
 @kbd{Alt+s} prompt allows you to save current column as a goal-column. While you move next and previous lines, cursor will try to reach this column as far as possibe.
 
+@kbd{Control+b} will run nu-bold, which will act differently according to major-mode. This try to emphasis, which might have a different meaning given the mode.
+@kbd{Alt+b} will run an emphasis (bold) prompt, allowing to indent, fill-paragraph, and so on.
+
 
 @node Files Buffers Windows
 @chapter Files Buffers Windows
@@ -229,7 +251,7 @@ Some advanced editon features rely on @kbd{Control-r}, which will invoke replace
 Use @kbd{Control+s} to save current file, @kbd{Alt+s} to invoke a prompt to rename it.
 @enumerate
 @item
-Use @kbd{Control+o} to open a file, a window, a buffer, or use bookmarks,... Or move to another frame...or buffers list...
+Use @kbd{Control+o} to open a file, a window, a buffer, or use bookmarks,... Or move to another frame...or buffers list... You can use @kbd{Control+Shift+o} to directly be prompted for a buffer to open. Or, @kbd{Control+Shift+i} to direclty open next buffer, skipping *Messages* or *Backtrace* and the like.
 @item
 Use @kbd{Control+w} to close current window. Note that @kbd{Alt+w} raises a prompt with far more options.
 @item
@@ -250,7 +272,7 @@ The print buffer, invoked from @kbd{Control+p}, will offer you to eval things or
 
 @kbd{Control+p} also offers to grep, find-grep or ediff.
 
-
+As seen above, @kbd{Alt+b} will run an emphasis-prompt, which allows to comment. Onto c-mode or various lisp-mode, @kbd{Control+b} will toggle comments.
 
 @node NU for the power user
 @chapter NU for the power user
@@ -296,6 +318,11 @@ From the help prompt (@kbd{Control-h}), run @key{h} to invoke nu-help. This func
 @end enumerate
 
 
+@node NU and some specific modes
+@chapter NU and some specific modes
+
+term is perfectly usable with nu-mode. Just press Control+Space then Control+c to run a sigstop. Or, Control+Space then Control+b to open another buffer. The vanilla x keymap is used. As of today there is no prompt however.
+
 @node NU & other libraries
 @chapter NU & other libraries
 
@@ -303,11 +330,21 @@ How does NU integrate with other libraries?
 
 @section org
 
-As of today, NU has few features related to org.  @kbd{Alt+s} prompt will allow you to org-store-link. @kbd{Alt+v} prompt will allow you to org-table-insert-column or row. More will come later ; as usual help is welcomed!
+As of today, NU has some features related to org.  @kbd{Alt+s} prompt will allow you to org-store-link. @kbd{Alt+v} prompt will allow you to org-table-insert-column or row. It is possible to insert a timestamp. The Control+Space Control+Space shortcut will trigger what would have been Control+c Control+c. @kbd{Control+b} will run org-emphasis. Using open-prompt, it is possible to open agenda.
+
+It is also possible to delete a node from the delete prompt. As you see, rather than storing all org-related features in one place, nu-mode does enrich its usual prompts or even commands given the org-mode context.
 
 @section magit
 
 Use Alt+s, ie save-prompt, to gain access to magit-status.
+
+@section god-mode
+
+god-mode is one possible modal editing. See below about evil-mode.
+god-mode can be toggled using @kbd{Control+g}. Using vanilla god-mode, it is then possible to quit god-mode pressing @kbd{Control+g} again (the modifier is necessary).
+
+I'm currently waiting for a patch to be integrated, in order to allow god-mode to allow configuring which modifier is added to keys. This patch will allow to use god-mode with alt automatically triggered. Forward / Backward char / line / word will be one key distant, while delete prompts becomes nicer. Commands relying on @kbd{Control} modifier will be triggered with @key{g} key. Using this, quitting god-mode is @kbd{gg}, since first g will toggle Control modifier.
+
 
 @section evil-mode
 
@@ -324,9 +361,6 @@ Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, 
 
 Obviously this only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
 
-@section god-mode
-
-I'm currently waiting for a patch to be integrated, in order to allow god-mode to allow configuring which modifier is added to keys. This patch will allow to use god-mode with alt automatically triggered. Forward / Backward char / line / word will be one key distant, while delete prompts becomes nicer. Commands relying on @kbd{Control} modifier will be triggered with @key{g} key.
 
 @node Contributing
 @chapter Contributing
