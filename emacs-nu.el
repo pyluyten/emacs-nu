@@ -47,7 +47,7 @@
    (define-key nu-keymap (kbd "C-d") 'kill-word)
    (define-key nu-keymap (kbd "C-f") 'nu-isearch-forward-regexp)
    (define-key nu-keymap (kbd "C-S-f") 'ace-jump-char-mode)
-   (define-key nu-keymap (kbd "C-g") 'nu-global-prompt)
+   (define-key nu-keymap (kbd "C-g") 'god-mode) ; gg to quit ;
 
    (define-key nu-keymap (kbd "C-h") 'nu-help-prompt)
    (define-key nu-menu-map (kbd "h") 'help-map)
