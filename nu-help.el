@@ -166,8 +166,6 @@ to describe the function.\n")
  (setq defn nil)
    (while (not input)
       (setq key (read-key-sequence "Enter a key or ? :"))
-      (message (format "key is %s" (key-description key)))
-
       (cond
 
        ; check if the user needs to scroll the help. Do not break loop.
