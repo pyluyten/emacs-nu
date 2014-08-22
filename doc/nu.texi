@@ -321,7 +321,13 @@ From the help prompt (@kbd{Control-h}), run @key{h} to invoke nu-help. This func
 @node NU and some specific modes
 @chapter NU and some specific modes
 
+@section term
+
 term is perfectly usable with nu-mode. Just press Control+Space then Control+c to run a sigstop. Or, Control+Space then Control+b to open another buffer. The vanilla x keymap is used. As of today there is no prompt however.
+
+@section dired
+
+dired allows to use nu-mode shortcuts to navigate. Use @kbd{Alt+p} (uniserval-argument) then s key to edit the ls command.
 
 @node NU & other libraries
 @chapter NU & other libraries
