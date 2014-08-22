@@ -429,9 +429,11 @@ If no argument given, copy 1 char."
     (call-interactively 'nu-copy-line))
   (message "Copy done! [Use control-space for C-c mode prefix.]"))
 
+
 (defun nu-trigger-mode-specific-map ()
   "Set temporary overlay map mode-specific-map"
   (interactive)
+  (message "C-c active.")
   (setq prefix-arg current-prefix-arg)
 
   ; Avoid infinite loop : we deactivate C-c as a key,
@@ -441,17 +443,22 @@ If no argument given, copy 1 char."
   ; if possible, use Control Space to toggle this.
   (setq defn-target
        (local-key-binding (kbd "\C-c \C-c")))
-  (message (format "C-c active. Assigning %s" (symbol-name defn-target)))
-  (setq defn-obstruct
+
+  ; to do this C-c C-c trick, we need this to be bound,
+  ; and also C-c C-<space> not to be...
+  (unless (or (eq nil defn-target)
+          (not (symbolp defn-target))
+          (not (commandp defn-target)))
+    (message (format "C-c active. Assigning %s" (symbol-name defn-target)))
+    (setq defn-obstruct
        (local-key-binding (kbd "\C-c C-SPC")))
-  (if (and (eq nil defn-obstruct)
-           (commandp defn-target))
-      (define-key nu-keymap (kbd "\C-c C-SPC") defn-target))
+    (if (and (eq nil defn-obstruct)
+             (commandp defn-target))
+        (define-key nu-keymap (kbd "\C-c C-SPC") defn-target)))
 
-  ; then run C-c in order to make it a prefix...
-  (setq unread-command-events
-     (listify-key-sequence "\C-c"))
-
+    ; then run C-c in order to make it a prefix...
+    (setq unread-command-events
+      (listify-key-sequence "\C-c"))
 
   ; Now add back function but after some delay
   ; or this would intercept C-c!
