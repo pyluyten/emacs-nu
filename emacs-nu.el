@@ -46,7 +46,7 @@
    (define-key nu-keymap (kbd "C-d") 'kill-word)
    (define-key nu-keymap (kbd "C-f") 'nu-isearch-forward-regexp)
    (define-key nu-keymap (kbd "C-g") 'nu-global-prompt)
-;   (define-key nu-menu-map (kbd "g") 'nu-global-map)
+
    (define-key nu-keymap (kbd "C-h") 'nu-help-prompt)
    (define-key nu-menu-map (kbd "h") 'help-map)
    (define-key nu-keymap (kbd "C-j") 'backward-delete-char)
@@ -56,26 +56,23 @@
 
    (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize)
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
+   (define-key nu-keymap (kbd "C-S-x") 'nu-global-prompt)
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
    (define-key nu-keymap (kbd "C-v") 'nu-yank-pop-or-yank)
-   ;b
+   (define-key nu-keymap (kbd "C-b") 'nu-bold)
    (define-key nu-keymap (kbd "C-n") 'nu-new-prompt)
 
 
    (define-key nu-keymap (kbd "C-$") 'kill-line)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
-
    (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
    (define-key nu-keymap (kbd "C-<prior>") 'previous-buffer)
-;   (define-key nu-keymap (kbd "M-<next>") ')
-;   (define-key nu-keymap (kbd "M-<prior>") ')
-
-   (define-key nu-keymap (kbd "C-<return>") 'repeat) ; do not work.
+   (define-key nu-keymap (kbd "C-<return>") 'repeat)
 
 
 
-;  all _ alt _ features
+    ;  all _ alt _ features
 
    (define-key nu-keymap (kbd "M-q") 'quoted-insert) ; fix minibuf'
    (define-key nu-keymap (kbd "M-w") 'nu-close-document)

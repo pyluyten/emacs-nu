@@ -10,6 +10,22 @@
 (defun nu-rot-reg-or-toggle-rot () (interative) (if mark-active (rot13-region) (toggle-rot13-mode)))
 
 
+(defun nu-bold ()
+ (interactive)
+ (message (format "%s" major-mode))
+ (cond
+   ((eq major-mode 'fundamental-mode)
+    (call-interactively 'fill-paragraph))
+   ((eq major-mode 'org-mode)
+    (call-interactively 'org-emphasize))
+   ((eq major-mode 'lisp-interaction-mode)
+    (call-interactively 'comment-region))
+   ((eq major-mode 'emacs-lisp-mode)
+    (call-interactively 'comment-region))
+   ((eq major-mode 'c-mode)
+    (call-interactively 'comment-region))
+   (t
+    (error "nu-bold : no major-mode found."))))
 
 
 (defun nu-next-buffer (&optional previous)
