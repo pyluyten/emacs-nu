@@ -103,8 +103,10 @@
    ;c
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
    (define-key nu-menu-map (kbd "v") 'nu-insert-map)
-   ;b
+   (define-key nu-menu-map (kbd "b") 'nu-bold-map)
+   (define-key nu-keymap (kbd "M-b") 'nu-bold-prompt)
    (define-key nu-keymap (kbd "M-n") 'delete-other-windows)
+
    (define-key nu-keymap (kbd "²") 'ido-switch-buffer)
    (define-key nu-keymap (kbd "³") 'ibuffer)
    (define-key nu-keymap (kbd "M-<dead-circumflex>")'nu-back-to-indentation)

@@ -25,7 +25,7 @@
    ((eq major-mode 'c-mode)
     (call-interactively 'comment-region))
    (t
-    (error "nu-bold : no major-mode found."))))
+    (message "nu-bold : no action"))))
 
 
 (defun nu-next-buffer (&optional previous)

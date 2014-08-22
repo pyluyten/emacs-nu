@@ -140,6 +140,25 @@
       (help-make-xrefs (help-buffer)))))
 
 
+(defun nu-populate-bold-map ()
+ "Populate bold map."
+  (nu-define-prefix 'nu-bold-map)
+  (define-key nu-bold-map (kbd "f") 'fill-paragraph)
+  (define-key nu-bold-map (kbd "i") 'indent)
+  (define-key nu-bold-map (kbd "a") 'align)
+  (if (or (eq major-mode 'c-mode)
+	  (eq major-mode 'lisp-interaction-mode)
+	  (eq major-mode 'emacs-lisp-mode))
+      (progn
+          (define-key nu-bold-map (kbd "c") 'comment-or-uncomment-region)
+	  (define-key nu-bold-map (kbd "l") 'comment-indent))))
+
+(defun nu-bold-prompt ()
+  (interactive)
+  (nu-populate-bold-map)
+  (nu-prompt-for-keymap nu-bold-map))
+
+
 (defun nu-populate-insert-map ()
  "Populate insert map."
   (nu-define-prefix 'nu-insert-map)
