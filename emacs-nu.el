@@ -23,6 +23,8 @@
    ;  do not respect _any_ emacs convention. Seriously.
 
    (define-key nu-keymap (kbd "C-q") 'keyboard-escape-quit)
+   (define-key nu-keymap (kbd "C-S-q") 'save-buffers-kill-emacs)
+
    (define-key nu-keymap (kbd "C-w") 'nu-window-prompt)
    (define-key nu-menu-map (kbd "w") 'nu-window-map)
    (define-key nu-menu-map (kbd "C-S-w") 'kill-buffer)
