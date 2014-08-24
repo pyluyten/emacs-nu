@@ -311,15 +311,15 @@ Sentence uses sentence-end delimiter."
 (defun nu-find-char (&optional backward)
   "Move forward up to char, up to end of buffer."
   (interactive)
-  (setq c (read-char-exclusive "Enter char to move point to:"))
-  (setq b nil)
-  (while (eq b nil)
-  (if (eq 
+  (let ((c (read-char-exclusive "Enter char to move point to:"))
+        (b nil))
+    (while (eq b nil)
+    (if (eq 
          (if backward (char-before) (char-after)) c)
-    (setq b t)
-    (if backward
-      (backward-char)
-      (forward-char)))))
+      (setq b t)
+      (if backward
+        (backward-char)
+        (forward-char))))))
 
 
 (defun nu-end-of-line ()
