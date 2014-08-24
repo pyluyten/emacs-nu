@@ -172,4 +172,4 @@
    (nu-restore-default-keymap))
 
 
-(provide 'emacs-nu)
+(provide 'nu-mode)
