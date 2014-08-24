@@ -128,6 +128,9 @@ If region is selected, use this as a search string."
 (defun nu-find-previous-mark () (interactive) (cua-set-mark 1))
 (defun nu-goto-line-previousbuffer () (interactive) (goto-line (previous-buffer)))
 
+; wait for the package to go back to help-fns+
+; make-help screen for only nu-help
+; andfix the whole s* below...
 
 (define-prefix-command 'nu-help-map)
 (define-key nu-help-map (kbd "<RET>") '(lambda ()
@@ -152,28 +155,32 @@ If region is selected, use this as a search string."
 (define-key nu-help-map (kbd "v") 'nu-describe-insert)
 (defun nu-describe-save () (interactive) (describe-keymap 'nu-save-map))
 (define-key nu-help-map (kbd "s") 'nu-describe-save)
-(make-help-screen nu-help
-(purecopy "emacs-NU help")
-"See there for manual: URL `https://github.com/pyluyten/emacs-nu/blob/master/doc/nu.pdf?raw=true'
- Space / Backspace to scroll this help screen.
- (Like any other NU prompt)
+(defun nu-help ()
+ (interactive)
+ (nu-prompt-for-keymap nu-help-map))
 
- Enter a key to describe NU shorcuts.
-
- Enter <Return> to see _the full_ keymap.
- m: describe the menu-map, ie, all the prompts.
-
- // Control Key Prompts
- h: nu-help-prompt     a: nu-a-prompt
- p: nu-print-prompt    r: nu-replace-prompt
- f: nu-find-prompt     o: nu-open-prompt
-
- // Alt Key Prompts
- s: nu-save-prompt     d: nu-delete-prompt (alt)
- v: nu-insert-prompt
-
- q: quit this help. Works for any NU prompt."
-nu-help-map)
+;(make-help-screen nu-help
+;(purecopy "emacs-NU help")
+;"See there for manual: URL `https://github.com/pyluyten/emacs-nu/blob/master/doc/nu.pdf?raw=true'
+; Space / Backspace to scroll this help screen.
+; (Like any other NU prompt)
+;
+; Enter a key to describe NU shorcuts.
+;
+; Enter <Return> to see _the full_ keymap.
+; m: describe the menu-map, ie, all the prompts
+;
+; // Control Key Prompts
+; h: nu-help-prompt     a: nu-a-prompt
+; p: nu-print-prompt    r: nu-replace-prompt
+; f: nu-find-prompt     o: nu-open-prompt
+;
+; // Alt Key Prompts
+; s: nu-save-prompt     d: nu-delete-prompt (alt)
+; v: nu-insert-prompt
+;
+; q: quit this help. Works for any NU prompt."
+;nu-help-map)
 
 
 (defun nu-yank (&optional n)

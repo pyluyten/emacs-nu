@@ -54,14 +54,15 @@
   (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
   ;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
-
+ (setq x-select-enable-clipboard t
+       x-select-enable-primary t)
 
 
 ; ~~~~
 ; ~~~~ Behaviour
 
-  (setq make-backup-files nil)
-  (setq auto-save-default nil)
+  (setq make-backup-files nil
+        auto-save-default nil)
 
 ; we're in 2014
   (require 'recentf)

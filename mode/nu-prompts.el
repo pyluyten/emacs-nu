@@ -24,33 +24,29 @@
 
 
 (require 'windmove)
-
-
-;; Get the macro make-help-screen when this is compiled,
-;; or run interpreted, but not when the compiled code is loaded.
-(eval-when-compile (require 'help-macro))
-
-
 (require 'nu-help)
 
-(defun nu-prompt (&optional title message)
- (interactive)
- (setq curb (current-buffer))
- (unless title (setq title "Enter:"))
- (setq buf (generate-new-buffer title))
- (view-buffer-other-window buf)
- (read-only-mode t)
- (org-mode)
- (funcall (and initial-major-mode))
- (setq message
-   (concat "\n    ~~~ ☸ ~~~\n" ; U+2638
-            message))
- (insert message)
- (setq x (read-event))
- (quit-window)
- (kill-buffer buf)q
- (switch-to-buffer curb)
- (setq x x))
+ (autoload 'zap-up-to-char "misc"
+"Kill up to, but not including ARGth occurrence of CHAR." t)
+
+;(defun nu-prompt (&optional title message)
+; (interactive)
+; (setq curb (current-buffer))
+; (unless title (setq title "Enter:"))
+; (setq buf (generate-new-buffer title))
+; (view-buffer-other-window buf)
+; (read-only-mode t)
+; (org-mode)
+; (funcall (and initial-major-mode))
+; (setq message
+;   (concat "\n    ~~~ ☸ ~~~\n" ; U+2638
+;            message))
+; (insert message)
+; (setq x (read-event))
+; (quit-window)
+; (kill-buffer buf)q
+; (switch-to-buffer curb)
+; (setq x x))
 
 
 
@@ -406,15 +402,15 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "m") 'nu-toggle-read-only)
   (define-key nu-replace-map (kbd "\C-r")  'query-replace-regexp)
   (define-key nu-replace-map (kbd "a")  'revert-buffer)
-  (define-key nu-replace-map (kbd "R")	 'query-replace)
-  (define-key nu-replace-map (kbd "k")	 'overwrite-mode)
-  (define-key nu-replace-map (kbd "I")	 'replace-string)
-  (define-key nu-replace-map (kbd "r")	 'replace-regexp)
-  (define-key nu-replace-map (kbd "j")	  'nu-join-with-following-line)
-  (define-key nu-replace-map (kbd "J")	  'join-line)
-  (define-key nu-replace-map (kbd "t")	  'transpose-lines)
-  (define-key nu-replace-map (kbd "z")	  'nu-zap-up-to-char)
-  (define-key nu-replace-map (kbd "u")	  'upcase-word)
+  (define-key nu-replace-map (kbd "R")  'query-replace)
+  (define-key nu-replace-map (kbd "k")  'overwrite-mode)
+  (define-key nu-replace-map (kbd "I")  'replace-string)
+  (define-key nu-replace-map (kbd "r")  'replace-regexp)
+  (define-key nu-replace-map (kbd "j")  'nu-join-with-following-line)
+  (define-key nu-replace-map (kbd "J")  'join-line)
+  (define-key nu-replace-map (kbd "t")  'transpose-lines)
+  (define-key nu-replace-map (kbd "z")  'zap-up-to-char)
+  (define-key nu-replace-map (kbd "u") 'upcase-word)
   (define-key nu-replace-map (kbd "d") 'downcase-word)
   (define-key nu-replace-map (kbd "c") 'capitalize-word)
   (define-key nu-replace-map (kbd "x") 'nu-rot-reg-or-toggle-rot)
