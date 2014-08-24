@@ -1,3 +1,6 @@
+;;; nu-mode.el --- Modern Emacs Keybinding
+
+
 (require 'nu-common)
 (require 'nu-hooks)
 
@@ -173,3 +176,5 @@
 
 
 (provide 'nu-mode)
+
+;;; nu-mode.el ends here
