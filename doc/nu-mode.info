@@ -1,7 +1,8 @@
-This is nu.info, produced by makeinfo version 5.1 from nu.texi.
+This is nu-mode.info, produced by makeinfo version 5.1 from
+nu-mode.texi.
 
-This manual is for Nu (version 0.3 of 2014-08-03), a modern keybinding
-for Emacs.  Copyright © 2014 Pierre-Yves Luyten.
+This manual is for nu-mode (version 0.3 of 2014-08-03), a modern
+keybinding for Emacs.  Copyright © 2014 Pierre-Yves Luyten.
 
      Permission is granted to copy, distribute and/or modify this
      document under the terms of the GNU Free Documentation License,
@@ -12,16 +13,16 @@ for Emacs.  Copyright © 2014 Pierre-Yves Luyten.
 
 INFO-DIR-SECTION Emacs
 START-INFO-DIR-ENTRY
-* Nu: (nu). Modern keybinding for Emacs.
+* nu-mode: (nu-mode). Modern keybinding for Emacs.
 END-INFO-DIR-ENTRY
 
 
-File: nu.info,  Node: Top,  Next: Overview,  Up: (dir)
+File: nu-mode.info,  Node: Top,  Next: Overview,  Up: (dir)
 
-Nu
-**
+nu-mode
+*******
 
-This is the manual for Nu, a modern keybinding for Emacs.
+This is the manual for nu-mode, a modern keybinding for Emacs.
 
 * Menu:
 
@@ -29,19 +30,19 @@ This is the manual for Nu, a modern keybinding for Emacs.
 * View and Edit::
 * Files Buffers Windows::
 * Hacking::
-* NU for the power user::
-* NU and some specific modes::
-* NU & other libraries::
+* nu for the power user::
+* nu and some specific modes::
+* nu & other libraries::
 * Contributing::
 * GNU Free Documentation License::
 
 
-File: nu.info,  Node: Overview,  Next: View and Edit,  Prev: Top,  Up: Top
+File: nu-mode.info,  Node: Overview,  Next: View and Edit,  Prev: Top,  Up: Top
 
 1 Overview
 **********
 
-"Nu " is a modern keybinding for Emacs.
+"nu-mode " is a modern keybinding for Emacs.
 
    nu-mode is a global minor mode, its keymap, and the commands which
 are not provided in raw Emacs.
@@ -53,36 +54,30 @@ are not provided in raw Emacs.
   4. 'Control-x', 'Control-c', 'Control-v' to cut, copy, paste.
 
    To allow user to leverage large panel of functions, nu-mode relies on
-prompts.  For example, 'Control-r' raises a prompt precising which key -
-actually, which sequence - to press in order to execute desired function
-: once 'Control-r' has been pressed and the "Replace-prompt" appears,
-pressing <r> will offer to replace-regexp, <a> will revert buffer, while
-'k' will trigger overwrite-mode, or 'j' will join current line with
-following line.
+prompts.  For example, while 'Control+f' will directly offer to
+isearch-forward-regexp, 'Alt+f' will raise a "find-prompt" offering
+several search related features.  The prompt will display a list of keys
+- actually, sequences - and associated functions : t to find-tag, w to
+ace-jump-word-mode, m for imenu, b for regexp-builder, 'Alt+f' to
+isearch-forward-regexp, and so on.
 
    Most common shortcuts - ie, common to most applications - respect
-this guideline.  Thus, there is a prompt for 's', 'v', 'a'...  Almost
-all prompts rely on Control modifier to be run.  There are exceptions.
-Since 'Control+s' invoking a prompt would be irritating, this sequence
-directly saves buffer, while 'Alt+s' runs the "save prompt".
-
-   nu-emacs does not only provides nu-mode.  There are also two
-independant parts
-  1. nu-alias is a simple mechanism to define aliases into org-mode
-     file(s).  This way its easier to maintain aliases to be invoked
-     from Mx.  See its REAME.
-  2. dhammacakka is a light set of customization.  See its README.
+this guideline.  Thus, there is a prompt for 's', 'v', 'a'...  Most
+prompts rely on 'Alt' modifier to be run.  There are exceptions.  For
+example, 'Control+n' will raise a prompt to precise which kind of "new"
+stuff to produce.
 
 1.1 Dependencies
 ================
 
-Nu depends on several libraries, both native or external ones :
-  1. help-fns+
+nu-mode depends on several libraries, both native or external ones.
+These are all optional dependencies.
+  1. help-fns+, to describe-keymap
   2. undo-tree
   3. ace-jump
   4. recentf
-  5. cua-selection-mode
-  6. magit is optional
+  5. cua-selection-mode (see : paddle)
+  6. magit
 
 1.2 Help
 ========
@@ -93,10 +88,10 @@ functions.  This includes the usual shortcuts to describe what a key
 does, or what a function does.  If you messed up, use 'Control+w' then
 'Control+q' to quit.
 
-   Prompts are usually triggered using a 'Control' modifier and
-advertise a function using the same key, but with 'Alt' modifier.  For
-example, 'Control-n' will pop-up a new-prompt, while 'Alt-n' will
-directly create some new untitled buffer.
+   Prompts are usually triggered using a 'Alt' modifier and advertise a
+function using the same key, but with 'Control' modifier.  For example,
+'Alt+s' will pop-up a save prompt, while 'Control+s' directly saves the
+current buffer.
 
    These prompts offer you to quickly learn where functions are.
 
@@ -146,7 +141,7 @@ are neither bound.  However, <Q> -ie, shift plus q - might be bound,
 because 'Shift+q' cannot be a mistake.
 
 
-File: nu.info,  Node: View and Edit,  Next: Files Buffers Windows,  Prev: Overview,  Up: Top
+File: nu-mode.info,  Node: View and Edit,  Next: Files Buffers Windows,  Prev: Overview,  Up: Top
 
 2 View and Edit
 ***************
@@ -158,7 +153,7 @@ character.
 2.1 Navigate
 ============
 
-While arrows still work, Nu uses <Alt> key to navigate.  Hence, the
+While arrows still work, nu-mode uses <Alt> key to navigate.  Hence, the
 thumb often presses <Alt> key, while pinky finger remains safe.  This is
 exactly the same principle than ErgoEmacs applies.  Navigate up left
 right down using <Alt> and :
@@ -299,7 +294,7 @@ given the mode.  'Alt+b' will run an emphasis (bold) prompt, allowing to
 indent, fill-paragraph, and so on.
 
 
-File: nu.info,  Node: Files Buffers Windows,  Next: Hacking,  Prev: View and Edit,  Up: Top
+File: nu-mode.info,  Node: Files Buffers Windows,  Next: Hacking,  Prev: View and Edit,  Up: Top
 
 3 Files Buffers Windows
 ***********************
@@ -345,7 +340,7 @@ It is possible, from Emacs to handle a bit of window management.  But
 you should rather use a decent window manager.
 
 
-File: nu.info,  Node: Hacking,  Next: NU for the power user,  Prev: Files Buffers Windows,  Up: Top
+File: nu-mode.info,  Node: Hacking,  Next: nu for the power user,  Prev: Files Buffers Windows,  Up: Top
 
 4 Hacking
 *********
@@ -365,9 +360,9 @@ comments.
    'Alt+s' prompt also allows you to create tags to find definitions.
 
 
-File: nu.info,  Node: NU for the power user,  Next: NU and some specific modes,  Prev: Hacking,  Up: Top
+File: nu-mode.info,  Node: nu for the power user,  Next: nu and some specific modes,  Prev: Hacking,  Up: Top
 
-5 NU for the power user
+5 nu for the power user
 ***********************
 
 If you are not used to Emacs, reading this chapter is not necessary.
@@ -425,9 +420,9 @@ acceptable for maggit is not for a full keymap.)
      from these prompts.
 
 
-File: nu.info,  Node: NU and some specific modes,  Next: NU & other libraries,  Prev: NU for the power user,  Up: Top
+File: nu-mode.info,  Node: nu and some specific modes,  Next: nu & other libraries,  Prev: nu for the power user,  Up: Top
 
-6 NU and some specific modes
+6 nu and some specific modes
 ****************************
 
 6.1 term
@@ -445,18 +440,18 @@ dired allows to use nu-mode shortcuts to navigate.  Use 'Alt+p'
 (uniserval-argument) then s key to edit the ls command.
 
 
-File: nu.info,  Node: NU & other libraries,  Next: Contributing,  Prev: NU and some specific modes,  Up: Top
+File: nu-mode.info,  Node: nu & other libraries,  Next: Contributing,  Prev: nu and some specific modes,  Up: Top
 
-7 NU & other libraries
+7 nu & other libraries
 **********************
 
-How does NU integrate with other libraries?
+How does nu-mode integrate with other libraries?
 
 7.1 org
 =======
 
-As of today, NU has some features related to org.  'Alt+s' prompt will
-allow you to org-store-link.  'Alt+v' prompt will allow you to
+As of today, nu-mode has some features related to org.  'Alt+s' prompt
+will allow you to org-store-link.  'Alt+v' prompt will allow you to
 org-table-insert-column or row.  It is possible to insert a timestamp.
 The Control+Space Control+Space shortcut will trigger what would have
 been Control+c Control+c.  'Control+b' will run org-emphasis.  Using
@@ -513,7 +508,7 @@ purpose.  Simply put below lines on your .emacs:
 are different, but fixing the paddle is fine.
 
 
-File: nu.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: NU & other libraries,  Up: Top
+File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: nu & other libraries,  Up: Top
 
 8 Contributing
 **************
@@ -522,7 +517,7 @@ As of today nu-mode only has one author, & contribution is more than
 welcomed.  Please look at github.
 
 
-File: nu.info,  Node: GNU Free Documentation License,  Prev: Contributing,  Up: Top
+File: nu-mode.info,  Node: GNU Free Documentation License,  Prev: Contributing,  Up: Top
 
 Appendix A GNU Free Documentation License
 *****************************************
@@ -1006,16 +1001,16 @@ their use in free software.
 
 
 Tag Table:
-Node: Top691
-Node: Overview1028
-Node: View and Edit5671
-Node: Files Buffers Windows11828
-Node: Hacking13757
-Node: NU for the power user14463
-Node: NU and some specific modes17335
-Node: NU & other libraries17905
-Node: Contributing20681
-Node: GNU Free Documentation License20932
+Node: Top716
+Node: Overview1073
+Node: View and Edit5421
+Node: Files Buffers Windows11588
+Node: Hacking13522
+Node: nu for the power user14233
+Node: nu and some specific modes17110
+Node: nu & other libraries17685
+Node: Contributing20476
+Node: GNU Free Documentation License20732
 
 End Tag Table
 

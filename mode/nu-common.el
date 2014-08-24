@@ -24,17 +24,10 @@
 ; external parts
 (require 'transpose-frame) ; play with frames
 (require 'nu-tile) ; still...
-(require 'dhammacakka) ; convenient default
-                       ; other than keys
 
 ; internal parts
 (require 'nu-prompts) ; prompters (menu-like)
 (require 'nu-commands) ; not emacs native commands
 (require 'nu-hooks) ; how to use other modes
-(require 'nu-alias) ; add some speed to Mx, like 'vs'
-(nu-alias-add-file
-  (concat
-    (file-name-directory (or load-file-name buffer-file-name))
-    "nu-alias.org"))
 
 (provide 'nu-common)

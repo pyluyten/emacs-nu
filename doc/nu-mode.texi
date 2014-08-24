@@ -1,13 +1,13 @@
 \input texinfo @c -*-texinfo*-*
-@setfilename nu.info
+@setfilename nu-mode.info
 @documentencoding ISO-8859-1
 @include version.texi
-@settitle Nu-mode manual
+@settitle nu-mode manual
 @include macros.texi
 
 
 @copying
-This manual is for Nu (version @value{VERSION} of @value{UPDATED}),
+This manual is for nu-mode (version @value{VERSION} of @value{UPDATED}),
 a modern keybinding for Emacs.
 Copyright @copyright{} 2014 @authors{}.
 
@@ -24,12 +24,12 @@ A copy of the license is included in the section entitled
 
 @dircategory Emacs
 @direntry
-* Nu: (nu). Modern keybinding for Emacs.
+* nu-mode: (nu-mode). Modern keybinding for Emacs.
 @end direntry
 
 
 @titlepage
-@title Nu
+@title nu-mode
 @subtitle Modern keybinding for Emacs
 @author @authors()
 @page
@@ -40,9 +40,9 @@ A copy of the license is included in the section entitled
 
 @ifnottex
 @node Top
-@top Nu
+@top nu-mode
 
-This is the manual for Nu, a modern keybinding for Emacs.
+This is the manual for nu-mode, a modern keybinding for Emacs.
 @end ifnottex
 
 @menu
@@ -50,9 +50,9 @@ This is the manual for Nu, a modern keybinding for Emacs.
 * View and Edit::
 * Files Buffers Windows::
 * Hacking::
-* NU for the power user::
-* NU and some specific modes::
-* NU & other libraries::
+* nu for the power user::
+* nu and some specific modes::
+* nu & other libraries::
 * Contributing::
 * GNU Free Documentation License::
 @end menu
@@ -60,7 +60,7 @@ This is the manual for Nu, a modern keybinding for Emacs.
 @node Overview
 @chapter Overview
 
-``Nu `` is a modern keybinding for Emacs.
+``nu-mode `` is a modern keybinding for Emacs.
 
 nu-mode is a global minor mode, its keymap,
 and the commands which are not provided in raw Emacs.
@@ -73,26 +73,20 @@ Modern, means respecting conventions like
 @item @kbd{Control-x}, @kbd{Control-c}, @kbd{Control-v} to cut, copy, paste.
 @end enumerate
 
-To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, @kbd{Control-r} raises a prompt precising which key - actually, which sequence - to press in order to execute desired function : once @kbd{Control-r} has been pressed and the ``Replace-prompt'' appears, pressing @key{r} will offer to replace-regexp, @key{a} will revert buffer, while @kbd{k} will trigger overwrite-mode, or @kbd{j} will join current line with following line.
+To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, while @kbd{Control+f} will directly offer to isearch-forward-regexp, @kbd{Alt+f} will raise a ``find-prompt'' offering several search related features. The prompt will display a list of keys - actually, sequences - and associated functions : t to find-tag, w to ace-jump-word-mode, m for imenu, b for regexp-builder, @kbd{Alt+f} to isearch-forward-regexp, and so on.
 
-Most common shortcuts - ie, common to most applications - respect this guideline. Thus, there is a prompt for @kbd{s}, @kbd{v}, @kbd{a}... Almost all prompts rely on Control modifier to be run. There are exceptions. Since @kbd{Control+s} invoking a prompt would be irritating, this sequence directly saves buffer, while @kbd{Alt+s} runs the ``save prompt''.
-
-nu-emacs does not only provides nu-mode. There are also two independant parts
-@enumerate
-@item nu-alias is a simple mechanism to define aliases into org-mode file(s). This way its easier to maintain aliases to be invoked from Mx. See its REAME.
-@item dhammacakka is a light set of customization. See its README.
-@end enumerate
+Most common shortcuts - ie, common to most applications - respect this guideline. Thus, there is a prompt for @kbd{s}, @kbd{v}, @kbd{a}... Most prompts rely on @kbd{Alt} modifier to be run. There are exceptions. For example, @kbd{Control+n} will raise a prompt to precise which kind of ``new'' stuff to produce.
 
 
 @section Dependencies
-Nu depends on several libraries, both native or external ones :
+nu-mode depends on several libraries, both native or external ones. These are all optional dependencies.
 @enumerate
-@item help-fns+
+@item help-fns+, to describe-keymap
 @item undo-tree
 @item ace-jump
 @item recentf
-@item cua-selection-mode
-@item magit is optional
+@item cua-selection-mode (see : paddle)
+@item magit
 @end enumerate
 
 
@@ -103,10 +97,9 @@ Use @kbd{Alt+z} to undo last command.
 Use @kbd{Control+h} to gain access to help functions. This includes the usual shortcuts to describe what a key does, or what a function does.
 If you messed up, use @kbd{Control+w} then @kbd{Control+q} to quit.
 
-Prompts are usually triggered using a @kbd{Control} modifier and advertise a function using the same key, but with @kbd{Alt} modifier. For example, @kbd{Control-n} will pop-up a new-prompt, while @kbd{Alt-n} will directly create some new untitled buffer.
+Prompts are usually triggered using a @kbd{Alt} modifier and advertise a function using the same key, but with @kbd{Control} modifier. For example, @kbd{Alt+s} will pop-up a save prompt, while @kbd{Control+s} directly saves the current buffer.
 
 These prompts offer you to quickly learn where functions are.
-
 
 @section Prompts
 
@@ -131,7 +124,7 @@ Obviously just type keys to input text. With slight notes : @kbd{Alt+m}to carria
 
 @section Navigate
 
-While arrows still work, Nu uses @key{Alt} key to navigate.
+While arrows still work, nu-mode uses @key{Alt} key to navigate.
 Hence, the thumb often presses @key{Alt} key, while pinky finger remains safe. This is exactly the same principle than ErgoEmacs applies.
 Navigate up left right down using @key{Alt} and :
 
@@ -276,8 +269,8 @@ As seen above, @kbd{Alt+b} will run an emphasis-prompt, which allows to comment.
 
 @kbd{Alt+s} prompt also allows you to create tags to find definitions.
 
-@node NU for the power user
-@chapter NU for the power user
+@node nu for the power user
+@chapter nu for the power user
 
 If you are not used to Emacs, reading this chapter is not necessary. But Emacs veteran should probably start here.
 emacs-nu redefines many keys, however two points make learning curve shorter
@@ -320,8 +313,8 @@ From the help prompt (@kbd{Control-h}), run @key{h} to invoke nu-help. This func
 @end enumerate
 
 
-@node NU and some specific modes
-@chapter NU and some specific modes
+@node nu and some specific modes
+@chapter nu and some specific modes
 
 @section term
 
@@ -331,14 +324,14 @@ term is perfectly usable with nu-mode. Just press Control+Space then Control+c t
 
 dired allows to use nu-mode shortcuts to navigate. Use @kbd{Alt+p} (uniserval-argument) then s key to edit the ls command.
 
-@node NU & other libraries
-@chapter NU & other libraries
+@node nu & other libraries
+@chapter nu & other libraries
 
-How does NU integrate with other libraries?
+How does nu-mode integrate with other libraries?
 
 @section org
 
-As of today, NU has some features related to org.  @kbd{Alt+s} prompt will allow you to org-store-link. @kbd{Alt+v} prompt will allow you to org-table-insert-column or row. It is possible to insert a timestamp. The Control+Space Control+Space shortcut will trigger what would have been Control+c Control+c. @kbd{Control+b} will run org-emphasis. Using open-prompt, it is possible to open agenda.
+As of today, nu-mode has some features related to org.  @kbd{Alt+s} prompt will allow you to org-store-link. @kbd{Alt+v} prompt will allow you to org-table-insert-column or row. It is possible to insert a timestamp. The Control+Space Control+Space shortcut will trigger what would have been Control+c Control+c. @kbd{Control+b} will run org-emphasis. Using open-prompt, it is possible to open agenda.
 
 It is also possible to delete a node from the delete prompt. As you see, rather than storing all org-related features in one place, nu-mode does enrich its usual prompts or even commands given the org-mode context.
 
@@ -380,7 +373,7 @@ As of today nu-mode only has one author, & contribution is more than welcomed. P
 @include fdl-1.3.texi
 
 @bye
- 
+
 @c Local Variables:
 @c mode: texinfo
 @c TeX-master: t
