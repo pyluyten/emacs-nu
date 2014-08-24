@@ -7,7 +7,7 @@
 (defun nu-no-goal-column () (interactive) (setq goal-column nil) (message "No goal column"))
 (defun nu-find-char-backward () (interactive) (nu-find-char t))
 (defun nu-join-with-following-line () (interactive) (join-line 1))
-(defun nu-rot-reg-or-toggle-rot () (interative) (if mark-active (rot13-region) (toggle-rot13-mode)))
+(defun nu-rot-reg-or-toggle-rot () (interactive) (if mark-active (rot13-region) (toggle-rot13-mode)))
 
 
 (defun nu-bold ()
@@ -325,7 +325,7 @@ Sentence uses sentence-end delimiter."
 (defun nu-end-of-line ()
   (interactive)
   (if (= (point) (progn (end-of-line) (point)))
-     (next-line)))
+     (forward-line)))
 
 
 
@@ -333,13 +333,13 @@ Sentence uses sentence-end delimiter."
   (interactive)
   (if (= (point) (progn (back-to-indentation) (point)))
     (if (= (point) (progn (beginning-of-line) (point)))
-	(previous-line))))
+        (forward-line -1))))
 
 
 (defun nu-back-to-bol ()
   (interactive)
   (if (= (point) (progn (beginning-of-line) (point)))
-      (previous-line)))
+      (forward-line -1)))
 
 
 (defun nu-copy-from-above (&optional arg)
@@ -445,8 +445,8 @@ If no argument given, copy 1 char."
 
   ; special case : look at C-c C-c
   ; if possible, use Control Space to toggle this.
-  (setq defn-target
-       (local-key-binding (kbd "\C-c \C-c")))
+  (let ((defn-target
+        (local-key-binding (kbd "\C-c \C-c"))))
 
   ; to do this C-c C-c trick, we need this to be bound,
   ; and also C-c C-<space> not to be...
@@ -454,8 +454,8 @@ If no argument given, copy 1 char."
           (not (symbolp defn-target))
           (not (commandp defn-target)))
     (message (format "C-c active. Assigning %s" (symbol-name defn-target)))
-    (setq defn-obstruct
-       (local-key-binding (kbd "\C-c C-SPC")))
+    (let ((defn-obstruct
+       (local-key-binding (kbd "\C-c C-SPC"))))
     (if (and (eq nil defn-obstruct)
              (commandp defn-target))
         (define-key nu-keymap (kbd "\C-c C-SPC") defn-target)))
@@ -466,7 +466,7 @@ If no argument given, copy 1 char."
 
   ; Now add back function but after some delay
   ; or this would intercept C-c!
-  (run-with-timer 0.3 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line))
+  (run-with-timer 0.3 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line))))
 
 
 (defun nu-cut-region-or-line (&optional arg)
@@ -511,15 +511,15 @@ A contigent amount of chars different than <space>."
 (defun nu-delete-above-line ()
   ""
   (interactive)
-  (previous-line)
+  (forward-line -1)
   (kill-whole-line))
 
 (defun nu-delete-below-line ()
   ""
   (interactive)
-  (next-line)
+  (forward-line)
   (kill-whole-line)
-  (previous-line))
+  (forward-line -1))
 
 (defun nu-backward-kill-line ()
   "Kill ARG lines backward."
@@ -548,11 +548,11 @@ A contigent amount of chars different than <space>."
 If tab is the only one, closes window.
 If window is the only one, kill buffer."
   (interactive)
-  (setq win (next-window (next-window)))
-  (if win
-    (if (eq win (next-window))
+  (let ((win (next-window (next-window))))
+   (if win
+     (if (eq win (next-window))
          (bury-buffer)
-         (delete-window))))
+         (delete-window)))))
 
 
 
