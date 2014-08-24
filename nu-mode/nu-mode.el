@@ -5,14 +5,6 @@
 (require 'nu-hooks)
 
 
-; we have the real keymap for real ("nu-keymap").
-; menu-map is only there for where-is sake.
-; thus we define things twice :
-; once a grand tragedy. Once as a farce.
-(defvar nu-keymap (make-sparse-keymap) "Emacs nu keymap")
-(defvar nu-menu-map (make-sparse-keymap) "Nu Menu Keymap")
-
-
 (require 'iso-transl); ^ : still does not work
 
 (defun nu-restore-default-keymap ()

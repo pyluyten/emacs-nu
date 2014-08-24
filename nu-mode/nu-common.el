@@ -19,7 +19,14 @@
 ;
 
 
-(add-to-list 'load-path "./")
+; we have the real keymap for real ("nu-keymap").
+; menu-map is only there for where-is sake.
+; thus we define things twice :
+; once a grand tragedy. Once as a farce.
+(defvar nu-keymap (make-sparse-keymap) "Emacs nu keymap")
+(defvar nu-menu-map (make-sparse-keymap) "Nu Menu Keymap")
+
+(require 'nu-help)
 
 ; external parts
 (require 'transpose-frame) ; play with frames
