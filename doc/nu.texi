@@ -257,12 +257,8 @@ Use @kbd{Control+w} to close current window. Note that @kbd{Alt+w} raises a prom
 @item
 Use @kbd{Control+n} to raise a prompt in order to create a new untitled document or split window. As the opposite of new, @kbd{Alt+n} will delete current window.
 @item
-Use @kbd{Control+t} to open another tab. It directly shows up an ibuffer list. Key @kbd{Alt+t} would swith from a `tab' to another one (other-window).
+Use @kbd{Control+t} to open another tab. It directly shows up an ibuffer list. Key @kbd{Alt+t} would swith from a `tab' to another one (other-window). Note that, in order to switch to another tab, you could also call ace-jump-char-mode (either @kbd{Alt+f f} or directly @kbd{Control+Shift+f} then specify which character of the other tab you want to jump to). If you actually just need to scroll another tab, stay in current one and use @kbd{Control+Alt+Space} to 'scroll-other-window'.
 @end enumerate 
-
-@verbatim
-² will invoke buffers list on the current frame. The tab invokes on another one.
-@end verbatim
 
 
 @node Hacking
