@@ -304,23 +304,45 @@ File: nu.info,  Node: Files Buffers Windows,  Next: Hacking,  Prev: View and Edi
 3 Files Buffers Windows
 ***********************
 
-Use 'Control+s' to save current file, 'Alt+s' to invoke a prompt to
-rename it.
-  1. Use 'Control+o' to open a file, a window, a buffer, or use
-     bookmarks,...  Or move to another frame...or buffers list...  You
-     can use 'Control+Shift+o' to directly be prompted for a buffer to
-     open.  Or, 'Control+Shift+i' to direclty open next buffer, skipping
-     *Messages* or *Backtrace* and the like.
-  2. Use 'Control+w' to close current window.  Note that 'Alt+w' raises
-     a prompt with far more options.
-  3. Use 'Control+n' to raise a prompt in order to create a new untitled
-     document or split window.  As the opposite of new, 'Alt+n' will
-     delete current window.
-  4. Use 'Control+t' to open another tab.  It directly shows up an
-     ibuffer list.  Key 'Alt+t' would swith from a 'tab' to another one
-     (other-window).
+3.1 Internal Windows and Tabs
+=============================
 
-² will invoke buffers list on the current frame. The tab invokes on another one.
+Emacs has a specific word for its internal frames : it says 'Windows'.
+This is awful, but might be understood given we precise these are
+internal windows, not X (or Wayland) windows.  Emacs has no support for
+standard tabs because there would be too much tabs.  But hidden buffers
+are tabs, aren't they?
+
+   Use 'Control+o' prompt to open a buffer.  You can use
+'Control+Shift+o' to directly be prompted for a buffer to open.  Or,
+'Control+Shift+i' to direclty open next buffer, skipping *Messages* or
+*Backtrace* and the like.  'Control+n' prompt allows you to create
+another internal window.  'Control+w' allows you to close document or
+reorganize internal windows (if you jsut want to close current document,
+directly use 'Alt+w').  'Alt+n' would delete-other-windows (ie, internal
+windows).
+
+   Use 'Control+t' to open another tab.  It does prompt for a buffer to
+open, but you can precise a file name.  Key 'Alt+t' would swith from a
+'tab' to another one (other-window, ie other-internal-window).  Note
+that, in order to switch to another tab, you could also call
+ace-jump-char-mode (either 'Alt+f f' or directly 'Control+Shift+f' then
+specify which character of the other tab you want to jump to).  If you
+actually just need to scroll another tab, stay in current one and use
+'Control+Alt+Space' to 'scroll-other-window'.
+
+3.2 Files, Bookmarks
+====================
+
+Use 'Control+s' to save current file, 'Alt+s' to invoke a prompt to
+rename it.  'Control+o' to open a file.  You can also have bookmarks :
+use the same open-prompt and save-prompt for this.
+
+3.3 External Windows
+====================
+
+It is possible, from Emacs to handle a bit of window management.  But
+you should rather use a decent window manager.
 
 
 File: nu.info,  Node: Hacking,  Next: NU for the power user,  Prev: Files Buffers Windows,  Up: Top
@@ -339,6 +361,8 @@ save cats or so.
    As seen above, 'Alt+b' will run an emphasis-prompt, which allows to
 comment.  Onto c-mode or various lisp-mode, 'Control+b' will toggle
 comments.
+
+   'Alt+s' prompt also allows you to create tags to find definitions.
 
 
 File: nu.info,  Node: NU for the power user,  Next: NU and some specific modes,  Prev: Hacking,  Up: Top
@@ -406,10 +430,19 @@ File: nu.info,  Node: NU and some specific modes,  Next: NU & other libraries,  
 6 NU and some specific modes
 ****************************
 
+6.1 term
+========
+
 term is perfectly usable with nu-mode.  Just press Control+Space then
 Control+c to run a sigstop.  Or, Control+Space then Control+b to open
 another buffer.  The vanilla x keymap is used.  As of today there is no
 prompt however.
+
+6.2 dired
+=========
+
+dired allows to use nu-mode shortcuts to navigate.  Use 'Alt+p'
+(uniserval-argument) then s key to edit the ls command.
 
 
 File: nu.info,  Node: NU & other libraries,  Next: Contributing,  Prev: NU and some specific modes,  Up: Top
@@ -977,12 +1010,12 @@ Node: Top691
 Node: Overview1028
 Node: View and Edit5671
 Node: Files Buffers Windows11828
-Node: Hacking12898
-Node: NU for the power user13533
-Node: NU and some specific modes16405
-Node: NU & other libraries16814
-Node: Contributing19590
-Node: GNU Free Documentation License19841
+Node: Hacking13757
+Node: NU for the power user14463
+Node: NU and some specific modes17335
+Node: NU & other libraries17905
+Node: Contributing20681
+Node: GNU Free Documentation License20932
 
 End Tag Table
 

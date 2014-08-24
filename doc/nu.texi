@@ -248,18 +248,22 @@ Some advanced editon features rely on @kbd{Control-r}, which will invoke replace
 @node Files Buffers Windows
 @chapter Files Buffers Windows
 
-Use @kbd{Control+s} to save current file, @kbd{Alt+s} to invoke a prompt to rename it.
-@enumerate
-@item
-Use @kbd{Control+o} to open a file, a window, a buffer, or use bookmarks,... Or move to another frame...or buffers list... You can use @kbd{Control+Shift+o} to directly be prompted for a buffer to open. Or, @kbd{Control+Shift+i} to direclty open next buffer, skipping *Messages* or *Backtrace* and the like.
-@item
-Use @kbd{Control+w} to close current window. Note that @kbd{Alt+w} raises a prompt with far more options.
-@item
-Use @kbd{Control+n} to raise a prompt in order to create a new untitled document or split window. As the opposite of new, @kbd{Alt+n} will delete current window.
-@item
-Use @kbd{Control+t} to open another tab. It directly shows up an ibuffer list. Key @kbd{Alt+t} would swith from a `tab' to another one (other-window). Note that, in order to switch to another tab, you could also call ace-jump-char-mode (either @kbd{Alt+f f} or directly @kbd{Control+Shift+f} then specify which character of the other tab you want to jump to). If you actually just need to scroll another tab, stay in current one and use @kbd{Control+Alt+Space} to 'scroll-other-window'.
-@end enumerate 
+@section Internal Windows and Tabs
 
+Emacs has a specific word for its internal frames : it says `Windows'. This is awful, but might be understood given we precise these are internal windows, not X (or Wayland) windows. Emacs has no support for standard tabs because there would be too much tabs. But hidden buffers are tabs, aren't they?
+
+Use @kbd{Control+o} prompt to open a buffer. You can use @kbd{Control+Shift+o} to directly be prompted for a buffer to open. Or, @kbd{Control+Shift+i} to direclty open next buffer, skipping *Messages* or *Backtrace* and the like. @kbd{Control+n} prompt allows you to create another internal window. @kbd{Control+w} allows you to close document or reorganize internal windows (if you jsut want to close current document, directly use @kbd{Alt+w}). @kbd{Alt+n} would delete-other-windows (ie, internal windows).
+
+Use @kbd{Control+t} to open another tab. It does prompt for a buffer to open, but you can precise a file name. Key @kbd{Alt+t} would swith from a `tab' to another one (other-window, ie other-internal-window). Note that, in order to switch to another tab, you could also call ace-jump-char-mode (either @kbd{Alt+f f} or directly @kbd{Control+Shift+f} then specify which character of the other tab you want to jump to). If you actually just need to scroll another tab, stay in current one and use @kbd{Control+Alt+Space} to 'scroll-other-window'.
+
+@section Files, Bookmarks
+
+Use @kbd{Control+s} to save current file, @kbd{Alt+s} to invoke a prompt to rename it.
+@kbd{Control+o} to open a file. You can also have bookmarks : use the same open-prompt and save-prompt for this.
+
+@section External Windows
+
+It is possible, from Emacs to handle a bit of window management. But you should rather use a decent window manager.
 
 @node Hacking
 @chapter Hacking
@@ -269,6 +273,8 @@ The print buffer, invoked from @kbd{Control+p}, will offer you to eval things or
 @kbd{Control+p} also offers to grep, find-grep or ediff.
 
 As seen above, @kbd{Alt+b} will run an emphasis-prompt, which allows to comment. Onto c-mode or various lisp-mode, @kbd{Control+b} will toggle comments.
+
+@kbd{Alt+s} prompt also allows you to create tags to find definitions.
 
 @node NU for the power user
 @chapter NU for the power user
