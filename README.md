@@ -11,12 +11,12 @@ _Welcome to emacs-nu!_
   See its dedicated readme. Now, if you're lazy, some example here
   , Press Alt-g,f or example, for a goto-prompt. (Not the most standard of my prompts, well...)
   You will directly see keys to perform some action. For example, "u" to backward-word.
-  You will also see you could have directly used a shortcut rather than using this prompt.
   , Press 3 to trigger numeric argument +3.
   , Press + to ask the prompt to repeat itself.
   , Now, press "u" for backward-word. You go three words backward. As the prompt was asked for repetition,
   press u again and you go three times backward-word again. Press o, and that's three times forward-word.
   , Press ? to ask for prompt help. Now press u and you have backward-word definition.
+  , Prompt also advertises you could have directly used a shortcut rather than using this prompt.
 
 
 - Aliases : to easier defining aliases.
@@ -33,28 +33,45 @@ _Welcome to emacs-nu!_
 
 _How to install?_
 
+= with a recipe =
+There's a recipe for nu-mode.
+Make sure you do require package. In your .emacs put:
 
-1/ Install emacs.
-   Some packages are built in : recentf, cua...
+  (require 'package)
 
-2/ Mx package-list-package.
-   Install undo-tree. (You don't need to change .emacs afterward)
+Now, make sure you did add melpa.
 
-3/ Add to your .emacs Marmalde:
-   (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+  (add-to-list 'package-archives
+   '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-4/ Still with Mx package-*:
-   install ace-jump, eventually magit
-   You do not need to change .emacs
+Now, if you are interested in nu-mode, just search nu-mode.
+Once intalled, add the elpa path to your load path and require nu-mode.
 
-5/ (add-to-list 'package-archives
-             '("melpa" . "http://melpa.milkbox.net/packages/") t)
-   Now you can install help-fns+
+      (require 'nu-mode)
+      (nu-mode 1)
 
-6/ github : add to list emacs-nu.
-   (require 'emacs-nu)
+= manually =
+
+first clone github, add the path to your list
+
+    (add-to-list 'load-path "~/contrib/git/emacs-nu/starterkit/")
+
+You can already require nu-alias. And add file.
+
+    (require 'nu-alias)
+    (nu-alias-add-file "~/.emacs.d/some-aliases.org")
+
+and require dhammacakka. This will add packages.
+
+    (require 'dhammacakka)
+
+reboot Emacs if you want to install packages for nu-mode.
+Optional dependencies are
+undo-tree
+ace-jump-mode
+help-fns+
+magit
 
 
--  To activate NU-MODE :   (nu-mode 1)
--  To activate the setup : (require 'dhammacakka)
--  To add an aliases org file : (nu-alias-add-file "~/.emacs.d/some-aliases.org")
+   (require nu-mode)
+   (nu-mode 1)
