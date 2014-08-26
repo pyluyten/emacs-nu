@@ -88,7 +88,8 @@
   (define-key nu-print-map (kbd "k") 'kmacro-end-or-call-macro)
   (define-key nu-print-map (kbd "c") 'subword-mode)
   (if (eq major-mode 'texinfo-mode)
-      (define-key nu-print-map (kbd "i") 'makeinfo-buffer)))
+      (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
+      (define-key nu-print-map (kbd "P") 'nu-texi2pdf)))
 
 (defun nu-print-prompt ()
   (interactive)
