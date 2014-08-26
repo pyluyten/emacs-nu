@@ -416,7 +416,11 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "c") 'capitalize-word)
   (define-key nu-replace-map (kbd "x") 'nu-rot-reg-or-toggle-rot)
   (define-key nu-replace-map (kbd "h") 'delete-horizontal-space)
-  (define-key nu-replace-map (kbd "t") 'ethan-wspace-untabify)
+  (if (not (fboundp 'ethan-wspace-untabify))
+    (defun ethan-wspace-untabify ()
+      (interactive)
+      (message "Please install ethan-wspace mode!")))
+  (define-key nu-replace-map (kbd "t") 'ethan-wspace-untabify))
   (if (eq major-mode 'org-mode)
       (progn
           (define-key nu-replace-map (kbd "C-J") 'org-shiftleft)
