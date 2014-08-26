@@ -130,7 +130,11 @@ If region is selected, use this as a search string."
 	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
     (isearch-backward-regexp)))
 (defun nu-find-previous-mark () (interactive) (cua-set-mark 1))
-(defun nu-goto-line-previousbuffer () (interactive) (goto-line (previous-buffer)))
+
+(defun nu-goto-line-previousbuffer ()
+ (interactive)
+ (previous-buffer)
+ (call-interactively 'goto-line))
 
 ; wait for the package to go back to help-fns+
 ; make-help screen for only nu-help
