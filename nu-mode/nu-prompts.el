@@ -150,11 +150,11 @@
   (define-key nu-bold-map (kbd "i") 'indent)
   (define-key nu-bold-map (kbd "a") 'align)
   (if (or (eq major-mode 'c-mode)
-	  (eq major-mode 'lisp-interaction-mode)
-	  (eq major-mode 'emacs-lisp-mode))
+          (eq major-mode 'lisp-interaction-mode)
+          (eq major-mode 'emacs-lisp-mode))
       (progn
           (define-key nu-bold-map (kbd "c") 'comment-or-uncomment-region)
-	  (define-key nu-bold-map (kbd "l") 'comment-indent))))
+          (define-key nu-bold-map (kbd "l") 'comment-indent))))
 
 (defun nu-bold-prompt ()
   (interactive)
@@ -417,6 +417,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "c") 'capitalize-word)
   (define-key nu-replace-map (kbd "x") 'nu-rot-reg-or-toggle-rot)
   (define-key nu-replace-map (kbd "h") 'delete-horizontal-space)
+  (define-key nu-replace-map (kbd "t") 'ethan-wspace-untabify)
   (if (eq major-mode 'org-mode)
       (progn
           (define-key nu-replace-map (kbd "C-J") 'org-shiftleft)
@@ -437,7 +438,7 @@ But if mark is active, exchange point and mark."
 (defun nu-replace-prompt ()
   (interactive)
   (if (or (eq overwrite-mode 'overwrite-mode-textual)
-	  (eq overwrite-mode 'overwrite-mode-binary))
+          (eq overwrite-mode 'overwrite-mode-binary))
       (overwrite-mode -1)
       (if (eq buffer-read-only t)
         (nu-toggle-read-only)
