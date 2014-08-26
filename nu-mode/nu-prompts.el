@@ -210,7 +210,7 @@
   ;(if (equal major-mode 'Magit)
     (define-key nu-save-map (kbd "c") 'magit-commit)
   ;(if (equal major-mode 'Magit)
-    (define-key nu-save-map (kbd "p") 'magit-push)
+    (define-key nu-save-map (kbd "p") 'nu-git-push)
   ;(if (boundp 'git-commit-commit)
     (define-key nu-save-map (kbd "x") 'git-commit-commit))
 
