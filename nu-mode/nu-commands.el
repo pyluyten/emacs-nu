@@ -93,8 +93,8 @@ If region is selected, use this as a search string."
   (interactive)
   (if mark-active
       (progn
-	(call-interactively 'isearch-forward)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+        (call-interactively 'isearch-forward)
+        (isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
       (isearch-forward)))
 
 (defun nu-isearch-backward ()
@@ -104,8 +104,8 @@ If region is selected, use this as a search string."
   (interactive)
     (if mark-active
       (progn
-	(call-interactively 'isearch-backward)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+        (call-interactively 'isearch-backward)
+        (isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
     (isearch-backward)))
 
 (defun nu-isearch-forward-regexp ()
@@ -115,8 +115,8 @@ If region is selected, use this as a search string."
   (interactive)
     (if mark-active
       (progn
-	(call-interactively 'isearch-forward-regexp)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+        (call-interactively 'isearch-forward-regexp)
+        (isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
     (call-interactively 'isearch-forward-regexp)))
 
 (defun nu-isearch-backward-regexp ()
@@ -126,8 +126,8 @@ If region is selected, use this as a search string."
   (interactive)
     (if mark-active
       (progn
-	(call-interactively 'isearch-backward-regexp)
-	(isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
+        (call-interactively 'isearch-backward-regexp)
+        (isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
     (isearch-backward-regexp)))
 (defun nu-find-previous-mark () (interactive) (cua-set-mark 1))
 
@@ -356,8 +356,8 @@ Copy ARG characters, but not past the end of that line.
 If no argument given, copy 1 char."
   (interactive "P")
   (let ((cc (current-column))
-	n
-	(string ""))
+        n
+        (string ""))
     (save-excursion
       (beginning-of-line)
       (backward-char 1)
@@ -367,17 +367,17 @@ If no argument given, copy 1 char."
       ;; If current column winds up in middle of a tab,
       ;; copy appropriate number of "virtual" space chars.
       (if (< cc (current-column))
-	  (if (= (preceding-char) ?\t)
-	      (progn
-		(setq string (make-string (min n (- (current-column) cc)) ?\s))
-		(setq n (- n (min n (- (current-column) cc)))))
-	    ;; In middle of ctl char => copy that whole char.
-	    (backward-char 1)))
+          (if (= (preceding-char) ?\t)
+              (progn
+                (setq string (make-string (min n (- (current-column) cc)) ?\s))
+                (setq n (- n (min n (- (current-column) cc)))))
+            ;; In middle of ctl char => copy that whole char.
+            (backward-char 1)))
       (setq string (concat string
-			   (buffer-substring
-			    (point)
-			    (min (line-end-position)
-				 (+ n (point)))))))
+                           (buffer-substring
+                            (point)
+                            (min (line-end-position)
+                                 (+ n (point)))))))
     (insert string)))
 
 
@@ -387,8 +387,8 @@ Copy ARG characters, but not past the end of that line.
 If no argument given, copy 1 char."
   (interactive "P")
   (let ((cc (current-column))
-	n
-	(string ""))
+        n
+        (string ""))
     (save-excursion
       (end-of-line)
       (forward-char 1)
@@ -398,17 +398,17 @@ If no argument given, copy 1 char."
       ;; If current column winds up in middle of a tab,
       ;; copy appropriate number of "virtual" space chars.
       (if (< cc (current-column))
-	  (if (= (preceding-char) ?\t)
-	      (progn
-		(setq string (make-string (min n (- (current-column) cc)) ?\s))
-		(setq n (- n (min n (- (current-column) cc)))))
-	    ;; In middle of ctl char => copy that whole char.
-	    (backward-char 1)))
+          (if (= (preceding-char) ?\t)
+              (progn
+                (setq string (make-string (min n (- (current-column) cc)) ?\s))
+                (setq n (- n (min n (- (current-column) cc)))))
+            ;; In middle of ctl char => copy that whole char.
+            (backward-char 1)))
       (setq string (concat string
-			   (buffer-substring
-			    (point)
-			    (min (line-end-position)
-				 (+ n (point)))))))
+                           (buffer-substring
+                            (point)
+                            (min (line-end-position)
+                                 (+ n (point)))))))
     (insert string)))
 
 
