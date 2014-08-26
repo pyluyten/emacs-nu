@@ -10,9 +10,22 @@
 (defun nu-rot-reg-or-toggle-rot () (interactive) (if mark-active (rot13-region) (toggle-rot13-mode)))
 
 
+; async shell commands...;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defun nu-git-push ()
+ (interactive)
+ (async-shell-command "git push"))
+
+
 (defun nu-texi2pdf ()
  (interactive)
  (async-shell-command (format "texi2pdf %s" buffer-file-name)))
+
+
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defun nu-bold ()
  (interactive)
