@@ -84,7 +84,7 @@ Output will be standard TAGS file."
  (interactive)
  (if (eq goal-column nil)
      (call-interactively 'set-goal-column)
-     (nu-no-goal-column)))     
+     (nu-no-goal-column)))
 
 (defun nu-isearch-forward ()
 "Search forward interactively.
@@ -322,7 +322,7 @@ Sentence uses sentence-end delimiter."
   (let ((c (read-char-exclusive "Enter char to move point to:"))
         (b nil))
     (while (eq b nil)
-    (if (eq 
+    (if (eq
          (if backward (char-before) (char-after)) c)
       (setq b t)
       (if backward
