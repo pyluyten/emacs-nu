@@ -26,28 +26,12 @@
 (require 'windmove)
 (require 'nu-help)
 
+
+
+
+
  (autoload 'zap-up-to-char "misc"
 "Kill up to, but not including ARGth occurrence of CHAR." t)
-
-;(defun nu-prompt (&optional title message)
-; (interactive)
-; (setq curb (current-buffer))
-; (unless title (setq title "Enter:"))
-; (setq buf (generate-new-buffer title))
-; (view-buffer-other-window buf)
-; (read-only-mode t)
-; (org-mode)
-; (funcall (and initial-major-mode))
-; (setq message
-;   (concat "\n    ~~~ ☸ ~~~\n" ; U+2638
-;            message))
-; (insert message)
-; (setq x (read-event))
-; (quit-window)
-; (kill-buffer buf)q
-; (switch-to-buffer curb)
-; (setq x x))
-
 
 
 (nu-define-prefix 'nu-window-map)
