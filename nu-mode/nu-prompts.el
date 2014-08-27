@@ -126,6 +126,8 @@
       (help-make-xrefs (help-buffer)))))
 
 
+(defvar nu-bold-map)
+
 (defun nu-populate-bold-map ()
  "Populate bold map."
   (nu-define-prefix 'nu-bold-map)
@@ -373,11 +375,9 @@ But if mark is active, exchange point and mark."
  "Toggle read only mode."
  (interactive)
  (run-with-timer 0.1 nil 'lambda ()
-   (interactive)
-   (if (eq buffer-read-only t)
-   (read-only-mode -1)
-   (read-only-mode 1))
-   (message "read-only toggled yep!"))
+              (if (eq buffer-read-only t)
+                  (read-only-mode -1)
+                  (read-only-mode 1)))
  (message "read only toggled."))
 
 (defun nu-populate-replace ()
