@@ -125,10 +125,7 @@
    (define-key nu-keymap (kbd "M-b") 'nu-bold-prompt)
    (define-key nu-keymap (kbd "M-n") 'delete-other-windows)
 
-   (define-key nu-keymap (kbd "²") 'ido-switch-buffer)
-   (define-key nu-keymap (kbd "³") 'ibuffer)
    (define-key nu-keymap (kbd "M-<dead-circumflex>")'nu-back-to-indentation)
-   (define-key nu-keymap (kbd "M-à") 'nu-back-to-indentation)
    (define-key nu-keymap (kbd "M-$") 'nu-end-of-line)
 
    ; a la view-mode scroll.
