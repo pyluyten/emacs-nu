@@ -5,7 +5,7 @@
 (require 'nu-hooks)
 
 
-(require 'iso-transl); ^ : still does not work
+(require 'iso-transl)
 
 (defun nu-restore-default-keymap ()
   "Populate nu keymap with defaults."
@@ -33,6 +33,7 @@
    (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
    (define-key universal-argument-map (kbd "C-u") 'backward-kill-word) ; fix c-u with prefix.
    (define-key universal-argument-map (kbd "M-p") 'universal-argument-more)
+   (define-key nu-keymap (kbd "C-S-u") 'nu-backward-kill-block)
 
    ; C-i is tab.
    (define-key nu-keymap (kbd "C-S-i") 'nu-next-buffer)
@@ -53,7 +54,7 @@
    (define-key nu-keymap (kbd "C-S-s") 'org-store-link)
 
    (define-key nu-keymap (kbd "C-d") 'kill-word)
-   (define-key nu-keymap (kbd "C-S-d") 'nu-delete-a-block)
+   (define-key nu-keymap (kbd "C-S-d") 'nu-kill-block)
 
    (define-key nu-keymap (kbd "C-f") 'nu-isearch-forward-regexp)
    (define-key nu-keymap (kbd "C-S-f") 'ace-jump-char-mode)
