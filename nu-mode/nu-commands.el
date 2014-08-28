@@ -410,7 +410,7 @@ If no argument given, copy 1 char."
       (forward-char 1)
       (skip-chars-forward "\ \t\n")
       (move-to-column cc)
-       (setq n (if arg (prefix-numeric-value-arg) 1))
+       (setq n (if arg (prefix-numeric-value arg) 1))
       ;; If current column winds up in middle of a tab,
       ;; copy appropriate number of "virtual" space chars.
       (if (< cc (current-column))
