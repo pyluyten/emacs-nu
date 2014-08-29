@@ -104,21 +104,19 @@ These prompts offer you to quickly learn where functions are.
 
 @section Prompts
 
-Prompts are basically a window showing several possible keys, and which functions are to be run given this input. However some features deserve some deeper explanation.
+Prompts are basically a window showing several possible keys, and which functions are to be run given this input. However some features deserve some deeper explanation. When a key does ``raise a prompt'', minibuffer will ask for an input or to press ? to get more details. This is basically a key sequence with a minibuffer prompt (this function is 'nu-light-prompt-for-keymap and is usable with any keymap, like help-map, and this is what Control+h does, for example).
 
-First, as explained below a prompt will explain how to use it, however prompt will also advertise direct shortcuts to commands : ie, shortcuts that would have directly run some function without going through the prompts. This does not mean using the prompt was wrong. It is rather meant as a way to discover and as a reminder, since nu-mode has many alternatives.
+Pressing ? will raise a ``buffer-prompt''. First, a buffer prompt will display available keys (what key sequences do not have). Second, a prompt will also advertise direct shortcuts to commands : ie, shortcuts that would have directly run some function without going through the prompts. For example, using Control+w prompt, it is possible to press w to 'delete-other-windows, but prompt will advertise that Alt+n would directly have called this same function without requiring to go through key sequence. This does not mean using the prompt was wrong. It is rather meant as a way to discover and as a reminder, since nu-mode has many alternatives.
 
-Second, a prompt allows you to use arguments in two ways. The first way, is to use standard Emacs keys to trigger an argument (eg, @kbd{Control+1}, or @kbd{Alt+1}, or @kbd{Alt+-}, or use the universal argument which is bound in nu-mode to @kbd{Alt+p}), then run the prompt, then choose the command that will be affected by the argument. The second way to use arguments is to first run the prompt, then directly press a digit or - to increment the argument. Then, press the relevant key to run the desired function.
+Third, a prompt (no matter light- or buffer-) allows you to use arguments in two ways. The first way, is to use standard Emacs keys to trigger an argument (eg, @kbd{Control+1}, or @kbd{Alt+1}, or @kbd{Alt+-}, or use the universal argument which is bound in nu-mode to @kbd{Alt+p}), then run the prompt, then choose the command that will be affected by the argument. The second way to use arguments is to first run the prompt, then directly press a digit or - to increment the argument. Then, press the relevant key to run the desired function.
 
-Third, a prompt also allows to get some help about functions. Run the prompt, press ?, then the same keymap as usual will not run functions but describe functions. For example, while `replace-prompt' ususally run `revert-buffer' on @key{a} press, once ? has been pressed, @key{a} will instead describe function `revert-buffer'.
+Fourth, a buffer-prompt also allows to get some help about functions. Run the buffer-prompt, press ?, then the same keymap as usual will not run functions but describe functions. For example, while `replace-prompt' ususally run `revert-buffer' on @key{a} press, once ? has been pressed, @key{a} will instead describe function `revert-buffer'.
 
-Fourth, a prompt can be toggled to some `repeat' state. Run a prompt, then press @key{+}. You can then use the prompt as usual, except that after running the function, prompt will ask you again for a key, with the same keymap. Escape the prompt pressing any unbound key. You might notice is does allow some sort of modal editing, but this is not really the intented behaviour. This feature is rather made to make some commands easier, for example deleting a paragraph then two word then a character. Modal editing is possible using nu-mode, see below.
+Fifth, a prompt (no matter light- or buffer-) can be toggled to some `repeat' state. Run a prompt, then press @key{+}. You can then use the prompt as usual, except that after running the function, prompt will ask you again for a key, with the same keymap. Escape the prompt pressing any unbound key. You might notice is does allow some sort of modal editing, but this is not really the intented behaviour. This feature is rather made to make some commands easier, for example deleting a paragraph then two word then a character. Modal editing is possible using nu-mode, see below.
 
-Fifth, a prompt can be scrolled using <space> and <backspace>.
+Sixth, a buffer-prompt can be scrolled using <space> and <backspace>.
 
-Sixth, a prompt can always be escaped using `q'. This letter is never bound. You can always use it. Note that @kbd{Control+q} and @kbd{Alt+q} are neither bound. However, @key{Q} -ie, shift plus q - might be bound, because @kbd{Shift+q} cannot be a mistake.
-
-
+Seventh, a prompt (no matter light- or buffer-) can always be escaped using `q'. This letter is never bound. You can always use it. Note that @kbd{Control+q} and @kbd{Alt+q} are neither bound. However, @key{Q} -ie, shift plus q - might be bound, because @kbd{Shift+q} cannot be a mistake.
 
 
 @node View and Edit
