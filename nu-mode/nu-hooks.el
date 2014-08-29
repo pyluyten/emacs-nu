@@ -1,4 +1,9 @@
 
+
+(defvar ibuffer-mode-map)
+(defvar dired-mode-map)
+
+
 (defun nu-prepare-for-isearch ()
   (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
   (define-key isearch-mode-map (kbd "C-r") 'isearch-repeat-backward)

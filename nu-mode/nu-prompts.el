@@ -26,7 +26,13 @@
 (require 'windmove)
 (require 'nu-help)
 
-
+(defvar nu-print-map)
+(defvar nu-delete-map)
+(defvar nu-insert-map)
+(defvar nu-save-map)
+(defvar nu-open-map)
+(defvar nu-goto-map)
+(defvar nu-replace-map)
 
 
 
