@@ -27,7 +27,7 @@
 but rather than executing the function,
 describes it."
  (interactive)
- (nu-prompt-for-keymap nu-current-keymap t))
+ (nu-buffer-prompt-for-keymap nu-current-keymap t))
 
 
 (defun nu-define-prefix (arg)
@@ -120,7 +120,12 @@ call insert description for each bind."
 (defvar nu-repeat-prompt nil)
 
 
-(defun nu-prompt-for-keymap (keymap &optional describe)
+; buffer-prompt is a heavy description
+; of a prompt keymap.
+; it uses *Help* buffer
+; and was previously
+; the standard nu-mode prompter
+(defun nu-buffer-prompt-for-keymap (keymap &optional describe)
  "Help to choose a key from a keymap
 
 If describe arg is t, only describe-function."
@@ -238,6 +243,64 @@ to describe the function.\n")
              ; if no func, make sure not to repeat.
             (setq nu-repeat-prompt nil))))))))
 
+
+(defun nu-prompt-for-keymap  (keymap &optional describe)
+"Light prompt for a keymap. Toggle buffer-prompt with ?"
+  (interactive)
+  (setq nu-current-keymap keymap)
+  (setq nu-current-major-mode major-mode)
+  (let* ((input nil)
+         (defn nil)
+         (local-map (make-sparse-keymap)))
+    (setcdr local-map keymap)
+    (define-key local-map [t] 'undefined)
+    (while (not input)
+      (setq key (read-key-sequence (propertize "Enter a key or ? :" 'face 'italic)))
+      (cond
+
+        ; allow to repeat prompt
+        ((string= key "+")
+               (setq nu-repeat-prompt t))
+
+        ((string= key "?")
+               (nu-buffer-prompt-for-keymap keymap))
+
+        ; check for negative / digit-argument.
+        ((string= (key-description key) "-")
+           (cond ((integerp current-prefix-arg)
+               (setq current-prefix-arg (- current-prefix-arg)))
+              ((eq current-prefix-arg '-)
+               (setq current-prefix-arg nil))
+              (t
+               (setq current-prefix-arg '-))))
+
+        ; digits
+        ((and (stringp (key-description key))
+              (string-match (key-description key) "[0123456789]"))
+          (cond
+            ((eq current-prefix-arg '-)
+             (setq current-prefix-arg (- (string-to-number (key-description key)))))
+            ((integerp current-prefix-arg)
+             (setq current-prefix-arg (+ (string-to-number (key-description key))
+                                         (* current-prefix-arg 10))))
+             (t
+              (setq current-prefix-arg (string-to-number (key-description key))))))
+       (t
+         (progn
+          (setq defn (lookup-key local-map key))
+
+          ; run the func. Repeat if asked.
+          (if (or (not nu-repeat-prompt)
+                  (eq defn nil))
+            (setq input t))
+          (if defn
+             (if describe
+                (describe-function defn)
+                (setq nu-last-command defn)
+                (ignore-errors
+                   (call-interactively defn)))
+             ; if no func, make sure not to repeat.
+            (setq nu-repeat-prompt nil))))))))
 
 (defadvice repeat (before nu-repeat-last-prompt ())
   (if
