@@ -31,6 +31,7 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 * Files Buffers Windows::
 * Hacking::
 * nu for the power user::
+* Customization::
 * nu and some specific modes::
 * nu & other libraries::
 * Contributing::
@@ -360,7 +361,7 @@ comments.
    'Alt+s' prompt also allows you to create tags to find definitions.
 
 
-File: nu-mode.info,  Node: nu for the power user,  Next: nu and some specific modes,  Prev: Hacking,  Up: Top
+File: nu-mode.info,  Node: nu for the power user,  Next: Customization,  Prev: Hacking,  Up: Top
 
 5 nu for the power user
 ***********************
@@ -420,12 +421,64 @@ acceptable for maggit is not for a full keymap.)
      from these prompts.
 
 
-File: nu-mode.info,  Node: nu and some specific modes,  Next: nu & other libraries,  Prev: nu for the power user,  Up: Top
+File: nu-mode.info,  Node: Customization,  Next: nu and some specific modes,  Prev: nu for the power user,  Up: Top
 
-6 nu and some specific modes
+6 Customization
+***************
+
+As ususal with Emacs, customization comes down at the very first usage.
+So even before to describe edition, customization has to be mentioned.
+There is not a single defcustom inside nu-mode.  All customization is to
+be done in other ways.
+
+   If you want prompts to automatically prompt a buffer rather than just
+a 'nu-light-prompt-for-keymap, which is the default, use :
+
+   (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
+
+   If you dislike both nu-buffer-prompt-for-keymap and default
+nu-light-prompt-for-keymap (why?  please report a bug!!), you're free to
+develop your own function.  The only requirement is this function to
+offer to call-interactively the functions being part of the prompt.  Be
+warned, you'll have to handle a huge amounts of details however if you
+want your function to be pleasant =)
+
+   If you want to amend nu-mode keymap, amend nu-keymap.  As of August,
+2014, some prompts have a "fixed" map you can amend directly: -
+nu-window-map (Control+w) - nu-new-map (Control+n) - nu-a-map
+(Control+a)
+
+   If you want to amend some "dynamic prompt", add a hook after its
+"populating" - nu-populate-print does populate print-map (Control+p) -
+nu-populate-delete (Control+d, nu-delete-map) - nu-populate-bold-map
+(Control+b, nu-bold-map) - nu-populate-insert-map (Alt+v, nu-insert-map)
+- nu-populate-save-map (Alt+s, nu-save-map) - nu-populate-open-map
+(Control+o, nu-open-map) - nu-populate-goto-map (Alt+g), nu-goto-map)
+
+   You can also raise prompt for maps outide of nu-mode : - ctl-x-map,
+using Control+Shift+x - help-map
+
+   Finally, it is totaly feasible to use nu-prompts styles for your own
+keymap : just (nu-prompt-for-keymap some-keymap), and you're there : one
+nu-mode prompt will offer you to leverage some-keymap.
+
+   nu-mode does trigger some settings which are not mandatory
+
+   cua-selection-mode is really logical given the nu-mode paddle.
+However, feel free to fix this call in nu-mode initialization.
+(cua-selection-mode 1)
+
+   Also, cursor-type is amended.  You can set it back, but again,
+despite not mandatory for nu-mode to work this is really logical given
+the keybinding.  (set-default 'cursor-type 'bar)
+
+
+File: nu-mode.info,  Node: nu and some specific modes,  Next: nu & other libraries,  Prev: Customization,  Up: Top
+
+7 nu and some specific modes
 ****************************
 
-6.1 term
+7.1 term
 ========
 
 term is perfectly usable with nu-mode.  Just press Control+Space then
@@ -433,7 +486,7 @@ Control+c to run a sigstop.  Or, Control+Space then Control+b to open
 another buffer.  The vanilla x keymap is used.  As of today there is no
 prompt however.
 
-6.2 dired
+7.2 dired
 =========
 
 dired allows to use nu-mode shortcuts to navigate.  Use 'Alt+p'
@@ -442,12 +495,12 @@ dired allows to use nu-mode shortcuts to navigate.  Use 'Alt+p'
 
 File: nu-mode.info,  Node: nu & other libraries,  Next: Contributing,  Prev: nu and some specific modes,  Up: Top
 
-7 nu & other libraries
+8 nu & other libraries
 **********************
 
 How does nu-mode integrate with other libraries?
 
-7.1 org
+8.1 org
 =======
 
 As of today, nu-mode has some features related to org.  'Alt+s' prompt
@@ -462,12 +515,12 @@ see, rather than storing all org-related features in one place, nu-mode
 does enrich its usual prompts or even commands given the org-mode
 context.
 
-7.2 magit
+8.2 magit
 =========
 
 Use Alt+s, ie save-prompt, to gain access to magit-status.
 
-7.3 god-mode
+8.3 god-mode
 ============
 
 god-mode is one possible modal editing.  See below about evil-mode.
@@ -483,7 +536,7 @@ delete prompts becomes nicer.  Commands relying on 'Control' modifier
 will be triggered with <g> key.  Using this, quitting god-mode is 'gg',
 since first g will toggle Control modifier.
 
-7.4 evil-mode
+8.4 evil-mode
 =============
 
 While nu-mode is not a modal editor, and aims at being the most
@@ -510,7 +563,7 @@ are different, but fixing the paddle is fine.
 
 File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: nu & other libraries,  Up: Top
 
-8 Contributing
+9 Contributing
 **************
 
 As of today nu-mode only has one author, & contribution is more than
@@ -1002,15 +1055,16 @@ their use in free software.
 
 Tag Table:
 Node: Top716
-Node: Overview1073
-Node: View and Edit5421
-Node: Files Buffers Windows11588
-Node: Hacking13522
-Node: nu for the power user14233
-Node: nu and some specific modes17110
-Node: nu & other libraries17685
-Node: Contributing20476
-Node: GNU Free Documentation License20732
+Node: Overview1091
+Node: View and Edit5439
+Node: Files Buffers Windows11606
+Node: Hacking13540
+Node: nu for the power user14251
+Node: Customization17115
+Node: nu and some specific modes19431
+Node: nu & other libraries19998
+Node: Contributing22789
+Node: GNU Free Documentation License23045
 
 End Tag Table
 

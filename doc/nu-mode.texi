@@ -51,6 +51,7 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 * Files Buffers Windows::
 * Hacking::
 * nu for the power user::
+* Customization::
 * nu and some specific modes::
 * nu & other libraries::
 * Contributing::
@@ -116,6 +117,9 @@ Fourth, a prompt can be toggled to some `repeat' state. Run a prompt, then press
 Fifth, a prompt can be scrolled using <space> and <backspace>.
 
 Sixth, a prompt can always be escaped using `q'. This letter is never bound. You can always use it. Note that @kbd{Control+q} and @kbd{Alt+q} are neither bound. However, @key{Q} -ie, shift plus q - might be bound, because @kbd{Shift+q} cannot be a mistake.
+
+
+
 
 @node View and Edit
 @chapter View and Edit
@@ -312,6 +316,45 @@ For each function accessible from a prompt, an additional shortcut is created, a
 From the help prompt (@kbd{Control-h}), run @key{h} to invoke nu-help. This function will present you all prompts, and will offer you to describe their keymaps - that is, all the functions you can access from these prompts.
 @end enumerate
 
+@node Customization
+@chapter Customization
+
+As ususal with Emacs, customization comes down at the very first usage. So even before to describe edition, customization has to be mentioned. There is not a single defcustom inside nu-mode. All customization is to be done in other ways.
+
+If you want prompts to automatically prompt a buffer rather than just a 'nu-light-prompt-for-keymap, which is the default, use :
+
+  (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
+
+If you dislike both nu-buffer-prompt-for-keymap and default nu-light-prompt-for-keymap (why? please report a bug!!), you're free to develop your own function. The only requirement is this function to offer to call-interactively the functions being part of the prompt. Be warned, you'll have to handle a huge amounts of details however if you want your function to be pleasant =)
+
+
+If you want to amend nu-mode keymap, amend nu-keymap. As of August, 2014, some prompts have a ``fixed'' map you can amend directly:
+- nu-window-map (Control+w)
+- nu-new-map (Control+n)
+- nu-a-map (Control+a)
+
+If you want to amend some ``dynamic prompt'', add a hook after its ``populating''
+- nu-populate-print does populate print-map (Control+p)
+- nu-populate-delete (Control+d, nu-delete-map)
+- nu-populate-bold-map (Control+b, nu-bold-map)
+- nu-populate-insert-map (Alt+v, nu-insert-map)
+- nu-populate-save-map (Alt+s, nu-save-map)
+- nu-populate-open-map (Control+o, nu-open-map)
+- nu-populate-goto-map (Alt+g), nu-goto-map)
+
+You can also raise prompt for maps outide of nu-mode :
+- ctl-x-map, using Control+Shift+x
+- help-map
+
+Finally, it is totaly feasible to use nu-prompts styles for your own keymap : just (nu-prompt-for-keymap some-keymap), and you're there : one nu-mode prompt will offer you to leverage some-keymap.
+
+nu-mode does trigger some settings which are not mandatory
+
+cua-selection-mode is really logical given the nu-mode paddle. However, feel free to fix this call in nu-mode initialization.
+   (cua-selection-mode 1)
+
+Also, cursor-type is amended. You can set it back, but again, despite not mandatory for nu-mode to work this is really logical given the keybinding.
+   (set-default 'cursor-type 'bar)
 
 @node nu and some specific modes
 @chapter nu and some specific modes
