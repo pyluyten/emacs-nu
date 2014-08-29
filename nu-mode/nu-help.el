@@ -61,8 +61,10 @@ and drect keys from both nu-keymap / major-mode."
            (if (not (eq nil keyvect))
              (progn
                (insert
-                 (format " %s"
-                   (mapconcat 'key-description keyvect ", "))))))
+                  (propertize
+                   (format " %s"
+                     (mapconcat 'key-description keyvect ", "))
+                   'face 'bold)))))
 
    ;; print the _direct keys_
    ;; remove menu, menu-bar, f1, help, ..
@@ -141,7 +143,7 @@ If describe arg is t, only describe-function."
 
  (with-help-window (help-buffer)
   (with-current-buffer "*Help*"
-      (if (eq nil current-prefix-arg) 
+      (if (eq nil current-prefix-arg)
           (setq prefixhelp "X")
           (setq prefixhelp current-prefix-arg))
    (if describe
@@ -153,7 +155,9 @@ Press ? to obtain this screen.
 From this prompt, press the associated key
 to describe the function.\n")
        (insert
-         (format "Prefix = %s.\nPress ? for help or to describe function\n" prefixhelp)))
+         (concat
+               (propertize (format "Prefix = %s" prefixhelp) 'face 'shadow)
+               (propertize "\nPress ? for help or to describe function\n" 'face 'italic))))
    (map-keymap 'nu-insert-binding-row keymap)
    (insert "\n\n\n"))
 
@@ -165,7 +169,7 @@ to describe the function.\n")
  (setq input nil)
  (setq defn nil)
    (while (not input)
-      (setq key (read-key-sequence "Enter a key or ? :"))
+      (setq key (read-key-sequence (propertize "Enter a key or ? :" 'face 'italic)))
       (cond
 
        ; check if the user needs to scroll the help. Do not break loop.
@@ -194,7 +198,7 @@ to describe the function.\n")
          (goto-char (point-min))
          (read-only-mode -1)
          (while (re-search-forward "\\`Prefix = .*?\n" nil t)
-         (replace-match (format "Prefix = %s\n" current-prefix-arg)))))
+         (replace-match (propertize (format "Prefix = %s\n" current-prefix-arg) 'face 'underline)))))
 
        ((and (stringp (key-description key))
              (string-match (key-description key) "[0123456789]"))
@@ -210,7 +214,7 @@ to describe the function.\n")
          (goto-char (point-min))
          (read-only-mode -1)
          (while (re-search-forward "\\`Prefix = .*?\n" nil t)
-         (replace-match (format "Prefix = %s\n" current-prefix-arg)))))
+         (replace-match (propertize (format "Prefix = %s\n" current-prefix-arg) 'face 'underline)))))
 
         ; now, break the loop, no matter a func has been found or not.
         ; eg the user can type not-mapped key to quit. "q" is never boundp.
