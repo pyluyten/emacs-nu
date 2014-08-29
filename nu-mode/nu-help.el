@@ -57,19 +57,19 @@ and drect keys from both nu-keymap / major-mode."
         (insert-button (symbol-name bind) 'action 'nu-prompt-describe)
 
   ; insert shortcuts _from the prompt_
-        (setq keyvect (where-is-internal bind (list nu-current-keymap)))
-        (if (not (eq nil keyvect))
+        (let ((keyvect (where-is-internal bind (list nu-current-keymap))))
+           (if (not (eq nil keyvect))
              (progn
                (insert
                  (format " %s"
-                   (mapconcat 'key-description keyvect ", ")))))
+                   (mapconcat 'key-description keyvect ", "))))))
 
    ;; print the _direct keys_
    ;; remove menu, menu-bar, f1, help, ..
    ;; use non-greedy "*?"
-  (setq major-keymap (eval (intern-soft 
-          (concat (symbol-name nu-current-major-mode) "-map"))))
-
+  (let ((majorkeys))
+  (let ((major-keymap (eval (intern-soft
+          (concat (symbol-name nu-current-major-mode) "-map")))))
 
    ;; TODO : make the regexp replace one or two C-c at beginning only
    ;; (since where-is-internal does not know our sorcery)
@@ -79,20 +79,20 @@ and drect keys from both nu-keymap / major-mode."
       (setq majorkeys
            (replace-regexp-in-string "\\(C-c\\)" "C-<SPC>"
                (mapconcat 'key-description (where-is-internal
-                     bind (list major-keymap)) "@"))))
+                     bind (list major-keymap)) "@")))))
 
-   (setq all
+   (let ((all
       (replace-regexp-in-string "\\(<menu>\\|<menu-bar>\\|<f.>\\|<help>\\).*?@" ""
         (format "%s@"
           (concat
            (mapconcat 'key-description (where-is-internal bind nu-keymap) "@")
             "@"
-            majorkeys))))
+            majorkeys)))))
    (if (> (string-width all) 1)
    (progn
      (setq all (replace-regexp-in-string "@" " " all))
      (insert " - or " all)))
-   (insert "\n"))))
+   (insert "\n"))))))
 
 
 (defun nu-insert-binding-row (ev bind)
@@ -133,9 +133,9 @@ If describe arg is t, only describe-function."
  (setq nu-current-keymap keymap)
  (setq nu-current-major-mode major-mode)
 
- (setq prev-frame (selected-frame))
- (setq config (current-window-configuration))
- (setq local-map (make-sparse-keymap))
+ (let* ((prev-frame (selected-frame))
+        (config (current-window-configuration))
+        (local-map (make-sparse-keymap)))
  (setcdr local-map keymap)
  (define-key local-map [t] 'undefined)
 
@@ -184,11 +184,11 @@ to describe the function.\n")
        ; check for negative / digit-argument.
        ((string= (key-description key) "-")
         (cond ((integerp current-prefix-arg)
-	       (setq current-prefix-arg (- current-prefix-arg)))
-	      ((eq current-prefix-arg '-)
-	       (setq current-prefix-arg nil))
-	      (t
-	       (setq current-prefix-arg '-)))
+               (setq current-prefix-arg (- current-prefix-arg)))
+              ((eq current-prefix-arg '-)
+               (setq current-prefix-arg nil))
+              (t
+               (setq current-prefix-arg '-)))
 
        (with-current-buffer "*Help*"
          (goto-char (point-min))
@@ -227,12 +227,12 @@ to describe the function.\n")
            (setq input t))
          (if defn
             (if describe
-	        (describe-function defn)
-	        (setq nu-last-command defn)
+                (describe-function defn)
+                (setq nu-last-command defn)
                 (ignore-errors
                    (call-interactively defn)))
              ; if no func, make sure not to repeat.
-            (setq nu-repeat-prompt nil)))))))
+            (setq nu-repeat-prompt nil))))))))
 
 
 (defadvice repeat (before nu-repeat-last-prompt ())
