@@ -2,6 +2,7 @@
 ;
 ; note : one cannot "advice" a 'map'
 
+(defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
 
 
  ; map-keymap has no way to receive
@@ -244,7 +245,7 @@ to describe the function.\n")
             (setq nu-repeat-prompt nil))))))))
 
 
-(defun nu-prompt-for-keymap  (keymap &optional describe)
+(defun nu-light-prompt-for-keymap  (keymap &optional describe)
 "Light prompt for a keymap. Toggle buffer-prompt with ?"
   (interactive)
   (setq nu-current-keymap keymap)
