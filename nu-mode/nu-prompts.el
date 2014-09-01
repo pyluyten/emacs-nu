@@ -391,6 +391,9 @@ But if mark is active, exchange point and mark."
   "Create replace-keymap."
   (setq nu-replace-map nil)
   (nu-define-prefix 'nu-replace-map)
+  (if (eq major-mode 'magit-status-mode)
+      (define-key nu-replace-map (kbd "a") 'magit-discard-item)
+      (progn
   (define-key nu-replace-map (kbd "m") 'nu-toggle-read-only)
   (define-key nu-replace-map (kbd "C-r")  'query-replace-regexp)
   (define-key nu-replace-map (kbd "a")  'revert-buffer)
@@ -421,7 +424,7 @@ But if mark is active, exchange point and mark."
           (define-key nu-replace-map (kbd "C-j") 'org-metaleft)
           (define-key nu-replace-map (kbd "C-l") 'org-metaright)
           (define-key nu-replace-map (kbd "C-i") 'org-metaup)
-          (define-key nu-replace-map (kbd "C-k") 'org-metadown))))
+          (define-key nu-replace-map (kbd "C-k") 'org-metadown))))))
 
 (defun nu-replace-do-prompt ()
   (interactive)
