@@ -141,7 +141,9 @@ If describe arg is t, only describe-function."
  (setq nu-current-keymap keymap)
  (setq nu-current-major-mode major-mode)
 
- (let* ((prev-frame (selected-frame))
+ (let* ((prefixhelp)
+	(new-frame)
+	(prev-frame (selected-frame))
         (config (current-window-configuration))
         (local-map (make-sparse-keymap)))
  (setcdr local-map keymap)
