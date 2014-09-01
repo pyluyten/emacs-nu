@@ -33,7 +33,10 @@
 (defvar nu-open-map)
 (defvar nu-goto-map)
 (defvar nu-replace-map)
-
+(defvar nu-window-map)
+(defvar nu-new-map)
+(defvar nu-a-map)
+(defvar nu-find-map)
 
 
  (autoload 'zap-up-to-char "misc"

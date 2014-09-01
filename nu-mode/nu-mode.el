@@ -7,6 +7,8 @@
 
 (require 'iso-transl)
 
+(defvar nu-menu-map)
+
 (defun nu-restore-default-keymap ()
   "Populate nu keymap with defaults."
   (interactive)
