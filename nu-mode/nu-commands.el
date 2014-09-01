@@ -2,10 +2,12 @@
 ; this is because describe-keymap need some definition
 ; lambda function appear as ?
 
+
+(defvar nu-help-map)
+
 (defun nu-next-window () (interactive) (other-window 1))
 (defun nu-previous-window () (interactive) (other-window -1))
 (defun nu-no-goal-column () (interactive) (setq goal-column nil) (message "No goal column"))
-(defun nu-find-char-backward () (interactive) (nu-find-char t))
 (defun nu-join-with-following-line () (interactive) (join-line 1))
 (defun nu-rot-reg-or-toggle-rot () (interactive) (if mark-active (rot13-region) (toggle-rot13-mode)))
 
@@ -341,6 +343,11 @@ Sentence uses sentence-end delimiter."
       (if backward
         (backward-char)
         (forward-char))))))
+
+
+(defun nu-find-char-backward ()
+  (interactive)
+  (nu-find-char t))
 
 
 (defun nu-end-of-line ()

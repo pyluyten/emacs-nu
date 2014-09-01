@@ -252,6 +252,7 @@ to describe the function.\n")
   (setq nu-current-major-mode major-mode)
   (let* ((input nil)
          (defn nil)
+         (key)
          (local-map (make-sparse-keymap)))
     (setcdr local-map keymap)
     (define-key local-map [t] 'undefined)
@@ -260,14 +261,14 @@ to describe the function.\n")
       (cond
 
         ; allow to repeat prompt
-        ((string= key "+")
+        ((and (stringp key) (string= key "+"))
                (setq nu-repeat-prompt t))
 
-        ((string= key "?")
+        ((and (stringp key) (string= key "?"))
                (nu-buffer-prompt-for-keymap keymap))
 
         ; check for negative / digit-argument.
-        ((string= (key-description key) "-")
+        ((and (stringp (key-description key)) (string= (key-description key) "-"))
            (cond ((integerp current-prefix-arg)
                (setq current-prefix-arg (- current-prefix-arg)))
               ((eq current-prefix-arg '-)
