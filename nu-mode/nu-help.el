@@ -141,7 +141,9 @@ If describe arg is t, only describe-function."
  (setq nu-current-keymap keymap)
  (setq nu-current-major-mode major-mode)
 
- (let* ((prefixhelp)
+ (let* ((key)
+        (defn)
+	(prefixhelp)
 	(new-frame)
 	(prev-frame (selected-frame))
         (config (current-window-configuration))
