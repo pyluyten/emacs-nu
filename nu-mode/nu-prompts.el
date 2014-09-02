@@ -367,6 +367,7 @@ But if mark is active, exchange point and mark."
 (define-key nu-find-map (kbd "r") 'nu-isearch-backward-regexp)
 (define-key nu-find-map (kbd "M-R") 'search-backward-regexp)
 (define-key nu-find-map (kbd "b") 'regexp-builder)
+(define-key nu-find-map (kbd "o") 'occur)
 (define-key nu-find-map (kbd "m") 'imenu)
 (define-key nu-find-map (kbd "s") 'nu-find-previous-mark)
 (define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
