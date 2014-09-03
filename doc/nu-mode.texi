@@ -376,9 +376,20 @@ As of today, nu-mode has some features related to org.  @kbd{Alt+s} prompt will 
 
 It is also possible to delete a node from the delete prompt. As you see, rather than storing all org-related features in one place, nu-mode does enrich its usual prompts or even commands given the org-mode context.
 
+
+@section dired
+
+Dired is not really integrated. Inside dired, nu-mode keys do apply. Which totally allows to use dired, but prompts should be remapped to make possible using dired only knowing nu-mode keys.
+
 @section magit
 
-Use Alt+s, ie save-prompt, to gain access to magit-status.
+Use Alt+s, ie save-prompt, to gain access to magit-status. Currently it is not properly integrated, in the sense that all nu-mode prompts would have to change once maggit-status-mode is active : as for dired.
+
+@section helm
+
+Helm is not integrated in the sense that default helm-map (and sibblings) use helm keys, not nu-mode keys - for example, use @kbd{Control+n} to select next helm entry, which s*!#_/.
+
+However, some prompts do provide access to helm functions : open prompt to access help-mini or help-find-files. Or insert prompt to access kill-ring from helm-show-kill-ring.
 
 @section god-mode
 
