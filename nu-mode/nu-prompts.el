@@ -73,6 +73,7 @@
   (define-key nu-print-map (kbd "f") 'find-grep)
   (define-key nu-print-map (kbd "g") 'grep)
   (define-key nu-print-map (kbd "b") 'eval-current-buffer)
+  (define-key nu-print-map (kbd "r") 'eval-region)
   (define-key nu-print-map (kbd "w") 'pwd)
   (define-key nu-print-map (kbd "n") 'negative-argument)
   (define-key nu-print-map (kbd "u") 'universal-argument)
