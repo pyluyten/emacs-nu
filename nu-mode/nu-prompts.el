@@ -42,13 +42,12 @@
  (autoload 'zap-up-to-char "misc"
 "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-
 (nu-define-prefix 'nu-window-map)
 (define-key nu-window-map (kbd "x") 'nu-close-document)
 (define-key nu-window-map (kbd "k") 'kill-buffer)
 (define-key nu-window-map (kbd "C-w") 'delete-window)
 (define-key nu-window-map (kbd "w") 'delete-other-windows)
-(define-key nu-window-map (kbd "C-<space>") 'scroll-other-window)
+(define-key nu-window-map (kbd "C-<SPC>") 'scroll-other-window)
 (define-key nu-window-map (kbd "C-<backspace>") 'scroll-other-window-down)
 (define-key nu-window-map (kbd "C-i") 'windmove-up)
 (define-key nu-window-map (kbd "C-j") 'windmove-left)
