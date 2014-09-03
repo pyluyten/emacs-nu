@@ -163,6 +163,7 @@
   (nu-define-prefix 'nu-insert-map)
   (define-key nu-insert-map (kbd "v") 'nu-yank-pop-or-yank)
   (define-key nu-insert-map (kbd "k") 'yank)
+  (define-key nu-insert-map (kbd "h")  'helm-show-kill-ring)
   (define-key nu-insert-map (kbd "i") 'browse-kill-ring)
   (define-key nu-insert-map (kbd "b") 'insert-buffer)
   (define-key nu-insert-map (kbd "f") 'insert-file)
