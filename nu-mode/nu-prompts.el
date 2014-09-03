@@ -94,6 +94,7 @@
   "Populate nu-delete-map."
   (nu-define-prefix 'nu-delete-map)
   (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
+  (define-key nu-delete-map (kbd "b") 'kill-buffer) ; redundant.
   (define-key nu-delete-map (kbd "j") 'backward-delete-char)
   (define-key nu-delete-map (kbd "M-j") 'nu-backward-kill-line)
   (define-key nu-delete-map (kbd "x") 'kill-whole-line)
