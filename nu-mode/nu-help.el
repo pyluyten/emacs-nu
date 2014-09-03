@@ -5,6 +5,7 @@
 (defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
 
 
+
  ; map-keymap has no way to receive
  ; more than two args
  ; we cannot easily communicate
@@ -179,7 +180,7 @@ to describe the function.\n")
  (setq input nil)
  (setq defn nil)
    (while (not input)
-      (setq key (read-key-sequence (propertize "Enter a key or ? :" 'face 'italic)))
+      (setq key (read-key-sequence (propertize "Enter a key or ? :" 'face 'italic) t))
       (cond
 
        ; check if the user needs to scroll the help. Do not break loop.
@@ -261,7 +262,7 @@ to describe the function.\n")
     (setcdr local-map keymap)
     (define-key local-map [t] 'undefined)
     (while (not input)
-      (setq key (read-key-sequence (propertize "Enter a key or ? :" 'face 'italic)))
+      (setq key (read-key-sequence (propertize "Enter a key or ? :" 'face 'italic) t))
       (cond
 
         ; allow to repeat prompt
