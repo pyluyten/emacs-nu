@@ -120,7 +120,7 @@
    (define-key nu-keymap (kbd "M-l") 'forward-char)
    (define-key nu-keymap (kbd "M-m") 'newline-and-indent)
    (define-key nu-keymap (kbd "M-z") 'undo-tree-undo)
-   ;x  execute-extended-command
+   (define-key nu-keymap (kbd "M-x") 'helm-M-x)
    ;c
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
    (define-key nu-menu-map (kbd "v") 'nu-insert-map)
