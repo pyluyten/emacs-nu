@@ -116,7 +116,7 @@
   (if (equal major-mode 'org-mode)
       (progn
         (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
-        (define-key nu-delete-map (kbd "-") 'org-table-kill-row)
+        (define-key nu-delete-map (kbd "r") 'org-table-kill-row)
         (define-key nu-delete-map (kbd "*") 'org-cut-special)
         (define-key nu-delete-map (kbd "M-k") 'org-cut-subtree))))
 
