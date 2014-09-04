@@ -281,7 +281,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "o")   'nu-next-window)
   (define-key nu-open-map (kbd "O")   'nu-previous-window)
   (define-key nu-open-map (kbd "i")   'ibuffer)
-  (define-key nu-open-map (kbd "C-i")   'org-iswitchb)
+  (define-key nu-open-map (kbd "C-i") 'org-iswitchb)
   (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer)
   (if (eq major-mode 'org-mode)
       (progn
@@ -322,7 +322,9 @@ But if mark is active, exchange point and mark."
   (define-key nu-goto-map (kbd "g") 'goto-line)
   (define-key nu-goto-map (kbd "M-g") 'nu-goto-line-previousbuffer)
   (define-key nu-goto-map (kbd "t") 'forward-list)
-  (define-key nu-goto-map (kbd "M-t") 'backward-list))
+  (define-key nu-goto-map (kbd "M-t") 'backward-list)
+  (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
+  (define-key nu-goto-map (kbd "M-s") 'org-mark-ring-goto))
 
 
 (defun nu-goto-prompt ()
@@ -374,7 +376,6 @@ But if mark is active, exchange point and mark."
 (define-key nu-find-map (kbd "o") 'occur)
 (define-key nu-find-map (kbd "g") 'rgrep)
 (define-key nu-find-map (kbd "m") 'imenu)
-(define-key nu-find-map (kbd "s") 'nu-find-previous-mark)
 (define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
 (define-key nu-find-map (kbd "f") 'ace-jump-char-mode)
 (define-key nu-find-map (kbd "w") 'ace-jump-word-mode)
