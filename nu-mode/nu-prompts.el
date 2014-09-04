@@ -505,7 +505,9 @@ But if mark is active, exchange point and mark."
   (setq nu-replace-map nil)
   (nu-define-prefix 'nu-replace-map)
   (if (eq major-mode 'magit-status-mode)
-      (define-key nu-replace-map (kbd "a") 'magit-discard-item)
+      (progn
+          (define-key nu-replace-map (kbd "k") 'magit-discard-item)
+          (define-key nu-replace-map (kbd "a") 'magit-log-edit-toggle-amending))
       (if (eq major-mode 'dired-mode)
           (progn
               (define-key nu-replace-map (kbd "r") 'dired-do-rename)
