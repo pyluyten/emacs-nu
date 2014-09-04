@@ -42,7 +42,7 @@
 
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
    (define-key nu-menu-map (kbd "o") 'nu-open-map)
-   (define-key nu-keymap (kbd "C-S-o") 'ido-switch-buffer)
+   (define-key nu-keymap (kbd "C-S-o") 'helm-buffer-list)
 
    (define-key nu-keymap (kbd "C-p") 'nu-print-prompt)
    (define-key nu-keymap (kbd "C-S-p") 'eval-last-sexp)
