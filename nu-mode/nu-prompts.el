@@ -193,25 +193,36 @@
 (defun nu-populate-insert-map ()
  "Populate insert map."
   (nu-define-prefix 'nu-insert-map)
-  (define-key nu-insert-map (kbd "v") 'nu-yank-pop-or-yank)
-  (define-key nu-insert-map (kbd "k") 'yank)
-  (define-key nu-insert-map (kbd "h")  'helm-show-kill-ring)
-  (define-key nu-insert-map (kbd "i") 'browse-kill-ring)
-  (define-key nu-insert-map (kbd "b") 'insert-buffer)
-  (define-key nu-insert-map (kbd "f") 'insert-file)
-  (define-key nu-insert-map (kbd "c") 'quoted-insert)
-  (define-key nu-insert-map (kbd "l") 'open-line)
+
+  (if (eq major-mode 'dired-mode)
+        (progn
+           (define-key nu-insert-map (kbd "v") 'dired-maybe-insert-subdir)
+           (define-key nu-insert-map (kbd "M-v") 'dired-create-directory))
+         ; else
+        (define-key nu-insert-map (kbd "v") 'nu-yank-pop-or-yank)
+        (define-key nu-insert-map (kbd "k") 'yank)
+        (define-key nu-insert-map (kbd "b") 'insert-buffer)
+        (define-key nu-insert-map (kbd "f") 'insert-file)
+        (define-key nu-insert-map (kbd "c") 'quoted-insert)
+        (define-key nu-insert-map (kbd "l") 'open-line)
+
+        ; addon
+        (if (eq major-mode 'org-mode)
+          (progn
+            (define-key nu-insert-map (kbd "L") 'org-insert-link)
+            (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
+            (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
+            (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
+            (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
+            (define-key nu-insert-map (kbd ",") 'org-time-stamp)
+            (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading))))
+
+  ; anycase
   (define-key nu-insert-map (kbd "s") 'async-shell-command)
   (define-key nu-insert-map (kbd "S") 'shell-command)
-  (if (eq major-mode 'org-mode)
-    (progn
-      (define-key nu-insert-map (kbd "L") 'org-insert-link)
-      (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
-      (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
-      (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
-      (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
-      (define-key nu-insert-map (kbd ",") 'org-time-stamp)
-      (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading))))
+  (define-key nu-insert-map (kbd "h")  'helm-show-kill-ring)
+  (define-key nu-insert-map (kbd "i") 'browse-kill-ring))
+
 
 (defun nu-insert-prompt ()
   (interactive)
