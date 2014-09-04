@@ -401,25 +401,34 @@ But if mark is active, exchange point and mark."
  (nu-prompt-for-keymap help-map))
 
 
-(nu-define-prefix 'nu-find-map)
-(define-key nu-find-map (kbd "F") 'nu-isearch-forward)
-(define-key nu-find-map (kbd "R") 'nu-isearch-backward)
-(define-key nu-find-map (kbd "M-f") 'nu-isearch-forward-regexp)
-(define-key nu-find-map (kbd "M-F") 'search-forward-regexp)
-(define-key nu-find-map (kbd "r") 'nu-isearch-backward-regexp)
-(define-key nu-find-map (kbd "M-R") 'search-backward-regexp)
-(define-key nu-find-map (kbd "b") 'regexp-builder)
-(define-key nu-find-map (kbd "o") 'occur)
-(define-key nu-find-map (kbd "g") 'rgrep)
-(define-key nu-find-map (kbd "m") 'imenu)
-(define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
-(define-key nu-find-map (kbd "f") 'ace-jump-char-mode)
-(define-key nu-find-map (kbd "w") 'ace-jump-word-mode)
-(define-key nu-find-map (kbd "z") 'nu-find-char)
-(define-key nu-find-map (kbd "t") 'find-tag)
-(define-key nu-find-map (kbd "M-z") 'nu-find-char-backward)
+(defun nu-populate-find-map ()
+  (nu-define-prefix 'nu-find-map)
+
+  (if (eq major-mode 'dired-mode)
+      (progn
+        (define-key nu-find-map (kbd "f") 'dired-mark-files-containing-regexp))
+      (define-key nu-find-map (kbd "f") 'ace-jump-char-mode))
+
+  ; common keys
+  (define-key nu-find-map (kbd "F") 'nu-isearch-forward)
+  (define-key nu-find-map (kbd "R") 'nu-isearch-backward)
+  (define-key nu-find-map (kbd "M-f") 'nu-isearch-forward-regexp)
+  (define-key nu-find-map (kbd "M-F") 'search-forward-regexp)
+  (define-key nu-find-map (kbd "r") 'nu-isearch-backward-regexp)
+  (define-key nu-find-map (kbd "M-R") 'search-backward-regexp)
+  (define-key nu-find-map (kbd "b") 'regexp-builder)
+  (define-key nu-find-map (kbd "o") 'occur)
+  (define-key nu-find-map (kbd "g") 'rgrep)
+  (define-key nu-find-map (kbd "m") 'imenu)
+  (define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
+  (define-key nu-find-map (kbd "w") 'ace-jump-word-mode)
+  (define-key nu-find-map (kbd "z") 'nu-find-char)
+  (define-key nu-find-map (kbd "t") 'find-tag)
+  (define-key nu-find-map (kbd "M-z") 'nu-find-char-backward))
+
 (defun nu-find-prompt ()
   (interactive)
+  (nu-populate-find-map)
   (nu-prompt-for-keymap nu-find-map))
 
 
