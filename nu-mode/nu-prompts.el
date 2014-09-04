@@ -315,6 +315,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-goto-map (kbd "M-o") 'forward-paragraph)
   (define-key nu-goto-map (kbd "h") 'back-to-indentation)
   (define-key nu-goto-map (kbd "m") 'end-of-line)
+  (define-key nu-goto-map (kbd "$") 'end-of-line)
   (define-key nu-goto-map (kbd "f") 'end-of-defun)
   (define-key nu-goto-map (kbd "M-f") 'beginning-of-defun)
   (define-key nu-goto-map (kbd "e") 'next-error)
