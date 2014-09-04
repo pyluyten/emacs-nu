@@ -365,6 +365,10 @@ term is perfectly usable with nu-mode. Just press Control+Space then Control+c t
 
 dired allows to use nu-mode shortcuts to navigate. Use @kbd{Alt+p} (uniserval-argument) then s key to edit the ls command.
 
+Some prompts are adapted to dired : selections (with @kbd{Control+a}) for example, will provide the different dired options to mark files. Look at ``replace'', ``insert'', ``find'', and so on. Where it make sense the usual prompts will be useful inside dired.
+
+Keys that *remain* useful inside dired are kept.
+
 @node nu & other libraries
 @chapter nu & other libraries
 
@@ -383,7 +387,9 @@ Dired is not really integrated. Inside dired, nu-mode keys do apply. Which total
 
 @section magit
 
-Use Alt+s, ie save-prompt, to gain access to magit-status. Currently it is not properly integrated, in the sense that all nu-mode prompts would have to change once maggit-status-mode is active : as for dired.
+Use Alt+s, ie save-prompt, to gain access to magit-status. Currently it is not properly integrated, in the sense that all nu-mode prompts would have to change once maggit-status-mode is active.
+
+However a work has started to integrate properly. For example, replace prompt will offer to toggle whether next commit has --amend.
 
 @section helm
 
