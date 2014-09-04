@@ -23,6 +23,12 @@
 ;;
 
 
+;;
+;; prompts : first define keys from "common case"
+;; that might be shallowed by other modes
+;;
+
+
 (require 'windmove)
 (require 'nu-help)
 
@@ -63,26 +69,42 @@
   (nu-prompt-for-keymap nu-window-map))
 
 
+
 (defun nu-populate-print ()
   (nu-define-prefix 'nu-print-map)
+
   (define-key nu-print-map (kbd "C-p") 'print-buffer)
   (define-key nu-print-map (kbd "p") 'async-shell-command)
-  (define-key nu-print-map (kbd "s") 'eval-last-sexp)
   (define-key nu-print-map (kbd "d") 'ediff)
+
+  (if (eq major-mode 'emacs-lisp-mode)
+     (progn
+       (define-key nu-print-map (kbd "s") 'eval-last-sexp)
+       (define-key nu-print-map (kbd "b") 'eval-current-buffer)
+       (define-key nu-print-map (kbd "r") 'eval-region)))
+
+  (if (eq major-mode 'dired-mode)
+        (progn
+        (define-key nu-print-map (kbd "C-p") 'dired-do-print)
+        (define-key nu-print-map (kbd "C-b") 'dired-do-byte-compile)
+        (define-key nu-print-map (kbd "p")   'dired-do-async-shell-command)
+        (define-key nu-print-map (kbd "P")   'dired-do-shell-command)
+        (define-key nu-print-map (kbd "d")   'dired-diff)))
+
+  (if (eq major-mode 'texinfo-mode)
+     (progn
+       (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
+       (define-key nu-print-map (kbd "P") 'nu-texi2pdf)))
+
   (define-key nu-print-map (kbd "f") 'find-grep)
   (define-key nu-print-map (kbd "g") 'grep)
-  (define-key nu-print-map (kbd "b") 'eval-current-buffer)
-  (define-key nu-print-map (kbd "r") 'eval-region)
   (define-key nu-print-map (kbd "w") 'pwd)
   (define-key nu-print-map (kbd "n") 'negative-argument)
   (define-key nu-print-map (kbd "u") 'universal-argument)
   (define-key nu-print-map (kbd "m") 'compile)
   (define-key nu-print-map (kbd "k") 'kmacro-end-or-call-macro)
-  (define-key nu-print-map (kbd "c") 'subword-mode)
-  (if (eq major-mode 'texinfo-mode)
-     (progn
-       (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
-       (define-key nu-print-map (kbd "P") 'nu-texi2pdf))))
+  (define-key nu-print-map (kbd "c") 'subword-mode))
+
 
 (defun nu-print-prompt ()
   (interactive)
