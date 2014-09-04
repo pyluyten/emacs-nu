@@ -300,6 +300,16 @@ But if mark is active, exchange point and mark."
 "Populate open map."
   (setq nu-open-map nil)
   (nu-define-prefix 'nu-open-map)
+
+  (if (eq major-mode 'dired-mode)
+      (progn
+        (define-key nu-open-map (kbd "d") 'dired-find-file)
+        (define-key nu-open-map (kbd "C-d") 'dired-find-file-other-window)))
+
+  (if (eq major-mode 'org-mode)
+      (progn
+         (define-key nu-open-map (kbd "L") 'org-open-at-point)))
+
   (define-key nu-open-map (kbd "f")  'find-file)
   (define-key nu-open-map (kbd "h")  'helm-mini)
   (define-key nu-open-map (kbd "C-h")  'helm-find-files)
@@ -317,10 +327,8 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "O")   'nu-previous-window)
   (define-key nu-open-map (kbd "i")   'ibuffer)
   (define-key nu-open-map (kbd "C-i") 'org-iswitchb)
-  (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer)
-  (if (eq major-mode 'org-mode)
-      (progn
-         (define-key nu-open-map (kbd "L") 'org-open-at-point))))
+  (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer))
+
 
 
 (defun nu-open-prompt ()
