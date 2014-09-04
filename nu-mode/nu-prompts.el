@@ -261,17 +261,23 @@
   (nu-prompt-for-keymap nu-save-map))
 
 
-(nu-define-prefix 'nu-new-map)
-(define-key nu-new-map (kbd "n") 'nu-new-empty-buffer)
-(define-key nu-new-map (kbd "w") 'make-frame-command)
-(define-key nu-new-map (kbd "v") 'split-window-below)
-(define-key nu-new-map (kbd "h") 'split-window-right)
-(define-key nu-new-map (kbd "i") 'ibuffer-other-window)
-(define-key nu-new-map (kbd "f") 'makedir)
+(defun nu-populate-new-map ()
+  (nu-define-prefix 'nu-new-map)
+
+  (if (eq major-mode 'dired-mode)
+      (define-key nu-new-map (kbd "d") 'dired-create-directory)
+      (define-key nu-new-map (kbd "d") 'make-directory))
+
+  (define-key nu-new-map (kbd "n") 'nu-new-empty-buffer)
+  (define-key nu-new-map (kbd "w") 'make-frame-command)
+  (define-key nu-new-map (kbd "v") 'split-window-below)
+  (define-key nu-new-map (kbd "h") 'split-window-right)
+  (define-key nu-new-map (kbd "i") 'ibuffer-other-window))
+
 (defun nu-new-prompt ()
   (interactive)
+  (nu-populate-new-map)
   (nu-prompt-for-keymap nu-new-map))
-
 
 
 (defun nu-populate-a-map ()
