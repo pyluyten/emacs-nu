@@ -43,6 +43,7 @@
 (defvar nu-new-map)
 (defvar nu-a-map)
 (defvar nu-find-map)
+(defvar nu-copy-map)
 
 
  (autoload 'zap-up-to-char "misc"
@@ -477,6 +478,22 @@ But if mark is active, exchange point and mark."
                   (read-only-mode 1)))
  (message "read only toggled."))
 
+
+(defun nu-populate-copy-map ()
+ (nu-define-prefix 'nu-copy-map)
+ (if (eq major-mode 'dired-mode)
+     (progn
+       (define-key nu-copy-map (kbd "c") 'dired-do-copy)
+       (define-key nu-copy-map (kbd "C-c") 'dired-copy-filename-as-kill)
+       (define-key nu-copy-map (kbd "h") 'dired-do-hardlink)
+       (define-key nu-copy-map (kbd "s") 'dired-do-symlink))))
+
+(defun nu-copy-prompt ()
+ (interactive)
+ (nu-populate-copy-map)
+ (nu-prompt-for-keymap nu-copy-map))
+
+
 (defun nu-populate-replace ()
   "Create replace-keymap."
   (setq nu-replace-map nil)
@@ -488,7 +505,8 @@ But if mark is active, exchange point and mark."
               (define-key nu-replace-map (kbd "r") 'dired-do-rename)
               (define-key nu-replace-map (kbd "z") 'dired-do-compress)
               (define-key nu-replace-map (kbd "u") 'dired-upcase)
-              (define-key nu-replace-map (kbd "d") 'dired-downcase))
+              (define-key nu-replace-map (kbd "d") 'dired-downcase)
+              (define-key nu-replace-map (kbd "w") 'wdired-change-to-wdired-mode))
 
           (define-key nu-replace-map (kbd "m") 'nu-toggle-read-only)
           (define-key nu-replace-map (kbd "C-r")  'query-replace-regexp)
