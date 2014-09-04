@@ -77,7 +77,8 @@
   (define-key nu-print-map (kbd "p") 'async-shell-command)
   (define-key nu-print-map (kbd "d") 'ediff)
 
-  (if (eq major-mode 'emacs-lisp-mode)
+  (if (or (eq major-mode 'emacs-lisp-mode)
+          (eq major-mode 'lisp-interaction-mode))
      (progn
        (define-key nu-print-map (kbd "s") 'eval-last-sexp)
        (define-key nu-print-map (kbd "b") 'eval-current-buffer)
@@ -252,23 +253,34 @@
 
 
 
-(nu-define-prefix 'nu-a-map)
-(define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
-(define-key nu-a-map (kbd "f") 'nu-mark-defun)
-(define-key nu-a-map (kbd "C-f") 'cd)
-(define-key nu-a-map (kbd "s") 'nu-mark-sentence)
-(define-key nu-a-map (kbd "w") '_nu-mark-a-word)
-(define-key nu-a-map (kbd "C-w") '_nu-select-a-block)
-(define-key nu-a-map (kbd "p") 'nu-mark-paragraph)
-(define-key nu-a-map (kbd "j") 'nu-mark-to-bol)
-(define-key nu-a-map (kbd "l") 'nu-mark-to-eol)
-(define-key nu-a-map (kbd "k") '_nu-mark-current-line)
-(define-key nu-a-map (kbd "C-<SPC>") 'nu-set-mark)
-(define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)
+(defun nu-populate-a-map ()
+  (nu-define-prefix 'nu-a-map)
+  (define-key nu-a-map (kbd "C-f") 'cd)
 
-(defun nu-a-prompt-internal ()
-  (interactive)
-  (nu-prompt-for-keymap nu-a-map))
+  (if (eq major-mode 'dired-mode)
+      (progn
+        (define-key nu-a-map (kbd "d") 'dired-flag-file-deletion)
+        (define-key nu-a-map (kbd "r") 'dired-flag-files-regexp)
+        (define-key nu-a-map (kbd "m") 'dired-mark)
+        (define-key nu-a-map (kbd "u") 'dired-unmark)
+        (define-key nu-a-map (kbd "s") 'nu-mark-subdirs-files)
+        (define-key nu-a-map (kbd "x") 'dired-toggle-marks)
+        (define-key nu-a-map (kbd "C-u") 'dired-unmark-all-marks)
+        (define-key nu-a-map (kbd "r") 'dired-mark-files-regexp)
+        (define-key nu-a-map (kbd "C-r") 'dired-mark-files-containing-regexp))
+  ; else...
+      (define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
+      (define-key nu-a-map (kbd "f") 'nu-mark-defun)
+      (define-key nu-a-map (kbd "s") 'nu-mark-sentence)
+      (define-key nu-a-map (kbd "w") '_nu-mark-a-word)
+      (define-key nu-a-map (kbd "C-w") '_nu-select-a-block)
+      (define-key nu-a-map (kbd "p") 'nu-mark-paragraph)
+      (define-key nu-a-map (kbd "j") 'nu-mark-to-bol)
+      (define-key nu-a-map (kbd "l") 'nu-mark-to-eol)
+      (define-key nu-a-map (kbd "k") '_nu-mark-current-line)
+      (define-key nu-a-map (kbd "C-<SPC>") 'nu-set-mark)
+      (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)))
+
 
 
 (defun nu-a-prompt ()
@@ -278,7 +290,8 @@ But if mark is active, exchange point and mark."
   (interactive)
      (if mark-active
       (exchange-point-and-mark)
-      (nu-a-prompt-internal)))
+      (nu-populate-a-map)
+      (nu-prompt-for-keymap nu-a-map)))
 
 
 
