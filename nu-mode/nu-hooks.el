@@ -40,7 +40,9 @@
 (defun nu-prepare-for-dired ()
   ; or use <space> to go down.
   (define-key dired-mode-map  (kbd "M-i") 'dired-previous-line)
-  (define-key dired-mode-map  (kbd "M-k") 'dired-next-line))
+  (define-key dired-mode-map  (kbd "M-k") 'dired-next-line)
+  (define-key dired-mode-map  (kbd "M-z") 'dired-undo)
+  (define-key dired-mode-map  (kbd "C-c") 'nu-copy-prompt))
 
 
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer)

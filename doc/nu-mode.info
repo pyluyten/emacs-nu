@@ -1,7 +1,7 @@
 This is nu-mode.info, produced by makeinfo version 5.1 from
 nu-mode.texi.
 
-This manual is for nu-mode (version 0.3 of 2014-08-03), a modern
+This manual is for nu-mode (version 0.5 of 2014-09-03), a modern
 keybinding for Emacs.  Copyright © 2014 Pierre-Yves Luyten.
 
      Permission is granted to copy, distribute and/or modify this
@@ -501,6 +501,13 @@ prompt however.
 dired allows to use nu-mode shortcuts to navigate.  Use 'Alt+p'
 (uniserval-argument) then s key to edit the ls command.
 
+   Some prompts are adapted to dired : selections (with 'Control+a') for
+example, will provide the different dired options to mark files.  Look
+at "replace", "insert", "find", and so on.  Where it make sense the
+usual prompts will be useful inside dired.
+
+   Keys that *remain* useful inside dired are kept.
+
 
 File: nu-mode.info,  Node: nu & other libraries,  Next: Contributing,  Prev: nu and some specific modes,  Up: Top
 
@@ -524,12 +531,35 @@ see, rather than storing all org-related features in one place, nu-mode
 does enrich its usual prompts or even commands given the org-mode
 context.
 
-8.2 magit
+8.2 dired
 =========
 
-Use Alt+s, ie save-prompt, to gain access to magit-status.
+Dired is not really integrated.  Inside dired, nu-mode keys do apply.
+Which totally allows to use dired, but prompts should be remapped to
+make possible using dired only knowing nu-mode keys.
 
-8.3 god-mode
+8.3 magit
+=========
+
+Use Alt+s, ie save-prompt, to gain access to magit-status.  Currently it
+is not properly integrated, in the sense that all nu-mode prompts would
+have to change once maggit-status-mode is active.
+
+   However a work has started to integrate properly.  For example,
+replace prompt will offer to toggle whether next commit has -amend.
+
+8.4 helm
+========
+
+Helm is not integrated in the sense that default helm-map (and
+sibblings) use helm keys, not nu-mode keys - for example, use
+'Control+n' to select next helm entry, which s*!#_/.
+
+   However, some prompts do provide access to helm functions : open
+prompt to access help-mini or help-find-files.  Or insert prompt to
+access kill-ring from helm-show-kill-ring.
+
+8.5 god-mode
 ============
 
 god-mode is one possible modal editing.  See below about evil-mode.
@@ -545,7 +575,7 @@ delete prompts becomes nicer.  Commands relying on 'Control' modifier
 will be triggered with <g> key.  Using this, quitting god-mode is 'gg',
 since first g will toggle Control modifier.
 
-8.4 evil-mode
+8.6 evil-mode
 =============
 
 While nu-mode is not a modal editor, and aims at being the most
@@ -1071,9 +1101,9 @@ Node: Hacking14239
 Node: nu for the power user14950
 Node: Customization17814
 Node: nu and some specific modes20130
-Node: nu & other libraries20697
-Node: Contributing23488
-Node: GNU Free Documentation License23744
+Node: nu & other libraries21006
+Node: Contributing24661
+Node: GNU Free Documentation License24917
 
 End Tag Table
 

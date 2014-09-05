@@ -23,6 +23,12 @@
 ;;
 
 
+;;
+;; prompts : first define keys from "common case"
+;; that might be shallowed by other modes
+;;
+
+
 (require 'windmove)
 (require 'nu-help)
 
@@ -37,6 +43,7 @@
 (defvar nu-new-map)
 (defvar nu-a-map)
 (defvar nu-find-map)
+(defvar nu-copy-map)
 
 
  (autoload 'zap-up-to-char "misc"
@@ -63,26 +70,43 @@
   (nu-prompt-for-keymap nu-window-map))
 
 
+
 (defun nu-populate-print ()
   (nu-define-prefix 'nu-print-map)
+
   (define-key nu-print-map (kbd "C-p") 'print-buffer)
   (define-key nu-print-map (kbd "p") 'async-shell-command)
-  (define-key nu-print-map (kbd "s") 'eval-last-sexp)
   (define-key nu-print-map (kbd "d") 'ediff)
+
+  (if (or (eq major-mode 'emacs-lisp-mode)
+          (eq major-mode 'lisp-interaction-mode))
+     (progn
+       (define-key nu-print-map (kbd "s") 'eval-last-sexp)
+       (define-key nu-print-map (kbd "b") 'eval-current-buffer)
+       (define-key nu-print-map (kbd "r") 'eval-region)))
+
+  (if (eq major-mode 'dired-mode)
+        (progn
+        (define-key nu-print-map (kbd "C-p") 'dired-do-print)
+        (define-key nu-print-map (kbd "C-b") 'dired-do-byte-compile)
+        (define-key nu-print-map (kbd "p")   'dired-do-async-shell-command)
+        (define-key nu-print-map (kbd "P")   'dired-do-shell-command)
+        (define-key nu-print-map (kbd "d")   'dired-diff)))
+
+  (if (eq major-mode 'texinfo-mode)
+     (progn
+       (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
+       (define-key nu-print-map (kbd "P") 'nu-texi2pdf)))
+
   (define-key nu-print-map (kbd "f") 'find-grep)
   (define-key nu-print-map (kbd "g") 'grep)
-  (define-key nu-print-map (kbd "b") 'eval-current-buffer)
-  (define-key nu-print-map (kbd "r") 'eval-region)
   (define-key nu-print-map (kbd "w") 'pwd)
   (define-key nu-print-map (kbd "n") 'negative-argument)
   (define-key nu-print-map (kbd "u") 'universal-argument)
   (define-key nu-print-map (kbd "m") 'compile)
   (define-key nu-print-map (kbd "k") 'kmacro-end-or-call-macro)
-  (define-key nu-print-map (kbd "c") 'subword-mode)
-  (if (eq major-mode 'texinfo-mode)
-     (progn
-       (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
-       (define-key nu-print-map (kbd "P") 'nu-texi2pdf))))
+  (define-key nu-print-map (kbd "c") 'subword-mode))
+
 
 (defun nu-print-prompt ()
   (interactive)
@@ -93,26 +117,35 @@
 (defun nu-populate-delete ()
   "Populate nu-delete-map."
   (nu-define-prefix 'nu-delete-map)
-  (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
-  (define-key nu-delete-map (kbd "b") 'kill-buffer) ; redundant.
-  (define-key nu-delete-map (kbd "j") 'backward-delete-char)
-  (define-key nu-delete-map (kbd "M-j") 'nu-backward-kill-line)
-  (define-key nu-delete-map (kbd "x") 'kill-whole-line)
-  (define-key nu-delete-map (kbd "k") 'nu-delete-below-line)
-  (define-key nu-delete-map (kbd "l") 'delete-forward-char)
-  (define-key nu-delete-map (kbd "$") 'kill-line)
-  (define-key nu-delete-map (kbd "M-l") 'kill-line)
-  (define-key nu-delete-map (kbd "u") 'backward-kill-word)
-  (define-key nu-delete-map (kbd "o") 'kill-word)
-  (define-key nu-delete-map (kbd "M-o") 'nu-kill-block)
-  (define-key nu-delete-map (kbd "M-u") 'nu-backward-kill-block)
-  (define-key nu-delete-map (kbd "h") 'delete-horizontal-space)
-  (define-key nu-delete-map (kbd "t") 'delete-trailing-whitespace)
-  (define-key nu-delete-map (kbd "b") 'delete-blank-lines)
-  (define-key nu-delete-map (kbd "s") 'kill-sexp)
-  (define-key nu-delete-map (kbd "e") 'kill-sentence)
-  (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
-  (define-key nu-delete-map (kbd "a") 'nu-delete-all)
+
+  (if (eq major-mode 'dired-mode)
+      (progn
+         (define-key nu-delete-map (kbd "d") 'dired-flag-file-deletion)
+         (define-key nu-delete-map (kbd "k") 'dired-do-flagged-delete)
+         (define-key nu-delete-map (kbd "o") 'dired-do-delete))
+      ; else
+      (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
+      (define-key nu-delete-map (kbd "b") 'kill-buffer) ; redundant.
+      (define-key nu-delete-map (kbd "j") 'backward-delete-char)
+      (define-key nu-delete-map (kbd "M-j") 'nu-backward-kill-line)
+      (define-key nu-delete-map (kbd "x") 'kill-whole-line)
+      (define-key nu-delete-map (kbd "k") 'nu-delete-below-line)
+      (define-key nu-delete-map (kbd "l") 'delete-forward-char)
+      (define-key nu-delete-map (kbd "$") 'kill-line)
+      (define-key nu-delete-map (kbd "M-l") 'kill-line)
+      (define-key nu-delete-map (kbd "u") 'backward-kill-word)
+      (define-key nu-delete-map (kbd "o") 'kill-word)
+      (define-key nu-delete-map (kbd "M-o") 'nu-kill-block)
+      (define-key nu-delete-map (kbd "M-u") 'nu-backward-kill-block)
+      (define-key nu-delete-map (kbd "h") 'delete-horizontal-space)
+      (define-key nu-delete-map (kbd "t") 'delete-trailing-whitespace)
+      (define-key nu-delete-map (kbd "b") 'delete-blank-lines)
+      (define-key nu-delete-map (kbd "s") 'kill-sexp)
+      (define-key nu-delete-map (kbd "e") 'kill-sentence)
+      (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
+      (define-key nu-delete-map (kbd "a") 'nu-delete-all))
+
+
   (define-key nu-delete-map (kbd "M-f") 'delete-file)
   (if (equal major-mode 'org-mode)
       (progn
@@ -161,25 +194,36 @@
 (defun nu-populate-insert-map ()
  "Populate insert map."
   (nu-define-prefix 'nu-insert-map)
-  (define-key nu-insert-map (kbd "v") 'nu-yank-pop-or-yank)
-  (define-key nu-insert-map (kbd "k") 'yank)
-  (define-key nu-insert-map (kbd "h")  'helm-show-kill-ring)
-  (define-key nu-insert-map (kbd "i") 'browse-kill-ring)
-  (define-key nu-insert-map (kbd "b") 'insert-buffer)
-  (define-key nu-insert-map (kbd "f") 'insert-file)
-  (define-key nu-insert-map (kbd "c") 'quoted-insert)
-  (define-key nu-insert-map (kbd "l") 'open-line)
+
+  (if (eq major-mode 'dired-mode)
+        (progn
+           (define-key nu-insert-map (kbd "v") 'dired-maybe-insert-subdir)
+           (define-key nu-insert-map (kbd "M-v") 'dired-create-directory))
+         ; else
+        (define-key nu-insert-map (kbd "v") 'nu-yank-pop-or-yank)
+        (define-key nu-insert-map (kbd "k") 'yank)
+        (define-key nu-insert-map (kbd "b") 'insert-buffer)
+        (define-key nu-insert-map (kbd "f") 'insert-file)
+        (define-key nu-insert-map (kbd "c") 'quoted-insert)
+        (define-key nu-insert-map (kbd "l") 'open-line)
+
+        ; addon
+        (if (eq major-mode 'org-mode)
+          (progn
+            (define-key nu-insert-map (kbd "L") 'org-insert-link)
+            (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
+            (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
+            (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
+            (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
+            (define-key nu-insert-map (kbd ",") 'org-time-stamp)
+            (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading))))
+
+  ; anycase
   (define-key nu-insert-map (kbd "s") 'async-shell-command)
   (define-key nu-insert-map (kbd "S") 'shell-command)
-  (if (eq major-mode 'org-mode)
-    (progn
-      (define-key nu-insert-map (kbd "L") 'org-insert-link)
-      (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
-      (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
-      (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
-      (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
-      (define-key nu-insert-map (kbd ",") 'org-time-stamp)
-      (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading))))
+  (define-key nu-insert-map (kbd "h")  'helm-show-kill-ring)
+  (define-key nu-insert-map (kbd "i") 'browse-kill-ring))
+
 
 (defun nu-insert-prompt ()
   (interactive)
@@ -217,36 +261,53 @@
   (nu-prompt-for-keymap nu-save-map))
 
 
-(nu-define-prefix 'nu-new-map)
-(define-key nu-new-map (kbd "n") 'nu-new-empty-buffer)
-(define-key nu-new-map (kbd "w") 'make-frame-command)
-(define-key nu-new-map (kbd "v") 'split-window-below)
-(define-key nu-new-map (kbd "h") 'split-window-right)
-(define-key nu-new-map (kbd "i") 'ibuffer-other-window)
-(define-key nu-new-map (kbd "f") 'makedir)
+(defun nu-populate-new-map ()
+  (nu-define-prefix 'nu-new-map)
+
+  (if (eq major-mode 'dired-mode)
+      (define-key nu-new-map (kbd "d") 'dired-create-directory)
+      (define-key nu-new-map (kbd "d") 'make-directory))
+
+  (define-key nu-new-map (kbd "n") 'nu-new-empty-buffer)
+  (define-key nu-new-map (kbd "w") 'make-frame-command)
+  (define-key nu-new-map (kbd "v") 'split-window-below)
+  (define-key nu-new-map (kbd "h") 'split-window-right)
+  (define-key nu-new-map (kbd "i") 'ibuffer-other-window))
+
 (defun nu-new-prompt ()
   (interactive)
+  (nu-populate-new-map)
   (nu-prompt-for-keymap nu-new-map))
 
 
+(defun nu-populate-a-map ()
+  (nu-define-prefix 'nu-a-map)
+  (define-key nu-a-map (kbd "C-f") 'cd)
 
-(nu-define-prefix 'nu-a-map)
-(define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
-(define-key nu-a-map (kbd "f") 'nu-mark-defun)
-(define-key nu-a-map (kbd "C-f") 'cd)
-(define-key nu-a-map (kbd "s") 'nu-mark-sentence)
-(define-key nu-a-map (kbd "w") '_nu-mark-a-word)
-(define-key nu-a-map (kbd "C-w") '_nu-select-a-block)
-(define-key nu-a-map (kbd "p") 'nu-mark-paragraph)
-(define-key nu-a-map (kbd "j") 'nu-mark-to-bol)
-(define-key nu-a-map (kbd "l") 'nu-mark-to-eol)
-(define-key nu-a-map (kbd "k") '_nu-mark-current-line)
-(define-key nu-a-map (kbd "C-<SPC>") 'nu-set-mark)
-(define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)
+  (if (eq major-mode 'dired-mode)
+      (progn
+        (define-key nu-a-map (kbd "d") 'dired-flag-file-deletion)
+        (define-key nu-a-map (kbd "r") 'dired-flag-files-regexp)
+        (define-key nu-a-map (kbd "m") 'dired-mark)
+        (define-key nu-a-map (kbd "u") 'dired-unmark)
+        (define-key nu-a-map (kbd "s") 'nu-mark-subdirs-files)
+        (define-key nu-a-map (kbd "x") 'dired-toggle-marks)
+        (define-key nu-a-map (kbd "C-u") 'dired-unmark-all-marks)
+        (define-key nu-a-map (kbd "r") 'dired-mark-files-regexp)
+        (define-key nu-a-map (kbd "C-r") 'dired-mark-files-containing-regexp))
+  ; else...
+      (define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
+      (define-key nu-a-map (kbd "f") 'nu-mark-defun)
+      (define-key nu-a-map (kbd "s") 'nu-mark-sentence)
+      (define-key nu-a-map (kbd "w") '_nu-mark-a-word)
+      (define-key nu-a-map (kbd "C-w") '_nu-select-a-block)
+      (define-key nu-a-map (kbd "p") 'nu-mark-paragraph)
+      (define-key nu-a-map (kbd "j") 'nu-mark-to-bol)
+      (define-key nu-a-map (kbd "l") 'nu-mark-to-eol)
+      (define-key nu-a-map (kbd "k") '_nu-mark-current-line)
+      (define-key nu-a-map (kbd "C-<SPC>") 'nu-set-mark)
+      (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)))
 
-(defun nu-a-prompt-internal ()
-  (interactive)
-  (nu-prompt-for-keymap nu-a-map))
 
 
 (defun nu-a-prompt ()
@@ -256,7 +317,8 @@ But if mark is active, exchange point and mark."
   (interactive)
      (if mark-active
       (exchange-point-and-mark)
-      (nu-a-prompt-internal)))
+      (nu-populate-a-map)
+      (nu-prompt-for-keymap nu-a-map)))
 
 
 
@@ -265,6 +327,16 @@ But if mark is active, exchange point and mark."
 "Populate open map."
   (setq nu-open-map nil)
   (nu-define-prefix 'nu-open-map)
+
+  (if (eq major-mode 'dired-mode)
+      (progn
+        (define-key nu-open-map (kbd "d") 'dired-find-file)
+        (define-key nu-open-map (kbd "C-d") 'dired-find-file-other-window)))
+
+  (if (eq major-mode 'org-mode)
+      (progn
+         (define-key nu-open-map (kbd "L") 'org-open-at-point)))
+
   (define-key nu-open-map (kbd "f")  'find-file)
   (define-key nu-open-map (kbd "h")  'helm-mini)
   (define-key nu-open-map (kbd "C-h")  'helm-find-files)
@@ -282,10 +354,8 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "O")   'nu-previous-window)
   (define-key nu-open-map (kbd "i")   'ibuffer)
   (define-key nu-open-map (kbd "C-i") 'org-iswitchb)
-  (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer)
-  (if (eq major-mode 'org-mode)
-      (progn
-         (define-key nu-open-map (kbd "L") 'org-open-at-point))))
+  (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer))
+
 
 
 (defun nu-open-prompt ()
@@ -301,29 +371,37 @@ But if mark is active, exchange point and mark."
 "Populate goto map."
   (setq nu-goto-map nil)
   (nu-define-prefix 'nu-goto-map)
-  (define-key nu-goto-map (kbd "l") 'forward-char)
-  (define-key nu-goto-map (kbd "M-l") 'forward-sentence)
-  (define-key nu-goto-map (kbd "j") 'backward-char)
-  (define-key nu-goto-map (kbd "M-j") 'backward-sentence)
+
+  (if (eq major-mode 'dired-mode)
+      (progn
+        (define-key nu-goto-map (kbd "u") 'dired-prev-marked-file)
+        (define-key nu-goto-map (kbd "o") 'dired-next-marked-file))
+      ; else
+      (define-key nu-goto-map (kbd "l") 'forward-char)
+      (define-key nu-goto-map (kbd "M-l") 'forward-sentence)
+      (define-key nu-goto-map (kbd "j") 'backward-char)
+      (define-key nu-goto-map (kbd "M-j") 'backward-sentence)
+      (define-key nu-goto-map (kbd "u") 'backward-word)
+      (define-key nu-goto-map (kbd "M-u") 'backward-paragraph)
+      (define-key nu-goto-map (kbd "o") 'forward-word)
+      (define-key nu-goto-map (kbd "M-o") 'forward-paragraph)
+      (define-key nu-goto-map (kbd "h") 'back-to-indentation)
+      (define-key nu-goto-map (kbd "m") 'end-of-line)
+      (define-key nu-goto-map (kbd "$") 'end-of-line)
+      (define-key nu-goto-map (kbd "f") 'end-of-defun)
+      (define-key nu-goto-map (kbd "M-f") 'beginning-of-defun)
+      (define-key nu-goto-map (kbd "t") 'forward-list)
+      (define-key nu-goto-map (kbd "M-t") 'backward-list))
+
+  ; common keys
   (define-key nu-goto-map (kbd "i") 'previous-line)
   (define-key nu-goto-map (kbd "M-i") 'beginning-of-buffer)
   (define-key nu-goto-map (kbd "k") 'forward-line)
   (define-key nu-goto-map (kbd "M-k") 'end-of-buffer)
-  (define-key nu-goto-map (kbd "u") 'backward-word)
-  (define-key nu-goto-map (kbd "M-u") 'backward-paragraph)
-  (define-key nu-goto-map (kbd "o") 'forward-word)
-  (define-key nu-goto-map (kbd "M-o") 'forward-paragraph)
-  (define-key nu-goto-map (kbd "h") 'back-to-indentation)
-  (define-key nu-goto-map (kbd "m") 'end-of-line)
-  (define-key nu-goto-map (kbd "$") 'end-of-line)
-  (define-key nu-goto-map (kbd "f") 'end-of-defun)
-  (define-key nu-goto-map (kbd "M-f") 'beginning-of-defun)
   (define-key nu-goto-map (kbd "e") 'next-error)
   (define-key nu-goto-map (kbd "M-e") 'previous-error)
   (define-key nu-goto-map (kbd "g") 'goto-line)
   (define-key nu-goto-map (kbd "M-g") 'nu-goto-line-previousbuffer)
-  (define-key nu-goto-map (kbd "t") 'forward-list)
-  (define-key nu-goto-map (kbd "M-t") 'backward-list)
   (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
   (define-key nu-goto-map (kbd "M-s") 'org-mark-ring-goto))
 
@@ -366,25 +444,34 @@ But if mark is active, exchange point and mark."
  (nu-prompt-for-keymap help-map))
 
 
-(nu-define-prefix 'nu-find-map)
-(define-key nu-find-map (kbd "F") 'nu-isearch-forward)
-(define-key nu-find-map (kbd "R") 'nu-isearch-backward)
-(define-key nu-find-map (kbd "M-f") 'nu-isearch-forward-regexp)
-(define-key nu-find-map (kbd "M-F") 'search-forward-regexp)
-(define-key nu-find-map (kbd "r") 'nu-isearch-backward-regexp)
-(define-key nu-find-map (kbd "M-R") 'search-backward-regexp)
-(define-key nu-find-map (kbd "b") 'regexp-builder)
-(define-key nu-find-map (kbd "o") 'occur)
-(define-key nu-find-map (kbd "g") 'rgrep)
-(define-key nu-find-map (kbd "m") 'imenu)
-(define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
-(define-key nu-find-map (kbd "f") 'ace-jump-char-mode)
-(define-key nu-find-map (kbd "w") 'ace-jump-word-mode)
-(define-key nu-find-map (kbd "z") 'nu-find-char)
-(define-key nu-find-map (kbd "t") 'find-tag)
-(define-key nu-find-map (kbd "M-z") 'nu-find-char-backward)
+(defun nu-populate-find-map ()
+  (nu-define-prefix 'nu-find-map)
+
+  (if (eq major-mode 'dired-mode)
+      (progn
+        (define-key nu-find-map (kbd "f") 'dired-mark-files-containing-regexp))
+      (define-key nu-find-map (kbd "f") 'ace-jump-char-mode))
+
+  ; common keys
+  (define-key nu-find-map (kbd "F") 'nu-isearch-forward)
+  (define-key nu-find-map (kbd "R") 'nu-isearch-backward)
+  (define-key nu-find-map (kbd "M-f") 'nu-isearch-forward-regexp)
+  (define-key nu-find-map (kbd "M-F") 'search-forward-regexp)
+  (define-key nu-find-map (kbd "r") 'nu-isearch-backward-regexp)
+  (define-key nu-find-map (kbd "M-R") 'search-backward-regexp)
+  (define-key nu-find-map (kbd "b") 'regexp-builder)
+  (define-key nu-find-map (kbd "o") 'occur)
+  (define-key nu-find-map (kbd "g") 'rgrep)
+  (define-key nu-find-map (kbd "m") 'imenu)
+  (define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
+  (define-key nu-find-map (kbd "w") 'ace-jump-word-mode)
+  (define-key nu-find-map (kbd "z") 'nu-find-char)
+  (define-key nu-find-map (kbd "t") 'find-tag)
+  (define-key nu-find-map (kbd "M-z") 'nu-find-char-backward))
+
 (defun nu-find-prompt ()
   (interactive)
+  (nu-populate-find-map)
   (nu-prompt-for-keymap nu-find-map))
 
 
@@ -397,13 +484,42 @@ But if mark is active, exchange point and mark."
                   (read-only-mode 1)))
  (message "read only toggled."))
 
+
+(defun nu-populate-copy-map ()
+ (nu-define-prefix 'nu-copy-map)
+ (if (eq major-mode 'dired-mode)
+     (progn
+       (define-key nu-copy-map (kbd "c") 'dired-do-copy)
+       (define-key nu-copy-map (kbd "C-c") 'dired-copy-filename-as-kill)
+       (define-key nu-copy-map (kbd "h") 'dired-do-hardlink)
+       (define-key nu-copy-map (kbd "s") 'dired-do-symlink))))
+
+(defun nu-copy-prompt ()
+ (interactive)
+ (nu-populate-copy-map)
+ (nu-prompt-for-keymap nu-copy-map))
+
+
+(defun nu-populate-replace-dired ()
+  (setq nu-replace-map nil)
+  (nu-define-prefix 'nu-replace-map)
+  (define-key nu-replace-map (kbd "r") 'dired-do-rename)
+  (define-key nu-replace-map (kbd "z") 'dired-do-compress)
+  (define-key nu-replace-map (kbd "u") 'dired-upcase)
+  (define-key nu-replace-map (kbd "d") 'dired-downcase)
+  (define-key nu-replace-map (kbd "w") 'wdired-change-to-wdired-mode))
+
+(defun nu-populate-replace-magit ()
+  (setq nu-replace-map nil)
+  (nu-define-prefix 'nu-replace-map)
+  (define-key nu-replace-map (kbd "k") 'magit-discard-item)
+  (define-key nu-replace-map (kbd "a") 'magit-log-edit-toggle-amending))
+
 (defun nu-populate-replace ()
   "Create replace-keymap."
   (setq nu-replace-map nil)
   (nu-define-prefix 'nu-replace-map)
-  (if (eq major-mode 'magit-status-mode)
-      (define-key nu-replace-map (kbd "a") 'magit-discard-item)
-      (progn
+
   (define-key nu-replace-map (kbd "m") 'nu-toggle-read-only)
   (define-key nu-replace-map (kbd "C-r")  'query-replace-regexp)
   (define-key nu-replace-map (kbd "a")  'revert-buffer)
@@ -420,11 +536,13 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "c") 'capitalize-word)
   (define-key nu-replace-map (kbd "x") 'nu-rot-reg-or-toggle-rot)
   (define-key nu-replace-map (kbd "h") 'delete-horizontal-space)
+
   (if (not (fboundp 'ethan-wspace-untabify))
     (defun ethan-wspace-untabify ()
       (interactive)
       (message "Please install ethan-wspace mode!")))
   (define-key nu-replace-map (kbd "t") 'ethan-wspace-untabify)
+
   (if (eq major-mode 'org-mode)
       (progn
           (define-key nu-replace-map (kbd "J") 'org-shiftleft)
@@ -434,12 +552,7 @@ But if mark is active, exchange point and mark."
           (define-key nu-replace-map (kbd "C-j") 'org-metaleft)
           (define-key nu-replace-map (kbd "C-l") 'org-metaright)
           (define-key nu-replace-map (kbd "C-i") 'org-metaup)
-          (define-key nu-replace-map (kbd "C-k") 'org-metadown))))))
-
-(defun nu-replace-do-prompt ()
-  (interactive)
-  (nu-populate-replace)
-  (nu-prompt-for-keymap nu-replace-map))
+  (define-key nu-replace-map (kbd "C-k") 'org-metadown))))))
 
 
 (defun nu-replace-prompt ()
@@ -447,9 +560,18 @@ But if mark is active, exchange point and mark."
   (if (or (eq overwrite-mode 'overwrite-mode-textual)
           (eq overwrite-mode 'overwrite-mode-binary))
       (overwrite-mode -1)
-      (if (eq buffer-read-only t)
-        (nu-toggle-read-only)
-        (nu-replace-do-prompt))))
+      (cond
+        ((eq major-mode 'dired-mode)
+         (nu-populate-replace-dired)
+         (nu-prompt-for-keymap nu-replace-map))
+        ((eq major-mode 'magit-status-mode)
+         (nu-populate-replace-magit)
+         (nu-prompt-for-keymap nu-replace-map))
+        ((eq buffer-read-only t)
+         (nu-toggle-read-only))
+        (t
+         (nu-populate-replace)
+         (nu-prompt-for-keymap nu-replace-map)))))
 
 
 (provide 'nu-prompts)
