@@ -383,7 +383,9 @@ It is also possible to delete a node from the delete prompt. As you see, rather 
 
 @section dired
 
-Dired is not really integrated. Inside dired, nu-mode keys do apply. Which totally allows to use dired, but prompts should be remapped to make possible using dired only knowing nu-mode keys.
+Dired is correctly integrated inside nu-mode. Use paddle to navigate, selection prompt to mark files, deletion prompt, replacement prompt... These prompts advertise how to use dired directly (not using prompts) while relevant.
+
+However dired keys are not all rebound, while part of them should.
 
 @section magit
 
