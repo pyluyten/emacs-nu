@@ -1,4 +1,11 @@
-
+;;
+;; Pierre-Yves Luyten <py@luyten.fr> 2014
+;; GPL V3.
+;;
+;;
+;; hooks and eval-after-load stuff.
+;;
+;;
 
 (defvar ibuffer-mode-map)
 (defvar dired-mode-map)
@@ -15,7 +22,6 @@
   ; or use <space> to go down.
   (define-key ibuffer-mode-map (kbd "M-i") 'ibuffer-backward-line)
   (define-key ibuffer-mode-map (kbd "M-k") 'ibuffer-forward-line))
-
 
 
 ; stock M-i & M-k functions to restore them
@@ -44,11 +50,33 @@
   (define-key dired-mode-map  (kbd "M-z") 'dired-undo)
   (define-key dired-mode-map  (kbd "C-c") 'nu-copy-prompt))
 
-
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer)
 (add-hook 'minibuffer-exit-hook  'nu-leave-minibuffer)
 (add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
 (add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
+
+
+
+
+(eval-after-load "helm-mode"
+  '(progn
+    (define-key helm-map (kbd "C-q") 'helm-keyboard-quit)
+    (define-key helm-map (kbd "M-k") 'helm-next-line)
+    (define-key helm-map (kbd "M-i") 'helm-previous-line)
+    (define-key helm-map (kbd "M-<SPC>") 'helm-next-page)
+    (define-key helm-map (kbd "M-<backspace>") 'helm-previous-page)
+    (define-key helm-map (kbd "C-v") 'helm-yank-text-at-point)
+    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)))
+
+
+ ;helm next source : open
+ ;helm-mark-all
+ ;helm-next-history-element
+ ;helm-previous-history-element
+ ;helm-copy-to-buffer
+ ;helm-yank-selection
+
+
 
 (provide 'nu-hooks)

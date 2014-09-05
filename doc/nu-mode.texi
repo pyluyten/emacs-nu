@@ -393,9 +393,9 @@ However a work has started to integrate properly. For example, replace prompt wi
 
 @section helm
 
-Helm is not integrated in the sense that default helm-map (and sibblings) use helm keys, not nu-mode keys - for example, use @kbd{Control+n} to select next helm entry, which s*!#_/.
+Some prompts do provide access to helm functions : open prompt to access help-mini or help-find-files. Or insert prompt to access kill-ring from helm-show-kill-ring.
 
-However, some prompts do provide access to helm functions : open prompt to access help-mini or help-find-files. Or insert prompt to access kill-ring from helm-show-kill-ring.
+Once helm buffer is opened to let you select file / buffer / function or whatever helm migth help you select, use paddle (@kbd{M-i} , @kbd{M-k} to navigate up/down).
 
 @section god-mode
 
