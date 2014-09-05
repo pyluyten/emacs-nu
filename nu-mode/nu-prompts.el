@@ -513,7 +513,8 @@ But if mark is active, exchange point and mark."
   (setq nu-replace-map nil)
   (nu-define-prefix 'nu-replace-map)
   (define-key nu-replace-map (kbd "k") 'magit-discard-item)
-  (define-key nu-replace-map (kbd "a") 'magit-log-edit-toggle-amending))
+  (define-key nu-replace-map (kbd "a") 'magit-log-edit-toggle-amending)
+  (define-key nu-replace-map (kbd "r") 'magit-rebase-step))
 
 (defun nu-populate-replace ()
   "Create replace-keymap."
