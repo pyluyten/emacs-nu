@@ -534,9 +534,12 @@ context.
 8.2 dired
 =========
 
-Dired is not really integrated.  Inside dired, nu-mode keys do apply.
-Which totally allows to use dired, but prompts should be remapped to
-make possible using dired only knowing nu-mode keys.
+Dired is correctly integrated inside nu-mode.  Use paddle to navigate,
+selection prompt to mark files, deletion prompt, replacement prompt...
+These prompts advertise how to use dired directly (not using prompts)
+while relevant.
+
+   However dired keys are not all rebound, while part of them should.
 
 8.3 magit
 =========
@@ -551,13 +554,13 @@ replace prompt will offer to toggle whether next commit has -amend.
 8.4 helm
 ========
 
-Helm is not integrated in the sense that default helm-map (and
-sibblings) use helm keys, not nu-mode keys - for example, use
-'Control+n' to select next helm entry, which s*!#_/.
+Some prompts do provide access to helm functions : open prompt to access
+help-mini or help-find-files.  Or insert prompt to access kill-ring from
+helm-show-kill-ring.
 
-   However, some prompts do provide access to helm functions : open
-prompt to access help-mini or help-find-files.  Or insert prompt to
-access kill-ring from helm-show-kill-ring.
+   Once helm buffer is opened to let you select file / buffer / function
+or whatever helm migth help you select, use paddle ('M-i' , 'M-k' to
+navigate up/down).
 
 8.5 god-mode
 ============
@@ -1102,8 +1105,8 @@ Node: nu for the power user14950
 Node: Customization17814
 Node: nu and some specific modes20130
 Node: nu & other libraries21006
-Node: Contributing24661
-Node: GNU Free Documentation License24917
+Node: Contributing24739
+Node: GNU Free Documentation License24995
 
 End Tag Table
 
