@@ -143,7 +143,17 @@
 
 
 (define-minor-mode nu-mode
-  "Simple Emacs keys"
+  "Modern Emacs keys.
+
+CUA+ : use most important standard shortcuts : C-s, C-f, C-c, C-x, C-v.
+Convenient : To move, use M-i M-j M-k M-l.
+
+Still powerful : Trying M-f will prompt for which find related function to run.
+C-a : selection, C-r : replacement, M-s (saving), M-d (deletions),
+M-g (goto), M-v (insertions).
+
+Both direct keys & prompters will adapt to current mode
+eg dired, magit, helm, ...)"
   :global t
   :keymap nu-keymap
 
