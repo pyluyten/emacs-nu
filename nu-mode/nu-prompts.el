@@ -328,6 +328,9 @@ But if mark is active, exchange point and mark."
   (setq nu-open-map nil)
   (nu-define-prefix 'nu-open-map)
 
+  (if (eq major-mode 'magit-status-mode)
+      (define-key nu-open-map (kbd "g") 'magit-log-long))
+
   (if (eq major-mode 'dired-mode)
       (progn
         (define-key nu-open-map (kbd "d") 'dired-find-file)
@@ -335,7 +338,7 @@ But if mark is active, exchange point and mark."
 
   (if (eq major-mode 'org-mode)
       (progn
-         (define-key nu-open-map (kbd "L") 'org-open-at-point)))
+         (define-key nu-open-map (kbd "o") 'org-open-at-point)))
 
   (define-key nu-open-map (kbd "f")  'find-file)
   (define-key nu-open-map (kbd "h")  'helm-mini)
@@ -350,8 +353,6 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "j")   'nu-previous-buffer)
   (define-key nu-open-map (kbd "c")   'org-capture)
   (define-key nu-open-map (kbd "a")   'org-agenda)
-  (define-key nu-open-map (kbd "o")   'nu-next-window)
-  (define-key nu-open-map (kbd "O")   'nu-previous-window)
   (define-key nu-open-map (kbd "i")   'ibuffer)
   (define-key nu-open-map (kbd "C-i") 'org-iswitchb)
   (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer))
