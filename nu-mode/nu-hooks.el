@@ -68,17 +68,14 @@
     (define-key helm-map (kbd "M-u") 'helm-previous-source)
     (define-key helm-map (kbd "M-h") 'helm-previous-history-element)
     (define-key helm-map (kbd "M-u") 'helm-next-history-element)
-    (define-key helm-map (kbd "M-p") 'unisersal-argument)
+    (define-key helm-map (kbd "M-p") 'universal-argument)
     (define-key helm-map (kbd "M-<SPC>") 'helm-next-page)
     (define-key helm-map (kbd "M-<backspace>") 'helm-previous-page)
     (define-key helm-map (kbd "C-v") 'helm-yank-text-at-point)
     (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)))
 
-
  ;helm next source : open
  ;helm-mark-all
- ;helm-next-history-element
- ;helm-previous-history-element
  ;helm-copy-to-buffer
  ;helm-yank-selection
 
