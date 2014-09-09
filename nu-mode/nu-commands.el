@@ -489,7 +489,7 @@ If no argument given, copy 1 char."
        (local-key-binding (kbd "\C-c C-SPC"))))
     (if (and (eq nil defn-obstruct)
              (commandp defn-target))
-        (define-key nu-keymap (kbd "\C-c C-SPC") defn-target)))
+        (define-key nu-keymap (kbd "\C-c C-SPC") defn-target))))
 
     ; then run C-c in order to make it a prefix...
     (setq unread-command-events
@@ -497,7 +497,7 @@ If no argument given, copy 1 char."
 
   ; Now add back function but after some delay
   ; or this would intercept C-c!
-  (run-with-timer 0.3 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line))))
+  (run-with-timer 0.3 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)))
 
 
 (defun nu-cut-region-or-line (&optional arg)
