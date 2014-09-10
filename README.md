@@ -33,16 +33,17 @@ _Welcome to emacs-nu!_
 
 _How to install?_
 
-= with a recipe =
+* Using Emacs Package Manager
+
 There's a recipe for nu-mode.
 Make sure you do require package. In your .emacs put:
 
-  (require 'package)
+    (require 'package)
 
 Now, make sure you did add melpa.
 
-  (add-to-list 'package-archives
-   '("melpa" . "http://melpa.milkbox.net/packages/") t)
+    (add-to-list 'package-archives
+    '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 Now, if you are interested in nu-mode, just search nu-mode.
 Once intalled, add the elpa path to your load path and require nu-mode.
@@ -50,7 +51,7 @@ Once intalled, add the elpa path to your load path and require nu-mode.
       (require 'nu-mode)
       (nu-mode 1)
 
-= manually =
+* Manually
 
 first clone github, add the path to your list
 
@@ -73,5 +74,5 @@ help-fns+
 magit
 
 
-   (require nu-mode)
-   (nu-mode 1)
+    (require nu-mode)
+    (nu-mode 1)
