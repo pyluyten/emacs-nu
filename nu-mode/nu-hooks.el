@@ -62,12 +62,13 @@
 (eval-after-load "helm-mode"
   '(progn
     (define-key helm-map (kbd "C-q") 'helm-keyboard-quit)
+    (define-key helm-map (kbd "C-x") 'helm-delete-minibuffer-content)
     (define-key helm-map (kbd "M-k") 'helm-next-line)
     (define-key helm-map (kbd "M-i") 'helm-previous-line)
     (define-key helm-map (kbd "M-o") 'helm-next-source)
     (define-key helm-map (kbd "M-u") 'helm-previous-source)
-    (define-key helm-map (kbd "M-h") 'helm-previous-history-element)
-    (define-key helm-map (kbd "M-u") 'helm-next-history-element)
+    (define-key helm-map (kbd "M-h") 'previous-history-element)
+    (define-key helm-map (kbd "M-$") 'next-history-element)
     (define-key helm-map (kbd "M-p") 'universal-argument)
     (define-key helm-map (kbd "M-<SPC>") 'helm-next-page)
     (define-key helm-map (kbd "M-<backspace>") 'helm-previous-page)
