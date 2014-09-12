@@ -1,7 +1,7 @@
 This is nu-mode.info, produced by makeinfo version 5.1 from
 nu-mode.texi.
 
-This manual is for nu-mode (version 0.5 of 2014-09-03), a modern
+This manual is for nu-mode (version 0.7 of 2014-09-12), a modern
 keybinding for Emacs.  Copyright © 2014 Pierre-Yves Luyten.
 
      Permission is granted to copy, distribute and/or modify this
@@ -29,6 +29,7 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 * Overview::
 * View and Edit::
 * Files Buffers Windows::
+* Minibuffer::
 * Hacking::
 * nu for the power user::
 * Customization::
@@ -304,7 +305,7 @@ given the mode.  'Alt+b' will run an emphasis (bold) prompt, allowing to
 indent, fill-paragraph, and so on.
 
 
-File: nu-mode.info,  Node: Files Buffers Windows,  Next: Hacking,  Prev: View and Edit,  Up: Top
+File: nu-mode.info,  Node: Files Buffers Windows,  Next: Minibuffer,  Prev: View and Edit,  Up: Top
 
 3 Files Buffers Windows
 ***********************
@@ -343,6 +344,20 @@ Use 'Control+s' to save current file, 'Alt+s' to invoke a prompt to
 rename it.  'Control+o' to open a file.  You can also have bookmarks :
 use the same open-prompt and save-prompt for this.
 
+   You can open a directory, too.
+
+   dired is the emacs file manager.  You can easily use regexp to open,
+delete, copy, rename files.  And since you are using nu-mode, this is
+regexp-file-management-for-human-beings ,).  Dired allows to use nu-mode
+shortcuts to navigate.  Use 'Alt+p' (uniserval-argument) then s key to
+edit the ls command.
+
+   Some prompts are adapted to dired : selections (with 'Control+a') for
+example, will provide the different dired options to mark files.  Look
+at "replace", "insert", "find", and so on.  Where it make sense the
+usual prompts will be useful inside dired.  Keys that *remain* useful
+inside dired are kept.
+
 3.3 External Windows
 ====================
 
@@ -350,9 +365,28 @@ It is possible, from Emacs to handle a bit of window management.  But
 you should rather use a decent window manager.
 
 
-File: nu-mode.info,  Node: Hacking,  Next: nu for the power user,  Prev: Files Buffers Windows,  Up: Top
+File: nu-mode.info,  Node: Minibuffer,  Next: Hacking,  Prev: Files Buffers Windows,  Up: Top
 
-4 Hacking
+4 Minibuffer
+************
+
+Some prompts do provide access to helm functions : open prompt to access
+help-mini or help-find-files.  Or insert prompt to access kill-ring from
+helm-show-kill-ring.  Mx will use helm-Mx, ibuffer does use helm too,
+and so on.
+
+   Once helm buffer is opened to let you select file / buffer / function
+or whatever helm migth help you select, use paddle ('M-i' , 'M-k' to
+navigate up/down).  If there are "sources", use M-o / M-u to navigate
+it.  Control-q to quit helm.
+
+   While looking for a file, C-u will not delete backward word but will
+go up one directory.
+
+
+File: nu-mode.info,  Node: Hacking,  Next: nu for the power user,  Prev: Minibuffer,  Up: Top
+
+5 Hacking
 *********
 
 The print buffer, invoked from 'Control+p', will offer you to eval
@@ -372,7 +406,7 @@ comments.
 
 File: nu-mode.info,  Node: nu for the power user,  Next: Customization,  Prev: Hacking,  Up: Top
 
-5 nu for the power user
+6 nu for the power user
 ***********************
 
 If you are not used to Emacs, reading this chapter is not necessary.
@@ -432,7 +466,7 @@ acceptable for maggit is not for a full keymap.)
 
 File: nu-mode.info,  Node: Customization,  Next: nu and some specific modes,  Prev: nu for the power user,  Up: Top
 
-6 Customization
+7 Customization
 ***************
 
 As ususal with Emacs, customization comes down at the very first usage.
@@ -484,10 +518,10 @@ the keybinding.  (set-default 'cursor-type 'bar)
 
 File: nu-mode.info,  Node: nu and some specific modes,  Next: nu & other libraries,  Prev: Customization,  Up: Top
 
-7 nu and some specific modes
+8 nu and some specific modes
 ****************************
 
-7.1 term
+8.1 term
 ========
 
 term is perfectly usable with nu-mode.  Just press Control+Space then
@@ -495,28 +529,16 @@ Control+c to run a sigstop.  Or, Control+Space then Control+b to open
 another buffer.  The vanilla x keymap is used.  As of today there is no
 prompt however.
 
-7.2 dired
-=========
-
-dired allows to use nu-mode shortcuts to navigate.  Use 'Alt+p'
-(uniserval-argument) then s key to edit the ls command.
-
-   Some prompts are adapted to dired : selections (with 'Control+a') for
-example, will provide the different dired options to mark files.  Look
-at "replace", "insert", "find", and so on.  Where it make sense the
-usual prompts will be useful inside dired.
-
-   Keys that *remain* useful inside dired are kept.
-
 
 File: nu-mode.info,  Node: nu & other libraries,  Next: Contributing,  Prev: nu and some specific modes,  Up: Top
 
-8 nu & other libraries
+9 nu & other libraries
 **********************
 
-How does nu-mode integrate with other libraries?
+How does nu-mode integrate with other libraries?  We already saw dired
+and helm because of their integration.
 
-8.1 org
+9.1 org
 =======
 
 As of today, nu-mode has some features related to org.  'Alt+s' prompt
@@ -531,17 +553,7 @@ see, rather than storing all org-related features in one place, nu-mode
 does enrich its usual prompts or even commands given the org-mode
 context.
 
-8.2 dired
-=========
-
-Dired is correctly integrated inside nu-mode.  Use paddle to navigate,
-selection prompt to mark files, deletion prompt, replacement prompt...
-These prompts advertise how to use dired directly (not using prompts)
-while relevant.
-
-   However dired keys are not all rebound, while part of them should.
-
-8.3 magit
+9.2 magit
 =========
 
 Use Alt+s, ie save-prompt, to gain access to magit-status.  Currently it
@@ -551,18 +563,18 @@ have to change once maggit-status-mode is active.
    However a work has started to integrate properly.  For example,
 replace prompt will offer to toggle whether next commit has -amend.
 
-8.4 helm
-========
+9.3 autojump
+============
 
-Some prompts do provide access to helm functions : open prompt to access
-help-mini or help-find-files.  Or insert prompt to access kill-ring from
-helm-show-kill-ring.
+autojump is part of the keybinding (alt f prompt, or directly
+Control+Shift+f to autojump to a char).
 
-   Once helm buffer is opened to let you select file / buffer / function
-or whatever helm migth help you select, use paddle ('M-i' , 'M-k' to
-navigate up/down).
+9.4 auto-complete
+=================
 
-8.5 god-mode
+There isn't much to say.  Auto-complete does integrate well, that's all!
+
+9.5 god-mode
 ============
 
 god-mode is one possible modal editing.  See below about evil-mode.
@@ -578,7 +590,7 @@ delete prompts becomes nicer.  Commands relying on 'Control' modifier
 will be triggered with <g> key.  Using this, quitting god-mode is 'gg',
 since first g will toggle Control modifier.
 
-8.6 evil-mode
+9.6 evil-mode
 =============
 
 While nu-mode is not a modal editor, and aims at being the most
@@ -605,8 +617,8 @@ are different, but fixing the paddle is fine.
 
 File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: nu & other libraries,  Up: Top
 
-9 Contributing
-**************
+10 Contributing
+***************
 
 As of today nu-mode only has one author, & contribution is more than
 welcomed.  Please look at github.
@@ -1097,16 +1109,17 @@ their use in free software.
 
 Tag Table:
 Node: Top716
-Node: Overview1091
-Node: View and Edit6138
-Node: Files Buffers Windows12305
-Node: Hacking14239
-Node: nu for the power user14950
-Node: Customization17814
-Node: nu and some specific modes20130
-Node: nu & other libraries21006
-Node: Contributing24739
-Node: GNU Free Documentation License24995
+Node: Overview1106
+Node: View and Edit6153
+Node: Files Buffers Windows12320
+Node: Minibuffer14906
+Node: Hacking15594
+Node: nu for the power user16294
+Node: Customization19158
+Node: nu and some specific modes21474
+Node: nu & other libraries21899
+Node: Contributing25264
+Node: GNU Free Documentation License25522
 
 End Tag Table
 

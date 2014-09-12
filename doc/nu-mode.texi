@@ -49,6 +49,7 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 * Overview::
 * View and Edit::
 * Files Buffers Windows::
+* Minibuffer::
 * Hacking::
 * nu for the power user::
 * Customization::
@@ -256,9 +257,25 @@ Use @kbd{Control+t} to open another tab. It does prompt for a buffer to open, bu
 Use @kbd{Control+s} to save current file, @kbd{Alt+s} to invoke a prompt to rename it.
 @kbd{Control+o} to open a file. You can also have bookmarks : use the same open-prompt and save-prompt for this.
 
+You can open a directory, too.
+
+dired is the emacs file manager. You can easily use regexp to open, delete, copy, rename files. And since you are using nu-mode, this is regexp-file-management-for-human-beings ,). Dired allows to use nu-mode shortcuts to navigate. Use @kbd{Alt+p} (uniserval-argument) then s key to edit the ls command.
+
+Some prompts are adapted to dired : selections (with @kbd{Control+a}) for example, will provide the different dired options to mark files. Look at ``replace'', ``insert'', ``find'', and so on. Where it make sense the usual prompts will be useful inside dired. Keys that *remain* useful inside dired are kept.
+
 @section External Windows
 
 It is possible, from Emacs to handle a bit of window management. But you should rather use a decent window manager.
+
+@node Minibuffer
+@chapter Minibuffer
+
+Some prompts do provide access to helm functions : open prompt to access help-mini or help-find-files. Or insert prompt to access kill-ring from helm-show-kill-ring. Mx will use helm-Mx, ibuffer does use helm too, and so on.
+
+Once helm buffer is opened to let you select file / buffer / function or whatever helm migth help you select, use paddle (@kbd{M-i} , @kbd{M-k} to navigate up/down). If there are ``sources'', use M-o / M-u to navigate it. Control-q to quit helm. 
+
+While looking for a file, C-u will not delete backward word but will go up one directory.
+
 
 @node Hacking
 @chapter Hacking
@@ -361,18 +378,10 @@ Also, cursor-type is amended. You can set it back, but again, despite not mandat
 
 term is perfectly usable with nu-mode. Just press Control+Space then Control+c to run a sigstop. Or, Control+Space then Control+b to open another buffer. The vanilla x keymap is used. As of today there is no prompt however.
 
-@section dired
-
-dired allows to use nu-mode shortcuts to navigate. Use @kbd{Alt+p} (uniserval-argument) then s key to edit the ls command.
-
-Some prompts are adapted to dired : selections (with @kbd{Control+a}) for example, will provide the different dired options to mark files. Look at ``replace'', ``insert'', ``find'', and so on. Where it make sense the usual prompts will be useful inside dired.
-
-Keys that *remain* useful inside dired are kept.
-
 @node nu & other libraries
 @chapter nu & other libraries
 
-How does nu-mode integrate with other libraries?
+How does nu-mode integrate with other libraries? We already saw dired and helm because of their integration.
 
 @section org
 
@@ -380,24 +389,19 @@ As of today, nu-mode has some features related to org.  @kbd{Alt+s} prompt will 
 
 It is also possible to delete a node from the delete prompt. As you see, rather than storing all org-related features in one place, nu-mode does enrich its usual prompts or even commands given the org-mode context.
 
-
-@section dired
-
-Dired is correctly integrated inside nu-mode. Use paddle to navigate, selection prompt to mark files, deletion prompt, replacement prompt... These prompts advertise how to use dired directly (not using prompts) while relevant.
-
-However dired keys are not all rebound, while part of them should.
-
 @section magit
 
 Use Alt+s, ie save-prompt, to gain access to magit-status. Currently it is not properly integrated, in the sense that all nu-mode prompts would have to change once maggit-status-mode is active.
 
 However a work has started to integrate properly. For example, replace prompt will offer to toggle whether next commit has --amend.
 
-@section helm
+@section autojump
 
-Some prompts do provide access to helm functions : open prompt to access help-mini or help-find-files. Or insert prompt to access kill-ring from helm-show-kill-ring.
+autojump is part of the keybinding (alt f prompt, or directly Control+Shift+f to autojump to a char).
 
-Once helm buffer is opened to let you select file / buffer / function or whatever helm migth help you select, use paddle (@kbd{M-i} , @kbd{M-k} to navigate up/down).
+@section auto-complete
+
+There isn't much to say. Auto-complete does integrate well, that's all!
 
 @section god-mode
 
@@ -405,7 +409,6 @@ god-mode is one possible modal editing. See below about evil-mode.
 god-mode can be toggled using @kbd{Control+g}. Using vanilla god-mode, it is then possible to quit god-mode pressing @kbd{Control+g} again (the modifier is necessary).
 
 I'm currently waiting for a patch to be integrated, in order to allow god-mode to allow configuring which modifier is added to keys. This patch will allow to use god-mode with alt automatically triggered. Forward / Backward char / line / word will be one key distant, while delete prompts becomes nicer. Commands relying on @kbd{Control} modifier will be triggered with @key{g} key. Using this, quitting god-mode is @kbd{gg}, since first g will toggle Control modifier.
-
 
 @section evil-mode
 
