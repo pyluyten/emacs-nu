@@ -77,6 +77,7 @@
 
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
    (define-key nu-keymap (kbd "C-v") 'nu-yank-pop-or-yank)
+   (define-key nu-keymap (kbd "C-S-v") 'helm-show-kill-ring)
    (define-key nu-keymap (kbd "C-b") 'nu-bold)
    (define-key nu-keymap (kbd "C-S-b") 'comment-or-uncomment-region)
 
