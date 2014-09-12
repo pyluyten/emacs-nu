@@ -340,10 +340,9 @@ But if mark is active, exchange point and mark."
       (progn
          (define-key nu-open-map (kbd "o") 'org-open-at-point)))
 
-  (define-key nu-open-map (kbd "f")  'find-file)
-  (define-key nu-open-map (kbd "h")  'helm-mini)
-  (define-key nu-open-map (kbd "C-h")  'helm-find-files)
-  (define-key nu-open-map (kbd "C-f")  'find-file-other-window)
+  (define-key nu-open-map (kbd "f")  'helm-find-files)
+  (define-key nu-open-map (kbd "o")  'helm-mini)
+  (define-key nu-open-map (kbd "C-f")  'find-file-other-window) ; useless now that helm fixes this stuff =)
   (define-key nu-open-map (kbd "r")  'helm-recentf)
   (define-key nu-open-map (kbd "b")  'helm-bookmarks)
   (define-key nu-open-map (kbd "C-b")  'bookmark-jump)
@@ -352,7 +351,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "j")   'nu-previous-buffer)
   (define-key nu-open-map (kbd "c")   'org-capture)
   (define-key nu-open-map (kbd "a")   'org-agenda)
-  (define-key nu-open-map (kbd "i")   'ibuffer)
+  (define-key nu-open-map (kbd "i")   'helm-buffers-list)
   (define-key nu-open-map (kbd "C-i") 'org-iswitchb)
   (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer))
 
