@@ -24,7 +24,7 @@
   (interactive)
   (if (eq nu-isearch-direction 'forward)
       (setq nu-isearch-direction 'backward)
-      (setq nu-isearch-direction isear'forward))
+      (setq nu-isearch-direction 'forward))
   (nu-isearch-repeat-same))
 
 (defun nu-prepare-for-isearch ()
