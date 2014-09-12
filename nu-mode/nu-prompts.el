@@ -461,7 +461,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-find-map (kbd "b") 'regexp-builder)
   (define-key nu-find-map (kbd "o") 'occur)
   (define-key nu-find-map (kbd "g") 'rgrep)
-  (define-key nu-find-map (kbd "m") 'imenu)
+  (define-key nu-find-map (kbd "m") 'helm-imenu)
   (define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
   (define-key nu-find-map (kbd "w") 'ace-jump-word-mode)
   (define-key nu-find-map (kbd "z") 'nu-find-char)
