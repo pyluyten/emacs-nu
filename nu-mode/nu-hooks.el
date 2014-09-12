@@ -12,6 +12,7 @@
 
 
 (defun nu-prepare-for-isearch ()
+  "I still need to replace this isearch turd."
   (define-key isearch-mode-map (kbd "C-f") 'isearch-repeat-forward)
   (define-key isearch-mode-map (kbd "C-r") 'isearch-repeat-backward)
   (define-key isearch-mode-map (kbd "C-j") 'isearch-repeat-backward)
@@ -19,7 +20,7 @@
   (define-key isearch-mode-map (kbd "C-q") 'isearch-cancel))
 
 (defun nu-prepare-for-ibuffer ()
-  ; or use <space> to go down.
+  "Obsolete, now helm is used."
   (define-key ibuffer-mode-map (kbd "M-i") 'ibuffer-backward-line)
   (define-key ibuffer-mode-map (kbd "M-k") 'ibuffer-forward-line))
 
@@ -31,6 +32,7 @@
 (defvar nu-m-k-sname nil)
 
 (defun nu-prepare-for-minibuffer ()
+  "Minibuffer might be not as important as helm. Still."
   (setq nu-m-i-sname (symbol-name (lookup-key nu-keymap (kbd "M-i"))))
   (setq nu-m-k-sname (symbol-name (lookup-key nu-keymap (kbd "M-k"))))
   (define-key nu-keymap (kbd "M-i") 'previous-history-element)
@@ -43,8 +45,11 @@
   (define-key nu-keymap (kbd "M-k") (intern-soft nu-m-k-sname)))
 
 
+
 (defun nu-prepare-for-dired ()
-  ; or use <space> to go down.
+  "Most dired adaptation is done using prompts.
+
+Still, some keys here help."
   (define-key dired-mode-map  (kbd "M-i") 'dired-previous-line)
   (define-key dired-mode-map  (kbd "M-k") 'dired-next-line)
   (define-key dired-mode-map  (kbd "M-z") 'dired-undo)
@@ -57,13 +62,12 @@
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
 
 
-
-
 (eval-after-load "helm-mode"
   '(progn
     (define-key helm-map (kbd "C-q") 'helm-keyboard-quit)
-    (define-key helm-map (kbd "C-x") 'helm-delete-minibuffer-content)
+    (define-key helm-map (kbd "C-k") 'helm-delete-minibuffer-contents)
     (define-key helm-map (kbd "M-k") 'helm-next-line)
+    (define-key helm-map (kbd "C-a") 'helm-mark-all)
     (define-key helm-map (kbd "M-i") 'helm-previous-line)
     (define-key helm-map (kbd "M-o") 'helm-next-source)
     (define-key helm-map (kbd "M-u") 'helm-previous-source)
@@ -73,13 +77,17 @@
     (define-key helm-map (kbd "M-<SPC>") 'helm-next-page)
     (define-key helm-map (kbd "M-<backspace>") 'helm-previous-page)
     (define-key helm-map (kbd "C-v") 'helm-yank-text-at-point)
-    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)))
+    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+    (define-key helm-find-files-map (kbd "M-u") 'helm-find-files-up-one-level)
+    (define-key helm-find-files-map (kbd "M-o") 'helm-execute-persistent-action)
+    (define-key helm-find-files-map (kbd "M-i") 'helm-previous-line)
+    (define-key helm-find-files-map (kbd "C-c") 'helm-ff-run-copy-file)
+    (define-key helm-find-files-map (kbd "C-x") 'helm-ff-run-delete-file)
+    (define-key helm-find-files-map (kbd "C-p") 'helm-ff-run-switch-to-eshell)
+    (define-key helm-find-files-map (kbd "C-r") 'helm-ff-run-rename-file)
+    (define-key helm-find-files-map (kbd "M-=") 'helm-ff-properties-persistent)))
 
- ;helm next source : open
- ;helm-mark-all
- ;helm-copy-to-buffer
+ ;helm-copy-to-buffer?
  ;helm-yank-selection
-
-
 
 (provide 'nu-hooks)
