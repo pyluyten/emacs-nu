@@ -17,6 +17,9 @@
   (define-key isearch-mode-map (kbd "C-r") 'isearch-repeat-backward)
   (define-key isearch-mode-map (kbd "C-j") 'isearch-repeat-backward)
   (define-key isearch-mode-map (kbd "C-v") 'isearch-yank-kill)
+  (define-key isearch-mode-map (kbd "M-e") 'isearch-yank-word-or-char)
+  (define-key isearch-mode-map (kbd "M-y") 'isearch-yank-line)
+  (define-key isearch-mode-map (kbd "C-r") 'isearch-edit-string)
   (define-key isearch-mode-map (kbd "C-q") 'isearch-cancel))
 
 (defun nu-prepare-for-ibuffer ()
