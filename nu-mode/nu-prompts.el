@@ -344,7 +344,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "h")  'helm-mini)
   (define-key nu-open-map (kbd "C-h")  'helm-find-files)
   (define-key nu-open-map (kbd "C-f")  'find-file-other-window)
-  (define-key nu-open-map (kbd "r")  'recentf-open-files)
+  (define-key nu-open-map (kbd "r")  'helm-recentf)
   (define-key nu-open-map (kbd "b")  'helm-bookmarks)
   (define-key nu-open-map (kbd "C-b")  'bookmark-jump)
   (define-key nu-open-map (kbd "x")  'list-registers)
