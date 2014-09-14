@@ -572,8 +572,8 @@ But if mark is active, exchange point and mark."
           (define-key nu-replace-map (kbd "I") 'org-shiftup)
           (define-key nu-replace-map (kbd "C-j") 'org-metaleft)
           (define-key nu-replace-map (kbd "C-l") 'org-metaright)
-          (define-key nu-replace-map (kbd "C-i") 'org-metaup)
-  (define-key nu-replace-map (kbd "C-k") 'org-metadown))))
+          (define-key nu-replace-map (kbd "C-u") 'org-metaup)
+  (define-key nu-replace-map (kbd "C-o") 'org-metadown))))
 
 
 (defun nu-replace-prompt ()
