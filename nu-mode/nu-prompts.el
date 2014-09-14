@@ -118,6 +118,11 @@
   "Populate nu-delete-map."
   (nu-define-prefix 'nu-delete-map)
 
+  (if (eq major-mode 'magit-status-mode)
+      (progn
+	(define-key nu-delete-map (kbd "b") 'magit-delete-branch))
+        (define-key nu-delete-map (kbd "h") 'magit-discard-item))
+
   (if (eq major-mode 'dired-mode)
       (progn
          (define-key nu-delete-map (kbd "d") 'dired-flag-file-deletion)
@@ -144,7 +149,6 @@
       (define-key nu-delete-map (kbd "e") 'kill-sentence)
       (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
       (define-key nu-delete-map (kbd "a") 'nu-delete-all))
-
 
   (define-key nu-delete-map (kbd "M-f") 'delete-file)
   (if (equal major-mode 'org-mode)
@@ -265,8 +269,12 @@
   (nu-define-prefix 'nu-new-map)
 
   (if (eq major-mode 'dired-mode)
+      ; switch what does d according to mode
       (define-key nu-new-map (kbd "d") 'dired-create-directory)
       (define-key nu-new-map (kbd "d") 'make-directory))
+
+  (if (eq major-mode 'magit-status-mode)
+      (define-key nu-new-map (kbd "b") 'magit-create-branch))
 
   (define-key nu-new-map (kbd "n") 'nu-new-empty-buffer)
   (define-key nu-new-map (kbd "w") 'make-frame-command)
@@ -329,7 +337,9 @@ But if mark is active, exchange point and mark."
   (nu-define-prefix 'nu-open-map)
 
   (if (eq major-mode 'magit-status-mode)
-      (define-key nu-open-map (kbd "g") 'magit-log-long))
+      (progn
+        (define-key nu-open-map (kbd "g") 'magit-log-long)
+        (define-key nu-open-map (kbd "C-b") 'magit-branch-manager)))
 
   (if (eq major-mode 'dired-mode)
       (progn
@@ -345,7 +355,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "C-f")  'find-file-other-window) ; useless now that helm fixes this stuff =)
   (define-key nu-open-map (kbd "r")  'helm-recentf)
   (define-key nu-open-map (kbd "b")  'helm-bookmarks)
-  (define-key nu-open-map (kbd "C-b")  'bookmark-jump)
+  (define-key nu-open-map (kbd "B")  'bookmark-jump)
   (define-key nu-open-map (kbd "x")  'list-registers)
   (define-key nu-open-map (kbd "l")  'nu-next-buffer)
   (define-key nu-open-map (kbd "j")   'nu-previous-buffer)
@@ -513,12 +523,15 @@ But if mark is active, exchange point and mark."
 (defalias 'git-pull-rebase 'magit-rebase-step)
 (defalias 'git-toggle-amend-next-commit 'magit-log-edit-toggle-amending)
 
+
 (defun nu-populate-replace-magit ()
   (setq nu-replace-map nil)
   (nu-define-prefix 'nu-replace-map)
   (define-key nu-replace-map (kbd "k") 'git-checkout-item)
   (define-key nu-replace-map (kbd "a") 'git-toggle-amend-next-commit)
+  (define-key nu-replace-map (kbd "b") 'magit-move-branch)
   (define-key nu-replace-map (kbd "r") 'git-pull-rebase))
+
 
 (defun nu-populate-replace ()
   "Create replace-keymap."
