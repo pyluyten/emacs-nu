@@ -362,7 +362,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "c")   'org-capture)
   (define-key nu-open-map (kbd "a")   'org-agenda)
   (define-key nu-open-map (kbd "i")   'helm-buffers-list)
-  (define-key nu-open-map (kbd "C-i") 'org-iswitchb)
+  (define-key nu-open-map (kbd "I") 'org-iswitchb)
   (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer))
 
 
