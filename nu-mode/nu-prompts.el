@@ -509,10 +509,13 @@ But if mark is active, exchange point and mark."
  (nu-prompt-for-keymap nu-copy-map))
 
 
+(defalias 'toggle-sorting-by-date-or-name 'dired-sort-toggle-or-edit)
+
 (defun nu-populate-replace-dired ()
   (setq nu-replace-map nil)
   (nu-define-prefix 'nu-replace-map)
   (define-key nu-replace-map (kbd "r") 'dired-do-rename)
+  (define-key nu-replace-map (kbd "s") 'toggle-sorting-by-date-or-name)
   (define-key nu-replace-map (kbd "z") 'dired-do-compress)
   (define-key nu-replace-map (kbd "u") 'dired-upcase)
   (define-key nu-replace-map (kbd "d") 'dired-downcase)
