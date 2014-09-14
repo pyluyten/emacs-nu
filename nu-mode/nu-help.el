@@ -262,14 +262,14 @@ to describe the function.\n")
     (setcdr local-map keymap)
     (define-key local-map [t] 'undefined)
     (while (not input)
-      (setq key (read-key-sequence (propertize "Enter a key or ? :" 'face 'italic) t))
+      (setq key (read-key-sequence (propertize "Enter a key or TAB :" 'face 'italic) t))
       (cond
 
         ; allow to repeat prompt
         ((and (stringp key) (string= key "+"))
                (setq nu-repeat-prompt t))
 
-        ((and (stringp key) (string= key "?"))
+        ((and (stringp (key-description key)) (string= (key-description key) "<tab>"))
                (nu-buffer-prompt-for-keymap keymap))
 
         ; check for negative / digit-argument.
