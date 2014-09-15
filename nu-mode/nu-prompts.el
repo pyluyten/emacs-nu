@@ -244,7 +244,7 @@
   (define-key nu-save-map (kbd "b") 'bookmark-set)
   (define-key nu-save-map (kbd "w") 'ido-write-file)
   (define-key nu-save-map (kbd "r") 'rename-buffer)
-  (define-key nu-save-map (kbd "l") 'org-store-link)
+  (define-key nu-save-map (kbd "L") 'org-store-link)
   (if (eq major-mode 'org-mode)
       (define-key nu-save-map (kbd "o") 'org-refile))
   (define-key nu-save-map (kbd "m") 'magit-status)
@@ -348,7 +348,7 @@ But if mark is active, exchange point and mark."
 
   (if (eq major-mode 'org-mode)
       (progn
-         (define-key nu-open-map (kbd "o") 'org-open-at-point)))
+         (define-key nu-open-map (kbd "L") 'org-open-at-point)))
 
   (define-key nu-open-map (kbd "f")  'helm-find-files)
   (define-key nu-open-map (kbd "o")  'helm-mini)
