@@ -100,7 +100,7 @@ Still, some keys here help."
     (define-key helm-find-files-map (kbd "M-o") 'helm-execute-persistent-action)
     (define-key helm-find-files-map (kbd "M-i") 'helm-previous-line)
     (define-key helm-find-files-map (kbd "C-c") 'helm-ff-run-copy-file)
-    (define-key helm-find-files-map (kbd "C-x") 'helm-ff-run-delete-file)
+    (define-key helm-find-files-map (kbd "C-d") 'helm-ff-run-delete-file)
     (define-key helm-find-files-map (kbd "C-p") 'helm-ff-run-switch-to-eshell)
     (define-key helm-find-files-map (kbd "C-r") 'helm-ff-run-rename-file)
     (define-key helm-find-files-map (kbd "M-=") 'helm-ff-properties-persistent)))
