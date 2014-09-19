@@ -82,29 +82,42 @@ Still, some keys here help."
 
 (eval-after-load "helm-mode"
   '(progn
+    ;; qwertyuiop
     (define-key helm-map (kbd "C-q") 'helm-keyboard-quit)
-    (define-key helm-map (kbd "C-x") 'helm-delete-minibuffer-contents)
-    (define-key helm-map (kbd "M-k") 'helm-next-line)
-    (define-key helm-map (kbd "C-a") 'helm-mark-all)
-    (define-key helm-map (kbd "M-a") 'helm-toggle-visible-mark)
+    (define-key helm-find-files-map (kbd "C-r") 'helm-ff-run-rename-file) ; dired is better as this, no?
+    (define-key helm-buffer-map (kbd "C-r") 'helm-buffer-run-query-replace) ; absurd func! well...
+
+    (define-key helm-find-files-map (kbd "<backspace>") 'helm-find-files-up-one-level) ;yé!
+    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
     (define-key helm-map (kbd "M-i") 'helm-previous-line)
-    (define-key helm-map (kbd "M-o") 'helm-next-source)
-    (define-key helm-map (kbd "M-u") 'helm-previous-source)
-    (define-key helm-map (kbd "M-h") 'previous-history-element)
-    (define-key helm-map (kbd "M-$") 'next-history-element)
+    (define-key helm-find-files-map (kbd "M-i") 'helm-previous-line)
+    (define-key helm-generic-files-map (kbd "M-i") 'helm-previous-line)
+    (define-key helm-find-files-map (kbd "C-o") 'helm-execute-persistent-action)
+    (define-key helm-generic-files-map (kbd "C-o") 'helm-execute-persistent-action)
+    (define-key helm-find-files-map (kbd "C-p") 'helm-ff-run-switch-to-eshell)
     (define-key helm-map (kbd "M-p") 'universal-argument)
+
+    ;asdfghjkl. Use Alt-g for goto.
+    (define-key helm-map (kbd "C-a") 'helm-mark-all) ; for once a mark all makes sense...
+    (define-key helm-map (kbd "M-a") 'helm-toggle-visible-mark)
+    (define-key helm-find-files-map (kbd "M-d") 'helm-ff-run-delete-file) ; ok
+    (define-key helm-buffer-map (kbd "M-d") 'helm-buffer-run-kill-buffers) ; ok but no confirm???!
+    (define-key helm-map (kbd "S-<backspace>") 'helm-previous-source) ; sort of previous page...
+    (define-key helm-map (kbd "S-<space>") 'helm-next-source) ; sort of next page...
+    (define-key helm-map (kbd "M-<dead-circumflex>") 'previous-history-element) ; not most frequent...
+    (define-key helm-map (kbd "M-$") 'next-history-element) ; not most frequent...
+    (define-key helm-map (kbd "M-k") 'helm-next-line) ; ok
+
+    ; zxcvbn
+    (define-key helm-map (kbd "C-x") 'helm-delete-minibuffer-contents) ; stick to this.
+    (define-key helm-map (kbd "C-c") 'nu-copy-region-or-line) ; stick to this
+    (define-key helm-find-files-map (kbd "M-c") 'helm-ff-run-copy-file) ; lame
+    (define-key helm-map (kbd "C-v") 'helm-yank-text-at-point) ; stick to this.
+
+    ; non char
     (define-key helm-map (kbd "M-<SPC>") 'helm-next-page)
     (define-key helm-map (kbd "M-<backspace>") 'helm-previous-page)
-    (define-key helm-map (kbd "C-v") 'helm-yank-text-at-point)
-    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
-    (define-key helm-find-files-map (kbd "M-u") 'helm-find-files-up-one-level)
-    (define-key helm-find-files-map (kbd "M-o") 'helm-execute-persistent-action)
-    (define-key helm-find-files-map (kbd "M-i") 'helm-previous-line)
-    (define-key helm-find-files-map (kbd "C-c") 'helm-ff-run-copy-file)
-    (define-key helm-find-files-map (kbd "C-d") 'helm-ff-run-delete-file)
-    (define-key helm-find-files-map (kbd "C-p") 'helm-ff-run-switch-to-eshell)
-    (define-key helm-find-files-map (kbd "C-r") 'helm-ff-run-rename-file)
-    (define-key helm-find-files-map (kbd "M-=") 'helm-ff-properties-persistent)))
+    (define-key helm-find-files-map (kbd "M-=") 'helm-ff-properties-persistent))) ; lame
 
  ;helm-copy-to-buffer?
  ;helm-yank-selection
