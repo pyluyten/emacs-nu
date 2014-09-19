@@ -80,7 +80,7 @@ Still, some keys here help."
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
 
 
-(eval-after-load "helm-mode"
+(eval-after-load "helm-mode" ;; TODO = helm-M-x-map
   '(progn
     ;; qwertyuiop
     (define-key helm-map (kbd "C-q") 'helm-keyboard-quit)
