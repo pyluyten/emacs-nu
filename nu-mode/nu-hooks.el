@@ -88,7 +88,7 @@ Still, some keys here help."
     (define-key helm-buffer-map (kbd "C-r") 'helm-buffer-run-query-replace) ; absurd func! well...
 
     (define-key helm-find-files-map (kbd "<backspace>") 'helm-find-files-up-one-level) ;yé!
-    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action)
+    (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; does expand, except Mx.
     (define-key helm-map (kbd "M-i") 'helm-previous-line)
     (define-key helm-find-files-map (kbd "M-i") 'helm-previous-line)
     (define-key helm-generic-files-map (kbd "M-i") 'helm-previous-line)

@@ -278,10 +278,13 @@
       (define-key nu-new-map (kbd "b") 'magit-create-branch))
 
   (define-key nu-new-map (kbd "n") 'nu-new-empty-buffer)
+  (define-key nu-new-map (kbd "C-n") 'helm-run-external-command)
   (define-key nu-new-map (kbd "m") 'compose-mail)
   (define-key nu-new-map (kbd "w") 'make-frame-command)
   (define-key nu-new-map (kbd "v") 'split-window-below)
   (define-key nu-new-map (kbd "h") 'split-window-right)
+  (define-key nu-new-map (kbd "t") 'term)
+  (define-key nu-new-map (kbd "s") 'eshell)
   (define-key nu-new-map (kbd "i") 'ibuffer-other-window))
 
 (defun nu-new-prompt ()
