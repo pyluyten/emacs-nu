@@ -277,6 +277,7 @@
       (define-key nu-new-map (kbd "b") 'magit-create-branch))
 
   (define-key nu-new-map (kbd "n") 'nu-new-empty-buffer)
+  (define-key nu-new-map (kbd "m") 'compose-mail)
   (define-key nu-new-map (kbd "w") 'make-frame-command)
   (define-key nu-new-map (kbd "v") 'split-window-below)
   (define-key nu-new-map (kbd "h") 'split-window-right)
@@ -361,6 +362,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "j")   'nu-previous-buffer)
   (define-key nu-open-map (kbd "c")   'org-capture)
   (define-key nu-open-map (kbd "a")   'org-agenda)
+  (define-key nu-open-map (kbd "m")   'menu-bar-read-mail)
   (define-key nu-open-map (kbd "i")   'helm-buffers-list)
   (define-key nu-open-map (kbd "C-i")   'ibuffer) ; is better at _reorganizing_ buffers...
   (define-key nu-open-map (kbd "I") 'org-iswitchb)
