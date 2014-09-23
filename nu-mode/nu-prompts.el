@@ -126,38 +126,41 @@
 
   (if (eq major-mode 'magit-status-mode)
       (progn
-        (define-key nu-delete-map (kbd "b") 'magit-delete-branch))
+        (define-key nu-delete-map (kbd "b") 'magit-delete-branch)
         (define-key nu-delete-map (kbd "h") 'magit-discard-item))
-
-  (if (eq major-mode 'dired-mode)
-      (progn
-         (define-key nu-delete-map (kbd "d") 'dired-flag-file-deletion)
-         (define-key nu-delete-map (kbd "k") 'dired-do-flagged-delete)
-         (define-key nu-delete-map (kbd "o") 'dired-do-delete))
       ; else
-      (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
-      (define-key nu-delete-map (kbd "b") 'kill-buffer) ; redundant.
-      (define-key nu-delete-map (kbd "j") 'backward-delete-char)
-      (define-key nu-delete-map (kbd "M-j") 'nu-backward-kill-line)
-      (define-key nu-delete-map (kbd "x") 'kill-whole-line)
-      (define-key nu-delete-map (kbd "k") 'nu-delete-below-line)
-      (define-key nu-delete-map (kbd "l") 'delete-forward-char)
-      (define-key nu-delete-map (kbd "$") 'kill-line)
-      (define-key nu-delete-map (kbd "M-l") 'kill-line)
-      (define-key nu-delete-map (kbd "u") 'backward-kill-word)
-      (define-key nu-delete-map (kbd "o") 'kill-word)
-      (define-key nu-delete-map (kbd "M-o") 'nu-kill-block)
-      (define-key nu-delete-map (kbd "M-u") 'nu-backward-kill-block)
-      (define-key nu-delete-map (kbd "h") 'delete-horizontal-space)
-      (define-key nu-delete-map (kbd "t") 'delete-trailing-whitespace)
-      (define-key nu-delete-map (kbd "b") 'delete-blank-lines)
-      (define-key nu-delete-map (kbd "s") 'kill-sexp)
-      (define-key nu-delete-map (kbd "e") 'kill-sentence)
-      (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
-      (define-key nu-delete-map (kbd "z")  'zap-up-to-char)
-      (define-key nu-delete-map (kbd "a") 'nu-delete-all))
+      (if (eq major-mode 'dired-mode)
+         (progn
+           (define-key nu-delete-map (kbd "d") 'dired-flag-file-deletion)
+           (define-key nu-delete-map (kbd "k") 'dired-do-flagged-delete)
+           (define-key nu-delete-map (kbd "o") 'dired-do-delete))
+           ; else
+            (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
+            (define-key nu-delete-map (kbd "b") 'kill-buffer) ; redundant.
+            (define-key nu-delete-map (kbd "j") 'backward-delete-char)
+            (define-key nu-delete-map (kbd "M-j") 'nu-backward-kill-line)
+            (define-key nu-delete-map (kbd "x") 'kill-whole-line)
+            (define-key nu-delete-map (kbd "k") 'nu-delete-below-line)
+            (define-key nu-delete-map (kbd "l") 'delete-forward-char)
+            (define-key nu-delete-map (kbd "$") 'kill-line)
+            (define-key nu-delete-map (kbd "M-l") 'kill-line)
+            (define-key nu-delete-map (kbd "u") 'backward-kill-word)
+            (define-key nu-delete-map (kbd "o") 'kill-word)
+            (define-key nu-delete-map (kbd "M-o") 'nu-kill-block)
+            (define-key nu-delete-map (kbd "M-u") 'nu-backward-kill-block)
+            (define-key nu-delete-map (kbd "h") 'delete-horizontal-space)
+            (define-key nu-delete-map (kbd "t") 'delete-trailing-whitespace)
+            (define-key nu-delete-map (kbd "b") 'delete-blank-lines)
+            (define-key nu-delete-map (kbd "s") 'kill-sexp)
+            (define-key nu-delete-map (kbd "e") 'kill-sentence)
+            (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
+            (define-key nu-delete-map (kbd "z")  'zap-up-to-char)
+            (define-key nu-delete-map (kbd "a") 'nu-delete-all)))
 
+  ; common cases
   (define-key nu-delete-map (kbd "M-f") 'delete-file)
+
+  ; these ones are additional...
   (if (equal major-mode 'org-mode)
       (progn
         (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
