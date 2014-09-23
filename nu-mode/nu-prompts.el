@@ -85,6 +85,12 @@
        (define-key nu-print-map (kbd "b") 'eval-current-buffer)
        (define-key nu-print-map (kbd "r") 'eval-region)))
 
+
+  (if (eq major-mode 'magit-status-mode)
+      (progn
+         (define-key nu-print-map (kbd "p") 'magit-shell-command)
+         (define-key nu-print-map (kbd ":") 'magit-git-command)))
+
   (if (eq major-mode 'dired-mode)
         (progn
         (define-key nu-print-map (kbd "C-p") 'dired-do-print)
@@ -120,7 +126,7 @@
 
   (if (eq major-mode 'magit-status-mode)
       (progn
-	(define-key nu-delete-map (kbd "b") 'magit-delete-branch))
+        (define-key nu-delete-map (kbd "b") 'magit-delete-branch))
         (define-key nu-delete-map (kbd "h") 'magit-discard-item))
 
   (if (eq major-mode 'dired-mode)
