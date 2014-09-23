@@ -257,17 +257,19 @@
   (define-key nu-save-map (kbd "L") 'org-store-link)
   (if (eq major-mode 'org-mode)
       (define-key nu-save-map (kbd "o") 'org-refile))
-  (define-key nu-save-map (kbd "m") 'magit-status)
   (define-key nu-save-map (kbd "k") 'kmacro-start-macro-or-insert-counter)
   (define-key nu-save-map (kbd "f") 'nu-create-tags)
-  ;(if (boundp 'magit-diff)
-    (define-key nu-save-map (kbd "d") 'magit-diff)
-  ;(if (equal major-mode 'Magit)
-    (define-key nu-save-map (kbd "c") 'magit-commit)
-  ;(if (equal major-mode 'Magit)
-    (define-key nu-save-map (kbd "p") 'nu-git-push)
-  ;(if (boundp 'git-commit-commit)
-    (define-key nu-save-map (kbd "x") 'git-commit-commit))
+
+  (if (eq major-mode 'magit-status-mode)
+      (progn
+        (define-key nu-save-map (kbd "d") 'magit-diff)
+        (define-key nu-save-map (kbd "c") 'magit-commit)
+        (define-key nu-save-map (kbd "p") 'nu-git-push)
+        (define-key nu-save-map (kbd "t") 'magit-push-tags)
+        (define-key nu-save-map (kbd "x") 'git-commit-commit))
+      ; else
+      (define-key nu-save-map (kbd "m") 'magit-status)))
+
 
 (defun nu-save-prompt ()
   (interactive)
@@ -284,7 +286,8 @@
       (define-key nu-new-map (kbd "d") 'make-directory))
 
   (if (eq major-mode 'magit-status-mode)
-      (define-key nu-new-map (kbd "b") 'magit-create-branch))
+      (define-key nu-new-map (kbd "b") 'magit-create-branch)
+      (define-key nu-new-map (kbd "a") 'magit-annotated-tag))
 
   (define-key nu-new-map (kbd "n") 'nu-new-empty-buffer)
   (define-key nu-new-map (kbd "C-n") 'helm-run-external-command)
