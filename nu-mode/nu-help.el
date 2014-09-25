@@ -14,6 +14,16 @@
 (defvar nu-current-keymap nil)
 (defvar nu-current-major-mode nil)
 
+; for helm
+(defvar nu-keymap-list)
+
+; helm style or buffer style
+(defvar nu-describe-bind-mode)
+
+
+(defvar nu-repeat-prompt nil)
+
+
 ; repeat does not work
 ; as we would like with prompts
 ; below fixes this.
@@ -48,32 +58,47 @@ This is a common key to _all_ prompts."
 
 (defun nu-describe-bind (bind)
 "Insert into *Help* Buffer a prompt row for bind.
+Or create a helm candidate, depending on nu-describe-bind-mode.
 
 This includes symbol name, key(s) from prompt,
 and drect keys from both nu-keymap / major-mode."
-  ; once bind sanitized, start printing help
+
+  ;; we start with a mass let*
+  ;; then a an if / progn that goes on all along...
+
+  (let* ((candidate)      ;; if helm mode, a list element...
+         (keyvect)        ;; keys from the prompt
+         (majorkeys)      ;; keys from major mode
+         (major-keymap)   ;; major-mode keymap
+         (all-shortcuts)) ;; shortcuts from anywhere.
+
   (if (and (symbolp bind) (not (eq bind 'digit-argument))
-                         (not (eq bind 'nu-help-about-prompts)))
-       (progn
-  ; insert the button
-        (insert-button (symbol-name bind) 'action 'nu-prompt-describe)
+                          (not (eq bind 'nu-help-about-prompts)))
+     (progn
 
-  ; insert shortcuts _from the prompt_
-        (let ((keyvect (where-is-internal bind (list nu-current-keymap))))
-           (if (not (eq nil keyvect))
-             (progn
-               (insert
-                  (propertize
-                   (format " %s"
-                     (mapconcat 'key-description keyvect ", "))
-                   'face 'bold)))))
+        ; insert the button
+        (if (string= nu-describe-bind-mode "buffer")
+            (insert-button (symbol-name bind) 'action 'nu-prompt-describe)
+            (setq candidate (symbol-name bind)))
 
-   ;; print the _direct keys_
-   ;; remove menu, menu-bar, f1, help, ..
-   ;; use non-greedy "*?"
-  (let ((majorkeys))
-  (let ((major-keymap (eval (intern-soft
-          (concat (symbol-name nu-current-major-mode) "-map")))))
+        ; insert shortcuts _from the prompt_
+        (setq keyvect (where-is-internal bind (list nu-current-keymap)))
+        (if (not (eq nil keyvect))
+           (progn
+              (if (string= nu-describe-bind-mode "buffer")
+                 (insert
+                    (propertize
+                       (format " %s"
+                          (mapconcat 'key-description keyvect ", "))
+                              'face 'bold))
+                 (setq candidate (concat candidate " toto"))))) ;; todo =)
+
+
+
+    ;; hack : is there a major-mode map?. FIXME.
+    (setq major-keymap
+        (eval (intern-soft
+                  (concat (symbol-name nu-current-major-mode) "-map"))))
 
    ;; TODO : make the regexp replace one or two C-c at beginning only
    ;; (since where-is-internal does not know our sorcery)
@@ -83,20 +108,31 @@ and drect keys from both nu-keymap / major-mode."
       (setq majorkeys
            (replace-regexp-in-string "\\(C-c\\)" "C-<SPC>"
                (mapconcat 'key-description (where-is-internal
-                     bind (list major-keymap)) "@")))))
+                     bind (list major-keymap)) "@"))))
 
-   (let ((all
+   ;; print the _direct keys_  (remove menu, menu-bar, f1, help, ..)
+   ;; use non-greedy "*?"
+
+   (setq all-shortcuts
       (replace-regexp-in-string "\\(<menu>\\|<menu-bar>\\|<f.>\\|<help>\\).*?@" ""
         (format "%s@"
           (concat
            (mapconcat 'key-description (where-is-internal bind nu-keymap) "@")
             "@"
-            majorkeys)))))
-   (if (> (string-width all) 1)
+            majorkeys))))
+   (if (> (string-width all-shortcuts) 1)
    (progn
-     (setq all (replace-regexp-in-string "@" " " all))
-     (insert " - or " all)))
-   (insert "\n"))))))
+     (setq all-shortcuts (replace-regexp-in-string "@" " " all-shortcuts))
+     (if (string= nu-describe-bind-mode "buffer")
+         (insert " - or " all-shortcuts)
+         (setq candidate (concat candidate " - or " all-shortcuts)))))
+
+   ; now it's over. Just append a \n...
+   (if (string= nu-describe-bind-mode "buffer")
+       (insert "\n")
+       (if (eq nu-keymap-list nil)
+           (setq nu-keymap-list '(candidate))
+           (setq nu-keymap-list (cons candidate nu-keymap-list))))))))
 
 
 (defun nu-insert-binding-row (ev bind)
@@ -119,7 +155,6 @@ call insert description for each bind."
 
 
 
-(defvar nu-repeat-prompt nil)
 
 
 ; buffer-prompt is a heavy description
@@ -141,12 +176,13 @@ If describe arg is t, only describe-function."
  ; also, include major mode keys.
  (setq nu-current-keymap keymap)
  (setq nu-current-major-mode major-mode)
+ (setq nu-describe-bind-mode "buffer")
 
  (let* ((key)
         (defn)
-	(prefixhelp)
-	(new-frame)
-	(prev-frame (selected-frame))
+        (prefixhelp)
+        (new-frame)
+        (prev-frame (selected-frame))
         (config (current-window-configuration))
         (local-map (make-sparse-keymap)))
  (setcdr local-map keymap)
@@ -250,6 +286,18 @@ to describe the function.\n")
             (setq nu-repeat-prompt nil))))))))
 
 
+(defun nu-helm-prompt-for-keymap (keymap)
+  "Use helm mode to prompt for a keymap.
+
+This one is a bit different..."
+ (interactive)
+ (let ((command))
+   (setq nu-keymap-list nil
+         nu-describe-bind-mode "helm")
+   (map-keymap 'nu-insert-binding-row keymap)
+   (setq command (helm-comp-read "Choose!" nu-keymap-list))))
+
+
 (defun nu-light-prompt-for-keymap  (keymap &optional describe)
 "Light prompt for a keymap. Toggle buffer-prompt with ?"
   (interactive)
@@ -271,6 +319,9 @@ to describe the function.\n")
 
         ((and (stringp (key-description key)) (string= (key-description key) "<tab>"))
                (nu-buffer-prompt-for-keymap keymap))
+
+        ((and (stringp (key-description key)) (string= (key-description key) "<space>"))
+               (nu-helm-prompt-for-keymap keymap))
 
         ; check for negative / digit-argument.
         ((and (stringp (key-description key)) (string= (key-description key) "-"))
