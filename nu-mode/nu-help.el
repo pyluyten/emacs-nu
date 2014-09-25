@@ -294,17 +294,18 @@ to describe the function.\n")
 
 This one is a bit different..."
  (interactive)
- (let ((command))
    (setq nu-current-keymap keymap
          nu-current-major-mode major-mode
          nu-keymap-list nil
          nu-describe-bind-mode "helm")
    (map-keymap 'nu-insert-binding-row keymap)
-   (call-interactively
-     (intern-soft
-        (replace-regexp-in-string "\\(\\w\\) .*" "\\1"
-           (helm-comp-read "Execute :" nu-keymap-list
-                         :must-match t))))))
+   (setq nu-last-command
+      (intern-soft
+          (replace-regexp-in-string "\\(\\w\\) .*" "\\1"
+             (helm-comp-read "Execute :" nu-keymap-list
+                             :must-match t))))
+   (ignore-errors (call-interactively nu-last-command))
+   (setq nu-repeat-prompt nil))
 
 
 (defun nu-light-prompt-for-keymap  (keymap &optional describe)
