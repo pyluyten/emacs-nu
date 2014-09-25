@@ -300,7 +300,9 @@ This one is a bit different..."
          nu-keymap-list nil
          nu-describe-bind-mode "helm")
    (map-keymap 'nu-insert-binding-row keymap)
-   (setq command (helm-comp-read "Choose!" nu-keymap-list))))
+   (call-interactively
+       (helm-comp-read "Execute :" nu-keymap-list
+          :must-match t))))
 
 
 (defun nu-light-prompt-for-keymap  (keymap &optional describe)
