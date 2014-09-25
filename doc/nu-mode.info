@@ -108,16 +108,16 @@ basically a key sequence with a minibuffer prompt (this function is
 'nu-light-prompt-for-keymap and is usable with any keymap, like
 help-map, and this is what Control+h does, for example).
 
-   Pressing ?  will raise a "buffer-prompt".  First, a buffer prompt
-will display available keys (what key sequences do not have).  Second, a
-prompt will also advertise direct shortcuts to commands : ie, shortcuts
-that would have directly run some function without going through the
-prompts.  For example, using Control+w prompt, it is possible to press w
-to 'delete-other-windows, but prompt will advertise that Alt+n would
-directly have called this same function without requiring to go through
-key sequence.  This does not mean using the prompt was wrong.  It is
-rather meant as a way to discover and as a reminder, since nu-mode has
-many alternatives.
+   Pressing <<tab>> will raise a "buffer-prompt".  First, a buffer
+prompt will display available keys (what key sequences do not have).
+Second, a prompt will also advertise direct shortcuts to commands : ie,
+shortcuts that would have directly run some function without going
+through the prompts.  For example, using Control+w prompt, it is
+possible to press w to 'delete-other-windows, but prompt will advertise
+that Alt+n would directly have called this same function without
+requiring to go through key sequence.  This does not mean using the
+prompt was wrong.  It is rather meant as a way to discover and as a
+reminder, since nu-mode has many alternatives.
 
    Third, a prompt (no matter light- or buffer-) allows you to use
 arguments in two ways.  The first way, is to use standard Emacs keys to
@@ -150,6 +150,33 @@ using nu-mode, see below.
 using 'q'.  This letter is never bound.  You can always use it.  Note
 that 'Control+q' and 'Alt+q' are neither bound.  However, <Q> -ie, shift
 plus q - might be bound, because 'Shift+q' cannot be a mistake.
+
+1.4 helm-prompts
+================
+
+An alternative way to explore prompts is helm.  Not the most efficient
+in my humble o, however it works : from a light prompt, instead of
+pressing <tab> to trigger a full (buffer) prompt, it is possible to
+press <space> to have a helm completion using the candidates
+corresponding to the prompt.
+
+   Prompts shortcuts are shown but totally ignored : this is helm which
+decides candidate selection.  Prompts shortcuts are only shown for
+information, in order to learn.
+
+   Direct shortcuts are also shown, as usual.  So, candidate selection
+is different but learning process is the same.  It might be efficient or
+fun to learn.  In some busy prompts it might occasionnaly help, who
+knows.
+
+1.5 ok but where are prompts
+============================
+
+Well, the simplest is to control+h then * to light-prompt about the
+different available prompts.  This just tells which key to press, not
+exactly which shortcut, and allows to describe the associated keymap.
+
+   You can control+h then * then * to describe the full nu-keymap.
 
 
 File: nu-mode.info,  Node: View and Edit,  Next: Files Buffers Windows,  Prev: Overview,  Up: Top
@@ -1110,16 +1137,16 @@ their use in free software.
 Tag Table:
 Node: Top716
 Node: Overview1106
-Node: View and Edit6153
-Node: Files Buffers Windows12320
-Node: Minibuffer14906
-Node: Hacking15594
-Node: nu for the power user16294
-Node: Customization19158
-Node: nu and some specific modes21474
-Node: nu & other libraries21899
-Node: Contributing25264
-Node: GNU Free Documentation License25522
+Node: View and Edit7217
+Node: Files Buffers Windows13384
+Node: Minibuffer15970
+Node: Hacking16658
+Node: nu for the power user17358
+Node: Customization20222
+Node: nu and some specific modes22538
+Node: nu & other libraries22963
+Node: Contributing26328
+Node: GNU Free Documentation License26586
 
 End Tag Table
 

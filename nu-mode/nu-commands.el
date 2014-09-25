@@ -178,6 +178,8 @@ If region is selected, use this as a search string."
 (define-key nu-help-map (kbd "v") 'nu-describe-insert)
 (defun nu-describe-save () (interactive) (describe-keymap 'nu-save-map))
 (define-key nu-help-map (kbd "s") 'nu-describe-save)
+(defun nu-describe-nu () (interactive) (describe-keymap 'nu-keymap))
+(define-key nu-help-map (kbd "*") 'nu-describe-nu)
 (defun nu-help ()
  (interactive)
  (nu-prompt-for-keymap nu-help-map))
