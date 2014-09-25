@@ -301,8 +301,10 @@ This one is a bit different..."
          nu-describe-bind-mode "helm")
    (map-keymap 'nu-insert-binding-row keymap)
    (call-interactively
-       (helm-comp-read "Execute :" nu-keymap-list
-          :must-match t))))
+     (intern-soft
+        (replace-regexp-in-string "\\(\\w\\) .*" "\\1"
+           (helm-comp-read "Execute :" nu-keymap-list
+                         :must-match t))))))
 
 
 (defun nu-light-prompt-for-keymap  (keymap &optional describe)
@@ -317,9 +319,9 @@ This one is a bit different..."
     (setcdr local-map keymap)
     (define-key local-map [t] 'undefined)
     (while (not input)
-      (setq key (read-key-sequence (propertize "Enter a key or TAB :" 'face 'italic) t))
-      (cond
+      (setq key (read-key-sequence (propertize "Enter a key or SPC or TAB :" 'face 'italic) t))
 
+      (cond
         ; allow to repeat prompt
         ((and (stringp key) (string= key "+"))
                (setq nu-repeat-prompt t))
@@ -327,7 +329,7 @@ This one is a bit different..."
         ((and (stringp (key-description key)) (string= (key-description key) "<tab>"))
                (nu-buffer-prompt-for-keymap keymap))
 
-        ((and (stringp (key-description key)) (string= (key-description key) "<space>"))
+        ((and (stringp (key-description key)) (string= (key-description key) "SPC"))
                (nu-helm-prompt-for-keymap keymap))
 
         ; check for negative / digit-argument.
