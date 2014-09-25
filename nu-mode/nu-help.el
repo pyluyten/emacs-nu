@@ -295,7 +295,9 @@ to describe the function.\n")
 This one is a bit different..."
  (interactive)
  (let ((command))
-   (setq nu-keymap-list nil
+   (setq nu-current-keymap keymap
+         nu-current-major-mode major-mode
+         nu-keymap-list nil
          nu-describe-bind-mode "helm")
    (map-keymap 'nu-insert-binding-row keymap)
    (setq command (helm-comp-read "Choose!" nu-keymap-list))))
