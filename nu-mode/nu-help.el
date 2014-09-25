@@ -319,6 +319,7 @@ This one is a bit different..."
          (local-map (make-sparse-keymap)))
     (setcdr local-map keymap)
     (define-key local-map [t] 'undefined)
+  (catch 'outide
     (while (not input)
       (setq key (read-key-sequence (propertize "Enter a key or SPC or TAB :" 'face 'italic) t))
 
@@ -331,7 +332,8 @@ This one is a bit different..."
                (nu-buffer-prompt-for-keymap keymap))
 
         ((and (stringp (key-description key)) (string= (key-description key) "SPC"))
-               (nu-helm-prompt-for-keymap keymap))
+               (nu-helm-prompt-for-keymap keymap)
+               (throw 'outside "another prompt is used."))
 
         ; check for negative / digit-argument.
         ((and (stringp (key-description key)) (string= (key-description key) "-"))
@@ -368,7 +370,7 @@ This one is a bit different..."
                 (ignore-errors
                    (call-interactively defn)))
              ; if no func, make sure not to repeat.
-            (setq nu-repeat-prompt nil))))))))
+            (setq nu-repeat-prompt nil)))))) "normal exit value")))
 
 (defadvice repeat (before nu-repeat-last-prompt ())
   (if
