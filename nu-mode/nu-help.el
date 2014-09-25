@@ -91,8 +91,11 @@ and drect keys from both nu-keymap / major-mode."
                        (format " %s"
                           (mapconcat 'key-description keyvect ", "))
                               'face 'bold))
-                 (setq candidate (concat candidate " toto"))))) ;; todo =)
-
+                 (setq candidate (concat candidate " "
+                    (propertize
+                         (format " %s"
+                          (mapconcat 'key-description keyvect ", "))
+                              'face 'bold))))))
 
 
     ;; hack : is there a major-mode map?. FIXME.
