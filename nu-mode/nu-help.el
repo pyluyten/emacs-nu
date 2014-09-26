@@ -328,7 +328,7 @@ This one is a bit different..."
         ((and (stringp key) (string= key "+"))
                (setq nu-repeat-prompt t))
 
-        ((and (stringp (key-description key)) (string= (key-description key) "<tab>"))
+        ((and (stringp (key-description key)) (string= (key-description key) "TAB"))
                (nu-buffer-prompt-for-keymap keymap))
 
         ((and (stringp (key-description key)) (string= (key-description key) "SPC"))
