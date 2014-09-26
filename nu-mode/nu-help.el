@@ -133,9 +133,7 @@ and drect keys from both nu-keymap / major-mode."
    ; now it's over. Just append a \n...
    (if (string= nu-describe-bind-mode "buffer")
        (insert "\n")
-       (if (eq nu-keymap-list nil)
-           (setq nu-keymap-list '(candidate))
-           (setq nu-keymap-list (cons candidate nu-keymap-list))))))))
+           (setq nu-keymap-list (cons candidate nu-keymap-list)))))))
 
 
 (defun nu-insert-binding-row (ev bind)
