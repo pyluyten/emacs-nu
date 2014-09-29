@@ -305,6 +305,16 @@
   (nu-define-prefix 'nu-a-map)
   (define-key nu-a-map (kbd "C-f") 'cd)
 
+  (if (eq major-mode 'proced)
+      (progn
+	    (define-key nu-a-map (kbd "a") 'proced-mark-all)
+	    (define-key nu-a-map (kbd "C-a") 'proced-unmark-all)
+	    (define-key nu-a-map (kbd "c") 'proced-mark-children)
+	    (define-key nu-a-map (kbd "p") 'proced-mark-parents)
+	    (define-key nu-a-map (kbd "l") 'proced-mark)
+	    (define-key nu-a-map (kbd "t") 'proced-toggle-marks)
+	    (define-key nu-a-map (kbd "u") 'proced-unmark))
+  ; else if...
   (if (eq major-mode 'dired-mode)
       (progn
         (define-key nu-a-map (kbd "d") 'dired-flag-file-deletion)
@@ -316,7 +326,7 @@
         (define-key nu-a-map (kbd "C-u") 'dired-unmark-all-marks)
         (define-key nu-a-map (kbd "r") 'dired-mark-files-regexp)
         (define-key nu-a-map (kbd "C-r") 'dired-mark-files-containing-regexp))
-  ; else...
+   ; else...
       (define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
       (define-key nu-a-map (kbd "f") 'nu-mark-defun)
       (define-key nu-a-map (kbd "s") 'nu-mark-sentence)
@@ -327,7 +337,7 @@
       (define-key nu-a-map (kbd "l") 'nu-mark-to-eol)
       (define-key nu-a-map (kbd "k") '_nu-mark-current-line)
       (define-key nu-a-map (kbd "C-<SPC>") 'nu-set-mark)
-      (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)))
+      (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark))))
 
 
 
