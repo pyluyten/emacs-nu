@@ -567,7 +567,7 @@ But if mark is active, exchange point and mark."
   (nu-define-prefix 'nu-replace-map)
 
   (define-key nu-replace-map (kbd "m") 'nu-toggle-read-only)
-  (define-key nu-replace-map (kbd "C-r")  'query-replace-regexp)
+  (define-key nu-replace-map (kbd "M-r")  'query-replace-regexp)
   (define-key nu-replace-map (kbd "a")  'revert-buffer)
   (define-key nu-replace-map (kbd "R")  'query-replace)
   (define-key nu-replace-map (kbd "k")  'overwrite-mode)
