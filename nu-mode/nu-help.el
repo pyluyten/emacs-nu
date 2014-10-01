@@ -306,9 +306,35 @@ This one is a bit different..."
    (setq nu-repeat-prompt nil))
 
 
+
+(defun ~nu-check-vector (vect value &optional is-string str-match)
+"check if vector is the same as value.
+
+Normally use equal, but if is-string is true, use string=.
+If str-match is true, use string-match.
+
+This function ensures no error can occur inside the process..."
+  (message (format "nu check vector : %i" (length key)))
+  (if (> (length vect) 1)
+      (> (length vect) 1) ; #false, too long vect
+      (if is-string
+          (if (not (integerp (elt vect 0)))
+             (integerp (elt vect 0)) ; #false, not an integer
+             (if (not (char-valid-p (elt vect 0)))
+                 (char-valid-p (elt vect 0)) ; #false invalid byte
+                 (if str-match
+          ; string + str match
+                     (string-match (byte-to-string (elt vect 0)) value)
+          ; string but not str match
+                     (string= (byte-to-string (elt vect 0)) value))))
+          ; not a string. check equality.
+          (equal (elt vect 0) value))))
+
+
 (defun nu-light-prompt-for-keymap  (keymap &optional describe)
 "Light prompt for a keymap. Toggle buffer-prompt with ?"
   (interactive)
+  (message "light prompt")
   (setq nu-current-keymap keymap)
   (setq nu-current-major-mode major-mode)
   (let* ((input nil)
@@ -319,22 +345,21 @@ This one is a bit different..."
     (define-key local-map [t] 'undefined)
   (catch 'outide
     (while (not input)
-      (setq key (read-key-sequence (propertize "Enter a key or SPC or TAB :" 'face 'italic) t))
-
+      (setq key (read-key-sequence-vector (propertize "Enter a key or SPC or TAB :" 'face 'italic) t))
       (cond
         ; allow to repeat prompt
-        ((and (stringp key) (string= key "+"))
-               (setq nu-repeat-prompt t))
+        ((~nu-check-vector key "+" t)
+         (setq nu-repeat-prompt t))
 
-        ((and (stringp (key-description key)) (string= (key-description key) "TAB"))
-               (nu-buffer-prompt-for-keymap keymap))
+        ((~nu-check-vector key 'tab)
+                (nu-buffer-prompt-for-keymap keymap))
 
-        ((and (stringp (key-description key)) (string= (key-description key) "SPC"))
+        ((~nu-check-vector key " " t)
                (nu-helm-prompt-for-keymap keymap)
                (throw 'outside "another prompt is used."))
 
         ; check for negative / digit-argument.
-        ((and (stringp (key-description key)) (string= (key-description key) "-"))
+        ((~nu-check-vector key "-" t)
            (cond ((integerp current-prefix-arg)
                (setq current-prefix-arg (- current-prefix-arg)))
               ((eq current-prefix-arg '-)
@@ -343,16 +368,15 @@ This one is a bit different..."
                (setq current-prefix-arg '-))))
 
         ; digits
-        ((and (stringp (key-description key))
-              (string-match (key-description key) "[0123456789]"))
+         ((~nu-check-vector key "[0123456789]" t t)
           (cond
             ((eq current-prefix-arg '-)
-             (setq current-prefix-arg (- (string-to-number (key-description key)))))
+             (setq current-prefix-arg (- (string-to-number (byte-to-string (elt key 0))))))
             ((integerp current-prefix-arg)
-             (setq current-prefix-arg (+ (string-to-number (key-description key))
+             (setq current-prefix-arg (+ (string-to-number (byte-to-string (elt key 0)))
                                          (* current-prefix-arg 10))))
              (t
-              (setq current-prefix-arg (string-to-number (key-description key))))))
+              (setq current-prefix-arg (string-to-number (byte-to-string (elt key 0)))))))
        (t
          (progn
           (setq defn (lookup-key local-map key))
