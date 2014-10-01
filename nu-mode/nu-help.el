@@ -314,7 +314,6 @@ Normally use equal, but if is-string is true, use string=.
 If str-match is true, use string-match.
 
 This function ensures no error can occur inside the process..."
-  (message (format "nu check vector : %i" (length key)))
   (if (> (length vect) 1)
       (> (length vect) 1) ; #false, too long vect
       (if is-string
