@@ -210,12 +210,13 @@
            (define-key nu-insert-map (kbd "v") 'dired-maybe-insert-subdir)
            (define-key nu-insert-map (kbd "M-v") 'dired-create-directory))
          ; else
-        (define-key nu-insert-map (kbd "v") 'nu-yank-pop-or-yank)
-        (define-key nu-insert-map (kbd "k") 'yank)
+        (define-key nu-insert-map (kbd "V") 'nu-yank-pop-or-yank) ; absurd.
+        (define-key nu-insert-map (kbd "v") 'yank)
         (define-key nu-insert-map (kbd "b") 'insert-buffer)
         (define-key nu-insert-map (kbd "f") 'insert-file)
         (define-key nu-insert-map (kbd "c") 'quoted-insert)
-        (define-key nu-insert-map (kbd "l") 'open-line)
+        (define-key nu-insert-map (kbd "k") 'nu-insert-line-below)
+        (define-key nu-insert-map (kbd "i") 'nu-insert-line-above)
 
         ; addon
         (if (eq major-mode 'org-mode)
@@ -231,8 +232,7 @@
   ; anycase
   (define-key nu-insert-map (kbd "s") 'async-shell-command)
   (define-key nu-insert-map (kbd "S") 'shell-command)
-  (define-key nu-insert-map (kbd "h")  'helm-show-kill-ring)
-  (define-key nu-insert-map (kbd "i") 'browse-kill-ring))
+  (define-key nu-insert-map (kbd "h")  'helm-show-kill-ring))
 
 
 (defun nu-insert-prompt ()

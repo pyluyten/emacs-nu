@@ -614,5 +614,13 @@ If window is the only one, kill buffer."
 
 
 
+(defalias 'nu-insert-line-below 'open-line)
+
+(defun nu-insert-line-above (&optional num)
+"Insert an empty row above."
+ (interactive "p")
+ (open-line num)
+ (next-line num))
+
 
 (provide 'nu-commands)
