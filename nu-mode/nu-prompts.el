@@ -602,9 +602,6 @@ But if mark is active, exchange point and mark."
 
 (defun nu-replace-prompt ()
   (interactive)
-  (if (or (eq overwrite-mode 'overwrite-mode-textual)
-          (eq overwrite-mode 'overwrite-mode-binary))
-      (overwrite-mode -1)
       (cond
         ((eq major-mode 'dired-mode)
          (nu-populate-replace-dired)
@@ -612,11 +609,14 @@ But if mark is active, exchange point and mark."
         ((eq major-mode 'magit-status-mode)
          (nu-populate-replace-magit)
          (nu-prompt-for-keymap nu-replace-map))
+        ((or (eq overwrite-mode 'overwrite-mode-textual)
+             (eq overwrite-mode 'overwrite-mode-binary))
+         (overwrite-mode -1))
         ((eq buffer-read-only t)
          (nu-toggle-read-only))
         (t
          (nu-populate-replace)
-         (nu-prompt-for-keymap nu-replace-map)))))
+         (nu-prompt-for-keymap nu-replace-map))))
 
 
 (provide 'nu-prompts)
