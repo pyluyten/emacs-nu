@@ -29,9 +29,9 @@
    (define-key nu-menu-map (kbd "a") 'nu-a-map)
    (define-key nu-keymap (kbd "M-a") 'cua-set-mark)
 
-   (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize)
+   (define-key nu-keymap (kbd "C-z") 'undo-tree-undo)
    (define-key nu-keymap (kbd "C-S-z") 'undo-tree-redo)
-   (define-key nu-keymap (kbd "M-z") 'undo-tree-undo)
+   (define-key nu-keymap (kbd "M-z") 'undo-tree-visualize)
 
    ; e? edit?
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
@@ -112,10 +112,10 @@
    ;; wxcvbn
    ;;
 
-   (define-key nu-keymap (kbd "C-w") 'nu-window-prompt)
+   (define-key nu-keymap (kbd "C-w") 'kill-buffer)
    (define-key nu-menu-map (kbd "w") 'nu-window-map)
    (define-key nu-menu-map (kbd "C-S-w") 'kill-buffer)
-   (define-key nu-keymap (kbd "M-w") 'nu-close-document)
+   (define-key nu-keymap (kbd "M-w") 'nu-window-prompt)
 
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
    (define-key nu-keymap (kbd "C-S-x") 'nu-global-prompt)
