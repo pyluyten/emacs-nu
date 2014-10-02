@@ -48,19 +48,34 @@
 
 (defvar nu-m-i-sname nil)
 (defvar nu-m-k-sname nil)
+(defvar nu-m-^-sname nil)
+(defvar nu-m-$-sname nil)
+
 
 (defun nu-prepare-for-minibuffer ()
   "Minibuffer might be not as important as helm. Still."
   (setq nu-m-i-sname (symbol-name (lookup-key nu-keymap (kbd "M-i"))))
   (setq nu-m-k-sname (symbol-name (lookup-key nu-keymap (kbd "M-k"))))
-  (define-key nu-keymap (kbd "M-i") 'previous-history-element)
-  (define-key nu-keymap (kbd "M-k") 'next-history-element))
+  (setq nu-m-^-sname (symbol-name (lookup-key nu-keymap (kbd "M-<dead-circumflex>"))))
+  (setq nu-m-$-sname (symbol-name (lookup-key nu-keymap (kbd "M-$"))))
+
+  (if (not (helm-alive-p))
+      (progn (define-key nu-keymap (kbd "M-i") 'previous-history-element)
+             (define-key nu-keymap (kbd "M-k") 'next-history-element))
+
+      ; if helm.
+      (define-key nu-keymap (kbd "M-i") 'helm-previous-line)
+      (define-key nu-keymap (kbd "M-k") 'helm-next-line)
+      (define-key nu-keymap (kbd "M-<dead-circumflex>") 'previous-history-element)
+      (define-key nu-keymap (kbd "M-$") 'next-history-element)))
 
 
 (defun nu-leave-minibuffer ()
   "Restore tab for previous."
   (define-key nu-keymap (kbd "M-i") (intern-soft nu-m-i-sname))
-  (define-key nu-keymap (kbd "M-k") (intern-soft nu-m-k-sname)))
+  (define-key nu-keymap (kbd "M-k") (intern-soft nu-m-k-sname))
+  (define-key nu-keymap (kbd "M-<dead-circumflex>") (intern-soft nu-m-^-sname))
+  (define-key nu-keymap (kbd "M-$") (intern-soft nu-m-$-sname)))
 
 
 
@@ -73,7 +88,7 @@ Still, some keys here help."
   (define-key dired-mode-map  (kbd "M-z") 'dired-undo)
   (define-key dired-mode-map  (kbd "C-c") 'nu-copy-prompt))
 
-(add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer)
+(add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
 (add-hook 'minibuffer-exit-hook  'nu-leave-minibuffer)
 (add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
 (add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
@@ -103,8 +118,12 @@ Still, some keys here help."
     (define-key helm-map (kbd "M-a") 'helm-toggle-visible-mark)
     (define-key helm-find-files-map (kbd "M-d") 'helm-ff-run-delete-file) ; ok
     (define-key helm-buffer-map (kbd "M-d") 'helm-buffer-run-kill-buffers) ; ok but no confirm???!
-    (define-key helm-map (kbd "S-<backspace>") 'helm-previous-source) ; sort of previous page...
-    (define-key helm-map (kbd "S-<space>") 'helm-next-source) ; sort of next page...
+
+    (define-key helm-map (kbd "S-<backspace>") 'helm-previous-source)
+    (define-key helm-buffer-map (kbd "S-<backspace>") 'helm-previous-source)
+    (define-key helm-map (kbd "S-<space>") 'helm-next-source)
+    (define-key helm-buffer-map (kbd "S-<space>") 'helm-next-source)
+
     (define-key helm-map (kbd "M-<dead-circumflex>") 'previous-history-element) ; not most frequent...
     (define-key helm-map (kbd "M-$") 'next-history-element) ; not most frequent...
     (define-key helm-map (kbd "M-k") 'helm-next-line) ; ok
