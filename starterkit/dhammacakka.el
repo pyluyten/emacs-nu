@@ -34,7 +34,7 @@
 
   (setq inhibit-splash-screen t
         inhibit-startup-message t
-	initial-buffer-choice "~")
+        initial-buffer-choice t)
 
   (setq vc-handled-backends nil)
 
