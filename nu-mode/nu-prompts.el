@@ -293,7 +293,10 @@
   (define-key nu-new-map (kbd "h") 'split-window-right)
   (define-key nu-new-map (kbd "t") 'term)
   (define-key nu-new-map (kbd "s") 'eshell)
-  (define-key nu-new-map (kbd "i") 'ibuffer-other-window))
+  (define-key nu-new-map (kbd "i") 'ibuffer-other-window)
+
+  (define-key nu-new-map (kbd "o")   'org-capture))
+
 
 (defun nu-new-prompt ()
   (interactive)
@@ -382,7 +385,6 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "x")  'list-registers)
   (define-key nu-open-map (kbd "l")  'nu-next-buffer)
   (define-key nu-open-map (kbd "j")   'nu-previous-buffer)
-  (define-key nu-open-map (kbd "c")   'org-capture)
   (define-key nu-open-map (kbd "a")   'org-agenda)
   (define-key nu-open-map (kbd "m")   'menu-bar-read-mail)
   (define-key nu-open-map (kbd "i")   'helm-buffers-list)
