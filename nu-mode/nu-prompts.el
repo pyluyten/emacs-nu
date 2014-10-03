@@ -155,6 +155,7 @@
 
   ; common cases
   (define-key nu-delete-map (kbd "M-f") 'delete-file)
+  (define-key nu-delete-map (kbd "M-d") 'delete-other-windows)
 
   ; these ones are additional...
   (if (equal major-mode 'org-mode)
