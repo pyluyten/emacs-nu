@@ -289,11 +289,11 @@ A contigent amount of chars different than <space>."
                    (eq (char-after) ?\n)))
           (forward-char)))
 
-(defun nu-mark-a-word ()
+(defun nu-mark-a-word (&optional arg)
   "Mark a word."
-  (interactive)
+  (interactive "P")
   (backward-word)
-  (mark-word))
+  (mark-word arg nil))
 
 (defun nu-mark-to-end-of-line ()
   "Select up to eol."
