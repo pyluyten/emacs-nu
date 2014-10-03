@@ -24,7 +24,7 @@
    ; anyway it will work as expected onto qwerty as well.
    ;;
 
-   (define-key nu-keymap (kbd "M-a") '_nu-mark-a-word)
+   (define-key nu-keymap (kbd "C-a") 'cua-set-mark)
    (define-key nu-keymap (kbd "C-S-a") 'nu-set-rectangle-mark)
    (define-key nu-menu-map (kbd "a") 'nu-a-map)
    (define-key nu-keymap (kbd "M-a") 'nu-a-prompt)
