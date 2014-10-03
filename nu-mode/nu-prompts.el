@@ -356,7 +356,8 @@ But if mark is active, exchange point and mark."
 
 
 
-
+; on #master this is C,
+; on #noxpaddle this is M...
 (defun nu-populate-open-map ()
 "Populate open map."
   (setq nu-open-map nil)
