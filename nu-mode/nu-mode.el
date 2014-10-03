@@ -62,10 +62,10 @@
    (define-key nu-keymap (kbd "C-S-o") 'helm-mini)
    (define-key nu-keymap (kbd "M-o") 'forward-word)
 
-   (define-key nu-keymap (kbd "C-p") 'nu-print-prompt)
+   (define-key nu-keymap (kbd "C-p") 'universal-argument)
    (define-key nu-keymap (kbd "C-S-p") 'eval-last-sexp)
    (define-key nu-menu-map (kbd "p") 'nu-print-map)
-   (define-key nu-keymap (kbd "M-p") 'universal-argument)
+   (define-key nu-keymap (kbd "M-p") 'nu-print-prompt)
 
 
 
