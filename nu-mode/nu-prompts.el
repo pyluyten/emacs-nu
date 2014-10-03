@@ -294,6 +294,7 @@
   (define-key nu-new-map (kbd "t") 'term)
   (define-key nu-new-map (kbd "s") 'eshell)
   (define-key nu-new-map (kbd "i") 'ibuffer-other-window)
+  (define-key nu-new-map (kbd "p") 'package-list-packages)
 
   (define-key nu-new-map (kbd "o")   'org-capture))
 
