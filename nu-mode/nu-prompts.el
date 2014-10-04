@@ -1,4 +1,3 @@
-
 ;;
 ;;   Pierre-Yves Luyten
 ;;   2014
@@ -221,6 +220,10 @@
         (define-key nu-insert-map (kbd "i") 'nu-insert-line-above)
 
         ; addon
+        (if (eq major-mode 'texinfo-mode)
+          (progn
+            (define-key nu-insert-map (kbd "M-u") 'texinfo-insert-@url)
+            (define-key nu-insert-map (kbd "M-k") 'texinfo-insert-@kbd))
         (if (eq major-mode 'org-mode)
           (progn
             (define-key nu-insert-map (kbd "L") 'org-insert-link)
@@ -229,7 +232,7 @@
             (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
             (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
             (define-key nu-insert-map (kbd "m") 'org-time-stamp)
-            (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading))))
+            (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading)))))
 
   ; anycase
   (define-key nu-insert-map (kbd "s") 'async-shell-command)

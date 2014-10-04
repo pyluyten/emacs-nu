@@ -1,4 +1,4 @@
 @c -*-texinfo-*-
 @c This is part of the Nu manual.
-@set VERSION 0.7
+@set VERSION 0.8
 @set UPDATED 2014-09-12

@@ -62,10 +62,11 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 @node Overview
 @chapter Overview
 
-``nu-mode `` is a modern keybinding for Emacs.
+``nu-mode `` is a modern keybinding for Emacs. It does offer a consistent CUA Emacs interface, and plans to integrate properly with most popular Emacs modes.
+CUA, here, does imply a deep meaning, despite it does partly use cua-mode.
 
 nu-mode is a global minor mode, its keymap,
-and the commands which are not provided in raw Emacs.
+and some commands which are not provided in raw Emacs.
 
 Modern, means respecting conventions like
 @enumerate
@@ -75,19 +76,23 @@ Modern, means respecting conventions like
 @item @kbd{Control-x}, @kbd{Control-c}, @kbd{Control-v} to cut, copy, paste.
 @end enumerate
 
-To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, while @kbd{Control+f} will directly offer to isearch-forward-regexp, @kbd{Alt+f} will raise a ``find-prompt'' offering several search related features. The prompt will display a list of keys - actually, sequences - and associated functions : t to find-tag, w to ace-jump-word-mode, m for imenu, b for regexp-builder, @kbd{Alt+f} to isearch-forward-regexp, and so on.
+To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, while @kbd{Control+f} will directly offer to isearch-forward-regexp (that is, ``Find''), @kbd{Alt+f} will raise a ``find-prompt'' offering several search related features. The prompt will display a list of keys - actually, sequences - and associated functions : t to find-tag, w to ace-jump-word-mode, m for imenu, b for regexp-builder, o for occur, @kbd{Alt+f} to isearch-forward-regexp, and so on.
 
-Most common shortcuts - ie, common to most applications - respect this guideline. Thus, there is a prompt for @kbd{s}, @kbd{v}, @kbd{a}... Most prompts rely on @kbd{Alt} modifier to be run. There are exceptions. For example, @kbd{Control+n} will raise a prompt to precise which kind of ``new'' stuff to produce.
-
+Prompts do adapt to context. As of October, 2014, there are 250 ``define-key'' inside the relevant code portion, which means about 15 prompts offer to call 25O commands. Obviously, additionnal keys paddle offers to easily navigate.
 
 @section Dependencies
-nu-mode depends on several libraries, both native or external ones. These are all optional dependencies.
+nu-mode depends on several libraries, both native or external ones.
+@enumerate
+@item recentf
+@item cua-selection-mode
+@item helm
+@item undo-tree
+@end enumerate
+
+These are all optional dependencies.
 @enumerate
 @item help-fns+, to describe-keymap
-@item undo-tree
 @item ace-jump
-@item recentf
-@item cua-selection-mode (see : paddle)
 @item magit
 @end enumerate
 
@@ -95,11 +100,11 @@ nu-mode depends on several libraries, both native or external ones. These are al
 @section Help
 
 Use @kbd{Control-q} to quit a sequence or a command in progress.
-Use @kbd{Alt+z} to undo last command.
+Use @kbd{Control+z} to undo last command.
 Use @kbd{Control+h} to gain access to help functions. This includes the usual shortcuts to describe what a key does, or what a function does.
-If you messed up, use @kbd{Control+w} then @kbd{Control+q} to quit.
+Use @kbd{Alt+w} @kbd{Q} to quit.
 
-Prompts are usually triggered using a @kbd{Alt} modifier and advertise a function using the same key, but with @kbd{Control} modifier. For example, @kbd{Alt+s} will pop-up a save prompt, while @kbd{Control+s} directly saves the current buffer.
+Prompts are usually triggered using a @kbd{Alt} modifier and advertise a function using the same key, but with @kbd{Control} modifier. For example, @kbd{Alt+s} will pop-up a save prompt offering several features, while @kbd{Control+s} directly saves the current buffer.
 
 These prompts offer you to quickly learn where functions are.
 
@@ -107,7 +112,7 @@ These prompts offer you to quickly learn where functions are.
 
 Prompts are basically a window showing several possible keys, and which functions are to be run given this input. However some features deserve some deeper explanation. When a key does ``raise a prompt'', minibuffer will ask for an input or to press ? to get more details. This is basically a key sequence with a minibuffer prompt (this function is 'nu-light-prompt-for-keymap and is usable with any keymap, like help-map, and this is what Control+h does, for example).
 
-Pressing @key{<tab>} will raise a ``buffer-prompt''. First, a buffer prompt will display available keys (what key sequences do not have). Second, a prompt will also advertise direct shortcuts to commands : ie, shortcuts that would have directly run some function without going through the prompts. For example, using Control+w prompt, it is possible to press w to 'delete-other-windows, but prompt will advertise that Alt+n would directly have called this same function without requiring to go through key sequence. This does not mean using the prompt was wrong. It is rather meant as a way to discover and as a reminder, since nu-mode has many alternatives.
+Pressing @key{<tab>} will raise a ``buffer-prompt''. First, a buffer prompt will display available keys (what key sequences do not have). Second, a prompt will also advertise direct shortcuts to commands : ie, shortcuts that would have directly run some function without going through the prompts. For example, using @kbd{Alt+d} prompt, it is possible to press o to 'kill-word, but prompt will advertise that @kbd{Control+d} would have directly called this same function without requiring to go through a prompt. This does not mean using the prompt was wrong. It is rather meant as a way to discover and as a reminder, since nu-mode has many alternatives.
 
 Third, a prompt (no matter light- or buffer-) allows you to use arguments in two ways. The first way, is to use standard Emacs keys to trigger an argument (eg, @kbd{Control+1}, or @kbd{Alt+1}, or @kbd{Alt+-}, or use the universal argument which is bound in nu-mode to @kbd{Alt+p}), then run the prompt, then choose the command that will be affected by the argument. The second way to use arguments is to first run the prompt, then directly press a digit or - to increment the argument. Then, press the relevant key to run the desired function.
 
@@ -121,26 +126,28 @@ Seventh, a prompt (no matter light- or buffer-) can always be escaped using `q'.
 
 @section helm-prompts
 
-An alternative way to explore prompts is helm. Not the most efficient in my humble o, however it works : from a light prompt, instead of pressing @key{tab} to trigger a full (buffer) prompt, it is possible to press @key{space} to have a helm completion using the candidates corresponding to the prompt.
+An alternative way to explore prompts is helm. Not the most efficient in my humble opinion, however it works : from a light prompt, instead of pressing @key{tab} to trigger a full (buffer) prompt, it is possible to press @key{space} to have a helm completion using the candidates corresponding to the prompt.
 
-Prompts shortcuts are shown but totally ignored : this is helm which decides candidate selection. Prompts shortcuts are only shown for information, in order to learn.
+Prompts shortcuts are shown but totally ignored : this is helm which decides candidate selection. Prompts shortcuts are only shown for information, in order to learn - shortcuts might also be used to select candidate however).
 
-Direct shortcuts are also shown, as usual. So, candidate selection is different but learning process is the same. It might be efficient or fun to learn. In some busy prompts it might occasionnaly help, who knows.
+Direct shortcuts are also shown, as usual.
 
 @section ok but where are prompts
 
-Well, the simplest is to control+h then * to light-prompt about the different available prompts. This just tells which key to press, not exactly which shortcut, and allows to describe the associated keymap.
+Read this documentation, or look at the Cheat Sheet on github : @uref{https://github.com/pyluyten/emacs-nu/wiki/Cheat-Sheet---All-Prompts}.
 
-You can control+h then * then * to describe the full nu-keymap.
+From Emacs, the simplest is to @kbd{Control+h} then @key{*} to light-prompt about the different available prompts. This just tells which key to press, not exactly which shortcut, and allows to describe the associated keymap.
+
+You can @kbd{Control+h * *} to describe the full nu-keymap.
 
 @node View and Edit
 @chapter View and Edit
 
-Obviously just type keys to input text. With slight notes : @kbd{Alt+m}to carriage return + indent. Use @kbd{Alt+v} + c to insert literally a character.
+Obviously just type keys to input text. With slight notes : @kbd{Alt+m} to carriage return + indent. Use @kbd{Alt+v c} to insert literally a character.
 
 @section Navigate
 
-While arrows still work, nu-mode uses @key{Alt} key to navigate.
+While arrows still work, nu-mode relies on @key{Alt} key to navigate.
 Hence, the thumb often presses @key{Alt} key, while pinky finger remains safe. This is exactly the same principle than ErgoEmacs applies.
 Navigate up left right down using @key{Alt} and :
 
@@ -155,9 +162,7 @@ Additionally, use @key{Alt} @key{u} and @key{Alt} @key{o} to move to previous, n
 @w{     }J@w{ }K@w{ }L
 
 
-Use @kbd{Alt+$} to go to end of line, or @kbd{Alt+h} to go beginning of line. To reach a line, or the beginning of buffer, or the end of the buffer, use @kbd{Alt+g} then the appropriate key. Just read this goto-prompt. To find a char, a string, a line starting with a specific letter, use @kbd{Alt+f}. To directly trigger a regexp-search, use @kbd{Control+f}.
-
-Notice that f key, used both with `control' and `alt' modifiers, offers find-related features. One of these keys is direct : it directly executes a command, & maybe a very common one. The other key does raise a prompt to offer more features. This principle to have one 'alt' modifier plus one 'control' modifier applies to other keys, as well.
+Use @kbd{Alt+$} to go to end of line, and @kbd{Alt+h} (or, @kbd{Alt+^} to go to beginning of line. To reach a line, or the beginning of buffer, or the end of the buffer, use @kbd{Alt+g} then the appropriate key. Just read this goto-prompt, which offers to navigate per line, paragraph, sentence and so on. To find a char, a string, a line starting with a specific letter, use ace-jump : also inside @kbd{Alt+f} prompt. To directly trigger a regexp-search, use @kbd{Control+f}, which is another way to navigate.
 
 Numeric arguments can apply to navigation. Press @kbd{Alt+1} then @kbd{Alt+5} to input 15 as a numeric argument ; now input @kbd{Alt+k} to go down one line : this will go down 15 lines.
 
@@ -231,9 +236,8 @@ Use @kbd{Control + v} to paste the current clipboard. Following @kbd{Control + v
 
 @section Undo or Redo
 
-Use @kbd{Alt+z} to undo. Or, use @kbd{Control+z} to invoke undo-tree visualizer to play with discard changes in an advanced way. This screen displays last changes, and you can navigate these using the paddle (@kbd{Alt+i}, @kbd{Alt+j}, @kbd{Alt+k}, @kbd{Alt+l}). Press @key{q} to quit this screen.
+As expected, use @kbd{Control+z} to undo and @kbd{Control+Shift+z} to redo. Or, use @kbd{Alt+z} to invoke undo-tree visualizer to play with discard changes in an advanced way. This screen displays last changes, and you can navigate these using the paddle (@kbd{Alt+i}, @kbd{Alt+j}, @kbd{Alt+k}, @kbd{Alt+l}). Press @key{q} to quit this screen. Note that this is somewhat a prompt, aint't it, which is a reminder on why to use @kbd{Alt}.
 
-It is also possible to directly redo using @kbd{Control+Shift+z}.
 
 @section Advanced Edition
 
@@ -261,9 +265,13 @@ Some advanced editon features rely on @kbd{Control-r}, which will invoke replace
 
 Emacs has a specific word for its internal frames : it says `Windows'. This is awful, but might be understood given we precise these are internal windows, not X (or Wayland) windows. Emacs has no support for standard tabs because there would be too much tabs. But hidden buffers are tabs, aren't they?
 
-Use @kbd{Control+o} prompt to open a buffer. You can use @kbd{Control+Shift+o} to directly be prompted for a buffer to open. Or, @kbd{Control+Shift+i} to direclty open next buffer, skipping *Messages* or *Backtrace* and the like. @kbd{Control+n} prompt allows you to create another internal window. @kbd{Control+w} allows you to close document or reorganize internal windows (if you jsut want to close current document, directly use @kbd{Alt+w}). @kbd{Alt+n} would delete-other-windows (ie, internal windows).
+Use @kbd{Control+o} prompt to open a buffer. You can use @kbd{Control+Shift+o} to directly be prompted for a buffer to open. Or, @kbd{Control+Shift+i} to direclty open next buffer, skipping *Messages* or *Backtrace* and the like. @kbd{Control+n} allows you to create another internal window. @kbd{Control+w} allows you to kill buffer.
 
-Use @kbd{Control+t} to open another tab. It does prompt for a buffer to open, but you can precise a file name. Key @kbd{Alt+t} would swith from a `tab' to another one (other-window, ie other-internal-window). Note that, in order to switch to another tab, you could also call ace-jump-char-mode (either @kbd{Alt+f f} or directly @kbd{Control+Shift+f} then specify which character of the other tab you want to jump to). If you actually just need to scroll another tab, stay in current one and use @kbd{Control+Alt+Space} to 'scroll-other-window'.
+Use @kbd{Control+t} to open another tab.
+
+The delete prompt (@kbd{Alt+d}) allows to delete either this window or all other windows. The save prompt (@kbd{Alt+s}) allows to save current configuration, which you can open from open prompt (@kbd{Control+o}).
+
+To navigate current internal windows, use the goto prompt (@kbd{Alt+g}) then one of the four ``windmove'' functions. Note that, in order to switch to another tab, you could also call ace-jump-char-mode (either @kbd{Alt+f f} or directly @kbd{Control+Shift+f} then specify which character of the other tab you want to jump to). If you actually just need to scroll another tab, stay in current one and use @kbd{Control+Alt+Space} to 'scroll-other-window'.
 
 @section Files, Bookmarks
 
@@ -272,30 +280,31 @@ Use @kbd{Control+s} to save current file, @kbd{Alt+s} to invoke a prompt to rena
 
 You can open a directory, too.
 
-dired is the emacs file manager. You can easily use regexp to open, delete, copy, rename files. And since you are using nu-mode, this is regexp-file-management-for-human-beings ,). Dired allows to use nu-mode shortcuts to navigate. Use @kbd{Alt+p} (uniserval-argument) then s key to edit the ls command.
+dired is the emacs file manager. You can easily use regexp to open, delete, copy, rename files. And since you are using nu-mode, this is regexp-file-management-for-human-beings ,). Dired allows to use nu-mode shortcuts to navigate. Use @kbd{Control+p} (uniserval-argument) then @key{s} key to edit the ls command.
 
 Some prompts are adapted to dired : selections (with @kbd{Control+a}) for example, will provide the different dired options to mark files. Look at ``replace'', ``insert'', ``find'', and so on. Where it make sense the usual prompts will be useful inside dired. Keys that *remain* useful inside dired are kept.
 
 @section External Windows
 
-It is possible, from Emacs to handle a bit of window management. But you should rather use a decent window manager.
+It is possible, from Emacs to handle a bit of window management. But you should rather use a decent window manager. Look however at the save proompt...
 
 @node Minibuffer
 @chapter Minibuffer
 
 Some prompts do provide access to helm functions : open prompt to access help-mini or help-find-files. Or insert prompt to access kill-ring from helm-show-kill-ring. Mx will use helm-Mx, ibuffer does use helm too, and so on.
 
-Once helm buffer is opened to let you select file / buffer / function or whatever helm migth help you select, use paddle (@kbd{M-i} , @kbd{M-k} to navigate up/down). If there are ``sources'', use M-o / M-u to navigate it. Control-q to quit helm. 
+Once helm buffer is opened to let you select file / buffer / function or whatever helm migth help you select, use paddle (@kbd{M-i} , @kbd{M-k} to navigate up/down). If there are ``sources'', use @kbd{Shift+Space} / @kbd{Shift+backspace} to navigate it or common @kbd{Alt+Space} / @kbd{Alt+Backspace} to scroll page. As expected, @kbd{Control+q} to quit helm.
 
 While looking for a file, C-u will not delete backward word but will go up one directory.
 
+Any helm prompt will use @key{TAB} as a ``persistent action'', which sometimes means completion.
 
 @node Hacking
 @chapter Hacking
 
-The print buffer, invoked from @kbd{Control+p}, will offer you to eval things or make (compile). The insert prompt, invoked from @kbd{Alt+v}, will allow you to insert a file, or the result of an async shell command into a new buffer. The save buffer, from @kbd{Alt+s}, offers to use git power to save cats or so.
+The print buffer, invoked from @kbd{Alt+p}, will offer you to eval things or make (compile). The insert prompt, invoked from @kbd{Alt+v}, will allow you to insert a file, or the result of an async shell command into a new buffer. The save buffer, from @kbd{Alt+s}, offers to use git power thanks to magit.
 
-@kbd{Control+p} also offers to grep, find-grep or ediff.
+@kbd{Alt+p} also offers to grep, find-grep or ediff.
 
 As seen above, @kbd{Alt+b} will run an emphasis-prompt, which allows to comment. Onto c-mode or various lisp-mode, @kbd{Control+b} will toggle comments.
 
@@ -304,16 +313,14 @@ As seen above, @kbd{Alt+b} will run an emphasis-prompt, which allows to comment.
 @node nu for the power user
 @chapter nu for the power user
 
-If you are not used to Emacs, reading this chapter is not necessary. But Emacs veteran should probably start here.
-emacs-nu redefines many keys, however two points make learning curve shorter
+If you are not used to Emacs, reading this chapter is not necessary. But Emacs veteran will probably be interested. Emacs-nu redefines many keys, however two points make learning curve shorter
 
 @enumerate
 @item For any user, knowing CUA keybinds will make emacs-nu discoverable.
 @item For veteran Emacs user, two important sequences remain:
 @end enumerate
 
-@kbd{M-x} is still there. This means, you can probably obtain what you want.
-Also, @kbd{Control+h} for help-prefix is still there.
+@kbd{M-x} is still there. This means, you can probably obtain what you want. Also, @kbd{Control+h} for help-prefix is still there.
 
 Now, two things should probably be kept in mind while trying nu-mode
 
@@ -328,7 +335,7 @@ To trigger a major mode sequence, start with @kbd{Control+Space}. This will invo
 To invoke above myfunction example, press @kbd{Control-SPC h}.
 
 @item
-You should not rely on @kbd{Control+x}, or at least no regularly. However to trigger x prefix, use @kbd{Control+g}. This will raise a prompt to trigger Control-X-Prefix.
+You should not rely on @kbd{Control+x}, or at least no regularly. However to trigger x prefix, use @kbd{Control+Shift+x}. This will raise a prompt to trigger Control-X-Prefix. Note this should @emph{not} be forced to, otherwise this is a bug you're encouraged to report.
 
 @end enumerate
 
@@ -357,21 +364,21 @@ If you dislike both nu-buffer-prompt-for-keymap and default nu-light-prompt-for-
 
 
 If you want to amend nu-mode keymap, amend nu-keymap. As of August, 2014, some prompts have a ``fixed'' map you can amend directly:
-- nu-window-map (Control+w)
-- nu-new-map (Control+n)
+- nu-window-map (Alt+w)
+- nu-new-map (Alt+n)
 - nu-a-map (Control+a)
 
 If you want to amend some ``dynamic prompt'', add a hook after its ``populating''
-- nu-populate-print does populate print-map (Control+p)
-- nu-populate-delete (Control+d, nu-delete-map)
-- nu-populate-bold-map (Control+b, nu-bold-map)
+- nu-populate-print does populate print-map (Alt+p)
+- nu-populate-delete (Alt+d, nu-delete-map)
+- nu-populate-bold-map (Alt+b, nu-bold-map)
 - nu-populate-insert-map (Alt+v, nu-insert-map)
 - nu-populate-save-map (Alt+s, nu-save-map)
 - nu-populate-open-map (Control+o, nu-open-map)
 - nu-populate-goto-map (Alt+g), nu-goto-map)
 
 You can also raise prompt for maps outide of nu-mode :
-- ctl-x-map, using Control+Shift+x
+- ctl-x-map, using @kbd{Control+Shift+x}
 - help-map
 
 Finally, it is totaly feasible to use nu-prompts styles for your own keymap : just (nu-prompt-for-keymap some-keymap), and you're there : one nu-mode prompt will offer you to leverage some-keymap.
@@ -379,17 +386,21 @@ Finally, it is totaly feasible to use nu-prompts styles for your own keymap : ju
 nu-mode does trigger some settings which are not mandatory
 
 cua-selection-mode is really logical given the nu-mode paddle. However, feel free to fix this call in nu-mode initialization.
-   (cua-selection-mode 1)
+@lisp
+(cua-selection-mode 1)
+@end lisp
 
 Also, cursor-type is amended. You can set it back, but again, despite not mandatory for nu-mode to work this is really logical given the keybinding.
+@lisp
    (set-default 'cursor-type 'bar)
+@end lisp
 
 @node nu and some specific modes
 @chapter nu and some specific modes
 
 @section term
 
-term is perfectly usable with nu-mode. Just press Control+Space then Control+c to run a sigstop. Or, Control+Space then Control+b to open another buffer. The vanilla x keymap is used. As of today there is no prompt however.
+term is perfectly usable with nu-mode. Just press @kbd{Control+Space Control+c} to run a sigstop. Or, Control+Space then Control+b to open another buffer. The vanilla x keymap is used. As of today there is no prompt however.
 
 @node nu & other libraries
 @chapter nu & other libraries
@@ -404,9 +415,9 @@ It is also possible to delete a node from the delete prompt. As you see, rather 
 
 @section magit
 
-Use Alt+s, ie save-prompt, to gain access to magit-status. Currently it is not properly integrated, in the sense that all nu-mode prompts would have to change once maggit-status-mode is active.
+Use Alt+s, ie save-prompt, to gain access to magit-status.
 
-However a work has started to integrate properly. For example, replace prompt will offer to toggle whether next commit has --amend.
+A work has started to integrate magit properly. For example, replace prompt will offer to toggle whether next commit has --amend. It is possible to use new prompt to create branch, open prompt to open branch manager, and so on.
 
 @section autojump
 
@@ -438,6 +449,9 @@ Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, 
 
 Obviously this only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
 
+@section texinfo
+
+Texinfo has little add-ons to prompts : ``print'' prompt will offer to makeinfo or convert to pdf, and ``insert'' prompt to texinfo-insert...
 
 @node Contributing
 @chapter Contributing

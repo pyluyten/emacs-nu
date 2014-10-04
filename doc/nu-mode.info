@@ -1,7 +1,7 @@
 This is nu-mode.info, produced by makeinfo version 5.1 from
 nu-mode.texi.
 
-This manual is for nu-mode (version 0.7 of 2014-09-12), a modern
+This manual is for nu-mode (version 0.8 of 2014-09-12), a modern
 keybinding for Emacs.  Copyright © 2014 Pierre-Yves Luyten.
 
      Permission is granted to copy, distribute and/or modify this
@@ -44,9 +44,12 @@ File: nu-mode.info,  Node: Overview,  Next: View and Edit,  Prev: Top,  Up: Top
 1 Overview
 **********
 
-"nu-mode " is a modern keybinding for Emacs.
+"nu-mode " is a modern keybinding for Emacs.  It does offer a consistent
+CUA Emacs interface, and plans to integrate properly with most popular
+Emacs modes.  CUA, here, does imply a deep meaning, despite it does
+partly use cua-mode.
 
-   nu-mode is a global minor mode, its keymap, and the commands which
+   nu-mode is a global minor mode, its keymap, and some commands which
 are not provided in raw Emacs.
 
    Modern, means respecting conventions like
@@ -57,43 +60,44 @@ are not provided in raw Emacs.
 
    To allow user to leverage large panel of functions, nu-mode relies on
 prompts.  For example, while 'Control+f' will directly offer to
-isearch-forward-regexp, 'Alt+f' will raise a "find-prompt" offering
-several search related features.  The prompt will display a list of keys
-- actually, sequences - and associated functions : t to find-tag, w to
-ace-jump-word-mode, m for imenu, b for regexp-builder, 'Alt+f' to
-isearch-forward-regexp, and so on.
+isearch-forward-regexp (that is, "Find"), 'Alt+f' will raise a
+"find-prompt" offering several search related features.  The prompt will
+display a list of keys - actually, sequences - and associated functions
+: t to find-tag, w to ace-jump-word-mode, m for imenu, b for
+regexp-builder, o for occur, 'Alt+f' to isearch-forward-regexp, and so
+on.
 
-   Most common shortcuts - ie, common to most applications - respect
-this guideline.  Thus, there is a prompt for 's', 'v', 'a'...  Most
-prompts rely on 'Alt' modifier to be run.  There are exceptions.  For
-example, 'Control+n' will raise a prompt to precise which kind of "new"
-stuff to produce.
+   Prompts do adapt to context.  As of October, 2014, there are 250
+"define-key" inside the relevant code portion, which means about 15
+prompts offer to call 25O commands.  Obviously, additionnal keys paddle
+offers to easily navigate.
 
 1.1 Dependencies
 ================
 
 nu-mode depends on several libraries, both native or external ones.
-These are all optional dependencies.
+  1. recentf
+  2. cua-selection-mode
+  3. helm
+  4. undo-tree
+
+   These are all optional dependencies.
   1. help-fns+, to describe-keymap
-  2. undo-tree
-  3. ace-jump
-  4. recentf
-  5. cua-selection-mode (see : paddle)
-  6. magit
+  2. ace-jump
+  3. magit
 
 1.2 Help
 ========
 
 Use 'Control-q' to quit a sequence or a command in progress.  Use
-'Alt+z' to undo last command.  Use 'Control+h' to gain access to help
-functions.  This includes the usual shortcuts to describe what a key
-does, or what a function does.  If you messed up, use 'Control+w' then
-'Control+q' to quit.
+'Control+z' to undo last command.  Use 'Control+h' to gain access to
+help functions.  This includes the usual shortcuts to describe what a
+key does, or what a function does.  Use 'Alt+w' 'Q' to quit.
 
    Prompts are usually triggered using a 'Alt' modifier and advertise a
 function using the same key, but with 'Control' modifier.  For example,
-'Alt+s' will pop-up a save prompt, while 'Control+s' directly saves the
-current buffer.
+'Alt+s' will pop-up a save prompt offering several features, while
+'Control+s' directly saves the current buffer.
 
    These prompts offer you to quickly learn where functions are.
 
@@ -112,12 +116,12 @@ help-map, and this is what Control+h does, for example).
 prompt will display available keys (what key sequences do not have).
 Second, a prompt will also advertise direct shortcuts to commands : ie,
 shortcuts that would have directly run some function without going
-through the prompts.  For example, using Control+w prompt, it is
-possible to press w to 'delete-other-windows, but prompt will advertise
-that Alt+n would directly have called this same function without
-requiring to go through key sequence.  This does not mean using the
-prompt was wrong.  It is rather meant as a way to discover and as a
-reminder, since nu-mode has many alternatives.
+through the prompts.  For example, using 'Alt+d' prompt, it is possible
+to press o to 'kill-word, but prompt will advertise that 'Control+d'
+would have directly called this same function without requiring to go
+through a prompt.  This does not mean using the prompt was wrong.  It is
+rather meant as a way to discover and as a reminder, since nu-mode has
+many alternatives.
 
    Third, a prompt (no matter light- or buffer-) allows you to use
 arguments in two ways.  The first way, is to use standard Emacs keys to
@@ -155,28 +159,30 @@ plus q - might be bound, because 'Shift+q' cannot be a mistake.
 ================
 
 An alternative way to explore prompts is helm.  Not the most efficient
-in my humble o, however it works : from a light prompt, instead of
+in my humble opinion, however it works : from a light prompt, instead of
 pressing <tab> to trigger a full (buffer) prompt, it is possible to
 press <space> to have a helm completion using the candidates
 corresponding to the prompt.
 
    Prompts shortcuts are shown but totally ignored : this is helm which
 decides candidate selection.  Prompts shortcuts are only shown for
-information, in order to learn.
+information, in order to learn - shortcuts might also be used to select
+candidate however).
 
-   Direct shortcuts are also shown, as usual.  So, candidate selection
-is different but learning process is the same.  It might be efficient or
-fun to learn.  In some busy prompts it might occasionnaly help, who
-knows.
+   Direct shortcuts are also shown, as usual.
 
 1.5 ok but where are prompts
 ============================
 
-Well, the simplest is to control+h then * to light-prompt about the
-different available prompts.  This just tells which key to press, not
-exactly which shortcut, and allows to describe the associated keymap.
+Read this documentation, or look at the Cheat Sheet on github :
+<https://github.com/pyluyten/emacs-nu/wiki/Cheat-Sheet---All-Prompts>.
 
-   You can control+h then * then * to describe the full nu-keymap.
+   From Emacs, the simplest is to 'Control+h' then <*> to light-prompt
+about the different available prompts.  This just tells which key to
+press, not exactly which shortcut, and allows to describe the associated
+keymap.
+
+   You can 'Control+h * *' to describe the full nu-keymap.
 
 
 File: nu-mode.info,  Node: View and Edit,  Next: Files Buffers Windows,  Prev: Overview,  Up: Top
@@ -184,17 +190,17 @@ File: nu-mode.info,  Node: View and Edit,  Next: Files Buffers Windows,  Prev: O
 2 View and Edit
 ***************
 
-Obviously just type keys to input text.  With slight notes : 'Alt+m'to
-carriage return + indent.  Use 'Alt+v' + c to insert literally a
+Obviously just type keys to input text.  With slight notes : 'Alt+m' to
+carriage return + indent.  Use 'Alt+v c' to insert literally a
 character.
 
 2.1 Navigate
 ============
 
-While arrows still work, nu-mode uses <Alt> key to navigate.  Hence, the
-thumb often presses <Alt> key, while pinky finger remains safe.  This is
-exactly the same principle than ErgoEmacs applies.  Navigate up left
-right down using <Alt> and :
+While arrows still work, nu-mode relies on <Alt> key to navigate.
+Hence, the thumb often presses <Alt> key, while pinky finger remains
+safe.  This is exactly the same principle than ErgoEmacs applies.
+Navigate up left right down using <Alt> and :
 
        I
      J K L
@@ -205,17 +211,13 @@ word.
      U I O
      J K L
 
-   Use 'Alt+$' to go to end of line, or 'Alt+h' to go beginning of line.
-To reach a line, or the beginning of buffer, or the end of the buffer,
-use 'Alt+g' then the appropriate key.  Just read this goto-prompt.  To
-find a char, a string, a line starting with a specific letter, use
-'Alt+f'.  To directly trigger a regexp-search, use 'Control+f'.
-
-   Notice that f key, used both with 'control' and 'alt' modifiers,
-offers find-related features.  One of these keys is direct : it directly
-executes a command, & maybe a very common one.  The other key does raise
-a prompt to offer more features.  This principle to have one 'alt'
-modifier plus one 'control' modifier applies to other keys, as well.
+   Use 'Alt+$' to go to end of line, and 'Alt+h' (or, 'Alt+^' to go to
+beginning of line.  To reach a line, or the beginning of buffer, or the
+end of the buffer, use 'Alt+g' then the appropriate key.  Just read this
+goto-prompt, which offers to navigate per line, paragraph, sentence and
+so on.  To find a char, a string, a line starting with a specific
+letter, use ace-jump : also inside 'Alt+f' prompt.  To directly trigger
+a regexp-search, use 'Control+f', which is another way to navigate.
 
    Numeric arguments can apply to navigation.  Press 'Alt+1' then
 'Alt+5' to input 15 as a numeric argument ; now input 'Alt+k' to go down
@@ -303,12 +305,12 @@ use 'Alt + v' to invoke an advanced "Paste" prompt.
 2.4 Undo or Redo
 ================
 
-Use 'Alt+z' to undo.  Or, use 'Control+z' to invoke undo-tree visualizer
-to play with discard changes in an advanced way.  This screen displays
-last changes, and you can navigate these using the paddle ('Alt+i',
-'Alt+j', 'Alt+k', 'Alt+l').  Press <q> to quit this screen.
-
-   It is also possible to directly redo using 'Control+Shift+z'.
+As expected, use 'Control+z' to undo and 'Control+Shift+z' to redo.  Or,
+use 'Alt+z' to invoke undo-tree visualizer to play with discard changes
+in an advanced way.  This screen displays last changes, and you can
+navigate these using the paddle ('Alt+i', 'Alt+j', 'Alt+k', 'Alt+l').
+Press <q> to quit this screen.  Note that this is somewhat a prompt,
+aint't it, which is a reminder on why to use 'Alt'.
 
 2.5 Advanced Edition
 ====================
@@ -349,20 +351,22 @@ are tabs, aren't they?
    Use 'Control+o' prompt to open a buffer.  You can use
 'Control+Shift+o' to directly be prompted for a buffer to open.  Or,
 'Control+Shift+i' to direclty open next buffer, skipping *Messages* or
-*Backtrace* and the like.  'Control+n' prompt allows you to create
-another internal window.  'Control+w' allows you to close document or
-reorganize internal windows (if you jsut want to close current document,
-directly use 'Alt+w').  'Alt+n' would delete-other-windows (ie, internal
-windows).
+*Backtrace* and the like.  'Control+n' allows you to create another
+internal window.  'Control+w' allows you to kill buffer.
 
-   Use 'Control+t' to open another tab.  It does prompt for a buffer to
-open, but you can precise a file name.  Key 'Alt+t' would swith from a
-'tab' to another one (other-window, ie other-internal-window).  Note
-that, in order to switch to another tab, you could also call
-ace-jump-char-mode (either 'Alt+f f' or directly 'Control+Shift+f' then
-specify which character of the other tab you want to jump to).  If you
-actually just need to scroll another tab, stay in current one and use
-'Control+Alt+Space' to 'scroll-other-window'.
+   Use 'Control+t' to open another tab.
+
+   The delete prompt ('Alt+d') allows to delete either this window or
+all other windows.  The save prompt ('Alt+s') allows to save current
+configuration, which you can open from open prompt ('Control+o').
+
+   To navigate current internal windows, use the goto prompt ('Alt+g')
+then one of the four "windmove" functions.  Note that, in order to
+switch to another tab, you could also call ace-jump-char-mode (either
+'Alt+f f' or directly 'Control+Shift+f' then specify which character of
+the other tab you want to jump to).  If you actually just need to scroll
+another tab, stay in current one and use 'Control+Alt+Space' to
+'scroll-other-window'.
 
 3.2 Files, Bookmarks
 ====================
@@ -376,8 +380,8 @@ use the same open-prompt and save-prompt for this.
    dired is the emacs file manager.  You can easily use regexp to open,
 delete, copy, rename files.  And since you are using nu-mode, this is
 regexp-file-management-for-human-beings ,).  Dired allows to use nu-mode
-shortcuts to navigate.  Use 'Alt+p' (uniserval-argument) then s key to
-edit the ls command.
+shortcuts to navigate.  Use 'Control+p' (uniserval-argument) then <s>
+key to edit the ls command.
 
    Some prompts are adapted to dired : selections (with 'Control+a') for
 example, will provide the different dired options to mark files.  Look
@@ -389,7 +393,8 @@ inside dired are kept.
 ====================
 
 It is possible, from Emacs to handle a bit of window management.  But
-you should rather use a decent window manager.
+you should rather use a decent window manager.  Look however at the save
+proompt...
 
 
 File: nu-mode.info,  Node: Minibuffer,  Next: Hacking,  Prev: Files Buffers Windows,  Up: Top
@@ -404,11 +409,15 @@ and so on.
 
    Once helm buffer is opened to let you select file / buffer / function
 or whatever helm migth help you select, use paddle ('M-i' , 'M-k' to
-navigate up/down).  If there are "sources", use M-o / M-u to navigate
-it.  Control-q to quit helm.
+navigate up/down).  If there are "sources", use 'Shift+Space' /
+'Shift+backspace' to navigate it or common 'Alt+Space' / 'Alt+Backspace'
+to scroll page.  As expected, 'Control+q' to quit helm.
 
    While looking for a file, C-u will not delete backward word but will
 go up one directory.
+
+   Any helm prompt will use <TAB> as a "persistent action", which
+sometimes means completion.
 
 
 File: nu-mode.info,  Node: Hacking,  Next: nu for the power user,  Prev: Minibuffer,  Up: Top
@@ -416,13 +425,13 @@ File: nu-mode.info,  Node: Hacking,  Next: nu for the power user,  Prev: Minibuf
 5 Hacking
 *********
 
-The print buffer, invoked from 'Control+p', will offer you to eval
-things or make (compile).  The insert prompt, invoked from 'Alt+v', will
-allow you to insert a file, or the result of an async shell command into
-a new buffer.  The save buffer, from 'Alt+s', offers to use git power to
-save cats or so.
+The print buffer, invoked from 'Alt+p', will offer you to eval things or
+make (compile).  The insert prompt, invoked from 'Alt+v', will allow you
+to insert a file, or the result of an async shell command into a new
+buffer.  The save buffer, from 'Alt+s', offers to use git power thanks
+to magit.
 
-   'Control+p' also offers to grep, find-grep or ediff.
+   'Alt+p' also offers to grep, find-grep or ediff.
 
    As seen above, 'Alt+b' will run an emphasis-prompt, which allows to
 comment.  Onto c-mode or various lisp-mode, 'Control+b' will toggle
@@ -437,7 +446,7 @@ File: nu-mode.info,  Node: nu for the power user,  Next: Customization,  Prev: H
 ***********************
 
 If you are not used to Emacs, reading this chapter is not necessary.
-But Emacs veteran should probably start here.  emacs-nu redefines many
+But Emacs veteran will probably be interested.  Emacs-nu redefines many
 keys, however two points make learning curve shorter
 
   1. For any user, knowing CUA keybinds will make emacs-nu discoverable.
@@ -459,8 +468,9 @@ want.  Also, 'Control+h' for help-prefix is still there.
      To invoke above myfunction example, press 'Control-SPC h'.
 
   2. You should not rely on 'Control+x', or at least no regularly.
-     However to trigger x prefix, use 'Control+g'.  This will raise a
-     prompt to trigger Control-X-Prefix.
+     However to trigger x prefix, use 'Control+Shift+x'.  This will
+     raise a prompt to trigger Control-X-Prefix.  Note this should _not_
+     be forced to, otherwise this is a bug you're encouraged to report.
 
    'Repeat' is invoked from 'Control+Return'.  It was hacked to work
 with prompts : thus, you can repeat a command ran from a prompt.  Prefix
@@ -515,18 +525,17 @@ want your function to be pleasant =)
 
    If you want to amend nu-mode keymap, amend nu-keymap.  As of August,
 2014, some prompts have a "fixed" map you can amend directly: -
-nu-window-map (Control+w) - nu-new-map (Control+n) - nu-a-map
-(Control+a)
+nu-window-map (Alt+w) - nu-new-map (Alt+n) - nu-a-map (Control+a)
 
    If you want to amend some "dynamic prompt", add a hook after its
-"populating" - nu-populate-print does populate print-map (Control+p) -
-nu-populate-delete (Control+d, nu-delete-map) - nu-populate-bold-map
-(Control+b, nu-bold-map) - nu-populate-insert-map (Alt+v, nu-insert-map)
-- nu-populate-save-map (Alt+s, nu-save-map) - nu-populate-open-map
+"populating" - nu-populate-print does populate print-map (Alt+p) -
+nu-populate-delete (Alt+d, nu-delete-map) - nu-populate-bold-map (Alt+b,
+nu-bold-map) - nu-populate-insert-map (Alt+v, nu-insert-map) -
+nu-populate-save-map (Alt+s, nu-save-map) - nu-populate-open-map
 (Control+o, nu-open-map) - nu-populate-goto-map (Alt+g), nu-goto-map)
 
    You can also raise prompt for maps outide of nu-mode : - ctl-x-map,
-using Control+Shift+x - help-map
+using 'Control+Shift+x' - help-map
 
    Finally, it is totaly feasible to use nu-prompts styles for your own
 keymap : just (nu-prompt-for-keymap some-keymap), and you're there : one
@@ -536,11 +545,12 @@ nu-mode prompt will offer you to leverage some-keymap.
 
    cua-selection-mode is really logical given the nu-mode paddle.
 However, feel free to fix this call in nu-mode initialization.
-(cua-selection-mode 1)
+     (cua-selection-mode 1)
 
    Also, cursor-type is amended.  You can set it back, but again,
 despite not mandatory for nu-mode to work this is really logical given
-the keybinding.  (set-default 'cursor-type 'bar)
+the keybinding.
+        (set-default 'cursor-type 'bar)
 
 
 File: nu-mode.info,  Node: nu and some specific modes,  Next: nu & other libraries,  Prev: Customization,  Up: Top
@@ -551,8 +561,8 @@ File: nu-mode.info,  Node: nu and some specific modes,  Next: nu & other librari
 8.1 term
 ========
 
-term is perfectly usable with nu-mode.  Just press Control+Space then
-Control+c to run a sigstop.  Or, Control+Space then Control+b to open
+term is perfectly usable with nu-mode.  Just press 'Control+Space
+Control+c' to run a sigstop.  Or, Control+Space then Control+b to open
 another buffer.  The vanilla x keymap is used.  As of today there is no
 prompt however.
 
@@ -583,12 +593,12 @@ context.
 9.2 magit
 =========
 
-Use Alt+s, ie save-prompt, to gain access to magit-status.  Currently it
-is not properly integrated, in the sense that all nu-mode prompts would
-have to change once maggit-status-mode is active.
+Use Alt+s, ie save-prompt, to gain access to magit-status.
 
-   However a work has started to integrate properly.  For example,
-replace prompt will offer to toggle whether next commit has -amend.
+   A work has started to integrate magit properly.  For example, replace
+prompt will offer to toggle whether next commit has -amend.  It is
+possible to use new prompt to create branch, open prompt to open branch
+manager, and so on.
 
 9.3 autojump
 ============
@@ -640,6 +650,12 @@ purpose.  Simply put below lines on your .emacs:
 
    Obviously this only fixes the basic paddle.  Backward and Foward word
 are different, but fixing the paddle is fine.
+
+9.7 texinfo
+===========
+
+Texinfo has little add-ons to prompts : "print" prompt will offer to
+makeinfo or convert to pdf, and "insert" prompt to texinfo-insert...
 
 
 File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: nu & other libraries,  Up: Top
@@ -1137,16 +1153,16 @@ their use in free software.
 Tag Table:
 Node: Top716
 Node: Overview1106
-Node: View and Edit7217
-Node: Files Buffers Windows13384
-Node: Minibuffer15970
-Node: Hacking16658
-Node: nu for the power user17358
-Node: Customization20222
-Node: nu and some specific modes22538
-Node: nu & other libraries22963
-Node: Contributing26328
-Node: GNU Free Documentation License26586
+Node: View and Edit7392
+Node: Files Buffers Windows13424
+Node: Minibuffer16040
+Node: Hacking16917
+Node: nu for the power user17606
+Node: Customization20573
+Node: nu and some specific modes22883
+Node: nu & other libraries23305
+Node: Contributing26795
+Node: GNU Free Documentation License27053
 
 End Tag Table
 
