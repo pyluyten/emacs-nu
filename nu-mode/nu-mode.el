@@ -135,7 +135,7 @@
    (define-key nu-menu-map (kbd "b") 'nu-bold-map)
    (define-key nu-keymap (kbd "M-b") 'nu-bold-prompt)
 
-   (define-key nu-keymap (kbd "C-n") 'split-window-right)
+   (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
    (define-key nu-keymap (kbd "C-S-n") 'nu-new-empty-buffer)
    (define-key nu-keymap (kbd "M-n") 'nu-new-prompt)
 
