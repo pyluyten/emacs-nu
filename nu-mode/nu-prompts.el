@@ -242,14 +242,15 @@
   (nu-prompt-for-keymap nu-insert-map))
 
 
-
 (defun nu-populate-save-map ()
  "Populate save map."
   (nu-define-prefix 'nu-save-map)
   (define-key nu-save-map (kbd "s") 'save-buffer)
   (define-key nu-save-map (kbd "g") 'nu-toggle-goal-column)
   (define-key nu-save-map (kbd "b") 'bookmark-set)
-  (define-key nu-save-map (kbd "w") 'ido-write-file)
+  (define-key nu-save-map (kbd "M-s") 'ido-write-file)
+  (define-key nu-save-map (kbd "w") 'window-configuration-to-register)
+  (define-key nu-save-map (kbd "M-f") 'frame-configuration-to-register)
   (define-key nu-save-map (kbd "r") 'rename-buffer)
   (define-key nu-save-map (kbd "L") 'org-store-link)
   (if (eq major-mode 'org-mode)
@@ -383,6 +384,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "o")  'helm-mini)
   (define-key nu-open-map (kbd "C-f")  'find-file-other-window) ; useless now that helm fixes this stuff =)
   (define-key nu-open-map (kbd "r")  'helm-recentf)
+  (define-key nu-open-map (kbd "C-r")  'helm-register)
   (define-key nu-open-map (kbd "b")  'helm-bookmarks)
   (define-key nu-open-map (kbd "B")  'bookmark-jump)
   (define-key nu-open-map (kbd "x")  'list-registers)
