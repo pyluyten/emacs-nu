@@ -41,8 +41,8 @@
    (define-key nu-menu-map (kbd "r") 'nu-replace-map)
    (define-key nu-keymap (kbd "M-r") 'nu-replace-prompt)
 
-   (define-key nu-keymap (kbd "C-t") 'ido-switch-buffer-other-window)
-   (define-key nu-keymap (kbd "M-t") 'other-window)
+   (define-key nu-keymap (kbd "C-t") 'split-window-right)
+   (define-key nu-keymap (kbd "M-t") 'ido-switch-buffer-other-window)
 
    ; y?
    (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)
