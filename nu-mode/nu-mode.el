@@ -126,9 +126,11 @@
    ; no standard M-c ; some mode might need it however.
 
    (define-key nu-keymap (kbd "C-v") 'nu-yank-pop-or-yank)
-   (define-key nu-keymap (kbd "C-S-v") 'helm-show-kill-ring)
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
    (define-key nu-menu-map (kbd "v") 'nu-insert-map)
+   (define-key nu-keymap (kbd "M-S-v") 'helm-show-kill-ring)
+   (define-key nu-keymap (kbd "C-S-v") 'quoted-insert)
+
 
    (define-key nu-keymap (kbd "C-b") 'nu-bold)
    (define-key nu-keymap (kbd "C-S-b") 'comment-or-uncomment-region)
@@ -136,7 +138,7 @@
    (define-key nu-keymap (kbd "M-b") 'nu-bold-prompt)
 
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
-   (define-key nu-keymap (kbd "C-S-n") 'nu-new-empty-buffer)
+   (define-key nu-keymap (kbd "C-S-n") 'org-capture)
    (define-key nu-keymap (kbd "M-n") 'nu-new-prompt)
 
 
