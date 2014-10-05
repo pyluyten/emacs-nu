@@ -89,10 +89,11 @@ nu-mode depends on several libraries, both native or external ones.
 1.2 Help
 ========
 
-Use 'Control-q' to quit a sequence or a command in progress.  Use
+Use 'Control+q' to quit a sequence or a command in progress.  Use
 'Control+z' to undo last command.  Use 'Control+h' to gain access to
 help functions.  This includes the usual shortcuts to describe what a
-key does, or what a function does.  Use 'Alt+w' 'Q' to quit.
+key does, or what a function does.  Use 'Alt+q' prompt to quit Emacs (or
+run some other function).
 
    Prompts are usually triggered using a 'Alt' modifier and advertise a
 function using the same key, but with 'Control' modifier.  For example,
@@ -148,12 +149,14 @@ rather made to make some commands easier, for example deleting a
 paragraph then two word then a character.  Modal editing is possible
 using nu-mode, see below.
 
-   Sixth, a buffer-prompt can be scrolled using <space> and <backspace>.
+   Sixth, a buffer-prompt can always be scrolled using <space> and
+<backspace>.  Thus space and backspace are not bound.  I might be
+tempted however to inverse things later on, bind space/backspace, and
+have buffer prompt use M-space / M-backspace to scroll.
 
    Seventh, a prompt (no matter light- or buffer-) can always be escaped
 using 'q'.  This letter is never bound.  You can always use it.  Note
-that 'Control+q' and 'Alt+q' are neither bound.  However, <Q> -ie, shift
-plus q - might be bound, because 'Shift+q' cannot be a mistake.
+that 'Control+q' and 'Alt+q' are neither bound.
 
 1.4 helm-prompts
 ================
@@ -272,18 +275,27 @@ go
      paddle>'.  Using 'Alt-Shift-u', for example, will select previous
      word (or extend current selection to previous word).
 
-  2. An alternative in order to select text is to press 'Alt+a' to set a
-     mark, then move to extend selection.  You can also use a direct key
-     to set a rectangular mark : 'Control+S', ie 'Control+Shift+s'.
+  2. An alternative in order to select text is to press 'Control+a' to
+     mark current "block" (a word including punctuation), then move to
+     extend selection.
 
-  3. An alternative is to press 'Control+a' to invoke "a-" prompt,
-     allowing to select "a-" word, "a-" sentence, and so on, or to set
-     the mark.  Or, to set a rectangular mark.  Read the prompt!
+  3. An alternative is to press 'Alt+a' to invoke "a-" prompt, allowing
+     to select "a-" word, "a-" sentence, and so on, or to set the mark.
+     Or, to set a rectangular mark.  Read the prompt!  Notably, 'Alt+a
+     i' will just set the mark, while 'Alt+a j' will set the mark & go
+     backward-char - and other paddle keys will perform some logical
+     actions.  Moreover, the a-prompt tries hard to keep in sync with
+     goto prompt to share the same keys, which are quite closely related
+     to paddle keys - thus it is easy to remember both mark and goto
+     prompt...
+
+  4. You can also use a direct key to set a rectangular mark :
+     'Control+Shift+a'.
 
    Once some text is selected you can "toggle the point and mark" using
-'Control+a', or deactivate the selection using 'Alt+a', or cut the text
-using 'Control+x' (or 'Alt+d' might be nice depending on your fingers
-position).
+either 'Control+a' or 'Alt+a', or deactivate the selection using
+'Alt+q', or cut the text using 'Control+x' (or 'Alt+d' might be nice
+depending on your fingers position).
 
 2.3 Cut Copy Paste
 ==================
@@ -1153,16 +1165,16 @@ their use in free software.
 Tag Table:
 Node: Top716
 Node: Overview1106
-Node: View and Edit7392
-Node: Files Buffers Windows13424
-Node: Minibuffer16040
-Node: Hacking16917
-Node: nu for the power user17606
-Node: Customization20573
-Node: nu and some specific modes22883
-Node: nu & other libraries23305
-Node: Contributing26795
-Node: GNU Free Documentation License27053
+Node: View and Edit7527
+Node: Files Buffers Windows13995
+Node: Minibuffer16611
+Node: Hacking17488
+Node: nu for the power user18177
+Node: Customization21144
+Node: nu and some specific modes23454
+Node: nu & other libraries23876
+Node: Contributing27366
+Node: GNU Free Documentation License27624
 
 End Tag Table
 

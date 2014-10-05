@@ -25,10 +25,10 @@
    ;;
 
 
-   (define-key nu-keymap (kbd "C-a") 'nu-a-prompt)
+   (define-key nu-keymap (kbd "C-a") 'nu-select-a-block)
    (define-key nu-keymap (kbd "C-S-a") 'nu-set-rectangle-mark)
    (define-key nu-menu-map (kbd "a") 'nu-a-map)
-   (define-key nu-keymap (kbd "M-a") 'cua-set-mark)
+   (define-key nu-keymap (kbd "M-a") 'nu-a-prompt)
 
    (define-key nu-keymap (kbd "C-z") 'undo-tree-undo)
    (define-key nu-keymap (kbd "C-S-z") 'undo-tree-redo)

@@ -99,10 +99,10 @@ These are all optional dependencies.
 
 @section Help
 
-Use @kbd{Control-q} to quit a sequence or a command in progress.
+Use @kbd{Control+q} to quit a sequence or a command in progress.
 Use @kbd{Control+z} to undo last command.
 Use @kbd{Control+h} to gain access to help functions. This includes the usual shortcuts to describe what a key does, or what a function does.
-Use @kbd{Alt+w} @kbd{Q} to quit.
+Use @kbd{Alt+q} prompt to quit Emacs (or run some other function).
 
 Prompts are usually triggered using a @kbd{Alt} modifier and advertise a function using the same key, but with @kbd{Control} modifier. For example, @kbd{Alt+s} will pop-up a save prompt offering several features, while @kbd{Control+s} directly saves the current buffer.
 
@@ -120,9 +120,9 @@ Fourth, a buffer-prompt also allows to get some help about functions. Run the bu
 
 Fifth, a prompt (no matter light- or buffer-) can be toggled to some `repeat' state. Run a prompt, then press @key{+}. You can then use the prompt as usual, except that after running the function, prompt will ask you again for a key, with the same keymap. Escape the prompt pressing any unbound key. You might notice is does allow some sort of modal editing, but this is not really the intented behaviour. This feature is rather made to make some commands easier, for example deleting a paragraph then two word then a character. Modal editing is possible using nu-mode, see below.
 
-Sixth, a buffer-prompt can be scrolled using <space> and <backspace>.
+Sixth, a buffer-prompt can always be scrolled using <space> and <backspace>. Thus space and backspace are not bound. I might be tempted however to inverse things later on, bind space/backspace, and have buffer prompt use M-space / M-backspace to scroll.
 
-Seventh, a prompt (no matter light- or buffer-) can always be escaped using `q'. This letter is never bound. You can always use it. Note that @kbd{Control+q} and @kbd{Alt+q} are neither bound. However, @key{Q} -ie, shift plus q - might be bound, because @kbd{Shift+q} cannot be a mistake.
+Seventh, a prompt (no matter light- or buffer-) can always be escaped using `q'. This letter is never bound. You can always use it. Note that @kbd{Control+q} and @kbd{Alt+q} are neither bound.
 
 @section helm-prompts
 
@@ -216,14 +216,17 @@ Right, but how to select? Once again, several alternatives...here we go
 The paddle allow to directly select (``mark'') text : keep @kbd{shift} pressed, then move either with arrows or @kbd{Alt+<some key of the paddle>}. Using @kbd{Alt-Shift-u}, for example, will select previous word (or extend current selection to previous word).
 
 @item
-An alternative in order to select text is to press @kbd{Alt+a} to set a mark, then move to extend selection. You can also use a direct key to set a rectangular mark : @kbd{Control+S}, ie @kbd{Control+Shift+s}.
+An alternative in order to select text is to press @kbd{Control+a} to mark current ``block'' (a word including punctuation), then move to extend selection.
 
 @item
-An alternative is to press @kbd{Control+a} to invoke ``a-'' prompt, allowing to select ``a-'' word, ``a-'' sentence, and so on, or to set the mark. Or, to set a rectangular mark. Read the prompt!
+An alternative is to press @kbd{Alt+a} to invoke ``a-'' prompt, allowing to select ``a-'' word, ``a-'' sentence, and so on, or to set the mark. Or, to set a rectangular mark. Read the prompt! Notably, @kbd{Alt+a i} will just set the mark, while @kbd{Alt+a j} will set the mark & go backward-char - and other paddle keys will perform some logical actions. Moreover, the a-prompt tries hard to keep in sync with goto prompt to share the same keys, which are quite closely related to paddle keys - thus it is easy to remember both mark and goto prompt...
+
+@item
+You can also use a direct key to set a rectangular mark : @kbd{Control+Shift+a}.
 
 @end enumerate
 
-Once some text is selected you can ``toggle the point and mark'' using @kbd{Control+a}, or deactivate the selection using @kbd{Alt+a}, or cut the text using @kbd{Control+x} (or @kbd{Alt+d} might be nice depending on your fingers position).
+Once some text is selected you can ``toggle the point and mark'' using either @kbd{Control+a} or @kbd{Alt+a}, or deactivate the selection using @kbd{Alt+q}, or cut the text using @kbd{Control+x} (or @kbd{Alt+d} might be nice depending on your fingers position).
 
 @section Cut Copy Paste
 

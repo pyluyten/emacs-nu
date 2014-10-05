@@ -251,6 +251,18 @@ a browse-kill-ring function."
 (defun _nu-mark-a-word ()
   (interactive)
   (run-with-timer 0.01 nil 'nu-mark-a-word))
+(defun nu-mark-forward-char ()
+   (interactive)
+   (run-with-timer 0.01 nil '~nu-mark-forward-char))
+(defun nu-mark-backward-char ()
+   (interactive)
+   (run-with-timer 0.01 nil '~nu-mark-backward-char))
+(defun nu-mark-forward-word ()
+   (interactive)
+   (run-with-timer 0.01 nil '~nu-mark-forward-word))
+(defun nu-mark-backward-word ()
+   (interactive)
+   (run-with-timer 0.01 nil '~nu-mark-backward-word))
 (defun _nu-select-a-block ()
   (interactive)
   (run-with-timer 0.01 nil 'nu-select-a-block))
@@ -281,13 +293,37 @@ a browse-kill-ring function."
 
 A contigent amount of chars different than <space>."
    (interactive)
-   (while (not (eq (char-before) ?\s))
-          (backward-char))
-   (cua-set-mark)
-   (while (not (or
-                   (eq (char-after) ?\s)
-                   (eq (char-after) ?\n)))
-          (forward-char)))
+   (if mark-active
+       (exchange-point-and-mark)
+       (while (not (eq (char-before) ?\s))
+              (backward-char))
+       (cua-set-mark)
+       (while (not (or
+                       (eq (char-after) ?\s)
+                       (eq (char-after) ?\n)))
+              (forward-char))))
+
+
+(defun ~nu-mark-forward-char (&optional arg)
+  (interactive "P")
+  (cua-set-mark)
+  (forward-char arg))
+
+
+(defun ~nu-mark-backward-char (&optional arg)
+  (interactive "P")
+  (cua-set-mark)
+  (backward-char arg))
+
+(defun ~nu-mark-forward-word (&optional arg)
+  (interactive "P")
+  (cua-set-mark)
+  (forward-word arg))
+
+(defun ~nu-mark-backward-word (&optional arg)
+  (interactive "P")
+  (cua-set-mark)
+  (backward-word arg))
 
 (defun nu-mark-a-word (&optional arg)
   "Mark a word."
@@ -615,6 +651,8 @@ If window is the only one, kill buffer."
 
 
 (defalias 'nu-insert-line-below 'open-line)
+
+(defalias 'nu-clear-mark 'cua-set-mark)
 
 (defun nu-insert-line-above (&optional num)
 "Insert an empty row above."
