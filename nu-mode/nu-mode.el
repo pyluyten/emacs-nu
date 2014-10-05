@@ -71,7 +71,8 @@
 
    (define-key nu-keymap (kbd "C-q") 'keyboard-escape-quit)
    (define-key nu-keymap (kbd "C-S-q") 'save-buffers-kill-emacs)
-   (define-key nu-keymap (kbd "M-q") 'quoted-insert) ; fix minibuf'
+   (define-key nu-menu-map (kbd "q") 'nu-quit-map)
+   (define-key nu-keymap (kbd "M-q") 'nu-quit-prompt)
 
 
    (define-key nu-keymap (kbd "C-s") 'save-buffer)

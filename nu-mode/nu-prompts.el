@@ -31,6 +31,7 @@
 (require 'windmove)
 (require 'nu-help)
 
+(defvar nu-quit-map)
 (defvar nu-print-map)
 (defvar nu-delete-map)
 (defvar nu-insert-map)
@@ -114,6 +115,20 @@
   (nu-populate-print)
   (nu-prompt-for-keymap nu-print-map))
 
+
+(defun nu-populate-quit ()
+  "Populate quit map."
+ (nu-define-prefix 'nu-quit-map)
+ (define-key nu-quit-map (kbd "e") 'kill-emacs)
+ (define-key nu-quit-map (kbd "f") 'delete-frame)
+ (define-key nu-quit-map (kbd "w") 'quit-window))
+
+
+(defun nu-quit-prompt ()
+  "Prompt to quit."
+  (interactive)
+  (nu-populate-quit)
+  (nu-prompt-for-keymap nu-quit-map))
 
 (defun nu-populate-delete ()
   "Populate nu-delete-map."
