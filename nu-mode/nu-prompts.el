@@ -456,22 +456,34 @@ But if mark is active, exchange point and mark."
       (define-key nu-goto-map (kbd "*") 'forward-list)
       (define-key nu-goto-map (kbd "M-*") 'backward-list))
 
+   ;
+   ; common keys
+   ;
 
-      (define-key nu-goto-map (kbd "M-i") 'windmove-up)
-      (define-key nu-goto-map (kbd "M-j") 'windmove-left)
-      (define-key nu-goto-map (kbd "M-k") 'windmove-down)
-      (define-key nu-goto-map (kbd "M-l") 'windmove-right)
+   (define-key nu-goto-map (kbd "M-i") 'windmove-up)
+   (define-key nu-goto-map (kbd "M-j") 'windmove-left)
+   (define-key nu-goto-map (kbd "M-k") 'windmove-down)
+   (define-key nu-goto-map (kbd "M-l") 'windmove-right)
 
-  ; common keys
-  (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
-  (define-key nu-goto-map (kbd "k") 'forward-line)
-  (define-key nu-goto-map (kbd "k") 'end-of-buffer)
-  (define-key nu-goto-map (kbd "e") 'next-error)
-  (define-key nu-goto-map (kbd "M-e") 'previous-error)
-  (define-key nu-goto-map (kbd "g") 'goto-line)
-  (define-key nu-goto-map (kbd "M-g") 'nu-goto-line-previousbuffer)
-  (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
-  (define-key nu-goto-map (kbd "M-s") 'org-mark-ring-goto))
+   (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
+   (define-key nu-goto-map (kbd "k") 'end-of-buffer)
+   (define-key nu-goto-map (kbd "e") 'next-error)
+   (define-key nu-goto-map (kbd "M-e") 'previous-error)
+   (define-key nu-goto-map (kbd "g") 'goto-line)
+   (define-key nu-goto-map (kbd "M-g") 'nu-goto-line-previousbuffer)
+   (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
+   (define-key nu-goto-map (kbd "M-s") 'org-mark-ring-goto)
+
+   ;;
+   ;; add-ons
+   ;;
+
+   (if (eq major-mode 'org-mode)
+       (progn
+         (define-key nu-goto-map (kbd "I") 'org-backward-heading-same-level)
+         (define-key nu-goto-map (kbd "K") 'org-forward-heading-same-level)
+         (define-key nu-goto-map (kbd "J") 'org-backward-element)
+         (define-key nu-goto-map (kbd "L") 'org-forward-element))))
 
 
 (defun nu-goto-prompt ()
