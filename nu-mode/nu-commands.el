@@ -286,6 +286,12 @@ a browse-kill-ring function."
   (run-with-timer 0.01 nil 'cua-set-rectangle-mark))
 
 
+(defun nu-mark-to-previous-line ()
+  (interactive)
+  (cua-set-mark)
+  (previous-line))
+
+
 
 (defun nu-select-a-block ()
   "Select a block
