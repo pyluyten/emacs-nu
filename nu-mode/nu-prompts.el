@@ -120,6 +120,8 @@
   "Populate quit map."
  (nu-define-prefix 'nu-quit-map)
  (define-key nu-quit-map (kbd "e") 'kill-emacs)
+ (define-key nu-quit-map (kbd "C-m") 'save-buffers-kill-emacs)
+ (define-key nu-quit-map (kbd "q") 'keyboard-escape-quit)
  (define-key nu-quit-map (kbd "f") 'delete-frame)
  (define-key nu-quit-map (kbd "w") 'quit-window))
 
