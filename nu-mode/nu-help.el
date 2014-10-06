@@ -5,10 +5,12 @@
 (defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
 
 
-
-(defun nu-make-overriding-map (keymap)
+(defun nu-make-overriding-map (keymap &rest bindings)
  (make-local-variable 'minor-mode-overriding-map-alist)
- (push `(nu-mode . ,keymap) minor-mode-overriding-map-alist))
+ (push `(nu-mode . ,keymap) minor-mode-overriding-map-alist)
+ (while (not (eq bindings nil))
+    (define-key keymap (kbd (car bindings)) (car (cdr bindings)))
+    (pop bindings) (pop bindings)))
 
 
  ; map-keymap has no way to receive

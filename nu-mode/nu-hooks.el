@@ -42,41 +42,28 @@
   (define-key ibuffer-mode-map (kbd "M-i") 'ibuffer-backward-line)
   (define-key ibuffer-mode-map (kbd "M-k") 'ibuffer-forward-line))
 
-
-; stock M-i & M-k functions to restore them
-; while leaving minibuffer
-
-(defvar nu-m-i-sname nil)
-(defvar nu-m-k-sname nil)
-(defvar nu-m-^-sname nil)
-(defvar nu-m-$-sname nil)
-
-
 (defun nu-prepare-for-minibuffer ()
-  "Minibuffer might be not as important as helm. Still."
-  (setq nu-m-i-sname (symbol-name (lookup-key nu-keymap (kbd "M-i"))))
-  (setq nu-m-k-sname (symbol-name (lookup-key nu-keymap (kbd "M-k"))))
-  (setq nu-m-^-sname (symbol-name (lookup-key nu-keymap (kbd "M-<dead-circumflex>"))))
-  (setq nu-m-$-sname (symbol-name (lookup-key nu-keymap (kbd "M-$"))))
+  "Minibuffer (except helm).
+
+Still, we might need it, for example for later on ido.
+& even helm function use it : completing-read functions without
+particular helm-map, such as describe-variable..."
 
   (if (not (helm-alive-p))
-      (progn (define-key nu-keymap (kbd "M-i") 'previous-history-element)
-             (define-key nu-keymap (kbd "M-k") 'next-history-element))
+      (progn (define-key minibuffer-local-map (kbd "M-i") 'previous-history-element)
+             (define-key minibuffer-local-map (kbd "M-k") 'next-history-element))
 
       ; if helm.
-      (define-key nu-keymap (kbd "M-i") 'helm-previous-line)
-      (define-key nu-keymap (kbd "M-k") 'helm-next-line)
-      (define-key nu-keymap (kbd "M-<dead-circumflex>") 'previous-history-element)
-      (define-key nu-keymap (kbd "M-$") 'next-history-element)))
+      (define-key minibuffer-local-map (kbd "M-i") 'helm-previous-line)
+      (define-key minibuffer-local-map (kbd "M-k") 'helm-next-line)
+      (define-key minibuffer-local-map (kbd "M-<dead-circumflex>") 'previous-history-element)
+      (define-key minibuffer-local-map (kbd "M-$") 'next-history-element))
 
-
-(defun nu-leave-minibuffer ()
-  "Restore tab for previous."
-  (define-key nu-keymap (kbd "M-i") (intern-soft nu-m-i-sname))
-  (define-key nu-keymap (kbd "M-k") (intern-soft nu-m-k-sname))
-  (define-key nu-keymap (kbd "M-<dead-circumflex>") (intern-soft nu-m-^-sname))
-  (define-key nu-keymap (kbd "M-$") (intern-soft nu-m-$-sname)))
-
+  (nu-make-overriding-map minibuffer-local-map
+                           "C-d" 'kill-word
+                           "M-j" 'backward-char
+                           "M-l" 'forward-char
+                           "M-q" 'abort-recursive-edit))
 
 
 (defun nu-prepare-for-dired ()
@@ -95,7 +82,6 @@ Still, some keys here help."
 
 
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
-(add-hook 'minibuffer-exit-hook  'nu-leave-minibuffer)
 (add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
 (add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
