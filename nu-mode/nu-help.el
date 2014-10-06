@@ -6,6 +6,11 @@
 
 
 
+(defun nu-make-overriding-map (keymap)
+ (make-local-variable 'minor-mode-overriding-map-alist)
+ (push `(nu-mode . ,keymap) minor-mode-overriding-map-alist))
+
+
  ; map-keymap has no way to receive
  ; more than two args
  ; we cannot easily communicate

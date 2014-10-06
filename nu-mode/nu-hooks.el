@@ -84,9 +84,15 @@
 
 Still, some keys here help."
   (define-key dired-mode-map  (kbd "M-i") 'dired-previous-line)
+  (define-key dired-mode-map  (kbd "M-l") 'dired-find-file)
+  (define-key dired-mode-map  (kbd "M-j") 'dired-up-directory)
   (define-key dired-mode-map  (kbd "M-k") 'dired-next-line)
-  (define-key dired-mode-map  (kbd "M-z") 'dired-undo)
-  (define-key dired-mode-map  (kbd "C-c") 'nu-copy-prompt))
+
+  (define-key dired-mode-map  (kbd "C-z") 'dired-undo)
+  (define-key dired-mode-map  (kbd "C-o") 'nu-open-prompt)
+  (define-key dired-mode-map  (kbd "C-c") 'nu-copy-prompt)
+  (nu-make-overriding-map dired-mode-map))
+
 
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
 (add-hook 'minibuffer-exit-hook  'nu-leave-minibuffer)
