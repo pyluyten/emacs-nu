@@ -250,6 +250,7 @@
             (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
             (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
             (define-key nu-insert-map (kbd "m") 'org-time-stamp)
+            (define-key nu-insert-map (kbd "d") 'org-deadline)
             (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading)))))
 
   ; anycase
