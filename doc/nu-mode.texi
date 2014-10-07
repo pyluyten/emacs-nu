@@ -292,9 +292,7 @@ Use @kbd{Control+s} to save current file, @kbd{Alt+s} to invoke a prompt to rena
 
 You can open a directory, too.
 
-dired is the emacs file manager. You can easily use regexp to open, delete, copy, rename files. And since you are using nu-mode, this is regexp-file-management-for-human-beings ,). Dired allows to use nu-mode shortcuts to navigate. Use @kbd{Control+p} (uniserval-argument) then @key{s} key to edit the ls command.
-
-Some prompts are adapted to dired : selections (with @kbd{Control+a}) for example, will provide the different dired options to mark files. Look at ``replace'', ``insert'', ``find'', and so on. Where it make sense the usual prompts will be useful inside dired. Keys that *remain* useful inside dired are kept.
+dired is the emacs file manager. You can easily use regexp to open, delete, copy, rename files. And since you are using nu-mode, this is regexp-file-management-for-human-beings ,). See the relevant section on Integration.
 
 @section External Windows
 
@@ -418,6 +416,13 @@ term is perfectly usable with nu-mode. Just press @kbd{Control+Space Control+c} 
 @chapter nu & other libraries
 
 How does nu-mode integrate with other libraries? We already saw dired and helm because of their integration.
+
+@section dired
+Dired allows to use nu-mode shortcuts to navigate : the @kbd{Alt+i} & @kbd{k} paddle allow to navigate the list, while @kbd{j} will go to parent directory and @kbd{l} will find-file at point.
+
+Some prompts are adapted to dired : selections (with @kbd{Control+a}) for example, will provide the different dired options to mark files. Look at ``replace'', ``insert'', ``find'', and so on. Where it make sense the usual prompts will be useful inside dired. Keys that *remain* useful inside dired are kept.
+
+Use @kbd{Control+p} (uniserval-argument) then @key{s} key to edit the ls command.
 
 @section org
 

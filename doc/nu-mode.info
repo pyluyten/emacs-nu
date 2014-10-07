@@ -405,15 +405,8 @@ use the same open-prompt and save-prompt for this.
 
    dired is the emacs file manager.  You can easily use regexp to open,
 delete, copy, rename files.  And since you are using nu-mode, this is
-regexp-file-management-for-human-beings ,).  Dired allows to use nu-mode
-shortcuts to navigate.  Use 'Control+p' (uniserval-argument) then <s>
-key to edit the ls command.
-
-   Some prompts are adapted to dired : selections (with 'Control+a') for
-example, will provide the different dired options to mark files.  Look
-at "replace", "insert", "find", and so on.  Where it make sense the
-usual prompts will be useful inside dired.  Keys that *remain* useful
-inside dired are kept.
+regexp-file-management-for-human-beings ,).  See the relevant section on
+Integration.
 
 3.3 External Windows
 ====================
@@ -601,7 +594,23 @@ File: nu-mode.info,  Node: nu & other libraries,  Next: Contributing,  Prev: nu 
 How does nu-mode integrate with other libraries?  We already saw dired
 and helm because of their integration.
 
-9.1 org
+9.1 dired
+=========
+
+Dired allows to use nu-mode shortcuts to navigate : the 'Alt+i' & 'k'
+paddle allow to navigate the list, while 'j' will go to parent directory
+and 'l' will find-file at point.
+
+   Some prompts are adapted to dired : selections (with 'Control+a') for
+example, will provide the different dired options to mark files.  Look
+at "replace", "insert", "find", and so on.  Where it make sense the
+usual prompts will be useful inside dired.  Keys that *remain* useful
+inside dired are kept.
+
+   Use 'Control+p' (uniserval-argument) then <s> key to edit the ls
+command.
+
+9.2 org
 =======
 
 As of today, nu-mode has some features related to org.  'Alt+s' prompt
@@ -616,7 +625,7 @@ see, rather than storing all org-related features in one place, nu-mode
 does enrich its usual prompts or even commands given the org-mode
 context.
 
-9.2 magit
+9.3 magit
 =========
 
 Use Alt+s, ie save-prompt, to gain access to magit-status.
@@ -626,18 +635,18 @@ prompt will offer to toggle whether next commit has -amend.  It is
 possible to use new prompt to create branch, open prompt to open branch
 manager, and so on.
 
-9.3 autojump
+9.4 autojump
 ============
 
 autojump is part of the keybinding (alt f prompt, or directly
 Control+Shift+f to autojump to a char).
 
-9.4 auto-complete
+9.5 auto-complete
 =================
 
 There isn't much to say.  Auto-complete does integrate well, that's all!
 
-9.5 god-mode
+9.6 god-mode
 ============
 
 god-mode is one possible modal editing.  See below about evil-mode.
@@ -653,7 +662,7 @@ delete prompts becomes nicer.  Commands relying on 'Control' modifier
 will be triggered with <g> key.  Using this, quitting god-mode is 'gg',
 since first g will toggle Control modifier.
 
-9.6 evil-mode
+9.7 evil-mode
 =============
 
 While nu-mode is not a modal editor, and aims at being the most
@@ -677,7 +686,7 @@ purpose.  Simply put below lines on your .emacs:
    Obviously this only fixes the basic paddle.  Backward and Foward word
 are different, but fixing the paddle is fine.
 
-9.7 texinfo
+9.8 texinfo
 ===========
 
 Texinfo has little add-ons to prompts : "print" prompt will offer to
@@ -1181,14 +1190,14 @@ Node: Top716
 Node: Overview1106
 Node: View and Edit7527
 Node: Files Buffers Windows14734
-Node: Minibuffer17350
-Node: Hacking18227
-Node: nu for the power user18916
-Node: Customization21883
-Node: nu and some specific modes24193
-Node: nu & other libraries24615
-Node: Contributing28105
-Node: GNU Free Documentation License28363
+Node: Minibuffer16959
+Node: Hacking17836
+Node: nu for the power user18525
+Node: Customization21492
+Node: nu and some specific modes23802
+Node: nu & other libraries24224
+Node: Contributing28296
+Node: GNU Free Documentation License28554
 
 End Tag Table
 
