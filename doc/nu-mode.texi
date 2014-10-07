@@ -147,28 +147,37 @@ Obviously just type keys to input text. With slight notes : @kbd{Alt+m} to carri
 
 @section Navigate
 
-While arrows still work, nu-mode relies on @key{Alt} key to navigate.
-Hence, the thumb often presses @key{Alt} key, while pinky finger remains safe. This is exactly the same principle than ErgoEmacs applies.
-Navigate up left right down using @key{Alt} and :
+@cartouche
+@verbatim
+      I
+    J K L
+@end verbatim
+@end cartouche
 
+nu-mode navigation is based on a paddle, an inversed T : while arrows still work, nu-mode relies on @key{Alt} key to navigate. @key{i} @key{j} @key{k} @key{l} go up, left, down, right (previous line, backward char, next line, forward char). If @kbd{Shift} is pressed while moving, this will select or extend selection, as @kbd{Shift} plus arrow does.
 
-@w{    }I@*
-@w{     }J@w{ }K@w{ }L
+There are several reasons leading to this choice ; the most important being @key{Alt} an easy key to press with the thumb, thus sparing pinky finger. This is exactly the same principle than ErgoEmacs applies. Another obvious reason is that many CUA keys are mainly on the bottom left part of the keyboard, while @kbd{Control} key associated with the paddle, has a specific meaning.
 
+(Actually, any nu-mode function, appart from opening, is available from the @key{Alt} key modifier, since prompts offer access to functions.)
 
 Additionally, use @key{Alt} @key{u} and @key{Alt} @key{o} to move to previous, next word.
 
-@w{  }U@w{ }I@w{ }O@*
-@w{     }J@w{ }K@w{ }L
+@cartouche
+@verbatim
+    U I O
+    J K L
+@end verbatim
+@end cartouche
 
+Use @kbd{Alt+$} to go to end of line, and @kbd{Alt+h} (or, @kbd{Alt+^} to go to beginning of line. @kbd{Shift} only works with @key{h} - but you can use mark prompt for this.
 
-Use @kbd{Alt+$} to go to end of line, and @kbd{Alt+h} (or, @kbd{Alt+^} to go to beginning of line. To reach a line, or the beginning of buffer, or the end of the buffer, use @kbd{Alt+g} then the appropriate key. Just read this goto-prompt, which offers to navigate per line, paragraph, sentence and so on. To find a char, a string, a line starting with a specific letter, use ace-jump : also inside @kbd{Alt+f} prompt. To directly trigger a regexp-search, use @kbd{Control+f}, which is another way to navigate.
+To reach a line, or the beginning of buffer, or the end of the buffer, use @kbd{Alt+g} then the appropriate key. Just read this goto-prompt, which offers to navigate per line, paragraph, sentence and so on. To find a char, a string, a line starting with a specific letter, use ace-jump : also inside @kbd{Alt+f} prompt. To directly trigger a regexp-search, use @kbd{Control+f}, which is another way to navigate.
 
 Numeric arguments can apply to navigation. Press @kbd{Alt+1} then @kbd{Alt+5} to input 15 as a numeric argument ; now input @kbd{Alt+k} to go down one line : this will go down 15 lines.
 
-`Repeat' also applies to navigation. Enter @kbd{Control+Return} to repeat a navigation.
+`Repeat' also applies to navigation. Enter @kbd{Control+Return} to repeat a navigation (or any command).
 
-However - let's finish with navigation. Use @kbd{Alt+Space} to scroll (to the bottom), and @kbd{Alt+Backspace} to go back to the top. Emacs vanilla keybindings for `help-mode' and some other offer Space and Backspace to do this - this is one of the few conventions respected into Emacs-nu. Yup.
+However - let's finish with navigation. Use @kbd{Alt+Space} to scroll (to the bottom), and @kbd{Alt+Backspace} to go back to the top. Emacs vanilla keybindings for `help-mode' and some other offer Space and Backspace to do this - this is one of the few conventions somewhat respected into Emacs-nu. Yup.
 
 Note that emacs sometimes require you to scroll another window. This is quite useful to go through *Help* buffer, for example. If you need this, use @kbd{Control+Alt+Space}. To scroll the other way around the other window, use first a negative argument (@kbd{Alt+-}).
 
@@ -244,7 +253,7 @@ As expected, use @kbd{Control+z} to undo and @kbd{Control+Shift+z} to redo. Or, 
 
 @section Advanced Edition
 
-Some advanced editon features rely on @kbd{Control-r}, which will invoke replace prompt, allowing you to replace-regexp, merge-lines, delete spaces, or invoke other functions.
+Some advanced editon features rely on @kbd{Alt+r}, which will invoke replace prompt, allowing you to replace-regexp, merge-lines, delete spaces, or invoke other functions (@kbd{Control+r} directly triggers replace-regexp).
 
 @enumerate
 @item

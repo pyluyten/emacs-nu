@@ -200,23 +200,37 @@ character.
 2.1 Navigate
 ============
 
-While arrows still work, nu-mode relies on <Alt> key to navigate.
-Hence, the thumb often presses <Alt> key, while pinky finger remains
-safe.  This is exactly the same principle than ErgoEmacs applies.
-Navigate up left right down using <Alt> and :
+      I
+    J K L
 
-       I
-     J K L
+   nu-mode navigation is based on a paddle, an inversed T : while arrows
+still work, nu-mode relies on <Alt> key to navigate.  <i> <j> <k> <l> go
+up, left, down, right (previous line, backward char, next line, forward
+char).  If 'Shift' is pressed while moving, this will select or extend
+selection, as 'Shift' plus arrow does.
+
+   There are several reasons leading to this choice ; the most important
+being <Alt> an easy key to press with the thumb, thus sparing pinky
+finger.  This is exactly the same principle than ErgoEmacs applies.
+Another obvious reason is that many CUA keys are mainly on the bottom
+left part of the keyboard, while 'Control' key associated with the
+paddle, has a specific meaning.
+
+   (Actually, any nu-mode function, appart from opening, is available
+from the <Alt> key modifier, since prompts offer access to functions.)
 
    Additionally, use <Alt> <u> and <Alt> <o> to move to previous, next
 word.
 
-     U I O
-     J K L
+    U I O
+    J K L
 
    Use 'Alt+$' to go to end of line, and 'Alt+h' (or, 'Alt+^' to go to
-beginning of line.  To reach a line, or the beginning of buffer, or the
-end of the buffer, use 'Alt+g' then the appropriate key.  Just read this
+beginning of line.  'Shift' only works with <h> - but you can use mark
+prompt for this.
+
+   To reach a line, or the beginning of buffer, or the end of the
+buffer, use 'Alt+g' then the appropriate key.  Just read this
 goto-prompt, which offers to navigate per line, paragraph, sentence and
 so on.  To find a char, a string, a line starting with a specific
 letter, use ace-jump : also inside 'Alt+f' prompt.  To directly trigger
@@ -227,13 +241,13 @@ a regexp-search, use 'Control+f', which is another way to navigate.
 one line : this will go down 15 lines.
 
    'Repeat' also applies to navigation.  Enter 'Control+Return' to
-repeat a navigation.
+repeat a navigation (or any command).
 
    However - let's finish with navigation.  Use 'Alt+Space' to scroll
 (to the bottom), and 'Alt+Backspace' to go back to the top.  Emacs
 vanilla keybindings for 'help-mode' and some other offer Space and
-Backspace to do this - this is one of the few conventions respected into
-Emacs-nu.  Yup.
+Backspace to do this - this is one of the few conventions somewhat
+respected into Emacs-nu.  Yup.
 
    Note that emacs sometimes require you to scroll another window.  This
 is quite useful to go through *Help* buffer, for example.  If you need
@@ -327,9 +341,9 @@ aint't it, which is a reminder on why to use 'Alt'.
 2.5 Advanced Edition
 ====================
 
-Some advanced editon features rely on 'Control-r', which will invoke
-replace prompt, allowing you to replace-regexp, merge-lines, delete
-spaces, or invoke other functions.
+Some advanced editon features rely on 'Alt+r', which will invoke replace
+prompt, allowing you to replace-regexp, merge-lines, delete spaces, or
+invoke other functions ('Control+r' directly triggers replace-regexp).
 
   1. 'Alt+y' will copy to current line char under point (on the below
      line).
@@ -1166,15 +1180,15 @@ Tag Table:
 Node: Top716
 Node: Overview1106
 Node: View and Edit7527
-Node: Files Buffers Windows13995
-Node: Minibuffer16611
-Node: Hacking17488
-Node: nu for the power user18177
-Node: Customization21144
-Node: nu and some specific modes23454
-Node: nu & other libraries23876
-Node: Contributing27366
-Node: GNU Free Documentation License27624
+Node: Files Buffers Windows14734
+Node: Minibuffer17350
+Node: Hacking18227
+Node: nu for the power user18916
+Node: Customization21883
+Node: nu and some specific modes24193
+Node: nu & other libraries24615
+Node: Contributing28105
+Node: GNU Free Documentation License28363
 
 End Tag Table
 
