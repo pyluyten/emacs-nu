@@ -59,11 +59,7 @@ particular helm-map, such as describe-variable..."
       (define-key minibuffer-local-map (kbd "M-<dead-circumflex>") 'previous-history-element)
       (define-key minibuffer-local-map (kbd "M-$") 'next-history-element))
 
-  (nu-make-overriding-map minibuffer-local-map
-                           "C-d" 'kill-word
-                           "M-j" 'backward-char
-                           "M-l" 'forward-char
-                           "M-q" 'abort-recursive-edit))
+  (nu-make-overriding-map minibuffer-local-map nil "M-q" 'abort-recursive-edit))
 
 
 (defun nu-prepare-for-dired ()
@@ -78,7 +74,7 @@ Still, some keys here help."
   (define-key dired-mode-map  (kbd "C-z") 'dired-undo)
   (define-key dired-mode-map  (kbd "C-o") 'nu-open-prompt)
   (define-key dired-mode-map  (kbd "C-c") 'nu-copy-prompt)
-  (nu-make-overriding-map dired-mode-map))
+  (nu-make-overriding-map dired-mode-map nil))
 
 
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)

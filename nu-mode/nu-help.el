@@ -4,10 +4,15 @@
 
 (defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
 
+; defconst?
+(defvar nu-state t "Used by overriding maps alist.")
 
-(defun nu-make-overriding-map (keymap &rest bindings)
+(defun nu-make-overriding-map (keymap unbind-keys-list &rest bindings)
  (make-local-variable 'minor-mode-overriding-map-alist)
- (push `(nu-mode . ,keymap) minor-mode-overriding-map-alist)
+ (push `(nu-state . ,keymap) minor-mode-overriding-map-alist)
+ (while (not (eq unbind-keys-list nil))
+    (define-key keymap (kbd (car unbind-keys-list)) nil)
+    (pop unbind-keys-list))
  (while (not (eq bindings nil))
     (define-key keymap (kbd (car bindings)) (car (cdr bindings)))
     (pop bindings) (pop bindings)))
