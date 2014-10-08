@@ -366,7 +366,7 @@
       (define-key nu-a-map (kbd "o") 'nu-mark-paragraph)
       (define-key nu-a-map (kbd "M-h") 'nu-mark-to-bol)
       (define-key nu-a-map (kbd "M-m") 'nu-mark-to-eol)
-      (define-key nu-a-map (kbd "k") '_nu-mark-current-line)
+      (define-key nu-a-map (kbd "M-k") '_nu-mark-current-line)
       (define-key nu-a-map (kbd "i") 'nu-set-mark)
       (define-key nu-a-map (kbd "M-i") 'nu-mark-to-previous-line)
       (define-key nu-a-map (kbd "M-j") 'nu-mark-backward-char)
