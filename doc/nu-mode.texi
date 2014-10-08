@@ -418,17 +418,24 @@ term is perfectly usable with nu-mode. Just press @kbd{Control+Space Control+c} 
 How does nu-mode integrate with other libraries? We already saw dired and helm because of their integration.
 
 @section dired
+
+As expected, most of vanilla Dired keys are respected : these are keys which should, in Fundamental mode for example, run self-insert-key - for example, d will mark a file for deletion. Modifiers keys will mainly invoke nu-mode commands. This allows to combine both worlds : if you don't know how to run something, use a prompt and read it to learn how to directly invoke the key. Eg, using Delete prompt it is possible to dired-delete a file, but we learn from this prompt an alternative - direct, native - key to run the same. This should make dired learning curve better.
+
 Dired allows to use nu-mode shortcuts to navigate : the @kbd{Alt+i} & @kbd{k} paddle allow to navigate the list, while @kbd{j} will go to parent directory and @kbd{l} will find-file at point.
 
-Some prompts are adapted to dired : selections (with @kbd{Control+a}) for example, will provide the different dired options to mark files. Look at ``replace'', ``insert'', ``find'', and so on. Where it make sense the usual prompts will be useful inside dired. Keys that *remain* useful inside dired are kept.
+Some prompts are adapted to dired : selections (with @kbd{Alt+a}) for example, will provide the different dired options to mark files. Look at ``replace'', ``insert'', ``find'', and so on. Where it make sense the usual prompts will be useful inside dired. Keys that *remain* useful inside dired are kept.
 
 Use @kbd{Control+p} (uniserval-argument) then @key{s} key to edit the ls command.
 
 @section org
 
-As of today, nu-mode has some features related to org.  @kbd{Alt+s} prompt will allow you to org-store-link. @kbd{Alt+v} prompt will allow you to org-table-insert-column or row. It is possible to insert a timestamp. The Control+Space Control+Space shortcut will trigger what would have been Control+c Control+c. @kbd{Control+b} will run org-emphasis. Using open-prompt, it is possible to open agenda.
+As of today, nu-mode has some features related to org.  @kbd{Alt+s} prompt will allow you to org-store-link. @kbd{Alt+v} prompt will allow you to org-table-insert-column or row. It is possible to insert a timestamp or directly a deadline. The Control+Space Control+Space shortcut will trigger what would have been Control+c Control+c. @kbd{Control+b} will run org-emphasis. Using open-prompt, it is possible to open agenda.
 
 It is also possible to delete a node from the delete prompt. As you see, rather than storing all org-related features in one place, nu-mode does enrich its usual prompts or even commands given the org-mode context.
+
+New prompt offers to input a new org-capture. One can org-mark-ring-goto using goto prompt.
+
+Shift selectections do not work with org-mode.
 
 @section magit
 
