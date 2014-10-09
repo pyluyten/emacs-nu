@@ -233,6 +233,7 @@
          ; else
         (define-key nu-insert-map (kbd "V") 'nu-yank-pop-or-yank) ; absurd.
         (define-key nu-insert-map (kbd "v") 'yank)
+        (define-key nu-insert-map (kbd "M-v") 'expand-abbrev)
         (define-key nu-insert-map (kbd "b") 'insert-buffer)
         (define-key nu-insert-map (kbd "f") 'insert-file)
         (define-key nu-insert-map (kbd "c") 'quoted-insert)
@@ -256,6 +257,7 @@
             (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading)))))
 
   ; anycase
+  (define-key nu-insert-map (kbd "g") 'define-global-abbrev)
   (define-key nu-insert-map (kbd "s") 'async-shell-command)
   (define-key nu-insert-map (kbd "S") 'shell-command)
   (define-key nu-insert-map (kbd "h")  'helm-show-kill-ring))
