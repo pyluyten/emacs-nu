@@ -429,13 +429,19 @@ Use @kbd{Control+p} (uniserval-argument) then @key{s} key to edit the ls command
 
 @section org
 
-As of today, nu-mode has some features related to org.  @kbd{Alt+s} prompt will allow you to org-store-link. @kbd{Alt+v} prompt will allow you to org-table-insert-column or row. It is possible to insert a timestamp or directly a deadline. The Control+Space Control+Space shortcut will trigger what would have been Control+c Control+c. @kbd{Control+b} will run org-emphasis. Using open-prompt, it is possible to open agenda.
+nu-mode has many features related to org. Rather than storing all org-related features in one place, nu-mode does enrich its usual prompts or even commands given the org-mode context.
 
-It is also possible to delete a node from the delete prompt. As you see, rather than storing all org-related features in one place, nu-mode does enrich its usual prompts or even commands given the org-mode context.
+@kbd{Alt+n} new prompt allows to capture a note.
+Using open-prompt, it is possible to open agenda.
+@kbd{Alt+s} prompt will allow you to org-store-link. @kbd{Alt+v} prompt will allow to paste an org link.
+This same prompt offers to org-table-insert-column or row. It is possible to insert a timestamp or directly a deadline.
+@kbd{Control+b} will run org-emphasis.
+@kbd{Alt+b} print prompt allows to expand (``print''), which does correspond to what org-modes binds to Alt+Tab, which is an *awful* choice.
+It is also possible to delete a node from the delete prompt.
+One can org-mark-ring-goto using goto prompt.
 
-New prompt offers to input a new org-capture. One can org-mark-ring-goto using goto prompt.
-
-Shift selectections do not work with org-mode.
+The Control+Space Control+Space shortcut will trigger what would have been Control+c Control+c. 
+Note that shift selectections do not work with org-mode.
 
 @section magit
 

@@ -597,11 +597,21 @@ and helm because of their integration.
 9.1 dired
 =========
 
-Dired allows to use nu-mode shortcuts to navigate : the 'Alt+i' & 'k'
+As expected, most of vanilla Dired keys are respected : these are keys
+which should, in Fundamental mode for example, run self-insert-key - for
+example, d will mark a file for deletion.  Modifiers keys will mainly
+invoke nu-mode commands.  This allows to combine both worlds : if you
+don't know how to run something, use a prompt and read it to learn how
+to directly invoke the key.  Eg, using Delete prompt it is possible to
+dired-delete a file, but we learn from this prompt an alternative -
+direct, native - key to run the same.  This should make dired learning
+curve better.
+
+   Dired allows to use nu-mode shortcuts to navigate : the 'Alt+i' & 'k'
 paddle allow to navigate the list, while 'j' will go to parent directory
 and 'l' will find-file at point.
 
-   Some prompts are adapted to dired : selections (with 'Control+a') for
+   Some prompts are adapted to dired : selections (with 'Alt+a') for
 example, will provide the different dired options to mark files.  Look
 at "replace", "insert", "find", and so on.  Where it make sense the
 usual prompts will be useful inside dired.  Keys that *remain* useful
@@ -613,17 +623,23 @@ command.
 9.2 org
 =======
 
-As of today, nu-mode has some features related to org.  'Alt+s' prompt
-will allow you to org-store-link.  'Alt+v' prompt will allow you to
-org-table-insert-column or row.  It is possible to insert a timestamp.
-The Control+Space Control+Space shortcut will trigger what would have
-been Control+c Control+c.  'Control+b' will run org-emphasis.  Using
-open-prompt, it is possible to open agenda.
+nu-mode has many features related to org.  Rather than storing all
+org-related features in one place, nu-mode does enrich its usual prompts
+or even commands given the org-mode context.
 
-   It is also possible to delete a node from the delete prompt.  As you
-see, rather than storing all org-related features in one place, nu-mode
-does enrich its usual prompts or even commands given the org-mode
-context.
+   'Alt+n' new prompt allows to capture a note.  Using open-prompt, it
+is possible to open agenda.  'Alt+s' prompt will allow you to
+org-store-link.  'Alt+v' prompt will allow to paste an org link.  This
+same prompt offers to org-table-insert-column or row.  It is possible to
+insert a timestamp or directly a deadline.  'Control+b' will run
+org-emphasis.  'Alt+b' print prompt allows to expand ("print"), which
+does correspond to what org-modes binds to Alt+Tab, which is an *awful*
+choice.  It is also possible to delete a node from the delete prompt.
+One can org-mark-ring-goto using goto prompt.
+
+   The Control+Space Control+Space shortcut will trigger what would have
+been Control+c Control+c.  Note that shift selectections do not work
+with org-mode.
 
 9.3 magit
 =========
@@ -1196,8 +1212,8 @@ Node: nu for the power user18525
 Node: Customization21492
 Node: nu and some specific modes23802
 Node: nu & other libraries24224
-Node: Contributing28296
-Node: GNU Free Documentation License28554
+Node: Contributing29206
+Node: GNU Free Documentation License29464
 
 End Tag Table
 

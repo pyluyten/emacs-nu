@@ -100,6 +100,11 @@
        (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
        (define-key nu-print-map (kbd "P") 'nu-texi2pdf)))
 
+
+  (if (eq major-mode 'org-mode)
+     (progn
+       (define-key nu-print-map (kbd "l") 'pcomplete)))
+
   (define-key nu-print-map (kbd "f") 'find-grep)
   (define-key nu-print-map (kbd "g") 'grep)
   (define-key nu-print-map (kbd "w") 'pwd)
