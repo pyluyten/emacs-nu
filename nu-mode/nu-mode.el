@@ -37,6 +37,7 @@
    ; e? edit?
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
 
+
    (define-key nu-keymap (kbd "C-r") 'replace-regexp)
    (define-key nu-menu-map (kbd "r") 'nu-replace-map)
    (define-key nu-keymap (kbd "M-r") 'nu-replace-prompt)
@@ -54,7 +55,7 @@
          (define-key universal-argument-map (kbd "M-p") 'universal-argument-more)
 
    ; C-i is tab.
-   (define-key nu-keymap (kbd "C-S-i") 'nu-next-buffer)
+   (define-key nu-keymap (kbd "C-S-i") 'nu-previous-buffer)
    (define-key nu-keymap (kbd "M-i") 'previous-line)
 
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
@@ -66,6 +67,7 @@
    (define-key nu-keymap (kbd "C-S-p") 'eval-last-sexp)
    (define-key nu-menu-map (kbd "p") 'nu-print-map)
    (define-key nu-keymap (kbd "M-p") 'nu-print-prompt)
+   (define-key nu-keymap (kbd "M-P") 'async-shell-command)
 
 
 
@@ -102,6 +104,7 @@
    (define-key nu-keymap (kbd "M-j") 'backward-char)
 
    (define-key nu-keymap (kbd "C-k") 'kill-visual-line)
+   (define-key nu-keymap (kbd "C-S-k") 'nu-next-buffer)
    (define-key nu-keymap (kbd "M-k") 'next-line)
 
    (define-key nu-keymap (kbd "C-l") 'delete-forward-char)
@@ -116,7 +119,7 @@
 
    (define-key nu-keymap (kbd "C-w") 'kill-buffer)
    (define-key nu-menu-map (kbd "w") 'nu-window-map)
-   (define-key nu-menu-map (kbd "C-S-w") 'kill-buffer)
+   (define-key nu-menu-map (kbd "C-S-w") 'transpose-frame)
    (define-key nu-keymap (kbd "M-w") 'nu-window-prompt)
 
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
@@ -129,7 +132,7 @@
    (define-key nu-keymap (kbd "C-v") 'nu-yank-pop-or-yank)
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
    (define-key nu-menu-map (kbd "v") 'nu-insert-map)
-   (define-key nu-keymap (kbd "M-S-v") 'helm-show-kill-ring)
+   (define-key nu-keymap (kbd "M-V") 'helm-show-kill-ring)
    (define-key nu-keymap (kbd "C-S-v") 'quoted-insert)
 
 
@@ -141,6 +144,7 @@
    (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
    (define-key nu-keymap (kbd "C-S-n") 'org-capture)
    (define-key nu-keymap (kbd "M-n") 'nu-new-prompt)
+   (define-key nu-keymap (kbd "M-N") 'split-window-horizontally)
 
 
    ;;

@@ -32,6 +32,7 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 * Minibuffer::
 * Hacking::
 * nu for the power user::
+* Cheat Sheet::
 * Customization::
 * nu and some specific modes::
 * nu & other libraries::
@@ -67,10 +68,13 @@ display a list of keys - actually, sequences - and associated functions
 regexp-builder, o for occur, 'Alt+f' to isearch-forward-regexp, and so
 on.
 
-   Prompts do adapt to context.  As of October, 2014, there are 250
-"define-key" inside the relevant code portion, which means about 15
-prompts offer to call 25O commands.  Obviously, additionnal keys paddle
-offers to easily navigate.
+   Prompts do adapt to context : ie, according to major mode or
+selection state, different functions will be available or not.  As of
+October, 2014, there are 250 "define-key" inside the relevant code
+portion, which means about 15 prompts offer to call 25O commands.
+Obviously, additionnal keys paddle offers to easily navigate.
+
+   If you're really impatient, go to Cheat Sheet...
 
 1.1 Dependencies
 ================
@@ -177,8 +181,31 @@ candidate however).
 1.5 ok but where are prompts
 ============================
 
-Read this documentation, or look at the Cheat Sheet on github :
-<https://github.com/pyluyten/emacs-nu/wiki/Cheat-Sheet---All-Prompts>.
+Either jump to Cheat Sheet part of this manual (or, on github :
+<https://github.com/pyluyten/emacs-nu/wiki/Cheat-Sheet---All-Prompts>).
+Or, run nu-describe-keymap ('Control+h Alt+k') and precise nu-menu-map.
+
+   All of the below keys use the alt modifier to run the associated
+prompt (for example 'Alt+f' to run the find prompt) except the h and o
+which uses Control modifier.
+
+
+key             binding
+---             -------
+a               nu-a-map
+b               nu-bold-map
+d               nu-delete-map
+f               nu-find-map
+g               nu-goto-map
+h               help-map
+o               nu-open-map
+p               nu-print-map
+q               nu-quit-map
+r               nu-replace-map
+s               nu-save-map
+v               nu-insert-map
+w               nu-window-map
+
 
    From Emacs, the simplest is to 'Control+h' then <*> to light-prompt
 about the different available prompts.  This just tells which key to
@@ -459,7 +486,7 @@ comments.
    'Alt+s' prompt also allows you to create tags to find definitions.
 
 
-File: nu-mode.info,  Node: nu for the power user,  Next: Customization,  Prev: Hacking,  Up: Top
+File: nu-mode.info,  Node: nu for the power user,  Next: Cheat Sheet,  Prev: Hacking,  Up: Top
 
 6 nu for the power user
 ***********************
@@ -520,9 +547,50 @@ acceptable for maggit is not for a full keymap.)
      from these prompts.
 
 
-File: nu-mode.info,  Node: Customization,  Next: nu and some specific modes,  Prev: nu for the power user,  Up: Top
+File: nu-mode.info,  Node: Cheat Sheet,  Next: Customization,  Prev: nu for the power user,  Up: Top
 
-7 Customization
+7 Cheat Sheet
+*************
+
+
+
+| key | Alt              | Control             | S-Ctrl    | S-Alt  |
+|-----+------------------+---------------------+-----------+--------|
+| a   | *Mark* / toggle  | Mark block / toggle | rectangle |        |
+| z   | *Undo tree*      | Undo                |           |        |
+| e   | Copy Above       |                     |           |        |
+| r   | *Replace*        | Replace regex       |           |        |
+| t   | *Other tab*      | New tab             |           |        |
+| y   | Copy Below       |                     |           |        |
+| u   | word back        | ctrl+bkspc.         |           | select |
+| i   | up               | X [tab]             |           | select |
+| o   | forward word     | *Open*              |           | select |
+| p   | *Print*          | Argument            |           |        |
+|-----+------------------+---------------------+-----------+--------|
+| q   | *Quit*           | Quit                |           |        |
+| s   | *Save*           | Save                |           |        |
+| d   | *Delete*         | kill-word           |           |        |
+| f   | *Find*           | Find                |           |        |
+| g   | *Goto*           | God                 |           |        |
+| h   | orig.            | *Help*              |           |        |
+| j   | left             | backsp              |           | select |
+| k   | down             | kill line           |           | select |
+| l   | right            | kill right          |           | select |
+| m   | newline & indent | X [RET]             |           |        |
+|-----+------------------+---------------------+-----------+--------|
+| w   | *Window* Pr      | kill-buffer         |           |        |
+| x   | helm Mx          | Cut                 | *ctl-x*   |        |
+| c   | -                | Copy                |           |        |
+| v   | *Insert*         | Paste               |           |        |
+| B   | *Emphasis*       | "bold"              |           |        |
+| n   | *New*            | split window        |           |        |
+|-----+------------------+---------------------+-----------+--------|
+
+
+
+File: nu-mode.info,  Node: Customization,  Next: nu and some specific modes,  Prev: Cheat Sheet,  Up: Top
+
+8 Customization
 ***************
 
 As ususal with Emacs, customization comes down at the very first usage.
@@ -574,10 +642,10 @@ the keybinding.
 
 File: nu-mode.info,  Node: nu and some specific modes,  Next: nu & other libraries,  Prev: Customization,  Up: Top
 
-8 nu and some specific modes
+9 nu and some specific modes
 ****************************
 
-8.1 term
+9.1 term
 ========
 
 term is perfectly usable with nu-mode.  Just press 'Control+Space
@@ -588,14 +656,14 @@ prompt however.
 
 File: nu-mode.info,  Node: nu & other libraries,  Next: Contributing,  Prev: nu and some specific modes,  Up: Top
 
-9 nu & other libraries
-**********************
+10 nu & other libraries
+***********************
 
 How does nu-mode integrate with other libraries?  We already saw dired
 and helm because of their integration.
 
-9.1 dired
-=========
+10.1 dired
+==========
 
 As expected, most of vanilla Dired keys are respected : these are keys
 which should, in Fundamental mode for example, run self-insert-key - for
@@ -620,8 +688,8 @@ inside dired are kept.
    Use 'Control+p' (uniserval-argument) then <s> key to edit the ls
 command.
 
-9.2 org
-=======
+10.2 org
+========
 
 nu-mode has many features related to org.  Rather than storing all
 org-related features in one place, nu-mode does enrich its usual prompts
@@ -641,8 +709,8 @@ One can org-mark-ring-goto using goto prompt.
 been Control+c Control+c.  Note that shift selectections do not work
 with org-mode.
 
-9.3 magit
-=========
+10.3 magit
+==========
 
 Use Alt+s, ie save-prompt, to gain access to magit-status.
 
@@ -651,19 +719,19 @@ prompt will offer to toggle whether next commit has -amend.  It is
 possible to use new prompt to create branch, open prompt to open branch
 manager, and so on.
 
-9.4 autojump
-============
+10.4 autojump
+=============
 
 autojump is part of the keybinding (alt f prompt, or directly
 Control+Shift+f to autojump to a char).
 
-9.5 auto-complete
-=================
+10.5 auto-complete
+==================
 
 There isn't much to say.  Auto-complete does integrate well, that's all!
 
-9.6 god-mode
-============
+10.6 god-mode
+=============
 
 god-mode is one possible modal editing.  See below about evil-mode.
 god-mode can be toggled using 'Control+g'.  Using vanilla god-mode, it
@@ -678,8 +746,8 @@ delete prompts becomes nicer.  Commands relying on 'Control' modifier
 will be triggered with <g> key.  Using this, quitting god-mode is 'gg',
 since first g will toggle Control modifier.
 
-9.7 evil-mode
-=============
+10.7 evil-mode
+==============
 
 While nu-mode is not a modal editor, and aims at being the most
 efficient keymap, sometimes using lot of modifiers might still be
@@ -702,8 +770,8 @@ purpose.  Simply put below lines on your .emacs:
    Obviously this only fixes the basic paddle.  Backward and Foward word
 are different, but fixing the paddle is fine.
 
-9.8 texinfo
-===========
+10.8 texinfo
+============
 
 Texinfo has little add-ons to prompts : "print" prompt will offer to
 makeinfo or convert to pdf, and "insert" prompt to texinfo-insert...
@@ -711,7 +779,7 @@ makeinfo or convert to pdf, and "insert" prompt to texinfo-insert...
 
 File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: nu & other libraries,  Up: Top
 
-10 Contributing
+11 Contributing
 ***************
 
 As of today nu-mode only has one author, & contribution is more than
@@ -1203,17 +1271,18 @@ their use in free software.
 
 Tag Table:
 Node: Top716
-Node: Overview1106
-Node: View and Edit7527
-Node: Files Buffers Windows14734
-Node: Minibuffer16959
-Node: Hacking17836
-Node: nu for the power user18525
-Node: Customization21492
-Node: nu and some specific modes23802
-Node: nu & other libraries24224
-Node: Contributing29206
-Node: GNU Free Documentation License29464
+Node: Overview1122
+Node: View and Edit8351
+Node: Files Buffers Windows15558
+Node: Minibuffer17783
+Node: Hacking18660
+Node: nu for the power user19349
+Node: Cheat Sheet22314
+Node: Customization24621
+Node: nu and some specific modes26921
+Node: nu & other libraries27343
+Node: Contributing32343
+Node: GNU Free Documentation License32601
 
 End Tag Table
 
