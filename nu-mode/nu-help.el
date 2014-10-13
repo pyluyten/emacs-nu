@@ -362,7 +362,8 @@ This function ensures no error can occur inside the process..."
         ((~nu-check-vector key "+" t)
          (setq nu-repeat-prompt t))
 
-        ((~nu-check-vector key 'tab)
+        ; check for tab ; with 9 i try to fix a bug on some platforms...
+        ((or (~nu-check-vector key 'tab) (~nu-check-vector key 9))
                 (nu-buffer-prompt-for-keymap keymap))
 
         ((~nu-check-vector key " " t)
