@@ -31,11 +31,10 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 * Files Buffers Windows::
 * Minibuffer::
 * Hacking::
-* nu for the power user::
+* Advanced Usage::
+* Integration::
 * Cheat Sheet::
 * Customization::
-* nu and some specific modes::
-* nu & other libraries::
 * Contributing::
 * GNU Free Documentation License::
 
@@ -466,7 +465,7 @@ go up one directory.
 sometimes means completion.
 
 
-File: nu-mode.info,  Node: Hacking,  Next: nu for the power user,  Prev: Minibuffer,  Up: Top
+File: nu-mode.info,  Node: Hacking,  Next: Advanced Usage,  Prev: Minibuffer,  Up: Top
 
 5 Hacking
 *********
@@ -486,10 +485,10 @@ comments.
    'Alt+s' prompt also allows you to create tags to find definitions.
 
 
-File: nu-mode.info,  Node: nu for the power user,  Next: Cheat Sheet,  Prev: Hacking,  Up: Top
+File: nu-mode.info,  Node: Advanced Usage,  Next: Integration,  Prev: Hacking,  Up: Top
 
-6 nu for the power user
-***********************
+6 Advanced Usage
+****************
 
 If you are not used to Emacs, reading this chapter is not necessary.
 But Emacs veteran will probably be interested.  Emacs-nu redefines many
@@ -547,9 +546,142 @@ acceptable for maggit is not for a full keymap.)
      from these prompts.
 
 
-File: nu-mode.info,  Node: Cheat Sheet,  Next: Customization,  Prev: nu for the power user,  Up: Top
+File: nu-mode.info,  Node: Integration,  Next: Cheat Sheet,  Prev: Advanced Usage,  Up: Top
 
-7 Cheat Sheet
+7 Integration
+*************
+
+nu-mode is to be responsive - in order for major modes to preserve
+nu-mode philosophy, prompts plus some direct keys will change according
+to the context : mainly major-mode.  More globally, nu-mode does
+integrate with other libraries.
+
+7.1 Major-mode : dired
+======================
+
+As expected, most of vanilla Dired keys are respected : these are keys
+which should, in Fundamental mode for example, run self-insert-key - for
+example, d will mark a file for deletion.  Modifiers keys will mainly
+invoke nu-mode commands.  This allows to combine both worlds : if you
+don't know how to run something, use a prompt and read it to learn how
+to directly invoke the key.  Eg, using Delete prompt it is possible to
+dired-delete a file, but we learn from this prompt an alternative -
+direct, native - key to run the same.  This should make dired learning
+curve better.
+
+   Dired allows to use nu-mode shortcuts to navigate : the 'Alt+i' & 'k'
+paddle allow to navigate the list, while 'j' will go to parent directory
+and 'l' will find-file at point.
+
+   Some prompts are adapted to dired : selections (with 'Alt+a') for
+example, will provide the different dired options to mark files.  Look
+at "replace", "insert", "find", and so on.  Where it make sense the
+usual prompts will be useful inside dired.  Keys that *remain* useful
+inside dired are kept.
+
+   Use 'Control+p' (uniserval-argument) then <s> key to edit the ls
+command.
+
+7.2 Major-mode / Minor-mode : org
+=================================
+
+nu-mode has many features related to org.  Rather than storing all
+org-related features in one place, nu-mode does enrich its usual prompts
+or even commands given the org-mode context.
+
+   'Alt+n' new prompt allows to capture a note.  Using open-prompt, it
+is possible to open agenda.  'Alt+s' prompt will allow you to
+org-store-link.  'Alt+v' prompt will allow to paste an org link.  This
+same prompt offers to org-table-insert-column or row.  It is possible to
+insert a timestamp or directly a deadline.  'Control+b' will run
+org-emphasis.  'Alt+b' print prompt allows to expand ("print"), which
+does correspond to what org-modes binds to Alt+Tab, which is an *awful*
+choice.  It is also possible to delete a node from the delete prompt.
+One can org-mark-ring-goto using goto prompt.
+
+   The Control+Space Control+Space shortcut will trigger what would have
+been Control+c Control+c.  Note that shift selectections do not work
+with org-mode.
+
+7.3 Major-mode : magit
+======================
+
+Use Alt+s, ie save-prompt, to gain access to magit-status.
+
+   A work has started to integrate magit properly.  For example, replace
+prompt will offer to toggle whether next commit has -amend.  It is
+possible to use new prompt to create branch, open prompt to open branch
+manager, and so on.
+
+7.4 Major-mode : term
+=====================
+
+term is perfectly usable with nu-mode.  Just press 'Control+Space
+Control+c' to run a sigstop.  Or, Control+Space then Control+b to open
+another buffer.  The vanilla x keymap is used.  As of today there is no
+prompt however.
+
+7.5 Major-mode : texinfo
+========================
+
+Texinfo has little add-ons to prompts : "print" prompt will offer to
+makeinfo or convert to pdf, and "insert" prompt to texinfo-insert...
+
+7.6 Minor-mode : auto-complete
+==============================
+
+There isn't much to say.  Auto-complete does integrate well, that's all!
+
+7.7 Minor-mode : god-mode
+=========================
+
+god-mode is one possible modal editing.  See below about evil-mode.
+god-mode can be toggled using 'Control+g'.  Using vanilla god-mode, it
+is then possible to quit god-mode pressing 'Control+g' again (the
+modifier is necessary).
+
+   I'm currently waiting for a patch to be integrated, in order to allow
+god-mode to allow configuring which modifier is added to keys.  This
+patch will allow to use god-mode with alt automatically triggered.
+Forward / Backward char / line / word will be one key distant, while
+delete prompts becomes nicer.  Commands relying on 'Control' modifier
+will be triggered with <g> key.  Using this, quitting god-mode is 'gg',
+since first g will toggle Control modifier.
+
+7.8 Minor-mode : evil-mode
+==========================
+
+While nu-mode is not a modal editor, and aims at being the most
+efficient keymap, sometimes using lot of modifiers might still be
+harassing.  Using vim keymap is feasible : you can activate evil-mode,
+then switch from evil-state to emacs-state as you want.
+
+   Even while in evil-state, you will enjoy a few nu-mode keys, like
+Alt+v, Alt+f, and probably many others.  However vim paddle (hjkl for
+left down up right) and nu-mode paddle (ijkl for up left down right)
+disagree on three of these four keys!  If you want to have evil with
+nu-mode paddle, I recommend you to make vim paddle similar to nu-mode.
+Since <i> will not be available anymore to insert, use <h> for this
+purpose.  Simply put below lines on your .emacs:
+
+     (define-key evil-normal-state-map (kbd "h") 'evil-insert)
+     (define-key evil-normal-state-map (kbd "j") 'evil-backward-char)
+     (define-key evil-normal-state-map (kbd "i") 'evil-previous-line)
+     (define-key evil-normal-state-map (kbd "k") 'evil-next-line)
+
+   Obviously this only fixes the basic paddle.  Backward and Foward word
+are different, but fixing the paddle is fine.
+
+7.9 Other : autojump
+====================
+
+autojump is part of the keybinding (alt f prompt, or directly
+Control+Shift+f to autojump to a char).
+
+
+File: nu-mode.info,  Node: Cheat Sheet,  Next: Customization,  Prev: Integration,  Up: Top
+
+8 Cheat Sheet
 *************
 
 
@@ -588,9 +720,9 @@ File: nu-mode.info,  Node: Cheat Sheet,  Next: Customization,  Prev: nu for the 
 
 
 
-File: nu-mode.info,  Node: Customization,  Next: nu and some specific modes,  Prev: Cheat Sheet,  Up: Top
+File: nu-mode.info,  Node: Customization,  Next: Contributing,  Prev: Cheat Sheet,  Up: Top
 
-8 Customization
+9 Customization
 ***************
 
 As ususal with Emacs, customization comes down at the very first usage.
@@ -598,8 +730,19 @@ So even before to describe edition, customization has to be mentioned.
 There is not a single defcustom inside nu-mode.  All customization is to
 be done in other ways.
 
-   If you want prompts to automatically prompt a buffer rather than just
-a 'nu-light-prompt-for-keymap, which is the default, use :
+9.1 I don't like the Alt modifier for the paddle
+================================================
+
+Easy.  Do bind Control+ [ijkluo] to the movement.  Eventually bind Alt +
+the same to delete, or rely on alt+d.  You loose some consistency, since
+alt key is suppose to offer *any function*.  (On the other hand, you
+could remap Alt+o to open prompt.)
+
+9.2 Prompts
+===========
+
+If you want prompts to automatically prompt a buffer rather than just a
+'nu-light-prompt-for-keymap, which is the default, use :
 
    (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
 
@@ -610,9 +753,9 @@ offer to call-interactively the functions being part of the prompt.  Be
 warned, you'll have to handle a huge amounts of details however if you
 want your function to be pleasant =)
 
-   If you want to amend nu-mode keymap, amend nu-keymap.  As of August,
-2014, some prompts have a "fixed" map you can amend directly: -
-nu-window-map (Alt+w) - nu-new-map (Alt+n) - nu-a-map (Control+a)
+   As of August, 2014, some prompts have a "fixed" map you can amend
+directly: - nu-window-map (Alt+w) - nu-new-map (Alt+n) - nu-a-map
+(Control+a)
 
    If you want to amend some "dynamic prompt", add a hook after its
 "populating" - nu-populate-print does populate print-map (Alt+p) -
@@ -628,7 +771,15 @@ using 'Control+Shift+x' - help-map
 keymap : just (nu-prompt-for-keymap some-keymap), and you're there : one
 nu-mode prompt will offer you to leverage some-keymap.
 
-   nu-mode does trigger some settings which are not mandatory
+9.3 Main keymap
+===============
+
+If you want to amend nu-mode keymap, amend nu-keymap.
+
+9.4 Side effects
+================
+
+nu-mode does trigger some settings which are not mandatory
 
    cua-selection-mode is really logical given the nu-mode paddle.
 However, feel free to fix this call in nu-mode initialization.
@@ -640,146 +791,9 @@ the keybinding.
         (set-default 'cursor-type 'bar)
 
 
-File: nu-mode.info,  Node: nu and some specific modes,  Next: nu & other libraries,  Prev: Customization,  Up: Top
+File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: Customization,  Up: Top
 
-9 nu and some specific modes
-****************************
-
-9.1 term
-========
-
-term is perfectly usable with nu-mode.  Just press 'Control+Space
-Control+c' to run a sigstop.  Or, Control+Space then Control+b to open
-another buffer.  The vanilla x keymap is used.  As of today there is no
-prompt however.
-
-
-File: nu-mode.info,  Node: nu & other libraries,  Next: Contributing,  Prev: nu and some specific modes,  Up: Top
-
-10 nu & other libraries
-***********************
-
-How does nu-mode integrate with other libraries?  We already saw dired
-and helm because of their integration.
-
-10.1 dired
-==========
-
-As expected, most of vanilla Dired keys are respected : these are keys
-which should, in Fundamental mode for example, run self-insert-key - for
-example, d will mark a file for deletion.  Modifiers keys will mainly
-invoke nu-mode commands.  This allows to combine both worlds : if you
-don't know how to run something, use a prompt and read it to learn how
-to directly invoke the key.  Eg, using Delete prompt it is possible to
-dired-delete a file, but we learn from this prompt an alternative -
-direct, native - key to run the same.  This should make dired learning
-curve better.
-
-   Dired allows to use nu-mode shortcuts to navigate : the 'Alt+i' & 'k'
-paddle allow to navigate the list, while 'j' will go to parent directory
-and 'l' will find-file at point.
-
-   Some prompts are adapted to dired : selections (with 'Alt+a') for
-example, will provide the different dired options to mark files.  Look
-at "replace", "insert", "find", and so on.  Where it make sense the
-usual prompts will be useful inside dired.  Keys that *remain* useful
-inside dired are kept.
-
-   Use 'Control+p' (uniserval-argument) then <s> key to edit the ls
-command.
-
-10.2 org
-========
-
-nu-mode has many features related to org.  Rather than storing all
-org-related features in one place, nu-mode does enrich its usual prompts
-or even commands given the org-mode context.
-
-   'Alt+n' new prompt allows to capture a note.  Using open-prompt, it
-is possible to open agenda.  'Alt+s' prompt will allow you to
-org-store-link.  'Alt+v' prompt will allow to paste an org link.  This
-same prompt offers to org-table-insert-column or row.  It is possible to
-insert a timestamp or directly a deadline.  'Control+b' will run
-org-emphasis.  'Alt+b' print prompt allows to expand ("print"), which
-does correspond to what org-modes binds to Alt+Tab, which is an *awful*
-choice.  It is also possible to delete a node from the delete prompt.
-One can org-mark-ring-goto using goto prompt.
-
-   The Control+Space Control+Space shortcut will trigger what would have
-been Control+c Control+c.  Note that shift selectections do not work
-with org-mode.
-
-10.3 magit
-==========
-
-Use Alt+s, ie save-prompt, to gain access to magit-status.
-
-   A work has started to integrate magit properly.  For example, replace
-prompt will offer to toggle whether next commit has -amend.  It is
-possible to use new prompt to create branch, open prompt to open branch
-manager, and so on.
-
-10.4 autojump
-=============
-
-autojump is part of the keybinding (alt f prompt, or directly
-Control+Shift+f to autojump to a char).
-
-10.5 auto-complete
-==================
-
-There isn't much to say.  Auto-complete does integrate well, that's all!
-
-10.6 god-mode
-=============
-
-god-mode is one possible modal editing.  See below about evil-mode.
-god-mode can be toggled using 'Control+g'.  Using vanilla god-mode, it
-is then possible to quit god-mode pressing 'Control+g' again (the
-modifier is necessary).
-
-   I'm currently waiting for a patch to be integrated, in order to allow
-god-mode to allow configuring which modifier is added to keys.  This
-patch will allow to use god-mode with alt automatically triggered.
-Forward / Backward char / line / word will be one key distant, while
-delete prompts becomes nicer.  Commands relying on 'Control' modifier
-will be triggered with <g> key.  Using this, quitting god-mode is 'gg',
-since first g will toggle Control modifier.
-
-10.7 evil-mode
-==============
-
-While nu-mode is not a modal editor, and aims at being the most
-efficient keymap, sometimes using lot of modifiers might still be
-harassing.  Using vim keymap is feasible : you can activate evil-mode,
-then switch from evil-state to emacs-state as you want.
-
-   Even while in evil-state, you will enjoy a few nu-mode keys, like
-Alt+v, Alt+f, and probably many others.  However vim paddle (hjkl for
-left down up right) and nu-mode paddle (ijkl for up left down right)
-disagree on three of these four keys!  If you want to have evil with
-nu-mode paddle, I recommend you to make vim paddle similar to nu-mode.
-Since <i> will not be available anymore to insert, use <h> for this
-purpose.  Simply put below lines on your .emacs:
-
-     (define-key evil-normal-state-map (kbd "h") 'evil-insert)
-     (define-key evil-normal-state-map (kbd "j") 'evil-backward-char)
-     (define-key evil-normal-state-map (kbd "i") 'evil-previous-line)
-     (define-key evil-normal-state-map (kbd "k") 'evil-next-line)
-
-   Obviously this only fixes the basic paddle.  Backward and Foward word
-are different, but fixing the paddle is fine.
-
-10.8 texinfo
-============
-
-Texinfo has little add-ons to prompts : "print" prompt will offer to
-makeinfo or convert to pdf, and "insert" prompt to texinfo-insert...
-
-
-File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: nu & other libraries,  Up: Top
-
-11 Contributing
+10 Contributing
 ***************
 
 As of today nu-mode only has one author, & contribution is more than
@@ -1271,18 +1285,17 @@ their use in free software.
 
 Tag Table:
 Node: Top716
-Node: Overview1122
-Node: View and Edit8351
-Node: Files Buffers Windows15558
-Node: Minibuffer17783
-Node: Hacking18660
-Node: nu for the power user19349
-Node: Cheat Sheet22314
-Node: Customization24621
-Node: nu and some specific modes26921
-Node: nu & other libraries27343
-Node: Contributing32343
-Node: GNU Free Documentation License32601
+Node: Overview1075
+Node: View and Edit8304
+Node: Files Buffers Windows15511
+Node: Minibuffer17736
+Node: Hacking18613
+Node: Advanced Usage19295
+Node: Integration22239
+Node: Cheat Sheet27802
+Node: Customization30099
+Node: Contributing32822
+Node: GNU Free Documentation License33073
 
 End Tag Table
 
