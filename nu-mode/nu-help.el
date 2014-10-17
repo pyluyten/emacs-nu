@@ -8,6 +8,11 @@
 (defvar nu-state t "Used by overriding maps alist.")
 
 (defun nu-make-overriding-map (keymap unbind-keys-list &rest bindings)
+   "Make keymap a minor-mode-overriding-map.
+
+Unbind any key as in unbind-keys-list.
+Add a binding for any binding provide on the form
+   C-l     'some-function."
  (make-local-variable 'minor-mode-overriding-map-alist)
  (push `(nu-state . ,keymap) minor-mode-overriding-map-alist)
  (while (not (eq unbind-keys-list nil))
@@ -17,6 +22,10 @@
     (define-key keymap (kbd (car bindings)) (car (cdr bindings)))
     (pop bindings) (pop bindings)))
 
+(defun nu-drop-overriding-map (keymap)
+    "Remove keymap from minor-mode-overriding-map."
+  (make-local-variable 'minor-mode-overriding-map-alist)
+  (setq minor-mode-overriding-map-alist (delete `(nu-state . ,keymap) minor-mode-overriding-map-alist)))
 
  ; map-keymap has no way to receive
  ; more than two args
