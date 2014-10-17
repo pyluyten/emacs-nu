@@ -62,6 +62,45 @@ particular helm-map, such as describe-variable..."
   (nu-make-overriding-map minibuffer-local-map nil "M-q" 'abort-recursive-edit))
 
 
+(defun nu-prepare-for-term-raw ()
+  "Respect term raw map principle to be an emulator,
+
+thus we only trick C-c."
+  (nu-drop-overriding-map term-mode-map)
+  (define-key term-raw-map (kbd "C-c l") 'term-line-mode)
+  (define-key term-raw-map (kbd "C-c o") 'nu-open-prompt)
+  (define-key term-raw-map (kbd "C-c g") 'nu-goto-prompt)
+  (nu-make-overriding-map term-raw-map nil))
+
+
+
+(defun nu-prepare-for-term-line ()
+  "Adapt term line mode map to nu-style."
+  (nu-drop-overriding-map term-raw-map)
+  (nu-make-overriding-map term-mode-map nil))
+
+
+
+(defadvice term-line-mode (after nu-prepare-for-term-line-advice ())
+  (nu-prepare-for-term-line))
+
+(ad-activate 'term-line-mode)
+
+
+(defadvice term-char-mode (after nu-prepare-for-term-char-advice ())
+  (nu-prepare-for-term-raw))
+
+(ad-activate 'term-char-mode)
+
+
+
+(defun nu-prepare-for-term ()
+  "Review terminal.
+
+Always start at char mode."
+  (nu-prepare-for-term-raw))
+
+
 (defun nu-prepare-for-dired ()
   "Most dired adaptation is done using prompts.
 
@@ -77,6 +116,7 @@ Still, some keys here help."
   (nu-make-overriding-map dired-mode-map nil))
 
 
+(add-hook 'term-mode-hook        'nu-prepare-for-term)
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
 (add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
 (add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
