@@ -675,4 +675,19 @@ But if mark is active, exchange point and mark."
          (nu-prompt-for-keymap nu-replace-map))))
 
 
+;;
+;; term
+;;
+
+(defvar nu-term-map "Map for term single point of entry.")
+
+(defun nu-prompt-for-term ()
+  (interactive)
+  (nu-define-prefix 'nu-term-map)
+  (define-key nu-term-map (kbd "o") 'nu-open-prompt)
+  (define-key nu-term-map (kbd "g") 'nu-goto-prompt)
+  (define-key nu-term-map (kbd "l") 'term-line-mode)
+  (nu-prompt-for-keymap nu-term-map))
+
+
 (provide 'nu-prompts)

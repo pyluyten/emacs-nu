@@ -67,9 +67,7 @@ particular helm-map, such as describe-variable..."
 
 thus we only trick C-c."
   (nu-drop-overriding-map term-mode-map)
-  (define-key term-raw-map (kbd "C-c l") 'term-line-mode)
-  (define-key term-raw-map (kbd "C-c o") 'nu-open-prompt)
-  (define-key term-raw-map (kbd "C-c g") 'nu-goto-prompt)
+  (define-key term-raw-map (kbd "C-c") 'nu-prompt-for-term)
   (nu-make-overriding-map term-raw-map nil))
 
 
