@@ -328,6 +328,12 @@ It is possible, from Emacs to handle a bit of window management. But you should 
 @node Minibuffer
 @chapter Minibuffer
 
+It is highly advised to enable helm-mode while using emacs-nu. Use below code in your .emacs.d/init.el or whatever file you are using to customize Emacs :
+
+@lisp
+(helm-mode 1)
+@end lisp
+
 Some prompts do provide access to helm functions : open prompt to access help-mini or help-find-files. Or insert prompt to access kill-ring from helm-show-kill-ring. Mx will use helm-Mx, ibuffer does use helm too, and so on.
 
 Once helm buffer is opened to let you select file / buffer / function or whatever helm migth help you select, use paddle (@kbd{M-i} , @kbd{M-k} to navigate up/down). If there are ``sources'', use @kbd{Shift+Space} / @kbd{Shift+backspace} to navigate it or common @kbd{Alt+Space} / @kbd{Alt+Backspace} to scroll page. As expected, @kbd{Control+q} to quit helm.

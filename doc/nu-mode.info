@@ -1,4 +1,4 @@
-This is nu-mode.info, produced by makeinfo version 5.1 from
+This is nu-mode.info, produced by makeinfo version 5.2 from
 nu-mode.texi.
 
 This manual is for nu-mode (version 0.8 of 2014-09-12), a modern
@@ -447,10 +447,16 @@ File: nu-mode.info,  Node: Minibuffer,  Next: Hacking,  Prev: Files Buffers Wind
 4 Minibuffer
 ************
 
-Some prompts do provide access to helm functions : open prompt to access
-help-mini or help-find-files.  Or insert prompt to access kill-ring from
-helm-show-kill-ring.  Mx will use helm-Mx, ibuffer does use helm too,
-and so on.
+It is highly advised to enable helm-mode while using emacs-nu.  Use
+below code in your .emacs.d/init.el or whatever file you are using to
+customize Emacs :
+
+     (helm-mode 1)
+
+   Some prompts do provide access to helm functions : open prompt to
+access help-mini or help-find-files.  Or insert prompt to access
+kill-ring from helm-show-kill-ring.  Mx will use helm-Mx, ibuffer does
+use helm too, and so on.
 
    Once helm buffer is opened to let you select file / buffer / function
 or whatever helm migth help you select, use paddle ('M-i' , 'M-k' to
@@ -1289,13 +1295,13 @@ Node: Overview1075
 Node: View and Edit8304
 Node: Files Buffers Windows15511
 Node: Minibuffer17736
-Node: Hacking18613
-Node: Advanced Usage19295
-Node: Integration22239
-Node: Cheat Sheet27802
-Node: Customization30099
-Node: Contributing32822
-Node: GNU Free Documentation License33073
+Node: Hacking18793
+Node: Advanced Usage19475
+Node: Integration22419
+Node: Cheat Sheet27982
+Node: Customization30279
+Node: Contributing33002
+Node: GNU Free Documentation License33253
 
 End Tag Table
 
