@@ -316,8 +316,9 @@
       (define-key nu-new-map (kbd "d") 'make-directory))
 
   (if (eq major-mode 'magit-status-mode)
+      (progn
       (define-key nu-new-map (kbd "b") 'magit-create-branch)
-      (define-key nu-new-map (kbd "a") 'magit-annotated-tag))
+      (define-key nu-new-map (kbd "a") 'magit-annotated-tag)))
 
   (define-key nu-new-map (kbd "n") 'nu-new-empty-buffer)
   (define-key nu-new-map (kbd "C-n") 'helm-run-external-command)
