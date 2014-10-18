@@ -685,6 +685,8 @@ But if mark is active, exchange point and mark."
   (interactive)
   (nu-define-prefix 'nu-term-line-c-c)
 
+  (define-key nu-term-line-c-c (kbd "c") 'nu-copy-region-or-line)
+
   ; stolen from term mode map C-c part...
   (define-key nu-term-line-c-c (kbd "C-a") 'term-bol)
   (define-key nu-term-line-c-c (kbd "C-c") 'term-interrupt-subjob)
@@ -739,7 +741,9 @@ both navigate, access to essential prompts, and control the terminal."
   ; so whenever it might be avoided it should.
   (define-key nu-term-map (kbd "o") 'nu-open-prompt)
   (define-key nu-term-map (kbd "p") 'nu-print-prompt)
+  (define-key nu-term-map (kbd "d") 'nu-delete-prompt)
   (define-key nu-term-map (kbd "g") 'nu-goto-prompt)
+  (define-key nu-term-map (kbd "w") 'nu-window-prompt)
   (define-key nu-term-map (kbd "v") 'nu-insert-prompt)
   (define-key nu-term-map (kbd "n") 'nu-new-prompt)
 
