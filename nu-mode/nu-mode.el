@@ -207,6 +207,21 @@ eg dired, magit, helm, ...)"
    (cua-selection-mode 1)
    (setq cua--rectangle-modifier-key 'control)
 
+   ; populate all prompts
+   ; so all maps are defined
+   (nu-populate-print)
+   (nu-populate-quit)
+   (nu-populate-delete)
+   (nu-populate-bold-map)
+   (nu-populate-insert-map)
+   (nu-populate-save-map)
+   (nu-populate-new-map)
+   (nu-populate-a-map)
+   (nu-populate-open-map)
+   (nu-populate-goto-map)
+   (nu-populate-find-map)
+   (nu-populate-replace)
+
    (nu-restore-default-keymap))
 
 
