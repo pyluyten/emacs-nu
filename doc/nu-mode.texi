@@ -435,7 +435,21 @@ A work has started to integrate magit properly. For example, replace prompt will
 
 @section Major-mode : term
 
-term is perfectly usable with nu-mode. Just press @kbd{Control+Space Control+c} to run a sigstop. Or, Control+Space then Control+b to open another buffer. The vanilla x keymap is used. As of today there is no prompt however.
+term is a major mode which has two components (sub-modes)
+@enumerate
+@item char mode
+@item line mode
+@end enumerate
+
+Default (startup) is char mode.
+
+Char mode is like a real terminal. This allows you to do real stuff, including terminal embedded interfaces. On the other hand, shortcuts are not available since keys are directly sent to term. There is an exception however : press control+c (or, control+space) and you will access a unique prompt. This prompt allows you to navigate to other buffers, trigger line-mode, cancel current command, or call another prompt.
+
+Basically in term mode you only run commands, plus navigate.
+
+When you want to select output or navigate more seriously, just use the line sub-mode. In line-mode, nu-keymap is not amended. (TODO : adapt it.) The advantage is to gain nu-keymap + some emulation, obviously on the other hand this is not anymore a full term emulation since keys are not directly sent.
+
+From line mode, press control+space to gain a prompt to come back to char mode (plus, many other stuff...)
 
 @section Major-mode : texinfo
 

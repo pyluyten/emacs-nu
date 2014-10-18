@@ -75,6 +75,7 @@ thus we only trick C-c."
 (defun nu-prepare-for-term-line ()
   "Adapt term line mode map to nu-style."
   (nu-drop-overriding-map term-raw-map)
+  (define-key term-mode-map (kbd "C-c") 'nu-tmp-prompt-for-term-line-c-c)
   (nu-make-overriding-map term-mode-map nil))
 
 

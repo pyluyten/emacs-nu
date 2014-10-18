@@ -679,15 +679,76 @@ But if mark is active, exchange point and mark."
 ;; term
 ;;
 
+
+(defun nu-tmp-prompt-for-term-line-c-c ()
+  "Temporary map... to be improved."
+  (interactive)
+  (nu-define-prefix 'nu-term-line-c-c)
+
+  ; stolen from term mode map C-c part...
+  (define-key nu-term-line-c-c (kbd "C-a") 'term-bol)
+  (define-key nu-term-line-c-c (kbd "C-c") 'term-interrupt-subjob)
+  (define-key nu-term-line-c-c (kbd "C-d") 'term-send-eof)
+  (define-key nu-term-line-c-c (kbd "C-e") 'term-show-maximum-output)
+  (define-key nu-term-line-c-c (kbd "C-j") 'term-line-mode)
+  (define-key nu-term-line-c-c (kbd "C-k") 'term-char-mode)
+  (define-key nu-term-line-c-c (kbd "C-l") 'term-dynamic-list-input-ring)
+  (define-key nu-term-line-c-c (kbd "RET") 'term-copy-old-input)
+  (define-key nu-term-line-c-c (kbd "C-n") 'term-next-prompt)
+  (define-key nu-term-line-c-c (kbd "C-o") 'term-kill-output)
+  (define-key nu-term-line-c-c (kbd "C-p") 'term-previous-prompt)
+  (define-key nu-term-line-c-c (kbd "C-q") 'term-pager-toggle)
+  (define-key nu-term-line-c-c (kbd "C-r") 'term-show-output)
+  (define-key nu-term-line-c-c (kbd "C-u") 'term-kill-input)
+  (define-key nu-term-line-c-c (kbd "C-w") 'backward-kill-word)
+  (define-key nu-term-line-c-c (kbd "C-z") 'term-stop-subjob)
+  (define-key nu-term-line-c-c (kbd "C-\\") 'term-quit-subjob)
+
+  (nu-prompt-for-keymap nu-term-line-c-c))
+
 (defvar nu-term-map "Map for term single point of entry.")
 
 (defun nu-prompt-for-term ()
+  "This is a specific prompt designed to make term usable.
+
+& still, respect cua principles. The idea is to let the user
+both navigate, access to essential prompts, and control the terminal."
   (interactive)
   (nu-define-prefix 'nu-term-map)
-  (define-key nu-term-map (kbd "o") 'nu-open-prompt)
-  (define-key nu-term-map (kbd "g") 'nu-goto-prompt)
-  (define-key nu-term-map (kbd "l") 'term-line-mode)
-  (nu-prompt-for-keymap nu-term-map))
 
+  ; paddle keys are dedicated to direct functions
+  ; either to navigate or do something with term.
+  (define-key nu-term-map (kbd "i") 'helm-buffers-list)
+  (define-key nu-term-map (kbd "k") 'ibuffer)
+  (define-key nu-term-map (kbd "l") 'term-line-mode)
+
+
+  ; This includes internal windows
+  ; or other functions using modified buffers keys.
+  ; since control is necessary to run this prompt
+  ; we use control as the unique modifier...
+   (define-key nu-goto-map (kbd "C-i") 'windmove-up)
+   (define-key nu-goto-map (kbd "C-j") 'windmove-left)
+   (define-key nu-goto-map (kbd "C-k") 'windmove-down)
+   (define-key nu-goto-map (kbd "C-l") 'windmove-right)
+
+
+  ; Prompt keys will run prompt, but that means
+  ; at least three keys to run a func :
+  ; term prompt -> nu prompt -> func
+  ; so whenever it might be avoided it should.
+  (define-key nu-term-map (kbd "o") 'nu-open-prompt)
+  (define-key nu-term-map (kbd "p") 'nu-print-prompt)
+  (define-key nu-term-map (kbd "g") 'nu-goto-prompt)
+  (define-key nu-term-map (kbd "v") 'nu-insert-prompt)
+  (define-key nu-term-map (kbd "n") 'nu-new-prompt)
+
+
+  ; some specific stuff that do not fit well
+  ; elsewhere...
+  (define-key nu-term-map (kbd "C-c") 'term-interrupt-subjob)
+  (define-key nu-term-map (kbd "C-<SPC>") 'term-pager-toggle)
+
+  (nu-prompt-for-keymap nu-term-map))
 
 (provide 'nu-prompts)
