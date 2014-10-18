@@ -110,6 +110,7 @@ Still, some keys here help."
   (define-key dired-mode-map  (kbd "M-k") 'dired-next-line)
 
   (define-key dired-mode-map  (kbd "C-z") 'dired-undo)
+  (define-key dired-mode-map  (kbd "M-s") 'nu-save-prompt)
   (define-key dired-mode-map  (kbd "C-o") 'nu-open-prompt)
   (define-key dired-mode-map  (kbd "C-c") 'nu-copy-prompt)
   (nu-make-overriding-map dired-mode-map nil))
