@@ -68,13 +68,18 @@ Ignores CHAR at point."
 
 Messages, Backtrace, Completions, Help."
   (interactive)
-  (if (eq previous nil)
-      (next-buffer)
-      (previous-buffer))
-  (while (string-match "\*.*\*" (buffer-name))
-      (if (eq previous nil)
-          (next-buffer)
-          (previous-buffer))))
+  (let* ((currentbuffer (current-buffer))
+	 (needstobreak nil))
+   (if (eq previous nil)
+       (next-buffer)
+       (previous-buffer))
+   (while (and (string-match "\*.*\*" (buffer-name))
+	       (eq needstobreak nil))
+     (if (not (eq currentbuffer (current-buffer)))
+         (if (eq previous nil)
+             (next-buffer)
+             (previous-buffer))
+         (setq needstobreak t)))))
 
 
 (defun nu-previous-buffer ()
