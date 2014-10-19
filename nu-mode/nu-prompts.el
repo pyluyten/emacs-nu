@@ -759,6 +759,7 @@ both navigate, access to essential prompts, and control the terminal."
   (define-key nu-term-map (kbd "g") 'nu-goto-prompt)
   (define-key nu-term-map (kbd "h") 'nu-help-prompt)
   (define-key nu-term-map (kbd "w") 'nu-window-prompt)
+  (define-key nu-term-map (kbd "c") 'nu-copy-region-or-line)
   (define-key nu-term-map (kbd "n") 'nu-new-prompt)
 
 
