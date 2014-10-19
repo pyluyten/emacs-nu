@@ -754,10 +754,11 @@ both navigate, access to essential prompts, and control the terminal."
   ; so whenever it might be avoided it should.
   (define-key nu-term-map (kbd "o") 'nu-open-prompt)
   (define-key nu-term-map (kbd "p") 'nu-print-prompt)
+  (define-key nu-term-map (kbd "q") 'nu-quit-prompt)
   (define-key nu-term-map (kbd "d") 'nu-delete-prompt)
   (define-key nu-term-map (kbd "g") 'nu-goto-prompt)
+  (define-key nu-term-map (kbd "h") 'nu-help-prompt)
   (define-key nu-term-map (kbd "w") 'nu-window-prompt)
-  (define-key nu-term-map (kbd "v") 'nu-insert-prompt)
   (define-key nu-term-map (kbd "n") 'nu-new-prompt)
 
 
