@@ -428,13 +428,13 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "b")  'helm-bookmarks)
   (define-key nu-open-map (kbd "B")  'bookmark-jump)
   (define-key nu-open-map (kbd "x")  'list-registers)
-  (define-key nu-open-map (kbd "l")  'nu-next-buffer)
-  (define-key nu-open-map (kbd "j")   'nu-previous-buffer)
+  (define-key nu-open-map (kbd "C-l")  'nu-next-buffer)
+  (define-key nu-open-map (kbd "C-j")   'nu-previous-buffer)
   (define-key nu-open-map (kbd "a")   'org-agenda)
   (define-key nu-open-map (kbd "m")   'menu-bar-read-mail)
-  (define-key nu-open-map (kbd "i")   'helm-buffers-list)
-  (define-key nu-open-map (kbd "C-i")   'ibuffer) ; is better at _reorganizing_ buffers...
-  (define-key nu-open-map (kbd "I") 'org-iswitchb)
+  (define-key nu-open-map (kbd "l")   'helm-buffers-list)
+  (define-key nu-open-map (kbd "i")   'ibuffer) ; is better at _reorganizing_ buffers...
+  (define-key nu-open-map (kbd "s") 'org-iswitchb)
   (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer))
 
 
