@@ -178,6 +178,31 @@ call insert description for each bind."
 
 
 
+(defun ~nu-check-vector (vect value &optional is-string str-match)
+"check if vector is the same as value.
+
+Normally use equal, but if is-string is true, use string=.
+If str-match is true, use string-match.
+
+This function ensures no error can occur inside the process..."
+  (if (> (length vect) 1)
+      (> (length vect) 1) ; #false, too long vect
+      (if is-string
+          (if (not (integerp (elt vect 0)))
+             (integerp (elt vect 0)) ; #false, not an integer
+             (if (not (char-valid-p (elt vect 0)))
+                 (char-valid-p (elt vect 0)) ; #false invalid byte
+                 (if str-match
+          ; string + str match
+                     (string-match (byte-to-string (elt vect 0)) value)
+          ; string but not str match
+                     (string= (byte-to-string (elt vect 0)) value))))
+          ; not a string. check equality.
+          (equal (elt vect 0) value))))
+
+
+
+
 
 ; buffer-prompt is a heavy description
 ; of a prompt keymap.
@@ -238,24 +263,23 @@ to describe the function.\n")
  (setq input nil)
  (setq defn nil)
    (while (not input)
-      (setq key (read-key-sequence (propertize "Enter a key or ? :" 'face 'italic) t))
+      (setq key (read-key-sequence-vector (propertize "Enter a key or ? :" 'face 'italic) t))
       (cond
 
        ; check if the user needs to scroll the help. Do not break loop.
-       ((eq (aref key 0) ?\d)
+       ((~nu-check-vector key ?\d nil)
         (ignore-errors
           (scroll-down nil)))
-       ((eq (aref key 0) ?\s)
+       ((~nu-check-vector key ?\s nil)
         (ignore-errors
           (scroll-up nil)))
 
        ; allow to repeat prompt
-       ((string= key "+")
-        (progn (message "plus")
-               (setq nu-repeat-prompt t)))
+       ((~nu-check-vector key "+" t)
+          (setq nu-repeat-prompt t))
 
        ; check for negative / digit-argument.
-       ((string= (key-description key) "-")
+       ((~nu-check-vector key "-" t)
         (cond ((integerp current-prefix-arg)
                (setq current-prefix-arg (- current-prefix-arg)))
               ((eq current-prefix-arg '-)
@@ -269,8 +293,7 @@ to describe the function.\n")
          (while (re-search-forward "\\`Prefix = .*?\n" nil t)
          (replace-match (propertize (format "Prefix = %s\n" current-prefix-arg) 'face 'underline)))))
 
-       ((and (stringp (key-description key))
-             (string-match (key-description key) "[0123456789]"))
+       ((~nu-check-vector key "[0123456789]" t t)
           (cond
             ((eq current-prefix-arg '-)
              (setq current-prefix-arg (- (string-to-number (key-description key)))))
@@ -327,34 +350,9 @@ This one is a bit different..."
    (setq nu-repeat-prompt nil))
 
 
-
-(defun ~nu-check-vector (vect value &optional is-string str-match)
-"check if vector is the same as value.
-
-Normally use equal, but if is-string is true, use string=.
-If str-match is true, use string-match.
-
-This function ensures no error can occur inside the process..."
-  (if (> (length vect) 1)
-      (> (length vect) 1) ; #false, too long vect
-      (if is-string
-          (if (not (integerp (elt vect 0)))
-             (integerp (elt vect 0)) ; #false, not an integer
-             (if (not (char-valid-p (elt vect 0)))
-                 (char-valid-p (elt vect 0)) ; #false invalid byte
-                 (if str-match
-          ; string + str match
-                     (string-match (byte-to-string (elt vect 0)) value)
-          ; string but not str match
-                     (string= (byte-to-string (elt vect 0)) value))))
-          ; not a string. check equality.
-          (equal (elt vect 0) value))))
-
-
 (defun nu-light-prompt-for-keymap  (keymap &optional describe)
 "Light prompt for a keymap. Toggle buffer-prompt with ?"
   (interactive)
-  (message "light prompt")
   (setq nu-current-keymap keymap)
   (setq nu-current-major-mode major-mode)
   (let* ((input nil)
