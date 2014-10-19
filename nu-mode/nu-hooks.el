@@ -123,6 +123,12 @@ Still, some keys here help."
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
 
 
+(eval-after-load "auto-complete"
+  '(progn
+     (define-key ac-completing-map (kbd "M-k") 'ac-next)
+     (define-key ac-completing-map (kbd "M-i") 'ac-previous)))
+
+
 (eval-after-load "helm-mode" ;; TODO = helm-M-x-map
   '(progn
     ;; qwertyuiop
