@@ -171,7 +171,11 @@ Still, some keys here help."
     ; non char
     (define-key helm-map (kbd "M-<SPC>") 'helm-next-page)
     (define-key helm-map (kbd "M-<backspace>") 'helm-previous-page)
-    (define-key helm-find-files-map (kbd "M-=") 'helm-ff-properties-persistent))) ; lame
+    (define-key helm-find-files-map (kbd "M-=") 'helm-ff-properties-persistent) ; lame
+
+    (define-key helm-map (kbd "M-<RET>") 'helm-select-action)
+    (define-key helm-buffer-map (kbd "M-<RET>") 'helm-select-action)
+    (define-key helm-find-files-map (kbd "M-<RET>") 'helm-select-action)))
 
  ;helm-copy-to-buffer?
  ;helm-yank-selection
