@@ -387,7 +387,7 @@ Now, two things should probably be kept in mind while trying nu-mode
 To trigger a major mode sequence, start with @kbd{Control+Space}. This will invoke vanilla emacs @kbd{Control+c}. For example, into org-mode, use @kbd{Control+Space Control+n} to navigate to next node. If you already defined you own keys starting with @kbd{Control+c}, do not amend this definition.
 
 @lisp
-(define-key mykeymap kbd("\C-c h") myfunction)
+(define-key mykeymap kbd("\C-c h") 'myfunction)
 @end lisp
 
 To invoke above myfunction example, press @kbd{Control-SPC h}.
@@ -506,44 +506,42 @@ autojump is part of the keybinding (alt f prompt, or directly Control+Shift+f to
 
 @node Cheat Sheet
 @chapter Cheat Sheet
-@cartouche
+
 @verbatim
 
-
-| key | Alt              | Control             | S-Ctrl    | S-Alt  |
-|-----+------------------+---------------------+-----------+--------|
-| a   | *Mark* / toggle  | Mark block / toggle | rectangle |        |
-| z   | *Undo tree*      | Undo                |           |        |
-| e   | Copy Above       |                     |           |        |
-| r   | *Replace*        | Replace regex       |           |        |
-| t   | *Other tab*      | New tab             |           |        |
-| y   | Copy Below       |                     |           |        |
-| u   | word back        | ctrl+bkspc.         |           | select |
-| i   | up               | X [tab]             |           | select |
-| o   | forward word     | *Open*              |           | select |
-| p   | *Print*          | Argument            |           |        |
-|-----+------------------+---------------------+-----------+--------|
-| q   | *Quit*           | Quit                |           |        |
-| s   | *Save*           | Save                |           |        |
-| d   | *Delete*         | kill-word           |           |        |
-| f   | *Find*           | Find                |           |        |
-| g   | *Goto*           | God                 |           |        |
-| h   | orig.            | *Help*              |           |        |
-| j   | left             | backsp              |           | select |
-| k   | down             | kill line           |           | select |
-| l   | right            | kill right          |           | select |
-| m   | newline & indent | X [RET]             |           |        |
-|-----+------------------+---------------------+-----------+--------|
-| w   | *Window* Pr      | kill-buffer         |           |        |
-| x   | helm Mx          | Cut                 | *ctl-x*   |        |
-| c   | -                | Copy                |           |        |
-| v   | *Insert*         | Paste               |           |        |
-| B   | *Emphasis*       | "bold"              |           |        |
-| n   | *New*            | split window        |           |        |
-|-----+------------------+---------------------+-----------+--------|
+| key | Alt             | Control     | S-Ctrl        | S-Alt       |
+|-----+-----------------+-------------+---------------+-------------|
+| a   | *Mark* /toggl   | Mark /toggl | Rectangle     |             |
+| z   | *Undo tree*     | Undo        | Redo          |             |
+| e   | Copy Above      |             |               |             |
+| r   | *Replace*       | Repl. regex |               |             |
+| t   | *Other tab*     | New tab     |               |             |
+| y   | Copy Below      |             |               |             |
+| u   | word back       | ctrl+bkspc. |               | select      |
+| i   | up              | X [tab]     | prev-buffer   | select      |
+| o   | forward word    | *Open*      | helm-mini     | select      |
+| p   | *Print*         | Argument    | eval lat sexp | async shell |
+|-----+-----------------+-------------+---------------+-------------|
+| q   | *Quit*          | Quit        |               |             |
+| s   | *Save*          | Save        | org stor link |             |
+| d   | *Delete*        | kill-word   | kill block    |             |
+| f   | *Find*          | Find        | ace jump word |             |
+| g   | *Goto*          | God         | quit emacs    |             |
+| h   | orig.           | *Help*      |               |             |
+| j   | left            | backsp      |               | select      |
+| k   | down            | kill line   | next-buffer   | select      |
+| l   | right           | kill right  |               | select      |
+| m   | newline &indent | X [RET]     |               |             |
+|-----+-----------------+-------------+---------------+-------------|
+| w   | *Window* Pr     | kill-buffer | transpos fram |             |
+| x   | *helm Mx*       | Cut         | *ctl-x*       |             |
+| c   | -               | Copy        |               |             |
+| v   | *Insert*        | Paste       | quoted insert | kill ring   |
+| B   | *Emphasis*      | "bold"      | toggl comment |             |
+| n   | *New*           | split win   | org capture   |             |
+|-----+-----------------+-------------+---------------+-------------|
 
 @end verbatim
-@end cartouche
 
 @node Customization
 @chapter Customization
