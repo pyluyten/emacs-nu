@@ -313,11 +313,11 @@ Some advanced editon features rely on @kbd{Alt+r}, which will invoke replace pro
 
 @section Internal Windows and Tabs
 
-Emacs has a specific word for its internal frames : it says `Windows'. This is awful, but might be understood given we precise these are internal windows, not X (or Wayland) windows. Emacs has no support for standard tabs because there would be too much tabs. But hidden buffers are tabs, aren't they?
+Emacs has a specific word for its internal frames : it says `Windows'. This is awful, but might be understood given we precise these are internal windows, not X or Wayland windows. Emacs has no support for standard tabs because there would be too much tabs. But hidden buffers are tabs, aren't they?
 
-Use @kbd{Control+o} prompt to open a buffer. You can use @kbd{Control+Shift+o} to directly be prompted for a buffer to open. Or, @kbd{Control+Shift+i} to direclty open next buffer, skipping *Messages* or *Backtrace* and the like. @kbd{Control+n} allows you to create another internal window. @kbd{Control+w} allows you to kill buffer.
+Use @kbd{Control+o} prompt to open a buffer. You can use @kbd{Control+Shift+o} to directly be prompted for a buffer to open. Or, @kbd{Control+Shift+i} to direclty open next buffer, skipping *Messages* or *Backtrace* and the like. @kbd{Control+n} allows you to create another internal window ; @kbd{Alt+n} would prompt, allowing for example to vertical split or open another external frame or so. @kbd{Control+w} allows you to kill buffer.
 
-Use @kbd{Control+t} to open another tab.
+Use @kbd{Control+t} to open another tab (horizontal-split). @kbd{Alt+t} will prompt for which buffer to open in another window.
 
 The delete prompt (@kbd{Alt+d}) allows to delete either this window or all other windows. The save prompt (@kbd{Alt+s}) allows to save current configuration, which you can open from open prompt (@kbd{Control+o}).
 

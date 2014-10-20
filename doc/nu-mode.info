@@ -418,7 +418,7 @@ File: nu-mode.info,  Node: Files Buffers Windows,  Next: Minibuffer,  Prev: View
 
 Emacs has a specific word for its internal frames : it says 'Windows'.
 This is awful, but might be understood given we precise these are
-internal windows, not X (or Wayland) windows.  Emacs has no support for
+internal windows, not X or Wayland windows.  Emacs has no support for
 standard tabs because there would be too much tabs.  But hidden buffers
 are tabs, aren't they?
 
@@ -426,9 +426,12 @@ are tabs, aren't they?
 'Control+Shift+o' to directly be prompted for a buffer to open.  Or,
 'Control+Shift+i' to direclty open next buffer, skipping *Messages* or
 *Backtrace* and the like.  'Control+n' allows you to create another
-internal window.  'Control+w' allows you to kill buffer.
+internal window ; 'Alt+n' would prompt, allowing for example to vertical
+split or open another external frame or so.  'Control+w' allows you to
+kill buffer.
 
-   Use 'Control+t' to open another tab.
+   Use 'Control+t' to open another tab (horizontal-split).  'Alt+t' will
+prompt for which buffer to open in another window.
 
    The delete prompt ('Alt+d') allows to delete either this window or
 all other windows.  The save prompt ('Alt+s') allows to save current
@@ -1388,15 +1391,15 @@ Node: Top716
 Node: Overview1098
 Node: View and Edit9039
 Node: Files Buffers Windows16415
-Node: Minibuffer18640
-Node: Hacking20299
-Node: Advanced Usage20981
-Node: Integration24068
-Node: Cheat Sheet30488
-Node: Customization32785
-Node: Drawbacks & Limits35514
-Node: Contributing37544
-Node: GNU Free Documentation License37800
+Node: Minibuffer18822
+Node: Hacking20481
+Node: Advanced Usage21163
+Node: Integration24250
+Node: Cheat Sheet30670
+Node: Customization32967
+Node: Drawbacks & Limits35696
+Node: Contributing37726
+Node: GNU Free Documentation License37982
 
 End Tag Table
 
