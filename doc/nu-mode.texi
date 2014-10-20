@@ -55,6 +55,7 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 * Integration::
 * Cheat Sheet::
 * Customization::
+* Drawbacks & Limits::
 * Contributing::
 * GNU Free Documentation License::
 @end menu
@@ -79,6 +80,10 @@ Modern, means respecting conventions like
 To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, while @kbd{Control+f} will directly offer to isearch-forward-regexp (that is, ``Find''), @kbd{Alt+f} will raise a ``find-prompt'' offering several search related features. The prompt will display a list of keys - actually, sequences - and associated functions : t to find-tag, w to ace-jump-word-mode, m for imenu, b for regexp-builder, o for occur, @kbd{Alt+f} to isearch-forward-regexp, and so on.
 
 Prompts do adapt to context : ie, according to major mode or selection state, different functions will be available or not. As of October, 2014, there are 250 ``define-key'' inside the relevant code portion, which means about 15 prompts offer to call 25O commands. Obviously, additionnal keys paddle offers to easily navigate.
+
+@section How long is nu-mode to learn
+
+Basically, understanding nu-mode requires to 1. learn the paddle (two minutes should make it), 2. get the idea and memorize the prompts (fifteen minutes) then 3. get used to helm configuration (add fifteen more minutes).
 
 If you're really impatient, go to Cheat Sheet...
 
@@ -162,6 +167,8 @@ w               nu-window-map
 
 @end verbatim
 @end cartouche
+
+Prompts content are more or less predictible ; though some notes might help. `nu-a-map' is the selection prompt ; usually Control+a stands for select all but nu-mode chooses a saner default. `bold-map' is actually an `emphasis' prompt, including stuff like 'toggle comments' in relevant modes. goto-map also allows to navigate internal windows. `print' rather means `eval'. `replace' is rather about `changing'.
 
 From Emacs, the simplest is to @kbd{Control+h} then @key{*} to light-prompt about the different available prompts. This just tells which key to press, not exactly which shortcut, and allows to describe the associated keymap.
 
@@ -410,11 +417,11 @@ nu-mode is to be responsive - in order for major modes to preserve nu-mode philo
 
 @section Major-mode : dired
 
-As expected, most of vanilla Dired keys are respected : these are keys which should, in Fundamental mode for example, run self-insert-key - for example, d will mark a file for deletion. Modifiers keys will mainly invoke nu-mode commands. This allows to combine both worlds : if you don't know how to run something, use a prompt and read it to learn how to directly invoke the key. Eg, using Delete prompt it is possible to dired-delete a file, but we learn from this prompt an alternative - direct, native - key to run the same. This should make dired learning curve better.
+As expected, most of vanilla @strong{Dired} keys are respected : these are keys which should, in Fundamental mode for example, run self-insert-key - for example, @key{d} will mark a file for deletion. Modifiers keys will mainly invoke nu-mode commands. This allows to combine both worlds : if you don't know how to run something, use a prompt and read it in order to learn how to directly invoke the key. Eg, using Delete prompt allows to dired-delete a file, but this same prompts also shows a - direct, native - key to run the same. This should make dired learning curve better.
 
-Dired allows to use nu-mode shortcuts to navigate : the @kbd{Alt+i} & @kbd{k} paddle allow to navigate the list, while @kbd{j} will go to parent directory and @kbd{l} will find-file at point.
+Dired allows to use nu-mode shortcuts to navigate : the @kbd{Alt+i} & @kbd{k} paddle allow to navigate the list, while @kbd{j} will go up to parent directory and @kbd{l} will find-file at point (for example, visit directory at point).
 
-Some prompts are adapted to dired : selections (with @kbd{Alt+a}) for example, will provide the different dired options to mark files. Look at ``replace'', ``insert'', ``find'', and so on. Where it make sense the usual prompts will be useful inside dired. Keys that *remain* useful inside dired are kept.
+Some prompts are adapted to dired : selections (with @kbd{Alt+a}) for example, will provide the different dired options to mark files. Look at ``replace'', ``insert'', ``find'' prompts and so on. Where it make sense the usual prompts will be useful inside dired. Keys that *remain* useful inside dired are kept.
 
 Use @kbd{Control+p} (uniserval-argument) then @key{s} key to edit the ls command.
 
@@ -589,6 +596,28 @@ Also, cursor-type is amended. You can set it back, but again, despite not mandat
 @lisp
    (set-default 'cursor-type 'bar)
 @end lisp
+
+
+@node Drawbacks & Limits
+@chapter Drawbacks & Limits
+
+
+Many keys are used for prompts, making it necessary for more functions to use a prompt (while still many functions are bound to direct shortcuts, thanks to Control+Shift or Alt+Shift). Anyway typing three keys to run a function appears to be fine enough. As of today there are 94 define-keys in nu-mode.el, including prompts (twice for each prompt). This still represents a bunch of shortcuts to learn...
+
+
+A more serious complaint I could formulate is that describe-keymap or where-is cannot totally works with nu-mode. As a workaround, menu key is bounded to prompts (thus, menu o would run the open prompt), allowing where-is to partially works. But where-is cannot work with responsive prompts : it cannot guess prompt will offer different features according to different modes. Anyway I don't see any magic here, nor any serious trouble - this just means the user will have to vaguely look at the Integration section of this manual...
+
+
+While starting, the worst part might be the two ambiguous keys :
+- o is a paddle key while navigating or selecting. But o is a prompt key for opening file. This is both ambiguous, plus this forces to use control for a prompt. On the other hand, some usage proves this to be rather easy. I'm all eager to get some feedback on this point.
+- h is a synonym for beginning of line, which makes it exactly the same as above : h will move, but control+h is a prompt.
+
+
+An even more serious remark would be that, once someone has learned a way, he will not want to have to learn a second time. Learning Emacs, twice??! Well, given Emacs-nu needs 30 minutes to learn, I don't think this is that bad. Most of major-modes / minor-modes will not require additional time. Helm-mode might require a few minutes to get used to.
+
+
+If Emacs-nu breaks some mode, this would be a more serious issue. In such case, please fill-in a bug.
+
 
 @node Contributing
 @chapter Contributing

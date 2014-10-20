@@ -35,6 +35,7 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 * Integration::
 * Cheat Sheet::
 * Customization::
+* Drawbacks & Limits::
 * Contributing::
 * GNU Free Documentation License::
 
@@ -73,9 +74,17 @@ October, 2014, there are 250 "define-key" inside the relevant code
 portion, which means about 15 prompts offer to call 25O commands.
 Obviously, additionnal keys paddle offers to easily navigate.
 
+1.1 How long is nu-mode to learn
+================================
+
+Basically, understanding nu-mode requires to 1.  learn the paddle (two
+minutes should make it), 2.  get the idea and memorize the prompts
+(fifteen minutes) then 3.  get used to helm configuration (add fifteen
+more minutes).
+
    If you're really impatient, go to Cheat Sheet...
 
-1.1 Dependencies
+1.2 Dependencies
 ================
 
 nu-mode depends on several libraries, both native or external ones.
@@ -89,7 +98,7 @@ nu-mode depends on several libraries, both native or external ones.
   2. ace-jump
   3. magit
 
-1.2 Help
+1.3 Help
 ========
 
 Use 'Control+q' to quit a sequence or a command in progress.  Use
@@ -105,7 +114,7 @@ function using the same key, but with 'Control' modifier.  For example,
 
    These prompts offer you to quickly learn where functions are.
 
-1.3 Prompts
+1.4 Prompts
 ===========
 
 Prompts are basically a window showing several possible keys, and which
@@ -161,7 +170,7 @@ have buffer prompt use M-space / M-backspace to scroll.
 using 'q'.  This letter is never bound.  You can always use it.  Note
 that 'Control+q' and 'Alt+q' are neither bound.
 
-1.4 helm-prompts
+1.5 helm-prompts
 ================
 
 An alternative way to explore prompts is helm.  Not the most efficient
@@ -177,7 +186,7 @@ candidate however).
 
    Direct shortcuts are also shown, as usual.
 
-1.5 ok but where are prompts
+1.6 ok but where are prompts
 ============================
 
 Either jump to Cheat Sheet part of this manual (or, on github :
@@ -205,6 +214,13 @@ s               nu-save-map
 v               nu-insert-map
 w               nu-window-map
 
+
+   Prompts content are more or less predictible ; though some notes
+might help.  'nu-a-map' is the selection prompt ; usually Control+a
+stands for select all but nu-mode chooses a saner default.  'bold-map'
+is actually an 'emphasis' prompt, including stuff like 'toggle comments'
+in relevant modes.  goto-map also allows to navigate internal windows.
+'print' rather means 'eval'.  'replace' is rather about 'changing'.
 
    From Emacs, the simplest is to 'Control+h' then <*> to light-prompt
 about the different available prompts.  This just tells which key to
@@ -584,25 +600,25 @@ integrate with other libraries.
 7.1 Major-mode : dired
 ======================
 
-As expected, most of vanilla Dired keys are respected : these are keys
+As expected, most of vanilla *Dired* keys are respected : these are keys
 which should, in Fundamental mode for example, run self-insert-key - for
-example, d will mark a file for deletion.  Modifiers keys will mainly
+example, <d> will mark a file for deletion.  Modifiers keys will mainly
 invoke nu-mode commands.  This allows to combine both worlds : if you
-don't know how to run something, use a prompt and read it to learn how
-to directly invoke the key.  Eg, using Delete prompt it is possible to
-dired-delete a file, but we learn from this prompt an alternative -
-direct, native - key to run the same.  This should make dired learning
-curve better.
+don't know how to run something, use a prompt and read it in order to
+learn how to directly invoke the key.  Eg, using Delete prompt allows to
+dired-delete a file, but this same prompts also shows a - direct, native
+- key to run the same.  This should make dired learning curve better.
 
    Dired allows to use nu-mode shortcuts to navigate : the 'Alt+i' & 'k'
-paddle allow to navigate the list, while 'j' will go to parent directory
-and 'l' will find-file at point.
+paddle allow to navigate the list, while 'j' will go up to parent
+directory and 'l' will find-file at point (for example, visit directory
+at point).
 
    Some prompts are adapted to dired : selections (with 'Alt+a') for
 example, will provide the different dired options to mark files.  Look
-at "replace", "insert", "find", and so on.  Where it make sense the
-usual prompts will be useful inside dired.  Keys that *remain* useful
-inside dired are kept.
+at "replace", "insert", "find" prompts and so on.  Where it make sense
+the usual prompts will be useful inside dired.  Keys that *remain*
+useful inside dired are kept.
 
    Use 'Control+p' (uniserval-argument) then <s> key to edit the ls
 command.
@@ -765,7 +781,7 @@ File: nu-mode.info,  Node: Cheat Sheet,  Next: Customization,  Prev: Integration
 
 
 
-File: nu-mode.info,  Node: Customization,  Next: Contributing,  Prev: Cheat Sheet,  Up: Top
+File: nu-mode.info,  Node: Customization,  Next: Drawbacks & Limits,  Prev: Cheat Sheet,  Up: Top
 
 9 Customization
 ***************
@@ -836,9 +852,48 @@ the keybinding.
         (set-default 'cursor-type 'bar)
 
 
-File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: Customization,  Up: Top
+File: nu-mode.info,  Node: Drawbacks & Limits,  Next: Contributing,  Prev: Customization,  Up: Top
 
-10 Contributing
+10 Drawbacks & Limits
+*********************
+
+Many keys are used for prompts, making it necessary for more functions
+to use a prompt (while still many functions are bound to direct
+shortcuts, thanks to Control+Shift or Alt+Shift).  Anyway typing three
+keys to run a function appears to be fine enough.  As of today there are
+94 define-keys in nu-mode.el, including prompts (twice for each prompt).
+This still represents a bunch of shortcuts to learn...
+
+   A more serious complaint I could formulate is that describe-keymap or
+where-is cannot totally works with nu-mode.  As a workaround, menu key
+is bounded to prompts (thus, menu o would run the open prompt), allowing
+where-is to partially works.  But where-is cannot work with responsive
+prompts : it cannot guess prompt will offer different features according
+to different modes.  Anyway I don't see any magic here, nor any serious
+trouble - this just means the user will have to vaguely look at the
+Integration section of this manual...
+
+   While starting, the worst part might be the two ambiguous keys : - o
+is a paddle key while navigating or selecting.  But o is a prompt key
+for opening file.  This is both ambiguous, plus this forces to use
+control for a prompt.  On the other hand, some usage proves this to be
+rather easy.  I'm all eager to get some feedback on this point.  - h is
+a synonym for beginning of line, which makes it exactly the same as
+above : h will move, but control+h is a prompt.
+
+   An even more serious remark would be that, once someone has learned a
+way, he will not want to have to learn a second time.  Learning Emacs,
+twice??!  Well, given Emacs-nu needs 30 minutes to learn, I don't think
+this is that bad.  Most of major-modes / minor-modes will not require
+additional time.  Helm-mode might require a few minutes to get used to.
+
+   If Emacs-nu breaks some mode, this would be a more serious issue.  In
+such case, please fill-in a bug.
+
+
+File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: Drawbacks & Limits,  Up: Top
+
+11 Contributing
 ***************
 
 As of today nu-mode only has one author, & contribution is more than
@@ -1330,17 +1385,18 @@ their use in free software.
 
 Tag Table:
 Node: Top716
-Node: Overview1075
-Node: View and Edit8304
-Node: Files Buffers Windows15680
-Node: Minibuffer17905
-Node: Hacking19564
-Node: Advanced Usage20246
-Node: Integration23333
-Node: Cheat Sheet29708
-Node: Customization32005
-Node: Contributing34728
-Node: GNU Free Documentation License34979
+Node: Overview1098
+Node: View and Edit9039
+Node: Files Buffers Windows16415
+Node: Minibuffer18640
+Node: Hacking20299
+Node: Advanced Usage20981
+Node: Integration24068
+Node: Cheat Sheet30488
+Node: Customization32785
+Node: Drawbacks & Limits35514
+Node: Contributing37544
+Node: GNU Free Documentation License37800
 
 End Tag Table
 
