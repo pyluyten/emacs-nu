@@ -447,7 +447,7 @@ File: nu-mode.info,  Node: Minibuffer,  Next: Hacking,  Prev: Files Buffers Wind
 4 Minibuffer
 ************
 
-It is highly advised to enable helm-mode while using emacs-nu.  Use
+It is highly advised to enable *helm-mode* while using emacs-nu.  Use
 below code in your .emacs.d/init.el or whatever file you are using to
 customize Emacs :
 
@@ -462,13 +462,22 @@ use helm too, and so on.
 or whatever helm migth help you select, use paddle ('M-i' , 'M-k' to
 navigate up/down).  If there are "sources", use 'Shift+Space' /
 'Shift+backspace' to navigate it or common 'Alt+Space' / 'Alt+Backspace'
-to scroll page.  As expected, 'Control+q' to quit helm.
+to scroll page.  As expected, 'Control+q' or 'Alt+q' to quit helm.
 
    While looking for a file, C-u will not delete backward word but will
-go up one directory.
+go up one directory.  Any helm prompt will use <TAB> as a "persistent
+action", which sometimes means completion (while looking for files),
+while most of the times this will run the 'actions' while keeping helm
+session alive.  For example, this would open the file but keep the helm
+prompt there to allow you opening another one.
 
-   Any helm prompt will use <TAB> as a "persistent action", which
-sometimes means completion.
+   Several items might be selected using 'Control+Space' to mark them.
+Otherwise, item at point will be the unique one.
+
+   Default action will be appropriate most of the time.  Once you have
+selected / marked the item(s) you want, you can change the action using
+'Control+Return' then either the 'F[0-9]' key as indicated or 'return'
+after having selected the right action.
 
 
 File: nu-mode.info,  Node: Hacking,  Next: Advanced Usage,  Prev: Minibuffer,  Up: Top
@@ -503,8 +512,12 @@ keys, however two points make learning curve shorter
   1. For any user, knowing CUA keybinds will make emacs-nu discoverable.
   2. For veteran Emacs user, two important sequences remain:
 
-   'M-x' is still there.  This means, you can probably obtain what you
-want.  Also, 'Control+h' for help-prefix is still there.
+   'M-x' is still there - which means, any unmapped or hidden function
+can be easily triggered.  It will run helm-M-x, and 'tab' would raise a
+help buffer while keeping the session alive.
+
+   'Control+h' will invoke a help prompt (thus, user can get help about
+help...).
 
    Now, two things should probably be kept in mind while trying nu-mode
 
@@ -1315,13 +1328,13 @@ Node: Overview1075
 Node: View and Edit8304
 Node: Files Buffers Windows15511
 Node: Minibuffer17736
-Node: Hacking18793
-Node: Advanced Usage19475
-Node: Integration22419
-Node: Cheat Sheet28794
-Node: Customization31091
-Node: Contributing33814
-Node: GNU Free Documentation License34065
+Node: Hacking19395
+Node: Advanced Usage20077
+Node: Integration23164
+Node: Cheat Sheet29539
+Node: Customization31836
+Node: Contributing34559
+Node: GNU Free Documentation License34810
 
 End Tag Table
 

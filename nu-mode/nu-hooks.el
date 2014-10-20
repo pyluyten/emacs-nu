@@ -150,13 +150,15 @@ Still, some keys here help."
     ;asdfghjkl. Use Alt-g for goto.
     (define-key helm-map (kbd "C-a") 'helm-mark-all) ; for once a mark all makes sense...
     (define-key helm-map (kbd "M-a") 'helm-toggle-visible-mark)
+    (define-key helm-find-files-map (kbd "M-a") 'helm-toggle-visible-mark)
+    (define-key helm-buffer-map (kbd "M-a") 'helm-toggle-visible-mark)
     (define-key helm-find-files-map (kbd "M-d") 'helm-ff-run-delete-file) ; ok
     (define-key helm-buffer-map (kbd "M-d") 'helm-buffer-run-kill-buffers) ; ok but no confirm???!
 
     (define-key helm-map (kbd "S-<backspace>") 'helm-previous-source)
     (define-key helm-buffer-map (kbd "S-<backspace>") 'helm-previous-source)
-    (define-key helm-map (kbd "S-<space>") 'helm-next-source)
-    (define-key helm-buffer-map (kbd "S-<space>") 'helm-next-source)
+    (define-key helm-map (kbd "S-<SPC>") 'helm-next-source)
+    (define-key helm-buffer-map (kbd "S-<SPC>") 'helm-next-source)
 
     (define-key helm-map (kbd "M-<dead-circumflex>") 'previous-history-element) ; not most frequent...
     (define-key helm-map (kbd "M-$") 'next-history-element) ; not most frequent...

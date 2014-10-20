@@ -328,7 +328,7 @@ It is possible, from Emacs to handle a bit of window management. But you should 
 @node Minibuffer
 @chapter Minibuffer
 
-It is highly advised to enable helm-mode while using emacs-nu. Use below code in your .emacs.d/init.el or whatever file you are using to customize Emacs :
+It is highly advised to enable @strong{helm-mode} while using emacs-nu. Use below code in your .emacs.d/init.el or whatever file you are using to customize Emacs :
 
 @lisp
 (helm-mode 1)
@@ -336,11 +336,13 @@ It is highly advised to enable helm-mode while using emacs-nu. Use below code in
 
 Some prompts do provide access to helm functions : open prompt to access help-mini or help-find-files. Or insert prompt to access kill-ring from helm-show-kill-ring. Mx will use helm-Mx, ibuffer does use helm too, and so on.
 
-Once helm buffer is opened to let you select file / buffer / function or whatever helm migth help you select, use paddle (@kbd{M-i} , @kbd{M-k} to navigate up/down). If there are ``sources'', use @kbd{Shift+Space} / @kbd{Shift+backspace} to navigate it or common @kbd{Alt+Space} / @kbd{Alt+Backspace} to scroll page. As expected, @kbd{Control+q} to quit helm.
+Once helm buffer is opened to let you select file / buffer / function or whatever helm migth help you select, use paddle (@kbd{M-i} , @kbd{M-k} to navigate up/down). If there are ``sources'', use @kbd{Shift+Space} / @kbd{Shift+backspace} to navigate it or common @kbd{Alt+Space} / @kbd{Alt+Backspace} to scroll page. As expected, @kbd{Control+q} or @kbd{Alt+q} to quit helm.
 
-While looking for a file, C-u will not delete backward word but will go up one directory.
+While looking for a file, C-u will not delete backward word but will go up one directory. Any helm prompt will use @key{TAB} as a ``persistent action'', which sometimes means completion (while looking for files), while most of the times this will run the `actions' while keeping helm session alive. For example, this would open the file but keep the helm prompt there to allow you opening another one.
 
-Any helm prompt will use @key{TAB} as a ``persistent action'', which sometimes means completion.
+Several items might be selected using @kbd{Control+Space} to mark them. Otherwise, item at point will be the unique one.
+
+Default action will be appropriate most of the time. Once you have selected / marked the item(s) you want, you can change the action using @kbd{Control+Return} then either the @kbd{F[0-9]} key as indicated or @kbd{return} after having selected the right action.
 
 @node Hacking
 @chapter Hacking
@@ -363,7 +365,9 @@ If you are not used to Emacs, reading this chapter is not necessary. But Emacs v
 @item For veteran Emacs user, two important sequences remain:
 @end enumerate
 
-@kbd{M-x} is still there. This means, you can probably obtain what you want. Also, @kbd{Control+h} for help-prefix is still there.
+@kbd{M-x} is still there - which means, any unmapped or hidden function can be easily triggered. It will run helm-M-x, and @kbd{tab} would raise a help buffer while keeping the session alive.
+
+@kbd{Control+h} will invoke a help prompt (thus, user can get help about help...).
 
 Now, two things should probably be kept in mind while trying nu-mode
 
