@@ -275,7 +275,11 @@ Use @kbd{Control + v} to paste the current clipboard. Following @kbd{Control + v
 
 @section Undo or Redo
 
-As expected, use @kbd{Control+z} to undo and @kbd{Control+Shift+z} to redo. Or, use @kbd{Alt+z} to invoke undo-tree visualizer to play with discard changes in an advanced way. This screen displays last changes, and you can navigate these using the paddle (@kbd{Alt+i}, @kbd{Alt+j}, @kbd{Alt+k}, @kbd{Alt+l}). Press @key{q} to quit this screen. Note that this is somewhat a prompt, aint't it, which is a reminder on why to use @kbd{Alt}.
+As expected, use @kbd{Control+z} to undo and @kbd{Control+Shift+z} to redo. Or, use @kbd{Alt+z} to invoke undo-tree visualizer to play with discard changes in an advanced way.
+
+This screen displays last changes, and you can navigate these using the paddle : @kbd{i} (redo), @kbd{j} (switch to left branch), @kbd{Alt+k} (redo), @kbd{l} (switch to right branch). Press @key{q} to quit this screen or @kbd{Alt+q} to abort. You can also toggle selection mode with @key{s} or toggle timestamps using @key{t}.
+
+Note that this is somewhat a prompt, despite not a nu-prompt, which is a reminder on why to use @kbd{Alt}.
 
 
 @section Advanced Edition

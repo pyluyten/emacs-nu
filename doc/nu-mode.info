@@ -359,10 +359,16 @@ use 'Alt + v' to invoke an advanced "Paste" prompt.
 
 As expected, use 'Control+z' to undo and 'Control+Shift+z' to redo.  Or,
 use 'Alt+z' to invoke undo-tree visualizer to play with discard changes
-in an advanced way.  This screen displays last changes, and you can
-navigate these using the paddle ('Alt+i', 'Alt+j', 'Alt+k', 'Alt+l').
-Press <q> to quit this screen.  Note that this is somewhat a prompt,
-aint't it, which is a reminder on why to use 'Alt'.
+in an advanced way.
+
+   This screen displays last changes, and you can navigate these using
+the paddle : 'i' (redo), 'j' (switch to left branch), 'Alt+k' (redo),
+'l' (switch to right branch).  Press <q> to quit this screen or 'Alt+q'
+to abort.  You can also toggle selection mode with <s> or toggle
+timestamps using <t>.
+
+   Note that this is somewhat a prompt, despite not a nu-prompt, which
+is a reminder on why to use 'Alt'.
 
 2.5 Advanced Edition
 ====================
@@ -1326,15 +1332,15 @@ Tag Table:
 Node: Top716
 Node: Overview1075
 Node: View and Edit8304
-Node: Files Buffers Windows15511
-Node: Minibuffer17736
-Node: Hacking19395
-Node: Advanced Usage20077
-Node: Integration23164
-Node: Cheat Sheet29539
-Node: Customization31836
-Node: Contributing34559
-Node: GNU Free Documentation License34810
+Node: Files Buffers Windows15680
+Node: Minibuffer17905
+Node: Hacking19564
+Node: Advanced Usage20246
+Node: Integration23333
+Node: Cheat Sheet29708
+Node: Customization32005
+Node: Contributing34728
+Node: GNU Free Documentation License34979
 
 End Tag Table
 

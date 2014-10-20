@@ -123,6 +123,16 @@ Still, some keys here help."
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
 
 
+(eval-after-load "undo-tree"
+  '(progn
+     (define-key undo-tree-visualizer-mode-map (kbd "i") 'undo-tree-visualize-undo)
+     (define-key undo-tree-visualizer-mode-map (kbd "k") 'undo-tree-visualize-redo)
+     (define-key undo-tree-visualizer-mode-map (kbd "j") 'undo-tree-visualize-switch-branch-left)
+     (define-key undo-tree-visualizer-mode-map (kbd "l") 'undo-tree-visualize-switch-branch-right)
+
+     (define-key undo-tree-visualizer-mode-map (kbd "M-q")   'undo-tree-visualizer-abort)))
+
+
 (eval-after-load "auto-complete"
   '(progn
      (define-key ac-completing-map (kbd "M-k") 'ac-next)
