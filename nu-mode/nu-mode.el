@@ -45,7 +45,7 @@
    (define-key nu-keymap (kbd "C-t") 'split-window-right)
    (define-key nu-keymap (kbd "M-t") 'ido-switch-buffer-other-window)
 
-   ; y?
+   (define-key nu-keymap (kbd "C-y") 'nu-prompt-for-major-mode)
    (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)
 
    (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
@@ -158,6 +158,7 @@
    (define-key nu-keymap (kbd "C-<dead-circumflex>") 'nu-backward-kill-line)
 
    (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
+
    (define-key nu-keymap (kbd "C-M-<SPC>") 'scroll-other-window)
    (define-key nu-keymap (kbd "M-<SPC>") 'scroll-up)
 

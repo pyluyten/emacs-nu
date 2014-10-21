@@ -29,6 +29,18 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+
+(defun nu-prompt-for-major-mode ()
+  "Promt for major mode keymap.
+
+Raise a standard prompt, using major mode as keymap.
+Well, at least current-local-map : this should be what
+we are talking about..."
+  (interactive)
+  (nu-prompt-for-keymap (current-local-map)))
+
+
+
 (defun nu-bold ()
  (interactive)
  (message (format "%s" major-mode))
