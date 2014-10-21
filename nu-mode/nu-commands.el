@@ -38,11 +38,11 @@
    ((eq major-mode 'org-mode)
     (call-interactively 'org-emphasize))
    ((eq major-mode 'lisp-interaction-mode)
-    (call-interactively 'comment-region))
+    (call-interactively 'comment-dwim))
    ((eq major-mode 'emacs-lisp-mode)
-    (call-interactively 'comment-region))
+    (call-interactively 'comment-dwim))
    ((eq major-mode 'c-mode)
-    (call-interactively 'comment-region))
+    (call-interactively 'comment-dwim))
    (t
     (message "nu-bold : no action"))))
 
