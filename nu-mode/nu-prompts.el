@@ -183,6 +183,7 @@
             (define-key nu-delete-map (kbd "s") 'kill-sexp)
             (define-key nu-delete-map (kbd "e") 'kill-sentence)
             (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
+            (define-key nu-delete-map (kbd "M-f") 'flush-lines)
             (define-key nu-delete-map (kbd "z")  'zap-up-to-char)
             (define-key nu-delete-map (kbd "a") 'nu-delete-all)))
 
