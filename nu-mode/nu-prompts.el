@@ -433,6 +433,7 @@ But if mark is active, exchange point and mark."
 
   (define-key nu-open-map (kbd "f")  'helm-find-files)
   (define-key nu-open-map (kbd "o")  'helm-mini)
+  (define-key nu-open-map (kbd "u")  'browse-url)
   (define-key nu-open-map (kbd "C-f")  'find-file-other-window) ; useless now that helm fixes this stuff =)
   (define-key nu-open-map (kbd "r")  'helm-recentf)
   (define-key nu-open-map (kbd "C-r")  'helm-register)
@@ -447,7 +448,6 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "i")   'ibuffer) ; is better at _reorganizing_ buffers...
   (define-key nu-open-map (kbd "s") 'org-iswitchb)
   (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer))
-
 
 
 (defun nu-open-prompt ()
