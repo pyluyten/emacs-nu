@@ -653,6 +653,8 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "R")  'query-replace)
   (define-key nu-replace-map (kbd "k")  'overwrite-mode)
   (define-key nu-replace-map (kbd "s")  'replace-string)
+  (define-key nu-replace-map (kbd "M-s")  'sort-lines)
+  (define-key nu-replace-map (kbd "e")  'keep-lines)
   (define-key nu-replace-map (kbd "r")  'replace-regexp)
   (define-key nu-replace-map (kbd "j")  'nu-join-with-following-line)
   (define-key nu-replace-map (kbd "J")  'join-line)
