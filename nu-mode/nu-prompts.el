@@ -49,20 +49,29 @@
  (autoload 'zap-up-to-char "misc"
 "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-(nu-define-prefix 'nu-window-map)
-(define-key nu-window-map (kbd "x") 'nu-close-document)
-(define-key nu-window-map (kbd "M-k") 'kill-buffer)
-(define-key nu-window-map (kbd "M-w") 'delete-window)
-(define-key nu-window-map (kbd "w") 'delete-other-windows)
-(define-key nu-window-map (kbd "M-<SPC>") 'scroll-other-window)
-(define-key nu-window-map (kbd "M-<backspace>") 'scroll-other-window-down)
-(define-key nu-window-map (kbd "f") 'transpose-frame)
-(define-key nu-window-map (kbd "n")   'nu-next-window)
-(define-key nu-window-map (kbd "p")   'nu-previous-window)
-(define-key nu-window-map (kbd "Q") 'save-buffers-kill-emacs)
+
+
+(defun nu-populate-window ()
+   (nu-define-prefix 'nu-window-map)
+   (define-key nu-window-map (kbd "l") 'enlarge-window-horizontally)
+   (define-key nu-window-map (kbd "i") 'enlarge-window)
+   (define-key nu-window-map (kbd "k") 'shrink-window)
+   (define-key nu-window-map (kbd "j") 'shrink-window-horizontally)
+    
+   (define-key nu-window-map (kbd "x") 'nu-close-document)
+   (define-key nu-window-map (kbd "M-k") 'kill-buffer)
+   (define-key nu-window-map (kbd "M-w") 'delete-window)
+   (define-key nu-window-map (kbd "w") 'delete-other-windows)
+   (define-key nu-window-map (kbd "o") 'scroll-other-window)
+   (define-key nu-window-map (kbd "M-o") 'scroll-other-window-down)
+   (define-key nu-window-map (kbd "f") 'transpose-frame)
+   (define-key nu-window-map (kbd "n")   'nu-next-window)
+   (define-key nu-window-map (kbd "p")   'nu-previous-window)
+   (define-key nu-window-map (kbd "Q") 'save-buffers-kill-emacs))
 
 (defun nu-window-prompt ()
   (interactive)
+  (nu-populate-window)
   (nu-prompt-for-keymap nu-window-map))
 
 
