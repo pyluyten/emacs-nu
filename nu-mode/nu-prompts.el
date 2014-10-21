@@ -218,7 +218,9 @@
           (eq major-mode 'lisp-interaction-mode)
           (eq major-mode 'emacs-lisp-mode))
       (progn
-          (define-key nu-bold-map (kbd "c") 'comment-or-uncomment-region)
+          (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
+          (define-key nu-bold-map (kbd "c") 'comment-dwim)
+          (define-key nu-bold-map (kbd "m") 'comment-indent-new-line)
           (define-key nu-bold-map (kbd "l") 'comment-indent))))
 
 (defun nu-bold-prompt ()
