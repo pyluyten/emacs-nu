@@ -471,7 +471,15 @@ But if mark is active, exchange point and mark."
         ; i should go parent dir. k should try to persistent-action subdir.
         (define-key nu-goto-map (kbd "u") 'dired-prev-marked-file)
         (define-key nu-goto-map (kbd "o") 'dired-next-marked-file))
-      ; else
+      (if (eq major-mode 'help-mode)
+	  (progn
+	    (define-key nu-goto-map (kbd "l") 'forward-button)
+	    (define-key nu-goto-map (kbd "j") 'backward-button)
+	    (define-key nu-goto-map (kbd "o") 'push-button)
+	    (define-key nu-goto-map (kbd "u") 'help-go-back))
+
+
+      ; else - default goto map.
       (define-key nu-goto-map (kbd "l") 'forward-sentence)
       (define-key nu-goto-map (kbd "j") 'backward-sentence)
       (define-key nu-goto-map (kbd "u") 'backward-paragraph)
@@ -479,7 +487,7 @@ But if mark is active, exchange point and mark."
       (define-key nu-goto-map (kbd "f") 'end-of-defun)
       (define-key nu-goto-map (kbd "M-f") 'beginning-of-defun)
       (define-key nu-goto-map (kbd "*") 'forward-list)
-      (define-key nu-goto-map (kbd "M-*") 'backward-list))
+      (define-key nu-goto-map (kbd "M-*") 'backward-list)))
 
    ;
    ; common keys
