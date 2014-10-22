@@ -769,10 +769,10 @@ both navigate, access to essential prompts, and control the terminal."
   ; or other functions using modified buffers keys.
   ; since control is necessary to run this prompt
   ; we use control as the unique modifier...
-   (define-key nu-goto-map (kbd "C-i") 'windmove-up)
-   (define-key nu-goto-map (kbd "C-j") 'windmove-left)
-   (define-key nu-goto-map (kbd "C-k") 'windmove-down)
-   (define-key nu-goto-map (kbd "C-l") 'windmove-right)
+   (define-key nu-term-map (kbd "C-i") 'windmove-up)
+   (define-key nu-term-map (kbd "C-j") 'windmove-left)
+   (define-key nu-term-map (kbd "C-k") 'windmove-down)
+   (define-key nu-term-map (kbd "C-l") 'windmove-right)
 
 
   ; Prompt keys will run prompt, but that means
