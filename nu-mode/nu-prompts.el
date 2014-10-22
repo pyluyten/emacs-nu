@@ -298,7 +298,9 @@
   (define-key nu-save-map (kbd "r") 'rename-buffer)
   (define-key nu-save-map (kbd "L") 'org-store-link)
   (if (eq major-mode 'org-mode)
-      (define-key nu-save-map (kbd "o") 'org-refile))
+      (progn
+        (define-key nu-save-map (kbd "o") 'org-refile)
+        (define-key nu-save-map (kbd "M-o") 'org-save-all-org-buffers)))
   (define-key nu-save-map (kbd "k") 'kmacro-start-macro-or-insert-counter)
   (define-key nu-save-map (kbd "f") 'nu-create-tags)
 
