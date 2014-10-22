@@ -27,6 +27,7 @@
 
    (define-key nu-keymap (kbd "C-a") 'nu-select-a-block)
    (define-key nu-keymap (kbd "C-S-a") 'nu-set-rectangle-mark)
+   (define-key nu-keymap (kbd "C-M-a") 'cua-toggle-global-mark)
    (define-key nu-menu-map (kbd "a") 'nu-a-map)
    (define-key nu-keymap (kbd "M-a") 'nu-a-prompt)
 
@@ -34,7 +35,7 @@
    (define-key nu-keymap (kbd "C-S-z") 'undo-tree-redo)
    (define-key nu-keymap (kbd "M-z") 'undo-tree-visualize)
 
-   ; e? edit?
+   ; e? edit? & use control+e to copy from above?
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
 
 
@@ -45,30 +46,32 @@
    (define-key nu-keymap (kbd "C-t") 'split-window-right)
    (define-key nu-keymap (kbd "M-t") 'ido-switch-buffer-other-window)
 
-   (define-key nu-keymap (kbd "C-y") 'nu-prompt-for-major-mode)
+   ; y? yes? customize?
    (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)
 
    (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
    (define-key nu-keymap (kbd "C-S-u") 'nu-backward-kill-block)
+   (define-key nu-keymap (kbd "C-M-u") 'backward-list)
    (define-key nu-keymap (kbd "M-u") 'backward-word)
-        (define-key universal-argument-map (kbd "C-u") 'backward-kill-word) ; fix c-u with prefix.
-         (define-key universal-argument-map (kbd "M-p") 'universal-argument-more)
+   (define-key universal-argument-map (kbd "C-u") 'backward-kill-word)
 
-   ; C-i is tab.
+   ; C-i is tab. Alt-S-i is selection.
    (define-key nu-keymap (kbd "C-S-i") 'nu-previous-buffer)
+   (define-key nu-keymap (kbd "C-M-i") 'beginning-of-defun)
    (define-key nu-keymap (kbd "M-i") 'previous-line)
 
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
    (define-key nu-menu-map (kbd "o") 'nu-open-map)
    (define-key nu-keymap (kbd "C-S-o") 'helm-mini)
+   (define-key nu-keymap (kbd "C-M-o") 'forward-list)
    (define-key nu-keymap (kbd "M-o") 'forward-word)
 
    (define-key nu-keymap (kbd "C-p") 'universal-argument)
-   (define-key nu-keymap (kbd "C-S-p") 'eval-last-sexp)
+   (define-key nu-keymap (kbd "C-M-p") 'eval-last-sexp)
    (define-key nu-menu-map (kbd "p") 'nu-print-map)
    (define-key nu-keymap (kbd "M-p") 'nu-print-prompt)
    (define-key nu-keymap (kbd "M-P") 'async-shell-command)
-
+   (define-key universal-argument-map (kbd "M-p") 'universal-argument-more)
 
 
    (define-key nu-keymap (kbd "C-q") 'keyboard-escape-quit)
@@ -98,16 +101,20 @@
 
    (define-key nu-keymap (kbd "C-h") 'nu-help-prompt)
    (define-key nu-menu-map (kbd "h") 'help-map)
+   (define-key nu-keymap (kbd "C-M-h") 'nu-prompt-for-major-mode)
    (define-key nu-keymap (kbd "M-h") 'nu-back-to-indentation)
 
    (define-key nu-keymap (kbd "C-j") 'backward-delete-char)
+   (define-key nu-keymap (kbd "C-M-j") 'backward-sexp)
    (define-key nu-keymap (kbd "M-j") 'backward-char)
 
    (define-key nu-keymap (kbd "C-k") 'kill-visual-line)
    (define-key nu-keymap (kbd "C-S-k") 'nu-next-buffer)
+   (define-key nu-keymap (kbd "C-M-k") 'end-of-defun)
    (define-key nu-keymap (kbd "M-k") 'next-line)
 
    (define-key nu-keymap (kbd "C-l") 'delete-forward-char)
+   (define-key nu-keymap (kbd "C-M-l") 'forward-sexp)
    (define-key nu-keymap (kbd "M-l") 'forward-char)
 
    ; C-m stands for enter.
