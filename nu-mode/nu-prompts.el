@@ -292,7 +292,7 @@
   (define-key nu-save-map (kbd "s") 'save-buffer)
   (define-key nu-save-map (kbd "g") 'nu-toggle-goal-column)
   (define-key nu-save-map (kbd "b") 'bookmark-set)
-  (define-key nu-save-map (kbd "M-s") 'ido-write-file)
+  (define-key nu-save-map (kbd "M-s") 'write-file)
   (define-key nu-save-map (kbd "w") 'window-configuration-to-register)
   (define-key nu-save-map (kbd "M-f") 'frame-configuration-to-register)
   (define-key nu-save-map (kbd "r") 'rename-buffer)
