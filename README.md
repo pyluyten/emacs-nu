@@ -8,15 +8,7 @@ _Welcome to emacs-nu!_
   While _not_ loosing features.
   This is the most important part of emacs-nu.
 
-  See its dedicated readme. Now, if you're lazy, some example here
-  , Press Alt-g,f or example, for a goto-prompt. (Not the most standard of my prompts, well...)
-  You will directly see keys to perform some action. For example, "u" to backward-word.
-  , Press 3 to trigger numeric argument +3.
-  , Press + to ask the prompt to repeat itself.
-  , Now, press "u" for backward-word. You go three words backward. As the prompt was asked for repetition,
-  press u again and you go three times backward-word again. Press o, and that's three times forward-word.
-  , Press ? to ask for prompt help. Now press u and you have backward-word definition.
-  , Prompt also advertises you could have directly used a shortcut rather than using this prompt.
+  See its texinfo manual, or this site wiki, or the http://nupad.wordpress.com/ blog.
 
 
 - Aliases : to easier defining aliases.
