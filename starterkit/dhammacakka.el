@@ -1,3 +1,4 @@
+
 ;;   This file is part of Bodhi.
 ;;
 ;;   Bodhi is free software: you can redistribute it and/or modify
@@ -64,12 +65,14 @@
   (setq make-backup-files nil
         auto-save-default nil)
 
+  (setq term-buffer-maximum-size 0)
+
+  (defalias 'yes-or-no-p 'y-or-n-p)
+
+
 ; we're in 2014
   (require 'recentf)
   (recentf-mode 1)
-
-
-  (defalias 'yes-or-no-p 'y-or-n-p)
 
 
 ; a sentence has a single dot, sorry
