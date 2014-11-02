@@ -43,7 +43,13 @@ since helm-buffers-list allows quick stuff."
   (define-key ibuffer-mode-map (kbd "M-i") 'ibuffer-backward-line)
   (define-key ibuffer-mode-map (kbd "M-k") 'ibuffer-forward-line)
   (define-key ibuffer-mode-map (kbd "M-l") 'ibuffer-visit-buffer)
-  (define-key ibuffer-mode-map (kbd "M-j") 'ibuffer-visit-buffer-other-window-noselect))
+  (define-key ibuffer-mode-map (kbd "M-j") 'ibuffer-visit-buffer-other-window-noselect)
+
+  ; cancel bindings then make override.
+  (nu-make-overriding-map ibuffer-mode-map
+			  '("C-o" "C-y" "M-g" "M-n" "M-p" "M-s")
+			  nil))
+
 
 (defun nu-prepare-for-minibuffer ()
   "Minibuffer (except helm).

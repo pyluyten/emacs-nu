@@ -448,6 +448,7 @@ But if mark is active, exchange point and mark."
    ((eq major-mode 'org-mode)
     (define-key nu-open-map (kbd "L") 'org-open-at-point))
    ((eq major-mode 'ibuffer-mode)
+    (define-key nu-open-map (kbd "h") 'ibuffer-do-view-horizontally)
     (define-key nu-open-map (kbd "i") 'ibuffer-find-file))))
 
 
@@ -568,7 +569,7 @@ But if mark is active, exchange point and mark."
     (define-key nu-find-map (kbd "%") 'dired-isearch-filenames-regexp)
     (define-key nu-find-map (kbd "x") 'dired-do-isearch-regexp))
    ((eq major-mode 'ibuffer-mode)
-    (define-key nu-find-map (kbd "M-o") 'dired-do-occur))
+    (define-key nu-find-map (kbd "M-o") 'ibuffer-do-occur))
    (t
     (define-key nu-find-map (kbd "F") 'nu-isearch-forward)
     (define-key nu-find-map (kbd "M-F") 'search-forward-regexp)
