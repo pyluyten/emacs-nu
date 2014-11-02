@@ -380,7 +380,7 @@ If you are not used to Emacs, reading this chapter is not necessary. But Emacs v
 
 @kbd{Control+h} will invoke a help prompt (thus, user can get help about help...).
 
-Now, two things should probably be kept in mind while trying nu-mode
+Now, two things should probably be kept in mind while trying nu-mode.
 
 @enumerate
 @item
@@ -391,6 +391,8 @@ To trigger a major mode sequence, start with @kbd{Control+Space}. This will invo
 @end lisp
 
 To invoke above myfunction example, press @kbd{Control-SPC h}.
+
+Use @kbd{Control+Alt+h} to invoke a prompt based on major mode keymap. Thus, this prompt allows to detail major modes - mapped - functions ; these shortcuts might eventually be mapped to a nu-mode prompt or even a direct nu-mode shortcut. As seen above, all Control+c major mode prefixed shortcuts might be directly invoked from Control+Space.
 
 @item
 You should not rely on @kbd{Control+x}, or at least no regularly. However to trigger x prefix, use @kbd{Control+Shift+x}. This will raise a prompt to trigger Control-X-Prefix. Note this should @emph{not} be forced to, otherwise this is a bug you're encouraged to report.
