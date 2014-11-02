@@ -78,41 +78,33 @@
 (defun nu-populate-print ()
   (nu-define-prefix 'nu-print-map)
 
+  (cond
+   ((or (eq major-mode 'emacs-lisp-mode)
+	(eq major-mode 'lisp-interaction-mode))
+    (define-key nu-print-map (kbd "s") 'eval-last-sexp)
+    (define-key nu-print-map (kbd "b") 'eval-current-buffer)
+    (define-key nu-print-map (kbd "r") 'eval-region))
+   ((eq major-mode 'magit-status-mode)
+    (define-key nu-print-map (kbd "p") 'magit-shell-command)
+    (define-key nu-print-map (kbd ":") 'magit-git-command))
+   ((eq major-mode 'dired-mode)
+    (define-key nu-print-map (kbd "C-p") 'dired-do-print)
+    (define-key nu-print-map (kbd "C-b") 'dired-do-byte-compile)
+    (define-key nu-print-map (kbd "p")   'dired-do-async-shell-command)
+    (define-key nu-print-map (kbd "P")   'dired-do-shell-command)
+    (define-key nu-print-map (kbd "d")   'dired-diff))
+   ((eq major-mode 'texinfo-mode)
+    (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
+    (define-key nu-print-map (kbd "P") 'nu-texi2pdf))
+   ((eq major-mode 'ibuffer-mode)
+    (define-key nu-print-ma (kbd "M-d") 'ibuffer-diff-with-file))
+   ((eq major-mode 'org-mode)
+    (define-key nu-print-map (kbd "l") 'pcomplete)))
+
+  ; common case
   (define-key nu-print-map (kbd "C-p") 'print-buffer)
   (define-key nu-print-map (kbd "p") 'async-shell-command)
   (define-key nu-print-map (kbd "d") 'ediff)
-
-  (if (or (eq major-mode 'emacs-lisp-mode)
-          (eq major-mode 'lisp-interaction-mode))
-     (progn
-       (define-key nu-print-map (kbd "s") 'eval-last-sexp)
-       (define-key nu-print-map (kbd "b") 'eval-current-buffer)
-       (define-key nu-print-map (kbd "r") 'eval-region)))
-
-
-  (if (eq major-mode 'magit-status-mode)
-      (progn
-         (define-key nu-print-map (kbd "p") 'magit-shell-command)
-         (define-key nu-print-map (kbd ":") 'magit-git-command)))
-
-  (if (eq major-mode 'dired-mode)
-        (progn
-        (define-key nu-print-map (kbd "C-p") 'dired-do-print)
-        (define-key nu-print-map (kbd "C-b") 'dired-do-byte-compile)
-        (define-key nu-print-map (kbd "p")   'dired-do-async-shell-command)
-        (define-key nu-print-map (kbd "P")   'dired-do-shell-command)
-        (define-key nu-print-map (kbd "d")   'dired-diff)))
-
-  (if (eq major-mode 'texinfo-mode)
-     (progn
-       (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
-       (define-key nu-print-map (kbd "P") 'nu-texi2pdf)))
-
-
-  (if (eq major-mode 'org-mode)
-     (progn
-       (define-key nu-print-map (kbd "l") 'pcomplete)))
-
   (define-key nu-print-map (kbd "c") 'subword-mode)
   (define-key nu-print-map (kbd "f") 'find-grep)
   (define-key nu-print-map (kbd "g") 'grep)
@@ -427,20 +419,7 @@ But if mark is active, exchange point and mark."
   (setq nu-open-map nil)
   (nu-define-prefix 'nu-open-map)
 
-  (if (eq major-mode 'magit-status-mode)
-      (progn
-        (define-key nu-open-map (kbd "g") 'magit-log-long)
-        (define-key nu-open-map (kbd "C-b") 'magit-branch-manager)))
-
-  (if (eq major-mode 'dired-mode)
-      (progn
-        (define-key nu-open-map (kbd "d") 'dired-find-file)
-        (define-key nu-open-map (kbd "C-d") 'dired-find-file-other-window)))
-
-  (if (eq major-mode 'org-mode)
-      (progn
-         (define-key nu-open-map (kbd "L") 'org-open-at-point)))
-
+  ;; common case
   (define-key nu-open-map (kbd "B")  'bookmark-jump)
   (define-key nu-open-map (kbd "C-f")  'find-file-other-window) ; useless now that helm fixes this stuff =)
   (define-key nu-open-map (kbd "C-j")   'nu-previous-buffer)
@@ -457,7 +436,19 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "r")  'helm-recentf)
   (define-key nu-open-map (kbd "s") 'org-iswitchb)
   (define-key nu-open-map (kbd "u")  'browse-url)
-  (define-key nu-open-map (kbd "x")  'list-registers))
+  (define-key nu-open-map (kbd "x")  'list-registers)
+
+  (cond
+   ((eq major-mode 'magit-status-mode)
+    (define-key nu-open-map (kbd "g") 'magit-log-long)
+    (define-key nu-open-map (kbd "C-b") 'magit-branch-manager))
+   ((eq major-mode 'dired-mode)
+    (define-key nu-open-map (kbd "d") 'dired-find-file)
+    (define-key nu-open-map (kbd "C-d") 'dired-find-file-other-window))
+   ((eq major-mode 'org-mode)
+    (define-key nu-open-map (kbd "L") 'org-open-at-point))
+   ((eq major-mode 'ibuffer-mode)
+    (define-key nu-open-map (kbd "i") 'ibuffer-find-file))))
 
 
 (defun nu-open-prompt ()
@@ -652,6 +643,9 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "f") 'ibuffer-do-sort-by-filename/process)
   (define-key nu-replace-map (kbd "i") 'ibuffer-invert-sorting)
   (define-key nu-replace-map (kbd "m") 'ibuffer-do-sort-by-major-mode)
+  (define-key nu-replace-map (kbd "r") 'ibuffer-do-revert)
+  (define-key nu-replace-map (kbd "M-r") 'ibuffer-do-replace-regexp)
+  (define-key nu-replace-map (kbd "t") 'ibuffer-do-toggle-read-only)
   (define-key nu-replace-map (kbd "s") 'ibuffer-do-sort-by-size)
   (define-key nu-replace-map (kbd "v") 'ibuffer-do-sort-by-recency))
 
