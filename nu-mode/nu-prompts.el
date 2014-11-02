@@ -156,7 +156,11 @@
       (progn
         (define-key nu-delete-map (kbd "b") 'magit-delete-branch)
         (define-key nu-delete-map (kbd "h") 'magit-discard-item))
-      ; else
+					; else
+    (if (eq major-mode 'ibuffer-mode)
+	(progn
+	  (define-key nu-delete-map (kbd "k") 'ibuffer-do-delete)
+	  (define-key nu-delete-map (kbd "d") 'ibuffer-mark-for-delete))
       (if (eq major-mode 'dired-mode)
          (progn
            (define-key nu-delete-map (kbd "d") 'dired-flag-file-deletion)
@@ -184,7 +188,7 @@
             (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
             (define-key nu-delete-map (kbd "M-f") 'flush-lines)
             (define-key nu-delete-map (kbd "z")  'zap-up-to-char)
-            (define-key nu-delete-map (kbd "a") 'nu-delete-all)))
+            (define-key nu-delete-map (kbd "a") 'nu-delete-all))))
 
   ; common cases
   (define-key nu-delete-map (kbd "M-f") 'delete-file)
@@ -366,7 +370,11 @@
 	    (define-key nu-a-map (kbd "l") 'proced-mark)
 	    (define-key nu-a-map (kbd "t") 'proced-toggle-marks)
 	    (define-key nu-a-map (kbd "u") 'proced-unmark))
-  ; else if...
+					; else if...
+    (if (eq major-mode 'ibuffer-mode)
+	(progn
+	  (define-key nu-a-map (kbd "m") 'ibuffer-mark-by-mode-regexp)
+	  (define-key nu-a-map (kbd "d") 'ibuffer-mark-dired-buffers))
   (if (eq major-mode 'dired-mode)
       (progn
         (define-key nu-a-map (kbd "d") 'dired-flag-file-deletion)
@@ -396,7 +404,7 @@
       (define-key nu-a-map (kbd "l") 'nu-mark-sentence)
       (define-key nu-a-map (kbd "o") 'nu-mark-paragraph)
       (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)
-      (define-key nu-a-map (kbd "w") '_nu-mark-a-word))))
+      (define-key nu-a-map (kbd "w") '_nu-mark-a-word)))))
 
 
 
