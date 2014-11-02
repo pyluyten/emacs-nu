@@ -644,6 +644,15 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "w") 'wdired-change-to-wdired-mode)
   (define-key nu-replace-map (kbd "z") 'dired-do-compress))
 
+(defun nu-populate-replace-ibuffer ()
+  (setq nu-replace-map nil)
+  (nu-define-prefix 'nu-replace-map)
+  (define-key nu-replace-map (kbd "a") 'ibuffer-do-sort-by-alphabetic)
+  (define-key nu-replace-map (kbd "f") 'ibuffer-do-sort-by-filename/process)
+  (define-key nu-replace-map (kbd "i") 'ibuffer-invert-sorting)
+  (define-key nu-replace-map (kbd "m") 'ibuffer-do-sort-by-major-mode)
+  (define-key nu-replace-map (kbd "s") 'ibuffer-do-sort-by-size)
+  (define-key nu-replace-map (kbd "v") 'ibuffer-do-sort-by-recency))
 
 (defalias 'git-checkout-item 'magit-discard-item)
 (defalias 'git-pull-rebase 'magit-rebase-step)
@@ -713,6 +722,9 @@ But if mark is active, exchange point and mark."
       (cond
         ((eq major-mode 'dired-mode)
          (nu-populate-replace-dired)
+	 (nu-prompt-for-keymap nu-replace-map))
+	((eq major-mode 'ibuffer-mode)
+	 (nu-populate-replace-ibuffer)
          (nu-prompt-for-keymap nu-replace-map))
         ((eq major-mode 'magit-status-mode)
          (nu-populate-replace-magit)
