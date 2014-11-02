@@ -475,19 +475,19 @@ But if mark is active, exchange point and mark."
   (nu-define-prefix 'nu-goto-map)
 
   ;; actually this case is : all read only modes...
-  (if (eq major-mode 'dired-mode)
-      (progn
-        ; i should go parent dir. k should try to persistent-action subdir.
-        (define-key nu-goto-map (kbd "u") 'dired-prev-marked-file)
-        (define-key nu-goto-map (kbd "o") 'dired-next-marked-file))
-      (if (eq major-mode 'help-mode)
-	  (progn
-	    (define-key nu-goto-map (kbd "l") 'forward-button)
-	    (define-key nu-goto-map (kbd "j") 'backward-button)
-	    (define-key nu-goto-map (kbd "o") 'push-button)
-	    (define-key nu-goto-map (kbd "u") 'help-go-back))
-
-
+  (cond
+   ((eq major-mode 'dired-mode)
+     ; i should go parent dir. k should try to persistent-action subdir.
+    (define-key nu-goto-map (kbd "u") 'dired-prev-marked-file)
+    (define-key nu-goto-map (kbd "o") 'dired-next-marked-file))
+   ((eq major-mode 'help-mode)
+    (define-key nu-goto-map (kbd "l") 'forward-button)
+    (define-key nu-goto-map (kbd "j") 'backward-button)
+    (define-key nu-goto-map (kbd "o") 'push-button)
+    (define-key nu-goto-map (kbd "u") 'help-go-back))
+   ((eq major-mode 'ibuffer-mode)
+    (define-key nu-goto-map (kbd "j") 'ibuffer-jump-to-buffer))
+   (t
       ; else - default goto map.
       (define-key nu-goto-map (kbd "l") 'forward-sentence)
       (define-key nu-goto-map (kbd "j") 'backward-sentence)
@@ -569,25 +569,26 @@ But if mark is active, exchange point and mark."
 (defun nu-populate-find-map ()
   (nu-define-prefix 'nu-find-map)
 
-  (if (eq major-mode 'dired-mode)
-      (progn
-        (define-key nu-find-map (kbd "f") 'dired-mark-files-containing-regexp)
-	(define-key nu-find-map (kbd "s") 'dired-isearch-filenames)
-	(define-key nu-find-map (kbd "M-s") 'dired-do-isearch)
-	(define-key nu-find-map (kbd "%") 'dired-isearch-filenames-regexp)
-	(define-key nu-find-map (kbd "x") 'dired-do-isearch-regexp))
-
-  ; else
-        (define-key nu-find-map (kbd "F") 'nu-isearch-forward)
-        (define-key nu-find-map (kbd "M-F") 'search-forward-regexp)
-        (define-key nu-find-map (kbd "M-R") 'search-backward-regexp)
-        (define-key nu-find-map (kbd "M-f") 'nu-isearch-forward-regexp)
-        (define-key nu-find-map (kbd "M-z") 'nu-find-char-backward)
-        (define-key nu-find-map (kbd "R") 'nu-isearch-backward)
-        (define-key nu-find-map (kbd "f") 'ace-jump-char-mode)
-        (define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
-        (define-key nu-find-map (kbd "r") 'nu-isearch-backward-regexp)
-        (define-key nu-find-map (kbd "w") 'ace-jump-word-mode))
+  (cond
+   ((eq major-mode 'dired-mode)
+    (define-key nu-find-map (kbd "f") 'dired-mark-files-containing-regexp)
+    (define-key nu-find-map (kbd "s") 'dired-isearch-filenames)
+    (define-key nu-find-map (kbd "M-s") 'dired-do-isearch)
+    (define-key nu-find-map (kbd "%") 'dired-isearch-filenames-regexp)
+    (define-key nu-find-map (kbd "x") 'dired-do-isearch-regexp))
+   ((eq major-mode 'ibuffer-mode)
+    (define-key nu-find-map (kbd "M-o") 'dired-do-occur))
+   (t
+    (define-key nu-find-map (kbd "F") 'nu-isearch-forward)
+    (define-key nu-find-map (kbd "M-F") 'search-forward-regexp)
+    (define-key nu-find-map (kbd "M-R") 'search-backward-regexp)
+    (define-key nu-find-map (kbd "M-f") 'nu-isearch-forward-regexp)
+    (define-key nu-find-map (kbd "M-z") 'nu-find-char-backward)
+    (define-key nu-find-map (kbd "R") 'nu-isearch-backward)
+    (define-key nu-find-map (kbd "f") 'ace-jump-char-mode)
+    (define-key nu-find-map (kbd "l") 'ace-jump-line-mode)
+    (define-key nu-find-map (kbd "r") 'nu-isearch-backward-regexp)
+    (define-key nu-find-map (kbd "w") 'ace-jump-word-mode)))
 
   ; common keys
   (define-key nu-find-map (kbd "b") 'regexp-builder)

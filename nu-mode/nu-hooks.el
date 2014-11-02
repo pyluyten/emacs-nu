@@ -38,9 +38,12 @@
   (define-key isearch-mode-map (kbd "C-q") 'isearch-cancel))
 
 (defun nu-prepare-for-ibuffer ()
-  "Obsolete, now helm is used."
+  "Should mainly be used for organization / multi buffers actions
+since helm-buffers-list allows quick stuff."
   (define-key ibuffer-mode-map (kbd "M-i") 'ibuffer-backward-line)
-  (define-key ibuffer-mode-map (kbd "M-k") 'ibuffer-forward-line))
+  (define-key ibuffer-mode-map (kbd "M-k") 'ibuffer-forward-line)
+  (define-key ibuffer-mode-map (kbd "M-l") 'ibuffer-visit-buffer)
+  (define-key ibuffer-mode-map (kbd "M-j") 'ibuffer-visit-buffer-other-window-noselect))
 
 (defun nu-prepare-for-minibuffer ()
   "Minibuffer (except helm).
