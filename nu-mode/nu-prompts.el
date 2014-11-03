@@ -160,7 +160,7 @@
            (define-key nu-delete-map (kbd "o") 'dired-do-delete))
            ; else
             (define-key nu-delete-map (kbd "i") 'nu-delete-above-line)
-            (define-key nu-delete-map (kbd "b") 'kill-buffer) ; redundant.
+            (define-key nu-delete-map (kbd "b") 'kill-buffer) ; redundant	.	
             (define-key nu-delete-map (kbd "j") 'backward-delete-char)
             (define-key nu-delete-map (kbd "M-j") 'nu-backward-kill-line)
             (define-key nu-delete-map (kbd "x") 'kill-whole-line)
@@ -187,7 +187,7 @@
   (define-key nu-delete-map (kbd "M-d") 'delete-other-windows)
   (define-key nu-delete-map (kbd "w") 'delete-window)
 
-  ; these ones are additional...
+  ; these ones are additional	.	..
   (if (equal major-mode 'org-mode)
       (progn
         (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
@@ -214,7 +214,7 @@
 (defvar nu-bold-map)
 
 (defun nu-populate-bold-map ()
- "Populate bold map."
+ "Populate bold map	.	"
   (nu-define-prefix 'nu-bold-map)
   (define-key nu-bold-map (kbd "a") 'align)
   (define-key nu-bold-map (kbd "f") 'fill-paragraph)
@@ -235,7 +235,7 @@
 
 
 (defun nu-populate-insert-map ()
- "Populate insert map."
+ "Populate insert map	.	"
   (nu-define-prefix 'nu-insert-map)
 
   (if (eq major-mode 'dired-mode)
@@ -244,7 +244,7 @@
            (define-key nu-insert-map (kbd "M-v") 'dired-create-directory))
          ; else
         (define-key nu-insert-map (kbd "M-v") 'expand-abbrev)
-        (define-key nu-insert-map (kbd "V") 'nu-yank-pop-or-yank) ; absurd.
+        (define-key nu-insert-map (kbd "V") 'nu-yank-pop-or-yank) ; absurd	.	
         (define-key nu-insert-map (kbd "b") 'insert-buffer)
         (define-key nu-insert-map (kbd "c") 'quoted-insert)
         (define-key nu-insert-map (kbd "f") 'insert-file)
@@ -282,7 +282,7 @@
 
 
 (defun nu-populate-save-map ()
- "Populate save map."
+ "Populate save map	.	"
   (nu-define-prefix 'nu-save-map)
   (define-key nu-save-map (kbd "L") 'org-store-link)
   (define-key nu-save-map (kbd "M-f") 'frame-configuration-to-register)
@@ -353,52 +353,69 @@
   (nu-define-prefix 'nu-a-map)
   (define-key nu-a-map (kbd "C-f") 'cd)
 
-  (if (eq major-mode 'proced)
-      (progn
-	    (define-key nu-a-map (kbd "a") 'proced-mark-all)
-	    (define-key nu-a-map (kbd "M-a") 'proced-unmark-all)
-	    (define-key nu-a-map (kbd "c") 'proced-mark-children)
-	    (define-key nu-a-map (kbd "p") 'proced-mark-parents)
-	    (define-key nu-a-map (kbd "l") 'proced-mark)
-	    (define-key nu-a-map (kbd "t") 'proced-toggle-marks)
-	    (define-key nu-a-map (kbd "u") 'proced-unmark))
-					; else if...
-    (if (eq major-mode 'ibuffer-mode)
-	(progn
-	  (define-key nu-a-map (kbd "m") 'ibuffer-mark-by-mode-regexp)
-	  (define-key nu-a-map (kbd "d") 'ibuffer-mark-dired-buffers))
-  (if (eq major-mode 'dired-mode)
-      (progn
-        (define-key nu-a-map (kbd "d") 'dired-flag-file-deletion)
-        (define-key nu-a-map (kbd "r") 'dired-flag-files-regexp)
-        (define-key nu-a-map (kbd "m") 'dired-mark)
-        (define-key nu-a-map (kbd "u") 'dired-unmark)
-        (define-key nu-a-map (kbd "s") 'nu-mark-subdirs-files)
-        (define-key nu-a-map (kbd "x") 'dired-toggle-marks)
-        (define-key nu-a-map (kbd "M-u") 'dired-unmark-all-marks)
-        (define-key nu-a-map (kbd "r") 'dired-mark-files-regexp)
-        (define-key nu-a-map (kbd "M-r") 'dired-mark-files-containing-regexp))
-   ; else...
-      (define-key nu-a-map (kbd "$") 'nu-mark-to-eol)
-      (define-key nu-a-map (kbd "M-$") 'nu-mark-to-eol)
-      (define-key nu-a-map (kbd "M-h") 'nu-mark-to-bol)
-      (define-key nu-a-map (kbd "M-i") 'nu-mark-to-previous-line)
-      (define-key nu-a-map (kbd "M-j") 'nu-mark-backward-char)
-      (define-key nu-a-map (kbd "M-k") '_nu-mark-current-line)
-      (define-key nu-a-map (kbd "M-l") 'nu-mark-forward-char)
-      (define-key nu-a-map (kbd "M-m") 'nu-mark-to-eol)
-      (define-key nu-a-map (kbd "M-o") 'nu-mark-forward-word)
-      (define-key nu-a-map (kbd "M-u") 'nu-mark-backward-word)
-      (define-key nu-a-map (kbd "M-w") '_nu-select-a-block)
-      (define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
-      (define-key nu-a-map (kbd "f") 'nu-mark-defun)
-      (define-key nu-a-map (kbd "i") 'nu-set-mark)
-      (define-key nu-a-map (kbd "l") 'nu-mark-sentence)
-      (define-key nu-a-map (kbd "o") 'nu-mark-paragraph)
-      (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)
-      (define-key nu-a-map (kbd "w") '_nu-mark-a-word)))))
-
-
+  (cond
+   ((eq major-mode 'proced)
+    (define-key nu-a-map (kbd "M-a") 'proced-unmark-all)
+    (define-key nu-a-map (kbd "a") 'proced-mark-all)
+    (define-key nu-a-map (kbd "c") 'proced-mark-children)
+    (define-key nu-a-map (kbd "l") 'proced-mark)
+    (define-key nu-a-map (kbd "p") 'proced-mark-parents)
+    (define-key nu-a-map (kbd "t") 'proced-toggle-marks)
+    (define-key nu-a-map (kbd "u") 'proced-unmark))
+   ((eq major-mode 'ibuffer-mode)
+    (define-key nu-a-map (kbd "D") 'ibuffer-mark-dired-buffers)
+    (define-key nu-a-map (kbd "H") 'ibuffer-mark-help-buffers)
+    (define-key nu-a-map (kbd "M-d") 'ibuffer-mark-for-delete-backwards)
+    (define-key nu-a-map (kbd "M-f") 'ibuffer-mark-dissociated-buffers)
+    (define-key nu-a-map (kbd "M-i") 'ibuffer-backwards-next-marked)
+    (define-key nu-a-map (kbd "M-k") 'ibuffer-forward-next-marked)
+    (define-key nu-a-map (kbd "M-m") 'ibuffer-mark-by-mode)
+    (define-key nu-a-map (kbd "M-r") 'nu-set-rectangle-mark)
+    (define-key nu-a-map (kbd "M-u") 'ibuffer-unmark-all)
+    (define-key nu-a-map (kbd "S") 'ibuffer-mark-special-buffers)
+    (define-key nu-a-map (kbd "c") 'ibuffer-mark-unsaved-buffers)
+    (define-key nu-a-map (kbd "d") 'ibuffer-mark-for-delete)
+    (define-key nu-a-map (kbd "e") 'ibuffer-mark-modified-buffers)
+    (define-key nu-a-map (kbd "f") 'ibuffer-mark-by-file-name-regexp)
+    (define-key nu-a-map (kbd "i") 'ibuffer-unmark-backward)
+    (define-key nu-a-map (kbd "k") 'ibuffer-mark-forward)
+    (define-key nu-a-map (kbd "m") 'ibuffer-mark-by-mode-regexp)
+    (define-key nu-a-map (kbd "n") 'ibuffer-mark-by-name-regexp)
+    (define-key nu-a-map (kbd "o") 'ibuffer-mark-old-buffers)
+    (define-key nu-a-map (kbd "r") 'ibuffer-mark-read-only-buffers)
+    (define-key nu-a-map (kbd "t") 'ibuffer-toggle-marks)
+    (define-key nu-a-map (kbd "u") 'ibuffer-unmark-forward)
+    (define-key nu-a-map (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
+    (define-key nu-a-map (kbd "z") 'ibuffer-mark-compressed-file-buffers))
+   ((eq major-mode 'dired-mode)
+    (define-key nu-a-map (kbd "M-r") 'dired-mark-files-containing-regexp)
+    (define-key nu-a-map (kbd "M-u") 'dired-unmark-all-marks)
+    (define-key nu-a-map (kbd "d") 'dired-flag-file-deletion)
+    (define-key nu-a-map (kbd "m") 'dired-mark)
+    (define-key nu-a-map (kbd "r") 'dired-flag-files-regexp)
+    (define-key nu-a-map (kbd "r") 'dired-mark-files-regexp)
+    (define-key nu-a-map (kbd "s") 'nu-mark-subdirs-files)
+    (define-key nu-a-map (kbd "u") 'dired-unmark)
+    (define-key nu-a-map (kbd "x") 'dired-toggle-marks))
+   (t
+     (define-key nu-a-map (kbd "$") 'nu-mark-to-eol)
+     (define-key nu-a-map (kbd "M-$") 'nu-mark-to-eol)
+     (define-key nu-a-map (kbd "M-h") 'nu-mark-to-bol)
+     (define-key nu-a-map (kbd "M-i") 'nu-mark-to-previous-line)
+     (define-key nu-a-map (kbd "M-j") 'nu-mark-backward-char)
+     (define-key nu-a-map (kbd "M-k") '_nu-mark-current-line)
+     (define-key nu-a-map (kbd "M-l") 'nu-mark-forward-char)
+     (define-key nu-a-map (kbd "M-m") 'nu-mark-to-eol)
+     (define-key nu-a-map (kbd "M-o") 'nu-mark-forward-word)
+     (define-key nu-a-map (kbd "M-u") 'nu-mark-backward-word)
+     (define-key nu-a-map (kbd "M-w") '_nu-select-a-block)
+     (define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
+     (define-key nu-a-map (kbd "f") 'nu-mark-defun)
+     (define-key nu-a-map (kbd "i") 'nu-set-mark)
+     (define-key nu-a-map (kbd "l") 'nu-mark-sentence)
+     (define-key nu-a-map (kbd "o") 'nu-mark-paragraph)
+     (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)
+     (define-key nu-a-map (kbd "w") '_nu-mark-a-word))))
 
 (defun nu-a-prompt ()
   "Triggers nu-a-map.
