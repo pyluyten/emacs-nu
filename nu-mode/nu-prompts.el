@@ -190,22 +190,15 @@
         (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
         (define-key nu-delete-map (kbd "r") 'org-table-kill-row)
         (define-key nu-delete-map (kbd "*") 'org-cut-special)
-        (define-key nu-delete-map (kbd "M-k") 'org-cut-subtree))))
+        (define-key nu-delete-map (kbd "M-k") 'org-cut-subtree)))
 
-(defun nu-delete-prompt-internal ()
-  (interactive)
-  (nu-populate-delete)
-  (nu-prompt-for-keymap nu-delete-map))
-
-
+  (if mark-active
+    (define-key nu-delete-map (kbd "<RET>") 'kill-region)))
 
 (defun nu-delete-prompt ()
   (interactive)
-  (if mark-active
-    (call-interactively 'kill-region)
-    (progn
-      (nu-delete-prompt-internal)
-      (help-make-xrefs (help-buffer)))))
+  (nu-populate-delete)
+  (nu-prompt-for-keymap nu-delete-map))
 
 
 (defvar nu-bold-map)
