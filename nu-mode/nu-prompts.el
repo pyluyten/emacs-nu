@@ -97,7 +97,10 @@
     (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
     (define-key nu-print-map (kbd "P") 'nu-texi2pdf))
    ((eq major-mode 'ibuffer-mode)
-    (define-key nu-print-ma (kbd "M-d") 'ibuffer-diff-with-file))
+    (define-key nu-print-map (kbd "M-d") 'ibuffer-diff-with-file)
+    (define-key nu-print-map (kbd "P") 'ibuffer-do-shell-command-pipe)
+    (define-key nu-print-map (kbd "M-f") 'ibuffer-do-shell-command-file)
+    (define-key nu-print-map (kbd "r") 'ibuffer-do-print))
    ((eq major-mode 'org-mode)
     (define-key nu-print-map (kbd "l") 'pcomplete)))
 
