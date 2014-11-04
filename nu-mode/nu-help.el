@@ -37,7 +37,6 @@ Add a binding for any binding provide on the form
  ; stocked for similar reasons.
 
 (defvar nu-current-keymap nil)
-(defvar nu-current-major-mode nil)
 (defvar nu-current-local-map nil)
 
 ; for helm
@@ -177,7 +176,7 @@ call insert description for each bind."
 
 
 (defun ~nu-check-vector (vect value &optional is-string str-match)
-"check if vector is the same as value.
+  "check if vector is the same as value.
 
 Normally use equal, but if is-string is true, use string=.
 If str-match is true, use string-match.
@@ -185,18 +184,18 @@ If str-match is true, use string-match.
 This function ensures no error can occur inside the process..."
   (if (> (length vect) 1)
       (> (length vect) 1) ; #false, too long vect
-      (if is-string
-          (if (not (integerp (elt vect 0)))
-             (integerp (elt vect 0)) ; #false, not an integer
-             (if (not (char-valid-p (elt vect 0)))
-                 (char-valid-p (elt vect 0)) ; #false invalid byte
-                 (if str-match
-          ; string + str match
-                     (string-match (byte-to-string (elt vect 0)) value)
-          ; string but not str match
-                     (string= (byte-to-string (elt vect 0)) value))))
-          ; not a string. check equality.
-          (equal (elt vect 0) value))))
+    (if is-string
+	(if (not (integerp (elt vect 0)))
+	    (integerp (elt vect 0)) ; #false, not an integer
+	  (if (not (char-valid-p (elt vect 0)))
+	      (char-valid-p (elt vect 0)) ; #false invalid byte
+	    (if str-match
+					; string + str match
+		(string-match (byte-to-string (elt vect 0)) value)
+					; string but not str match
+	      (string= (byte-to-string (elt vect 0)) value))))
+					; not a string. check equality.
+      (equal (elt vect 0) value))))
 
 
 
@@ -219,9 +218,8 @@ If describe arg is t, only describe-function."
  ; thus, use a global var
  ;
  ; also, include major mode keys.
- (setq nu-current-keymap keymap)
- (setq nu-current-major-mode major-mode)
- (setq nu-describe-bind-mode "buffer")
+ (setq nu-current-keymap keymap
+       nu-describe-bind-mode "buffer")
 
  (let* ((key)
         (defn)
@@ -335,7 +333,6 @@ to describe the function.\n")
 This one is a bit different..."
  (interactive)
    (setq nu-current-keymap keymap
-         nu-current-major-mode major-mode
          nu-keymap-list nil
          nu-describe-bind-mode "helm")
    (map-keymap 'nu-insert-binding-row keymap)
@@ -352,7 +349,6 @@ This one is a bit different..."
 "Light prompt for a keymap. Toggle buffer-prompt with ?"
   (interactive)
   (setq nu-current-keymap keymap
-        nu-current-major-mode major-mode
 	nu-current-local-map (current-local-map))
   
   (let* ((input nil)
