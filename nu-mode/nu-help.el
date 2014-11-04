@@ -32,8 +32,13 @@ Add a binding for any binding provide on the form
  ; we cannot easily communicate
  ; to this function which keymap it is parsing (!)
  ; thus, use a global var
+ ;
+ ; (current-global-map) has to be 
+ ; stocked for similar reasons.
+
 (defvar nu-current-keymap nil)
 (defvar nu-current-major-mode nil)
+(defvar nu-current-local-map nil)
 
 ; for helm
 (defvar nu-keymap-list)
@@ -90,7 +95,6 @@ and drect keys from both nu-keymap / major-mode."
   (let* ((candidate)      ;; if helm mode, a list element...
          (keyvect)        ;; keys from the prompt
          (majorkeys)      ;; keys from major mode
-         (major-keymap)   ;; major-mode keymap
          (all-shortcuts)) ;; shortcuts from anywhere.
 
   (if (and (symbolp bind) (not (eq bind 'digit-argument))
@@ -118,21 +122,15 @@ and drect keys from both nu-keymap / major-mode."
                           (mapconcat 'key-description keyvect ", "))
                               'face 'bold))))))
 
-
-    ;; hack : is there a major-mode map?. FIXME.
-    (setq major-keymap
-        (eval (intern-soft
-                  (concat (symbol-name nu-current-major-mode) "-map"))))
-
    ;; TODO : make the regexp replace one or two C-c at beginning only
    ;; (since where-is-internal does not know our sorcery)
 
-  (if (not (keymapp major-keymap))
+  (if (not (keymapp nu-current-local-map))
       (setq majorkeys "")
       (setq majorkeys
            (replace-regexp-in-string "\\(C-c\\)" "C-<SPC>"
                (mapconcat 'key-description (where-is-internal
-                     bind (list major-keymap)) "@"))))
+                     bind (list nu-current-local-map)) "@"))))
 
    ;; print the _direct keys_  (remove menu, menu-bar, f1, help, ..)
    ;; use non-greedy "*?"
@@ -353,8 +351,10 @@ This one is a bit different..."
 (defun nu-light-prompt-for-keymap  (keymap &optional describe)
 "Light prompt for a keymap. Toggle buffer-prompt with ?"
   (interactive)
-  (setq nu-current-keymap keymap)
-  (setq nu-current-major-mode major-mode)
+  (setq nu-current-keymap keymap
+        nu-current-major-mode major-mode
+	nu-current-local-map (current-local-map))
+  
   (let* ((input nil)
          (defn nil)
          (key)
