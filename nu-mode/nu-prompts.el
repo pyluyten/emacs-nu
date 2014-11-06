@@ -172,6 +172,7 @@
     (define-key nu-delete-map (kbd "a") 'nu-delete-all)
     (define-key nu-delete-map (kbd "b") 'delete-blank-lines)
     (define-key nu-delete-map (kbd "b") 'kill-buffer) ; redundant	.	
+    (define-key nu-delete-map (kbd "d") 'kill-whole-line)
     (define-key nu-delete-map (kbd "e") 'kill-sentence)
     (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
     (define-key nu-delete-map (kbd "h") 'delete-horizontal-space)
@@ -183,7 +184,6 @@
     (define-key nu-delete-map (kbd "s") 'kill-sexp)
     (define-key nu-delete-map (kbd "t") 'delete-trailing-whitespace)
     (define-key nu-delete-map (kbd "u") 'backward-kill-word)
-    (define-key nu-delete-map (kbd "x") 'kill-whole-line)
     (define-key nu-delete-map (kbd "z")  'zap-up-to-char)))
 
   ; common cases
