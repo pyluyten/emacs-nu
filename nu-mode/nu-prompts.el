@@ -528,8 +528,8 @@ But if mark is active, exchange point and mark."
 
    (if (eq major-mode 'org-mode)
        (progn
-         (define-key nu-goto-map (kbd "I") 'org-backward-heading-same-level)
-         (define-key nu-goto-map (kbd "K") 'org-forward-heading-same-level)
+         (define-key nu-goto-map (kbd "M-i") 'org-backward-heading-same-level)
+         (define-key nu-goto-map (kbd "M-k") 'org-forward-heading-same-level)
          (define-key nu-goto-map (kbd "J") 'org-backward-element)
          (define-key nu-goto-map (kbd "L") 'org-forward-element))))
 
