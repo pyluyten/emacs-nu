@@ -380,13 +380,8 @@ This one is a bit different..."
       ; if we should look for the mapped func
       ; or just do something else....
 
-					;(set-temporary-overlay-map keymap)
-					;(nu-make-overriding-map keymap)
-					;(put nu-mode 'keymap keymap) ; set the value of a lisp symbol's property
       (nu-add-keymap keymap)
       (setq key (read-key-sequence-vector (propertize "Enter a key or SPC or TAB :" 'face 'italic) t))
-					;(nu-drop-overriding-map keymap
-					;(put nu-mode 'keymap nu-keymap)
       (nu-remove-keymap keymap)
       (cond
         ; allow to repeat prompt
