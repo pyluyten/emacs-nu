@@ -357,9 +357,24 @@ This one is a bit different..."
          (local-map (make-sparse-keymap)))
     (setcdr local-map keymap)
     (define-key local-map [t] 'undefined)
-  (catch 'outide
+  (catch 'outside
     (while (not input)
+      ; read-key-sequence : in order to offer the user to enter
+      ; the sequence he wants, we first need to activate the map
+      ; this is why we make the keymap overriding.
+      ; - as opposed to directly trigger the mapped func.
+      ; after this, we're parsing the sequence to check
+      ; if we should look for the mapped func
+      ; or just do something else....
+
+					;(set-temporary-overlay-map keymap)
+					;(nu-make-overriding-map keymap)
+					;(put nu-mode 'keymap keymap) ; set the value of a lisp symbol's property
+      (nu-add-keymap keymap)
       (setq key (read-key-sequence-vector (propertize "Enter a key or SPC or TAB :" 'face 'italic) t))
+					;(nu-drop-overriding-map keymap
+					;(put nu-mode 'keymap nu-keymap)
+      (nu-remove-keymap keymap)
       (cond
         ; allow to repeat prompt
         ((~nu-check-vector key "+" t)
