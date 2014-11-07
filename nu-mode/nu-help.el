@@ -27,6 +27,19 @@ Add a binding for any binding provide on the form
   (make-local-variable 'minor-mode-overriding-map-alist)
   (setq minor-mode-overriding-map-alist (delete `(nu-state . ,keymap) minor-mode-overriding-map-alist)))
 
+
+(defun nu-add-keymap (keymap)
+  "Adds keymap to the list of nu-mode keymaps.
+
+Currently this is only used in order to use read-key-sequence."
+  (make-local-variable 'minor-mode-map-alist)
+  (push `(nu-mode . ,keymap) minor-mode-map-alist))
+
+(defun nu-remove-keymap (keymap)
+  "Removes keymap from nu-mode ones."
+  (make-local-variable 'minor-mode-map-alist)
+  (setq minor-mode-map-alist (delete `(nu-mode . ,keymap) minor-mode-map-alist)))
+
  ; map-keymap has no way to receive
  ; more than two args
  ; we cannot easily communicate
