@@ -199,39 +199,45 @@ eg dired, magit, helm, ...)"
   :global t
   :keymap nu-keymap
 
-   ; this is part of a modern keymap because cursor
-   ; is an indicator
-   (set-default 'cursor-type 'bar)
+  (if nu-mode
+      (progn
+	; the variable allowing to make keymaps override...
+	(setq nu-state t)
+					; this is part of a modern keymap because cursor
+					; is an indicator
+	(set-default 'cursor-type 'bar)
 
-   ; a real dependency
-   (undo-tree-mode 1)
+					; a real dependency
+	(undo-tree-mode 1)
 
-   ; do not use cua-mode because C-x C-c have specific meaning
-   ; TODO: test if the user can enable cua-keys on his .emacs
-   ;
-   ; do not keep cua modifier on 'meta
-   ; otherwise their rectangle is broken...
+					; do not use cua-mode because C-x C-c have specific meaning
+					; TODO: test if the user can enable cua-keys on his .emacs
+					;
+					; do not keep cua modifier on 'meta
+					; otherwise their rectangle is broken...
+	
+	(setq cua-rectangle-mark-key (kbd "C-S-s-<return>"))
+	(cua-selection-mode 1)
+	(setq cua--rectangle-modifier-key 'control)
 
-   (setq cua-rectangle-mark-key (kbd "C-S-s-<return>"))
-   (cua-selection-mode 1)
-   (setq cua--rectangle-modifier-key 'control)
+					; populate all prompts
+					; so all maps are defined
+	(nu-populate-print)
+	(nu-populate-quit)
+	(nu-populate-delete)
+	(nu-populate-bold-map)
+	(nu-populate-insert-map)
+	(nu-populate-save-map)
+	(nu-populate-new-map)
+	(nu-populate-a-map)
+	(nu-populate-open-map)
+	(nu-populate-goto-map)
+	(nu-populate-find-map)
+	(nu-populate-replace)
 
-   ; populate all prompts
-   ; so all maps are defined
-   (nu-populate-print)
-   (nu-populate-quit)
-   (nu-populate-delete)
-   (nu-populate-bold-map)
-   (nu-populate-insert-map)
-   (nu-populate-save-map)
-   (nu-populate-new-map)
-   (nu-populate-a-map)
-   (nu-populate-open-map)
-   (nu-populate-goto-map)
-   (nu-populate-find-map)
-   (nu-populate-replace)
-
-   (nu-restore-default-keymap))
+	(nu-restore-default-keymap))
+					; if disabled
+    (setq nu-state nil)))
 
 
 (provide 'nu-mode)
