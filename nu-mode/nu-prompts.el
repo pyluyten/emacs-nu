@@ -82,7 +82,8 @@
    ((or (eq major-mode 'emacs-lisp-mode)
 	(eq major-mode 'lisp-interaction-mode))
     (define-key nu-print-map (kbd "s") 'eval-last-sexp)
-    (define-key nu-print-map (kbd "b") 'eval-current-buffer)
+    (define-key nu-print-map (kbd "b") 'eval-buffer)
+    (define-key nu-print-map (kbd "M-d") 'eval-defun)
     (define-key nu-print-map (kbd "r") 'eval-region))
    ((eq major-mode 'magit-status-mode)
     (define-key nu-print-map (kbd "p") 'magit-shell-command)
@@ -181,6 +182,7 @@
     (define-key nu-delete-map (kbd "k") 'nu-delete-below-line)
     (define-key nu-delete-map (kbd "l") 'delete-forward-char)
     (define-key nu-delete-map (kbd "o") 'kill-word)
+    (define-key nu-delete-map (kbd "r") 'kill-rectangle)
     (define-key nu-delete-map (kbd "s") 'kill-sexp)
     (define-key nu-delete-map (kbd "t") 'delete-trailing-whitespace)
     (define-key nu-delete-map (kbd "u") 'backward-kill-word)
@@ -206,6 +208,8 @@
   (interactive)
   (nu-populate-delete)
   (nu-prompt-for-keymap nu-delete-map))
+
+
 
 
 (defvar nu-bold-map)
@@ -247,6 +251,8 @@
         (define-key nu-insert-map (kbd "f") 'insert-file)
         (define-key nu-insert-map (kbd "i") 'nu-insert-line-above)
         (define-key nu-insert-map (kbd "k") 'nu-insert-line-below)
+        (define-key nu-insert-map (kbd "r") 'yank-rectangle)
+        (define-key nu-insert-map (kbd "M-r") 'open-rectangle)
         (define-key nu-insert-map (kbd "v") 'yank)
 
         ; addon
@@ -411,7 +417,9 @@
      (define-key nu-a-map (kbd "i") 'nu-set-mark)
      (define-key nu-a-map (kbd "l") 'nu-mark-sentence)
      (define-key nu-a-map (kbd "o") 'nu-mark-paragraph)
-     (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)
+     (if (boundp 'rectangle-mark-mode)
+         (define-key nu-a-map (kbd "r") 'rectangle-mark-mode)
+         (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark))
      (define-key nu-a-map (kbd "w") '_nu-mark-a-word))))
 
 (defun nu-a-prompt ()
@@ -621,13 +629,19 @@ But if mark is active, exchange point and mark."
 
 
 (defun nu-populate-copy-map ()
- (nu-define-prefix 'nu-copy-map)
- (if (eq major-mode 'dired-mode)
-     (progn
-       (define-key nu-copy-map (kbd "c") 'dired-do-copy)
-       (define-key nu-copy-map (kbd "C-c") 'dired-copy-filename-as-kill)
-       (define-key nu-copy-map (kbd "h") 'dired-do-hardlink)
-       (define-key nu-copy-map (kbd "s") 'dired-do-symlink))))
+  (nu-define-prefix 'nu-copy-map)
+  (cond
+   ((eq major-mode 'dired-mode)
+    (define-key nu-copy-map (kbd "c") 'dired-do-copy)
+    (define-key nu-copy-map (kbd "C-c") 'dired-copy-filename-as-kill)
+    (define-key nu-copy-map (kbd "h") 'dired-do-hardlink)
+    (define-key nu-copy-map (kbd "s") 'dired-do-symlink))
+   (t
+    (define-key nu-copy-map (kbd "r") 'copy-rectangle-as-kill)
+    (define-key nu-copy-map (kbd "c") 'nu-copy-region-or-line)
+    (define-key nu-copy-map (kbd "e") 'nu-copy-from-above)
+    (define-key nu-copy-map (kbd "y") 'nu-copy-from-below))))
+
 
 (defun nu-copy-prompt ()
  (interactive)
@@ -695,6 +709,9 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "d") 'downcase-word)
   (define-key nu-replace-map (kbd "e")  'keep-lines)
   (define-key nu-replace-map (kbd "f")  'sort-fields)
+  (define-key nu-replace-map (kbd "g")  'clear-rectangle)
+  (define-key nu-replace-map (kbd "G")  'delete-whitespace-rectangle)
+  (define-key nu-replace-map (kbd "M-g")  'string-rectangle)
   (define-key nu-replace-map (kbd "h") 'delete-horizontal-space)
   (define-key nu-replace-map (kbd "j")  'nu-join-with-following-line)
   (define-key nu-replace-map (kbd "k")  'overwrite-mode)
