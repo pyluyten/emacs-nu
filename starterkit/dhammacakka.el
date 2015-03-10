@@ -33,9 +33,9 @@
 ; ~~~~ Lighter startup
 ; See als http://ergoemacs.org/emacs/emacs_make_modern.html
 
-  (setq inhibit-splash-screen t
-        inhibit-startup-message t
-        initial-buffer-choice t)
+(setq
+        inhibit-splash-screen t
+        inhibit-startup-message t)
 
   (setq vc-handled-backends nil)
 
