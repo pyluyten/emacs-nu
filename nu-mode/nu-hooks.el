@@ -155,7 +155,6 @@ Still, some keys here help."
     (define-key helm-find-files-map (kbd "C-r") 'helm-ff-run-rename-file) ; dired is better as this, no?
     (define-key helm-buffer-map (kbd "C-r") 'helm-buffer-run-query-replace) ; absurd func! well...
 
-    (define-key helm-find-files-map (kbd "<backspace>") 'helm-find-files-up-one-level)
     (define-key helm-find-files-map (kbd "C-u") 'helm-find-files-up-one-level)
     (define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; does expand, except Mx.
     (define-key helm-map (kbd "M-i") 'helm-previous-line)
