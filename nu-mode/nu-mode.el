@@ -19,7 +19,7 @@
 (require 'nu-common)
 (require 'nu-hooks)
 
-
+(require 'help-fns+)
 (require 'iso-transl)
 
 (defvar nu-menu-map)
