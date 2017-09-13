@@ -70,6 +70,8 @@ Currently this is only used in order to use read-key-sequence."
 (defvar nu-current-keymap nil)
 (defvar nu-current-local-map nil)
 
+(defvar nu-lv-message nil)
+
 ; for helm
 (defvar nu-keymap-list)
 
@@ -111,46 +113,67 @@ This is a common key to _all_ prompts."
  (describe-function (function-called-at-point)))
 
 
+(defvar nu-lv-row)
 
 (defun nu-describe-bind (bind)
-"Insert into *Help* Buffer a prompt row for bind.
-Or create a helm candidate, depending on nu-describe-bind-mode.
+"This function is used with map-keymap.
+For each element in keymap ('bind'),
+it does describe the element.
+
+This function acts differently according to
+global variable : nu-describe-bind.
+if nu-describe-bind='buffer', then *help*
+         buffer is used to describe binding.
+
+if nu-describe-bind = helm, then 
+       a candidate list is built.
+
+if nu-describe-bind= lv, then a lv
+  message string is built.
 
 This includes symbol name, key(s) from prompt,
 and drect keys from both nu-keymap / major-mode."
 
-  ;; we start with a mass let*
-  ;; then a an if / progn that goes on all along...
-
   (let* ((candidate)      ;; if helm mode, a list element...
          (keyvect)        ;; keys from the prompt
          (majorkeys)      ;; keys from major mode
+;	 (nu-lv-row)         ;; if lv mode, a string...
          (all-shortcuts)) ;; shortcuts from anywhere.
 
   (if (and (symbolp bind) (not (eq bind 'digit-argument))
                           (not (eq bind 'nu-help-about-prompts)))
      (progn
 
-        ; insert the button
-        (if (string= nu-describe-bind-mode "buffer")
-            (insert-button (symbol-name bind) 'action 'nu-prompt-describe)
-            (setq candidate (symbol-name bind)))
+	; insert the button
+       (cond
+           ((string= nu-describe-bind-mode "buffer")
+	    (insert-button (symbol-name bind) 'action 'nu-prompt-describe))
 
-        ; insert shortcuts _from the prompt_
+	   ((string= nu-describe-bind-mode "lv")
+	    (setq nu-lv-row (symbol-name bind)))
+	   
+	  ((string= nu-describe-bind-mode "helm")
+	   (setq candidate (symbol-name bind))))
+
+	; insert shortcuts _from the prompt_
+        ; for HELM this is not useful since HELM uses completion       
         (setq keyvect (where-is-internal bind (list nu-current-keymap)))
         (if (not (eq nil keyvect))
-           (progn
-              (if (string= nu-describe-bind-mode "buffer")
+            (cond
+	       ((string= nu-describe-bind-mode "buffer")
                  (insert
                     (propertize
                        (format " %s"
                           (mapconcat 'key-description keyvect ", "))
-                              'face 'bold))
-                 (setq candidate (concat candidate " "
+		       'face 'bold)))
+	  
+	      ((string= nu-describe-bind-mode "lv")
+	       (setq nu-lv-row
+		  (concat nu-lv-row
                     (propertize
-                         (format " %s"
+                       (format " %s"
                           (mapconcat 'key-description keyvect ", "))
-                              'face 'bold))))))
+		       'face 'bold))))))
 
    ;; TODO : make the regexp replace one or two C-c at beginning only
    ;; (since where-is-internal does not know our sorcery)
@@ -175,14 +198,25 @@ and drect keys from both nu-keymap / major-mode."
    (if (> (string-width all-shortcuts) 1)
    (progn
      (setq all-shortcuts (replace-regexp-in-string "@" " " all-shortcuts))
-     (if (string= nu-describe-bind-mode "buffer")
-         (insert " - or " all-shortcuts)
-         (setq candidate (concat candidate " - or " all-shortcuts)))))
+     (cond
+         ((string= nu-describe-bind-mode "buffer")
+	  (insert " - or " all-shortcuts))
 
+	 ((string= nu-describe-bind-mode "lv")
+	  (setq nu-lv-row (concat nu-lv-row " - or " all-shortcuts)))
+
+	 ((string= nu-describe-bind-mode "helm")
+          (setq candidate (concat candidate " - or " all-shortcuts))))))
+   
    ; now it's over. Just append a \n...
-   (if (string= nu-describe-bind-mode "buffer")
-       (insert "\n")
-           (setq nu-keymap-list (cons candidate nu-keymap-list)))))))
+   (cond
+    ((string= nu-describe-bind-mode "buffer")
+     (insert "\n"))
+
+    ((string= nu-describe-bind-mode "lv")
+     (setq nu-lv-message (concat nu-lv-message nu-lv-row "\n")))
+    ((string= nu-describe-bind-mode "helm")
+     (setq nu-keymap-list (cons candidate nu-keymap-list))))))))
 
 
 (defun nu-insert-binding-row (ev bind)
@@ -251,7 +285,7 @@ If describe arg is t, only describe-function."
  ; also, include major mode keys.
  (setq nu-current-keymap keymap
        nu-describe-bind-mode "buffer")
-
+ 
  (let* ((key)
         (defn)
         (prefixhelp)
@@ -325,7 +359,7 @@ to describe the function.\n")
             ((eq current-prefix-arg '-)
              (setq current-prefix-arg (- (string-to-number (key-description key)))))
             ((integerp current-prefix-arg)
-             (setq current-prefix-arg (+ (string-to-number (key-description key))
+             (tsetq current-prefix-arg (+ (string-to-number (key-description key))
                                          (* current-prefix-arg 10))))
              (t
               (setq current-prefix-arg (string-to-number (key-description key)))))
@@ -374,6 +408,9 @@ This one is a bit different..."
                              :must-match t))))
    (ignore-errors (call-interactively nu-last-command))
    (setq nu-repeat-prompt nil))
+
+
+
 
 
 (defun nu-light-prompt-for-keymap  (keymap &optional describe)
