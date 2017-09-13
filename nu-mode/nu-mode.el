@@ -46,9 +46,9 @@
    (define-key nu-menu-map (kbd "a") 'nu-a-map)
    (define-key nu-keymap (kbd "M-a") 'nu-a-prompt)
 
-   (define-key nu-keymap (kbd "C-z") 'undo-tree-undo)
+   (define-key nu-keymap (kbd "M-z") 'undo-tree-undo)
    (define-key nu-keymap (kbd "C-S-z") 'undo-tree-redo)
-   (define-key nu-keymap (kbd "M-z") 'undo-tree-visualize)
+   (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize)
 
    ; e? edit? & use control+e to copy from above?
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
@@ -95,9 +95,9 @@
    (define-key nu-keymap (kbd "M-q") 'nu-quit-prompt)
 
 
-   (define-key nu-keymap (kbd "C-s") 'save-buffer)
+   (define-key nu-keymap (kbd "M-s") 'save-buffer)
    (define-key nu-keymap (kbd "C-S-s") 'org-store-link)
-   (define-key nu-keymap (kbd "M-s") 'nu-save-prompt)
+   (define-key nu-keymap (kbd "C-s") 'nu-save-prompt)
    (define-key nu-menu-map (kbd "s") 'nu-save-map)
 
    (define-key nu-keymap (kbd "C-d") 'kill-word)
@@ -105,13 +105,13 @@
    (define-key nu-keymap (kbd "M-d") 'nu-delete-prompt)
    (define-key nu-menu-map (kbd "d") 'nu-delete-map)
 
-   (define-key nu-keymap (kbd "C-f") 'nu-isearch-forward-regexp)
-   (define-key nu-keymap (kbd "C-S-f") 'ace-jump-char-mode)
-   (define-key nu-keymap (kbd "M-f") 'nu-find-prompt)
+   (define-key nu-keymap (kbd "M-f") 'nu-isearch-forward-regexp)
+   (define-key nu-keymap (kbd "C-S-f") 'ace-jump-char-mode) 
+   (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-menu-map (kbd "f") 'nu-find-map)
 
-   (define-key nu-keymap (kbd "C-g") 'god-mode) ; gg to quit ;
    (define-key nu-keymap (kbd "M-g") 'nu-goto-prompt)
+   (define-key nu-keymap (kbd "C-g") 'ace-jump-char-mode)
    (define-key nu-keymap (kbd "C-M-g") 'recenter-top-bottom)
    (define-key nu-menu-map (kbd "g") 'nu-goto-map)
 
