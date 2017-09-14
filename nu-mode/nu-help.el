@@ -112,8 +112,14 @@ This is a common key to _all_ prompts."
  "describe the nu prompt function point is at."
  (describe-function (function-called-at-point)))
 
+(defface nu-face-shortcut
+  '((((class color) (background light))
+     :foreground "#0f4b77" :bold t)
+    (((class color) (background dark))
+     :foreground "#b1d5ef" :bold t))
+  "nu-face-shortcut")
 
-(defvar nu-lv-row)
+
 
 (defun nu-describe-bind (bind)
 "This function is used with map-keymap.
@@ -137,7 +143,7 @@ and drect keys from both nu-keymap / major-mode."
   (let* ((candidate)      ;; if helm mode, a list element...
          (keyvect)        ;; keys from the prompt
          (majorkeys)      ;; keys from major mode
-;	 (nu-lv-row)         ;; if lv mode, a string...
+	 (nu-lv-row)         ;; if lv mode, a string...
          (all-shortcuts)) ;; shortcuts from anywhere.
 
   (if (and (symbolp bind) (not (eq bind 'digit-argument))
@@ -165,15 +171,15 @@ and drect keys from both nu-keymap / major-mode."
                     (propertize
                        (format " %s"
                           (mapconcat 'key-description keyvect ", "))
-		       'face 'bold)))
+		       'face 'nu-face-shortcut)))
 	  
 	      ((string= nu-describe-bind-mode "lv")
 	       (setq nu-lv-row
-		  (concat nu-lv-row
-                    (propertize
-                       (format " %s"
-                          (mapconcat 'key-description keyvect ", "))
-		       'face 'bold))))))
+		     (concat nu-lv-row
+			(propertize
+			  (format " %s"
+                             (mapconcat 'key-description keyvect ", "))
+                          'face 'nu-face-shortcut))))))
 
    ;; TODO : make the regexp replace one or two C-c at beginning only
    ;; (since where-is-internal does not know our sorcery)
