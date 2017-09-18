@@ -18,6 +18,7 @@
 
 (require 'nu-common)
 (require 'nu-hooks)
+(require 'nu-setup)
 
 (require 'help-fns+)
 (require 'iso-transl)
@@ -147,7 +148,7 @@
 
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
    (define-key nu-keymap (kbd "C-S-x") 'nu-global-prompt)
-   (define-key nu-keymap (kbd "M-x") 'helm-M-x)
+   (define-key nu-keymap (kbd "M-x") 'nu-M-x)
 
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
    ; no standard M-c ; some mode might need it however.

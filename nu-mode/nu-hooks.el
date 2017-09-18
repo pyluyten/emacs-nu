@@ -65,7 +65,6 @@ since helm-buffers-list allows quick stuff."
 			  '("C-o" "C-y" "M-g" "M-n" "M-p" "M-s")
 			  nil))
 
-
 (defun nu-prepare-for-minibuffer ()
   "Minibuffer (except helm).
 
@@ -73,15 +72,18 @@ Still, we might need it, for example for later on ido.
 & even helm function use it : completing-read functions without
 particular helm-map, such as describe-variable..."
 
-  (if (not (helm-alive-p))
-      (progn (define-key minibuffer-local-map (kbd "M-i") 'previous-history-element)
-             (define-key minibuffer-local-map (kbd "M-k") 'next-history-element))
+  (if (boundp 'helm-alive-p)
 
-      ; if helm.
-      (define-key minibuffer-local-map (kbd "M-i") 'helm-previous-line)
-      (define-key minibuffer-local-map (kbd "M-k") 'helm-next-line)
-      (define-key minibuffer-local-map (kbd "M-<dead-circumflex>") 'previous-history-element)
-      (define-key minibuffer-local-map (kbd "M-$") 'next-history-element))
+	  ; if helm.
+	  (progn
+           (define-key minibuffer-local-map (kbd "M-i") 'helm-previous-line)
+           (define-key minibuffer-local-map (kbd "M-k") 'helm-next-line)
+           (define-key minibuffer-local-map (kbd "M-<dead-circumflex>") 'previous-history-element)
+           (define-key minibuffer-local-map (kbd "M-$") 'next-history-element))
+
+    (progn
+      (define-key minibuffer-local-map (kbd "M-i") 'previous-history-element)
+      (define-key minibuffer-local-map (kbd "M-k") 'next-history-element)))
 
   (nu-make-overriding-map minibuffer-local-map nil "M-q" 'abort-recursive-edit))
 
