@@ -19,6 +19,7 @@
 (require 'nu-common)
 (require 'nu-hooks)
 (require 'nu-setup)
+(require 'nu-lv)
 
 (require 'help-fns+)
 (require 'iso-transl)
@@ -103,16 +104,16 @@
 
    (define-key nu-keymap (kbd "C-d") 'kill-word)
    (define-key nu-keymap (kbd "C-S-d") 'nu-kill-block)
-   (define-key nu-keymap (kbd "M-d") 'nu-delete-prompt)
+   (define-key nu-keymap (kbd "M-d") 'hydra-nu-meta-menu/body)
    (define-key nu-menu-map (kbd "d") 'nu-delete-map)
 
    (define-key nu-keymap (kbd "M-f") 'nu-isearch-forward-regexp)
-   (define-key nu-keymap (kbd "C-S-f") 'ace-jump-char-mode) 
+   (define-key nu-keymap (kbd "C-S-f") 'avy-goto-char) 
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-menu-map (kbd "f") 'nu-find-map)
 
    (define-key nu-keymap (kbd "M-g") 'nu-goto-prompt)
-   (define-key nu-keymap (kbd "C-g") 'ace-jump-char-mode)
+   (define-key nu-keymap (kbd "C-g") 'avy-goto-char)
    (define-key nu-keymap (kbd "C-M-g") 'recenter-top-bottom)
    (define-key nu-menu-map (kbd "g") 'nu-goto-map)
 

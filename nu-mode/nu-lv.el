@@ -114,6 +114,7 @@ PROMPTS
 _a_ select       _r_ replace    _o_ open     _g_ goto
 _h_ help         _f_ find       _p_ print    _s_ save
 _n_ new          t tab
+_d_ delete
 "
     ;; paddle direct functions.
     ("i" nu-find-file :exit t)
@@ -130,16 +131,8 @@ _n_ new          t tab
     ("f" (nu-buffer-prompt-for-keymap nu-find-map) :exit t)
     ("p" (nu-buffer-prompt-for-keymap nu-print-map) :exit t)
     ("s" (nu-buffer-prompt-for-keymap nu-save-map) :exit t)
+    ("d" (nu-buffer-prompt-for-keymap nu-delete-map) :exit t)
     ("n" (nu-buffer-prompt-for-keymap nu-new-map) :exit t))
-
-
-
-
-
-(define-key nu-keymap (kbd "C-h") 'hydra-nu-meta-menu/body)
-
-
-
 
 (provide 'nu-lv)
 
