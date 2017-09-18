@@ -100,3 +100,47 @@ to describe the function.\n")
                    (call-interactively defn)))
              ; if no func, make sure not to repeat.
 	   (setq nu-repeat-prompt nil))))))))
+
+
+(defhydra hydra-nu-meta-menu (:color pink
+                              :hint nil)
+"
+PADDLE
+----------------------------------------------------------------
+_i_: find-file   j:       k:         _l_:buffers
+
+PROMPTS
+----------------------------------------------------------------
+_a_ select       _r_ replace    _o_ open     _g_ goto
+_h_ help         _f_ find       _p_ print    _s_ save
+_n_ new          t tab
+"
+    ;; paddle direct functions.
+    ("i" nu-find-file :exit t)
+    ("l" nu-buffer-list :exit t)
+;;    ("k" nil)
+;;    ("j" nil)
+
+    ;; nu prompts
+    ("a" (nu-buffer-prompt-for-keymap nu-a-map) :exit t)
+    ("r" (nu-buffer-prompt-for-keymap nu-replace-map) :exit t)
+    ("o" (nu-buffer-prompt-for-keymap nu-open-map) :exit t)
+    ("g" (nu-buffer-prompt-for-keymap nu-goto-map) :exit t)
+    ("h" (nu-buffer-prompt-for-keymap nu-help-map) :exit t)
+    ("f" (nu-buffer-prompt-for-keymap nu-find-map) :exit t)
+    ("p" (nu-buffer-prompt-for-keymap nu-print-map) :exit t)
+    ("s" (nu-buffer-prompt-for-keymap nu-save-map) :exit t)
+    ("n" (nu-buffer-prompt-for-keymap nu-new-map) :exit t))
+
+
+
+
+
+(define-key nu-keymap (kbd "C-h") 'hydra-nu-meta-menu/body)
+
+
+
+
+(provide 'nu-lv)
+
+
