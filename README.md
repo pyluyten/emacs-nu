@@ -1,44 +1,49 @@
 _Welcome to emacs-nu!_
 
+Emacs is the best editor in the universe.
+Nu-mode is an Emacs package.
 
-- Nu-mode (global minor) theme. A keybinding and more importantly
-  its specific prompt mechanism.
-  Its emphasis is being modern, easy to use,
-  reducing learning curve as much as possible.
-  While _not_ loosing features.
-  This is the most important part of emacs-nu.
+What is nu-mode?
+NU-MODE wants to make Emacs easier & faster, stronger & better.
 
-  See its texinfo manual, or this site wiki, or the http://nupad.wordpress.com/ blog.
+- It is a keymap.
+  This keymap is a combo of
+  * ergonomy. one do not want to constangly switch between Control, Alt, Super!
+  * conventions. one want control+s to allow to save, control+f to find & so
 
+- It is a prompter mechanism
+  A prompt is a menu displaying many commands.
+  Also, it does display how to obtain these commands more quickly, when available
+  Also, it does offer to describe these commands.
 
-- Aliases : to easier defining aliases.
-  Define your aliases in org-mode files.
-  See its dedicated readme.
+_WHAT KEYMAP_ and _WHAT PROMPTS_ ?
 
+  any very useful command should be available keeping your thumb on Alt.
+  This obviously includes navigation.
+  This includes also searching for text, saving file, selecting...
 
-- Dhammacakka : "the wheel of truth"...
-  Yet another basic setup to cure emacs.
-  See its dedicated readme.
-
-
-
+  other functions are available using a prompt.
+  either you use the classic shortcuts, eg control+f , while standing for "find"
+  in common text editors, will stand for "any find related command" in nu-mode.
+  so when you type control+f, you will see how to call many different commands.
+  
+See its texinfo manual, or this site wiki, or the http://nupad.wordpress.com/ blog.
 
 _How to install?_
 
 * Using Emacs Package Manager
 
-There's a recipe for nu-mode.
-Make sure you do require package. In your .emacs put:
+Nu-mode is in Melpa. So it's the usual easy process.
+You can look at https://melpa.org
+They provide instructions to put something like this in your init.el
 
     (require 'package)
 
-Now, make sure you did add melpa.
-
     (add-to-list 'package-archives
-    '("melpa" . "http://melpa.milkbox.net/packages/") t)
+    '("melpa" . "https://melpa.org/packages") t)
 
-Now, if you are interested in nu-mode, just search nu-mode.
-Once intalled, add the elpa path to your load path and require nu-mode.
+Then, M-x package-list-packages, then search for nu-mode.
+Finally add this to your init.el.
 
       (require 'nu-mode)
       (nu-mode 1)
@@ -47,24 +52,4 @@ Once intalled, add the elpa path to your load path and require nu-mode.
 
 first clone github, add the path to your list
 
-    (add-to-list 'load-path "~/contrib/git/emacs-nu/starterkit/")
-
-You can already require nu-alias. And add file.
-
-    (require 'nu-alias)
-    (nu-alias-add-file "~/.emacs.d/some-aliases.org")
-
-and require dhammacakka. This will add packages.
-
-    (require 'dhammacakka)
-
-reboot Emacs if you want to install packages for nu-mode.
-Optional dependencies are
-undo-tree
-ace-jump-mode
-help-fns+
-magit
-
-
-    (require nu-mode)
-    (nu-mode 1)
+    (add-to-list 'load-path "~/path/to/git/emacs-nu/starterkit/")
