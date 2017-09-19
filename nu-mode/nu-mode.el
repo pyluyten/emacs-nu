@@ -112,8 +112,8 @@
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-menu-map (kbd "f") 'nu-find-map)
 
-   (define-key nu-keymap (kbd "M-g") 'nu-goto-prompt)
-   (define-key nu-keymap (kbd "C-g") 'avy-goto-char)
+   (define-key nu-keymap (kbd "M-g") 'ace-window)
+   (define-key nu-keymap (kbd "C-g") 'nu-goto-prompt)
    (define-key nu-keymap (kbd "C-M-g") 'recenter-top-bottom)
    (define-key nu-menu-map (kbd "g") 'nu-goto-map)
 

@@ -1,8 +1,9 @@
 (define-package
   "nu-mode"
-  "0.2"
+  "0.3"
   "Modern Emacs Prompts Based Keybinding."
   '((undo-tree "0.6.5")
     (help-fns+ "0")
-    (transpose-frame "0")
-    (helm "20140902.1005")))
+    (ace-window "0")
+    (avy        "0")
+    (transpose-frame "0")))
