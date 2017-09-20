@@ -42,17 +42,17 @@
    ;;
 
 
-   (define-key nu-keymap (kbd "C-a") 'nu-select-a-block)
+   (define-key nu-keymap (kbd "C-a") 'nu-a-prompt)
    (define-key nu-keymap (kbd "C-S-a") 'nu-set-rectangle-mark)
    (define-key nu-keymap (kbd "C-M-a") 'cua-toggle-global-mark)
    (define-key nu-menu-map (kbd "a") 'nu-a-map)
-   (define-key nu-keymap (kbd "M-a") 'nu-a-prompt)
+   (define-key nu-keymap (kbd "M-a") 'nu-set-mark)
 
    (define-key nu-keymap (kbd "M-z") 'undo-tree-undo)
    (define-key nu-keymap (kbd "C-S-z") 'undo-tree-redo)
    (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize)
 
-   ; e? edit? & use control+e to copy from above?
+
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
 
 
