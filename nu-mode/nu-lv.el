@@ -38,7 +38,6 @@ to describe the function.\n")
  (setq input nil)
  (setq defn nil)
    (while (not input)
-	;(setq key (read-key-sequence-vector (propertize "Enter a key or ? :" 'face 'italic) t))
       (setq key (read-key-sequence-vector nil t))
       (cond
 
