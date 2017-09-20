@@ -549,29 +549,30 @@ But if mark is active, exchange point and mark."
   (nu-prompt-for-keymap ctl-x-map))
 
 
+;; TODO insert into hydra....
+;; emacs-nu help page        emacs manual
+;; info                      describe-function
+;; search in documentation   describe-key
+;; describe-mode             describe-variable
 
-; we do use native help-map.
-; this is an exception : we do not want
-; to print the _entire_ help map.
-; still, we use this.
-;
-; this is why a specific prompt is there.
-;(make-help-screen nu-help-prompt
-;(purecopy "Help")
-;"Press q to quit or :
-; 
-;h: emacs-nu help page
-;r: emacs manual
-;i: info
-;f: describe-function         d: search in documentation
-;k: describe-key              m: describe-mode
-;v: describe-variable"
-;help-map)
+(defhydra hydra-nu-help-menu (:color pink
+                              :hint nil)
+"
+/WELCOME TO EMACS NU HELP!/
+Press q to quit any prompt.
+Press Alt+q to quit commands.
+
+OTHER HELP FEATURES
+----------------------------------------------------------------
+_h_ prompt for help map
+"
+    ("h" (nu-buffer-prompt-for-keymap nu-hehlp-map) :exit t))
+
+
 (defun nu-help-prompt ()
- (interactive)
- (define-key help-map (kbd "*") 'nu-help)
- ;(define-key help-map (kbd "h") 'nu-help)
- (nu-prompt-for-keymap help-map))
+  (interactive)
+  (define-key help-map (kbd "*") 'nu-help)
+  (hydra-nu-help-menu/body))
 
 
 (defun nu-populate-find-map ()
