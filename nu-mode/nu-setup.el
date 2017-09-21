@@ -3,8 +3,8 @@
   (defalias 'nu-M-x 'counsel-M-x)
   (defalias 'nu-find-files 'counsel-find-file)
   (defalias 'nu-buffers-list 'ivy-switch-buffer)
-  ;; 'counsel-describe-function)
-  ;; 'counsel-describe-variable)
+  (defalias 'nu-describe-function 'counsel-describe-function)
+  (defalias 'nu-describe-variable 'counsel-describe-variable)
   (defalias 'nu-bookmarks 'list-bookmarks)
   (defalias 'nu-recentf 'ivy-recentf))
 
@@ -17,8 +17,8 @@
   (defalias 'nu-Mx 'execute-extended-command)
   (defalias 'nu-find-files 'find-file)
   (defalias 'nu-buffers-list 'ibuffer)
-  ;; describe func
-  ;; describe variable
+  (defalias 'nu-describe-function 'describe-function)
+  (defalias 'nu-describe-variable 'describe-variable)
   (defalias 'nu-bookmarks 'list-bookmarks)
   (defalias 'nu-recentf 'recentf-open-files))
 
@@ -26,8 +26,8 @@
   (defalias 'nu-M-x 'helm-M-x)
   (defalias 'nu-find-files 'helm-find-files)
   (defalias 'nu-buffers-list 'helm-buffers-list)
-  ;; describe func
-  ;; describe var
+  (defalias 'nu-describe-function 'describe-function)
+  (defalias 'nu-describe-variable 'describe-variable)
   (defalias 'nu-bookmarks 'helm-bookmarks)
   (defalias 'nu-recentf 'helm-recent))
 
