@@ -117,11 +117,10 @@ _n_ new          t tab
 _d_ delete
 "
     ;; paddle direct functions.
-    ("i" nu-buffer-list :exit t)
+    ("i" nu-find-files :exit t)
     ("l" nu-next-buffer :exit t)
     ("k" delete-window :exit t)
     ("j" nu-recentf :exit t)
-    ("o" nu-find-files :exit t)
     ("u" nu-bookmarks :exit t)
     ("m" delete-other-windows :exit t)
     ("<SPC>" ibuffer :exit t)
@@ -139,5 +138,3 @@ _d_ delete
     ("n" (nu-buffer-prompt-for-keymap nu-new-map) :exit t))
 
 (provide 'nu-lv)
-
-
