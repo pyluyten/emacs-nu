@@ -446,7 +446,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "b")  'nu-bookmarks)
   (define-key nu-open-map (kbd "f")  'nu-find-files)
   (define-key nu-open-map (kbd "i")   'ibuffer) ; is better at _reorganizing_ buffers...
-  (define-key nu-open-map (kbd "l")   'helm-buffers-list)
+  (define-key nu-open-map (kbd "l")   'nu-buffers-list)
   (define-key nu-open-map (kbd "m")   'menu-bar-read-mail)
   (define-key nu-open-map (kbd "o")  'helm-mini)
   (define-key nu-open-map (kbd "r")  'nu-recentf)
