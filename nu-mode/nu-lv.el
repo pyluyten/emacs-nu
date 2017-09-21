@@ -107,7 +107,7 @@ to describe the function.\n")
 PADDLE
 ----------------------------------------------------------------
 _i_: open file  _j_: recent     _k_: delete window   _l_: next buffer
-_u_: bookmarks  _m_: maximize
+_u_: bookmarks  _m_: maximize   _<SPC>_ : ibuffers
 
 PROMPTS
 ----------------------------------------------------------------
@@ -124,6 +124,7 @@ _d_ delete
     ("o" nu-find-files :exit t)
     ("u" nu-bookmarks :exit t)
     ("m" delete-other-windows :exit t)
+    ("<SPC>" ibuffer :exit t)
 
     ;; nu prompts
     ("a" (nu-buffer-prompt-for-keymap nu-a-map) :exit t)
