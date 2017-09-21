@@ -149,7 +149,7 @@ _q_ quit any prompt
     ("t" nil :exit t)
     ("y" nil :exit t)
     ("w" nil :exit t)
-    ("w" nil :exit t)
+    ("x" nil :exit t)
     ("c" nil :exit t)
     ("v" nil :exit t)
     ("b" nil :exit t)
