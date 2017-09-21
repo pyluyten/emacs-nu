@@ -113,12 +113,12 @@ PROMPTS
 ----------------------------------------------------------------
 _a_ select       _r_ replace    _o_ open     _g_ goto
 _h_ help         _f_ find       _p_ print    _s_ save
-_n_ new          t tab
+_n_ new
 _d_ delete
 
 OTHER
 --------------------------------------------------------------
-_z_ undo tree
+_z_ undo tree         t tab (todo)
 
 _q_ quit any prompt
 "
