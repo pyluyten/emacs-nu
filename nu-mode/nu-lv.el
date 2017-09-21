@@ -106,7 +106,8 @@ to describe the function.\n")
 "
 PADDLE
 ----------------------------------------------------------------
-_i_: find-file   j:       k:         _l_:buffers
+_i_: open file  _j_: recent     _k_: delete window   _l_: next buffer
+_u_: bookmarks  _m_: maximize
 
 PROMPTS
 ----------------------------------------------------------------
@@ -116,10 +117,13 @@ _n_ new          t tab
 _d_ delete
 "
     ;; paddle direct functions.
-    ("i" nu-find-file :exit t)
-    ("l" nu-buffer-list :exit t)
-;;    ("k" nil)
-;;    ("j" nil)
+    ("i" nu-buffer-list :exit t)
+    ("l" nu-next-buffer :exit t)
+    ("k" delete-window :exit t)
+    ("j" nu-recentf :exit t)
+    ("o" nu-find-files :exit t)
+    ("u" nu-bookmarks :exit t)
+    ("m" delete-other-windows :exit t)
 
     ;; nu prompts
     ("a" (nu-buffer-prompt-for-keymap nu-a-map) :exit t)
