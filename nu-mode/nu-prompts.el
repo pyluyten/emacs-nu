@@ -562,11 +562,15 @@ But if mark is active, exchange point and mark."
 Press q to quit any prompt.
 Press Alt+q to quit commands.
 
+FREQUENT HELP
+----------------------------------------------------
+
+
 OTHER HELP FEATURES
-----------------------------------------------------------------
+----------------------------------------------------
 _h_ prompt for help map
 "
-    ("h" (nu-buffer-prompt-for-keymap nu-hehlp-map) :exit t))
+    ("h" (nu-buffer-prompt-for-keymap help-map) :exit t))
 
 
 (defun nu-help-prompt ()
