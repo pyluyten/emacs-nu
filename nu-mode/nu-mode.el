@@ -56,12 +56,12 @@
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
 
 
-   (define-key nu-keymap (kbd "C-r") 'replace-regexp)
+   (define-key nu-keymap (kbd "M-r") 'replace-regexp)
    (define-key nu-menu-map (kbd "r") 'nu-replace-map)
-   (define-key nu-keymap (kbd "M-r") 'nu-replace-prompt)
+   (define-key nu-keymap (kbd "C-r") 'nu-replace-prompt)
 
-   (define-key nu-keymap (kbd "C-t") 'split-window-right)
-   (define-key nu-keymap (kbd "M-t") 'ido-switch-buffer-other-window)
+   (define-key nu-keymap (kbd "M-t") 'split-window-right)
+   (define-key nu-keymap (kbd "C-t") 'ido-switch-buffer-other-window)
 
    ; y? yes? customize?
    (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)
@@ -83,10 +83,10 @@
    (define-key nu-keymap (kbd "C-M-o") 'forward-list)
    (define-key nu-keymap (kbd "M-o") 'forward-word)
 
-   (define-key nu-keymap (kbd "C-p") 'universal-argument)
+   (define-key nu-keymap (kbd "M-p") 'universal-argument)
    (define-key nu-keymap (kbd "C-M-p") 'eval-last-sexp)
    (define-key nu-menu-map (kbd "p") 'nu-print-map)
-   (define-key nu-keymap (kbd "M-p") 'nu-print-prompt)
+   (define-key nu-keymap (kbd "C-p") 'nu-print-prompt)
    (define-key nu-keymap (kbd "M-P") 'async-shell-command)
    (define-key universal-argument-map (kbd "M-p") 'universal-argument-more)
 
@@ -142,10 +142,10 @@
    ;; wxcvbn
    ;;
 
-   (define-key nu-keymap (kbd "C-w") 'kill-buffer)
+   (define-key nu-keymap (kbd "M-w") 'kill-buffer)
    (define-key nu-menu-map (kbd "w") 'nu-window-map)
    (define-key nu-menu-map (kbd "C-S-w") 'transpose-frame)
-   (define-key nu-keymap (kbd "M-w") 'nu-window-prompt)
+   (define-key nu-keymap (kbd "C-w") 'nu-window-prompt)
 
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
    (define-key nu-keymap (kbd "C-S-x") 'nu-global-prompt)
@@ -161,14 +161,14 @@
    (define-key nu-keymap (kbd "C-S-v") 'quoted-insert)
 
 
-   (define-key nu-keymap (kbd "C-b") 'nu-bold)
+   (define-key nu-keymap (kbd "M-b") 'nu-bold)
    (define-key nu-keymap (kbd "C-S-b") 'comment-or-uncomment-region)
    (define-key nu-menu-map (kbd "b") 'nu-bold-map)
-   (define-key nu-keymap (kbd "M-b") 'nu-bold-prompt)
+   (define-key nu-keymap (kbd "C-b") 'nu-bold-prompt)
 
-   (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
+   (define-key nu-keymap (kbd "M-n") 'nu-new-empty-buffer)
    (define-key nu-keymap (kbd "C-S-n") 'org-capture)
-   (define-key nu-keymap (kbd "M-n") 'nu-new-prompt)
+   (define-key nu-keymap (kbd "C-n") 'nu-new-prompt)
    (define-key nu-keymap (kbd "M-N") 'split-window-horizontally)
 
 
@@ -197,8 +197,7 @@
    ;; FN keys?
    ;;
 
-   (define-key nu-keymap (kbd "<f10>") 'tmm-menubar)
-)
+   (define-key nu-keymap (kbd "<f10>") 'tmm-menubar))
 
 
 (define-minor-mode nu-mode
