@@ -115,6 +115,12 @@ _a_ select       _r_ replace    _o_ open     _g_ goto
 _h_ help         _f_ find       _p_ print    _s_ save
 _n_ new          t tab
 _d_ delete
+
+OTHER
+--------------------------------------------------------------
+_z_ undo tree
+
+_q_ quit any prompt
 "
     ;; paddle direct functions.
     ("i" nu-find-files :exit t)
@@ -135,6 +141,18 @@ _d_ delete
     ("p" (nu-buffer-prompt-for-keymap nu-print-map) :exit t)
     ("s" (nu-buffer-prompt-for-keymap nu-save-map) :exit t)
     ("d" (nu-buffer-prompt-for-keymap nu-delete-map) :exit t)
-    ("n" (nu-buffer-prompt-for-keymap nu-new-map) :exit t))
+    ("n" (nu-buffer-prompt-for-keymap nu-new-map) :exit t)
+
+    ;; other
+    ("z" undo-tree-visualize :exit t)
+    ("e" nil :exit t)
+    ("t" nil :exit t)
+    ("y" nil :exit t)
+    ("w" nil :exit t)
+    ("w" nil :exit t)
+    ("c" nil :exit t)
+    ("v" nil :exit t)
+    ("b" nil :exit t)
+    ("q" nil :exit t))
 
 (provide 'nu-lv)
