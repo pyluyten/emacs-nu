@@ -558,19 +558,35 @@ But if mark is active, exchange point and mark."
 (defhydra hydra-nu-help-menu (:color pink
                               :hint nil)
 "
-/WELCOME TO EMACS NU HELP!/
-Press q to quit any prompt.
-Press Alt+q to quit commands.
+~~~~~~~~~~~~~  WELCOME TO EMACS NU HELP! ~~~~~~~~~~~~~~~
+Press q to quit any prompt. Press Alt+q to quit commands
 
-FREQUENT HELP
-----------------------------------------------------
+MOST FREQUENT HELP FUNCTIONS
+--------------------------------------------------------
+_j_ describe function       _k_   describe-variable
+_l_ describe key (then type a key or shortcut)
+_<SPC>_ where-is
+_u_ describe keymap  (for example nu-keymap)
+_i_ info directory
 
+ALL HELP FUNCTIONS : _h_ prompt for help map
+-------------------------------------------------------
 
-OTHER HELP FEATURES
-----------------------------------------------------
-_h_ prompt for help map
+OTHER
+-------------------------------------------------------
+_o_ describe bindings       _m_   describe mode
+_y_ find function on key
 "
-    ("h" (nu-buffer-prompt-for-keymap help-map) :exit t))
+  ("i" info-directory :exit t)
+  ("j" nu-describe-function :exit t)
+  ("k" nu-describe-variable :exit t)
+  ("l" describe-key :exit t)
+  ("u" describe-keymap :exit t)
+  ("o" describe-bindings :exit t)
+  ("m" describe-mode :exit t)
+  ("y" find-function-on-key :exit t)
+  ("<SPC>" where-is :exit t)
+  ("h" (nu-buffer-prompt-for-keymap help-map) :exit t))
 
 
 (defun nu-help-prompt ()
