@@ -72,9 +72,10 @@ Still, we might need it, for example for later on ido.
 & even helm function use it : completing-read functions without
 particular helm-map, such as describe-variable..."
 
+  ; if helm
   (if (boundp 'helm-alive-p)
 
-	  ; if helm.
+      (if (helm-alive-p)
 	  (progn
            (define-key minibuffer-local-map (kbd "M-i") 'helm-previous-line)
            (define-key minibuffer-local-map (kbd "M-k") 'helm-next-line)
@@ -83,7 +84,16 @@ particular helm-map, such as describe-variable..."
 
     (progn
       (define-key minibuffer-local-map (kbd "M-i") 'previous-history-element)
-      (define-key minibuffer-local-map (kbd "M-k") 'next-history-element)))
+      (define-key minibuffer-local-map (kbd "M-k") 'next-history-element))))
+
+  ; if ivy
+  (if (boundp 'ivy-minibuffer-map)
+      (progn
+	;; standard ivy map
+	;; M-i		ivy-insert-current
+        ;; M-j		ivy-yank-word
+	(define-key ivy-minibuffer-map (kbd "M-i") 'ivy-previous-line)
+	(define-key ivy-minibuffer-map (kbd "M-k") 'ivy-next-line)))
 
   (nu-make-overriding-map minibuffer-local-map nil "M-q" 'abort-recursive-edit))
 
