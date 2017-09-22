@@ -66,11 +66,11 @@ since helm-buffers-list allows quick stuff."
 			  nil))
 
 (defun nu-prepare-for-minibuffer ()
-  "Minibuffer (except helm).
+  "Minibuffer.
 
-Still, we might need it, for example for later on ido.
-& even helm function use it : completing-read functions without
-particular helm-map, such as describe-variable..."
+Minibuffer should use same keys are fundamental mode.
+Helm has few shortcuts because it has its maps
+(see eval after load helm mode)"
 
   ; if helm
   (if (boundp 'helm-alive-p)
@@ -93,7 +93,11 @@ particular helm-map, such as describe-variable..."
 	;; M-i		ivy-insert-current
         ;; M-j		ivy-yank-word
 	(define-key ivy-minibuffer-map (kbd "M-i") 'ivy-previous-line)
-	(define-key ivy-minibuffer-map (kbd "M-k") 'ivy-next-line)))
+	(define-key ivy-minibuffer-map (kbd "M-k") 'ivy-next-line)
+      ; (define-key ivy-minibuffer-map (kbd "M-h") 'ivy-dispathching done))
+	(define-key ivy-minibuffer-map (kbd "M-g") 'ivy-partial-or-done)
+	(define-key ivy-minibuffer-map (kbd "M-f") 'ivy-avy)
+	(define-key ivy-minibuffer-map (kbd "M-d") 'hydra-ivy/body)))
 
   (nu-make-overriding-map minibuffer-local-map nil "M-q" 'abort-recursive-edit))
 
