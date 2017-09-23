@@ -29,11 +29,11 @@
   "I still need to replace this isearch turd."
   (define-key isearch-mode-map (kbd "M-k") 'isearch-repeat-forward)
   (define-key isearch-mode-map (kbd "M-i") 'isearch-repeat-backward)
-  (define-key isearch-mode-map (kbd "M-u") 'isearch-yank-kill)
-  (define-key isearch-mode-map (kbd "M-o") 'isearch-yank-word-or-char)
-  (define-key isearch-mode-map (kbd "M-j") 'isearch-yank-line)
-  (define-key isearch-mode-map (kbd "M-l") 'isearch-edit-string)
-  (define-key isearch-mode-map (kbd "M-q") 'isearch-cancel))
+  (define-key isearch-mode-map (kbd "M-v") 'isearch-yank-kill)
+  (define-key isearch-mode-map (kbd "M-a") 'isearch-yank-word-or-char)
+  (define-key isearch-mode-map (kbd "M-g") 'isearch-yank-line)
+  (define-key isearch-mode-map (kbd "M-s") 'isearch-edit-string)
+  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel))
 
 (defun nu-prepare-for-ibuffer ()
   "Should mainly be used for organization / multi buffers actions
@@ -78,6 +78,7 @@ Helm has few shortcuts because it has its maps
 	(define-key ivy-minibuffer-map (kbd "M-i") 'ivy-previous-line)
 	(define-key ivy-minibuffer-map (kbd "M-k") 'ivy-next-line)
       ; (define-key ivy-minibuffer-map (kbd "M-h") 'ivy-dispathching done))
+	(define-key ivy-minibuffer-map (kbd "M-m") 'ivy-immediate-done)
 	(define-key ivy-minibuffer-map (kbd "M-g") 'ivy-partial-or-done)
 	(define-key ivy-minibuffer-map (kbd "M-f") 'ivy-avy)
 	(define-key ivy-minibuffer-map (kbd "M-d") 'hydra-ivy/body)))
