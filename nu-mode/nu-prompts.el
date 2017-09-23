@@ -368,6 +368,8 @@ q: quit
 "
 PADDLE
 ----------------------------------------
+_i_ insert string before rectangle
+_j_ replace rect with string
 _l_ move cursor around mark
 _k_ clear mark
 
@@ -375,7 +377,9 @@ OTHER
 ----------------------------------------
 _q_ quit
 "
-("l" rectangle-exchange-point-and-mark :exit t)
+("l" rectangle-exchange-point-and-mark)
+("j" string-rectangle :exit t)
+("i" string-insert-rectangle :exit t)
 ("k" pop-to-mark-command :exit t)
 ("q" nil :exit t))
 
@@ -446,7 +450,7 @@ _q_ quit
      (define-key nu-a-map (kbd "i") 'nu-set-mark)
      (define-key nu-a-map (kbd "l") 'nu-mark-sentence)
      (define-key nu-a-map (kbd "o") 'nu-mark-paragraph)
-     (define-key nu-a-map (kbd "r") 'rectangle-mark-mode)
+     (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark)
      (define-key nu-a-map (kbd "w") '_nu-mark-a-word))))
 
 (defun nu-a-prompt ()

@@ -322,12 +322,12 @@ a browse-kill-ring function."
   (if mark-active
       (if (bound-and-true-p rectangle-mark-mode)
 	  (nu-rectangle-selection-hydra/body)
-	  (nu-selection-hydra/body))
-      (push-mark-command nil)))
+	(nu-selection-hydra/body))
+    (push-mark-command nil)))
 
 (defun nu-set-rectangle-mark ()
   (interactive)
-  (run-with-timer 0.01 nil 'cua-set-rectangle-mark))
+  (run-with-timer 0.01 nil 'rectangle-mark-mode))
 
 
 (defun nu-mark-to-previous-line ()
