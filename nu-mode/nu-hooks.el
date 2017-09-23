@@ -25,32 +25,15 @@
 (defvar ibuffer-mode-map)
 (defvar dired-mode-map)
 
-(defvar nu-isearch-direction 'forward)
-
-(defun nu-isearch-repeat-same ()
-  "Continue isearch same direction."
-  (interactive)
-  (if (eq nu-isearch-direction 'forward)
-      (isearch-repeat-forward)
-      (isearch-repeat-backward)))
-
-(defun nu-isearch-repeat-opposite ()
-  "Continue isearch, opposite direction."
-  (interactive)
-  (if (eq nu-isearch-direction 'forward)
-      (setq nu-isearch-direction 'backward)
-      (setq nu-isearch-direction 'forward))
-  (nu-isearch-repeat-same))
-
 (defun nu-prepare-for-isearch ()
   "I still need to replace this isearch turd."
-  (define-key isearch-mode-map (kbd "C-f") 'nu-isearch-repeat-same)
-  (define-key isearch-mode-map (kbd "C-S-f") 'nu-isearch-repeat-opposite)
-  (define-key isearch-mode-map (kbd "C-v") 'isearch-yank-kill)
-  (define-key isearch-mode-map (kbd "M-e") 'isearch-yank-word-or-char)
-  (define-key isearch-mode-map (kbd "M-y") 'isearch-yank-line)
-  (define-key isearch-mode-map (kbd "C-r") 'isearch-edit-string)
-  (define-key isearch-mode-map (kbd "C-q") 'isearch-cancel))
+  (define-key isearch-mode-map (kbd "M-k") 'isearch-repeat-forward)
+  (define-key isearch-mode-map (kbd "M-i") 'isearch-repeat-backward)
+  (define-key isearch-mode-map (kbd "M-u") 'isearch-yank-kill)
+  (define-key isearch-mode-map (kbd "M-o") 'isearch-yank-word-or-char)
+  (define-key isearch-mode-map (kbd "M-j") 'isearch-yank-line)
+  (define-key isearch-mode-map (kbd "M-l") 'isearch-edit-string)
+  (define-key isearch-mode-map (kbd "M-q") 'isearch-cancel))
 
 (defun nu-prepare-for-ibuffer ()
   "Should mainly be used for organization / multi buffers actions
