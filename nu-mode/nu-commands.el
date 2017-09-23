@@ -286,36 +286,6 @@ a browse-kill-ring function."
 (defun nu-mark-defun ()
   (interactive)
   (run-with-timer 0.01 nil 'mark-defun))
-(defun _nu-mark-a-word ()
-  (interactive)
-  (run-with-timer 0.01 nil 'nu-mark-a-word))
-(defun nu-mark-forward-char ()
-   (interactive)
-   (run-with-timer 0.01 nil '~nu-mark-forward-char))
-(defun nu-mark-backward-char ()
-   (interactive)
-   (run-with-timer 0.01 nil '~nu-mark-backward-char))
-(defun nu-mark-forward-word ()
-   (interactive)
-   (run-with-timer 0.01 nil '~nu-mark-forward-word))
-(defun nu-mark-backward-word ()
-   (interactive)
-   (run-with-timer 0.01 nil '~nu-mark-backward-word))
-(defun _nu-select-a-block ()
-  (interactive)
-  (run-with-timer 0.01 nil 'nu-select-a-block))
-(defun nu-mark-paragraph ()
-  (interactive)
-  (run-with-timer 0.01 nil 'mark-paragraph))
-(defun nu-mark-to-bol ()
-  (interactive)
-  (run-with-timer 0.01 nil 'nu-mark-to-beginning-of-line))
-(defun nu-mark-to-eol ()
-  (interactive)
-  (run-with-timer 0.01 nil 'nu-mark-to-end-of-line))
-(defun _nu-mark-current-line ()
-  (interactive)
-  (run-with-timer 0.01 nil 'nu-mark-current-line))
 
 (defun nu-set-mark ()
   (interactive)
@@ -328,88 +298,6 @@ a browse-kill-ring function."
 (defun nu-set-rectangle-mark ()
   (interactive)
   (run-with-timer 0.01 nil 'rectangle-mark-mode))
-
-
-(defun nu-mark-to-previous-line ()
-  (interactive)
-  (cua-set-mark)
-  (previous-line))
-
-
-
-(defun nu-select-a-block ()
-  "Select a block
-\(What vim calls a 'word')
-
-A contigent amount of chars different than <space>."
-   (interactive)
-   (if mark-active
-       (exchange-point-and-mark)
-       (while (not (eq (char-before) ?\s))
-              (backward-char))
-       (cua-set-mark)
-       (while (not (or
-                       (eq (char-after) ?\s)
-                       (eq (char-after) ?\n)))
-              (forward-char))))
-
-
-(defun ~nu-mark-forward-char (&optional arg)
-  (interactive "P")
-  (cua-set-mark)
-  (forward-char arg))
-
-
-(defun ~nu-mark-backward-char (&optional arg)
-  (interactive "P")
-  (cua-set-mark)
-  (backward-char arg))
-
-(defun ~nu-mark-forward-word (&optional arg)
-  (interactive "P")
-  (cua-set-mark)
-  (forward-word arg))
-
-(defun ~nu-mark-backward-word (&optional arg)
-  (interactive "P")
-  (cua-set-mark)
-  (backward-word arg))
-
-(defun nu-mark-a-word (&optional arg)
-  "Mark a word."
-  (interactive "P")
-  (backward-word)
-  (mark-word arg nil))
-
-(defun nu-mark-to-end-of-line ()
-  "Select up to eol."
-  (interactive)
-  (cua-set-mark)
-  (end-of-line))
-
-
-(defun nu-mark-to-beginning-of-line ()
-  "Select up to bol."
-  (interactive)
-  (cua-set-mark)
-  (beginning-of-line))
-
-
-(defun nu-mark-current-line ()
-  "Select current line."
-  (interactive)
-  (beginning-of-line)
-  (cua-set-mark)
-  (end-of-line))
-
-
-(defun nu-mark-sentence ()
-  "Mark whole sentence.
-
-Sentence uses sentence-end delimiter."
-  (interactive)
-  (backward-sentence)
-  (call-interactively 'mark-end-of-sentence))
 
 
 (defun nu-new-tab ()
