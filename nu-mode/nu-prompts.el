@@ -24,6 +24,7 @@
 
 (require 'windmove)
 (require 'nu-help)
+(require 'hydra)
 
 (defvar nu-quit-map)
 (defvar nu-print-map)
@@ -346,10 +347,44 @@
   (nu-prompt-for-keymap nu-new-map))
 
 
+(defhydra nu-selection-hydra (:color pink
+                	      :hint   nil)
+"
+PADDLE
+----------------------------------------
+_l_: move cursor around mark
+_k_: clear mark
+
+OTHER
+----------------------------------------
+q: quit
+"
+("l" exchange-point-and-mark) ; does not exit.
+("k" pop-to-mark-command :exit t)
+("q" nil :exit t))
+
+(defhydra nu-rectangle-selection-hydra (:color pink
+                	                :hint   nil)
+"
+PADDLE
+----------------------------------------
+_l_ move cursor around mark
+_k_ clear mark
+
+OTHER
+----------------------------------------
+_q_ quit
+"
+("l" rectangle-exchange-point-and-mark :exit t)
+("k" pop-to-mark-command :exit t)
+("q" nil :exit t))
+
+
 (defun nu-populate-a-map ()
   (nu-define-prefix 'nu-a-map)
-  (define-key nu-a-map (kbd "C-f") 'cd)
 
+  (define-key nu-a-map (kbd "C-f") 'cd)
+    
   (cond
    ((eq major-mode 'proced)
     (define-key nu-a-map (kbd "M-a") 'proced-unmark-all)
@@ -411,9 +446,7 @@
      (define-key nu-a-map (kbd "i") 'nu-set-mark)
      (define-key nu-a-map (kbd "l") 'nu-mark-sentence)
      (define-key nu-a-map (kbd "o") 'nu-mark-paragraph)
-     (if (boundp 'rectangle-mark-mode)
-         (define-key nu-a-map (kbd "r") 'rectangle-mark-mode)
-         (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark))
+     (define-key nu-a-map (kbd "r") 'rectangle-mark-mode)
      (define-key nu-a-map (kbd "w") '_nu-mark-a-word))))
 
 (defun nu-a-prompt ()
@@ -421,12 +454,8 @@
 
 But if mark is active, exchange point and mark."
   (interactive)
-     (if mark-active
-      (exchange-point-and-mark)
-      (nu-populate-a-map)
-      (nu-prompt-for-keymap nu-a-map)))
-
-
+  (nu-populate-a-map)
+  (nu-prompt-for-keymap nu-a-map))
 
 ; on #master this is C,
 ; on #noxpaddle this is M...

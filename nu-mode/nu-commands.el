@@ -22,6 +22,8 @@
 ; lambda function appear as ?
 
 
+
+
 (defvar nu-help-map)
 
 (defun nu-next-window () (interactive) (other-window 1))
@@ -314,9 +316,15 @@ a browse-kill-ring function."
 (defun _nu-mark-current-line ()
   (interactive)
   (run-with-timer 0.01 nil 'nu-mark-current-line))
+
 (defun nu-set-mark ()
   (interactive)
-  (run-with-timer 0.01 nil 'cua-set-mark))
+  (if mark-active
+      (if (bound-and-true-p rectangle-mark-mode)
+	  (nu-rectangle-selection-hydra/body)
+	  (nu-selection-hydra/body))
+      (push-mark-command nil)))
+
 (defun nu-set-rectangle-mark ()
   (interactive)
   (run-with-timer 0.01 nil 'cua-set-rectangle-mark))
