@@ -582,8 +582,8 @@ Press q to quit any prompt. Press Alt+q to quit commands
 
 MOST FREQUENT HELP FUNCTIONS
 --------------------------------------------------------
-_j_ describe function       _k_   describe-variable
-_l_ describe key (then type a key or shortcut)
+_f_ describe function       _j_   describe-variable
+_k_ describe key (then type a key or shortcut)
 _<SPC>_ where-is
 _u_ describe keymap  (for example nu-keymap)
 _i_ info directory
@@ -597,9 +597,9 @@ _o_ describe bindings       _m_   describe mode
 _y_ find function on key
 "
   ("i" info-directory :exit t)
-  ("j" nu-describe-function :exit t)
-  ("k" nu-describe-variable :exit t)
-  ("l" describe-key :exit t)
+  ("f" nu-describe-function :exit t)
+  ("j" nu-describe-variable :exit t)
+  ("k" describe-key :exit t)
   ("u" describe-keymap :exit t)
   ("o" describe-bindings :exit t)
   ("m" describe-mode :exit t)
