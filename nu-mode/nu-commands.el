@@ -485,48 +485,6 @@ If no argument given, copy 1 char."
    (kill-whole-line arg))
   (message "Cut! If you wanted to x keymap, Undo with M-z or C-z then, C-g"))
 
-
-(defun nu-kill-block (&optional arg)
-  "Kills forward block (contigent chars, ie
-a vim 'WORD').
-
-With arg prefix, kills arg blocks forward,
-or backward if prefix is negative."
-   (interactive "p")
-   (let ((beg (point)))
-       (while (> (abs arg) 0)
-           ; first skip space before/after WORD.
-           (if (> arg 0)	
-                (while (or (eq (char-after) ?\s)
-                           (eq (char-after) ?\n))
-                       (forward-char 1))
-                (while (or (eq (char-before) ?\s)
-                           (eq (char-before) ?\n))
-                       (forward-char -1)))
-           ; now move after/before WORD
-           (if (> arg 0)
-                (while (not (or
-                               (eq (char-after) ?\s)
-                               (eq (char-after) ?\n)))
-                       (forward-char 1))
-                (while (not (or
-                               (eq (char-before) ?\s)
-                               (eq (char-before) ?\n)))
-                       (forward-char -1)))
-           ; increment then kill
-          (if (> arg 0)
-              (setq arg (- arg 1))
-     	      (if (< arg 0)
-     	          (setq arg (+ arg 1)))))
-       (kill-region beg (point))))
-
-(defun nu-backward-kill-block (&optional arg)
- "Kills n blocks backward.
-
-See nu-kill-block."
-  (interactive "p")
-  (nu-kill-block (* arg -1)))
-
 (defun nu-delete-all ()
  "Deletes the current buffer text."
  (interactive)
@@ -539,19 +497,6 @@ See nu-kill-block."
  (interactive)
  (backward-sexp)
  (kill-sexp))
-
-(defun nu-delete-above-line ()
-  ""
-  (interactive)
-  (forward-line -1)
-  (kill-whole-line))
-
-(defun nu-delete-below-line ()
-  ""
-  (interactive)
-  (forward-line)
-  (kill-whole-line)
-  (forward-line -1))
 
 (defun nu-backward-kill-line ()
   "Kill ARG lines backward."
