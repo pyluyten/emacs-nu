@@ -68,3 +68,9 @@ Finally add this to your init.el.
 Well, clone github, and add path to your list
 
     (add-to-list 'load-path "~/path/to/git/emacs-nu/nu-mode/")
+
+Then the usual require & acitvation.
+But to visit info file the simpler is to call
+
+     (info "~/path/to/git/emacs-nu/doc/nu-mode.info")
+
