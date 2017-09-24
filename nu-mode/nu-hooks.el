@@ -82,7 +82,7 @@ Helm has few shortcuts because it has its maps
         (define-key ivy-minibuffer-map (kbd "M-v") 'ivy-yank-word)
 	(define-key ivy-minibuffer-map (kbd "M-i") 'ivy-previous-line)
 	(define-key ivy-minibuffer-map (kbd "M-k") 'ivy-next-line)
-        (define-key ivy-minibuffer-map (kbd "M-s") 'ivy-dispatching done)
+        (define-key ivy-minibuffer-map (kbd "M-s") 'ivy-dispatching-done)
 	(define-key ivy-minibuffer-map (kbd "M-m") 'ivy-immediate-done)
 	(define-key ivy-minibuffer-map (kbd "M-g") 'ivy-partial-or-done)
 	(define-key ivy-minibuffer-map (kbd "M-f") 'ivy-avy)
