@@ -258,7 +258,7 @@
   ; anycase
   (define-key nu-insert-map (kbd "S") 'shell-command)
   (define-key nu-insert-map (kbd "g") 'define-global-abbrev)
-  (define-key nu-insert-map (kbd "h")  'helm-show-kill-ring)
+  (define-key nu-insert-map (kbd "h")  'nu-browse-kill-ring)
   (define-key nu-insert-map (kbd "s") 'async-shell-command))
 
 
