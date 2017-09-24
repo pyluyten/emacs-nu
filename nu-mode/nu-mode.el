@@ -230,12 +230,10 @@ eg dired, magit, helm, ...)"
 					; do not keep cua modifier on 'meta
 					; otherwise their rectangle is broken...
 	
-	(setq cua-rectangle-mark-key (kbd "C-S-s-<return>"))
 	(cua-selection-mode 1)
-	(setq cua--rectangle-modifier-key 'control)
 
-					; populate all prompts
-					; so all maps are defined
+        ; populate all prompts
+	; so all maps are defined
 	(nu-populate-print)
 	(nu-populate-quit)
 	(nu-populate-delete)
