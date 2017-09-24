@@ -154,12 +154,10 @@
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
    ; no standard M-c ; some mode might need it however.
 
-   (define-key nu-keymap (kbd "C-v") 'nu-yank-pop-or-yank)
-   (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
+   (define-key nu-keymap (kbd "C-v") 'nu-insert-prompt)
+   (define-key nu-keymap (kbd "M-v") 'yank)
    (define-key nu-menu-map (kbd "v") 'nu-insert-map)
-   (define-key nu-keymap (kbd "M-V") 'helm-show-kill-ring)
    (define-key nu-keymap (kbd "C-S-v") 'quoted-insert)
-
 
    (define-key nu-keymap (kbd "M-b") 'nu-bold)
    (define-key nu-keymap (kbd "C-S-b") 'comment-or-uncomment-region)

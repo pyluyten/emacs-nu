@@ -6,7 +6,8 @@
   (defalias 'nu-describe-function 'counsel-describe-function)
   (defalias 'nu-describe-variable 'counsel-describe-variable)
   (defalias 'nu-bookmarks 'list-bookmarks)
-  (defalias 'nu-recentf 'ivy-recentf))
+  (defalias 'nu-recentf 'ivy-recentf)
+  (defalias 'nu-browse-kill-ring 'counsel-yank-pop))
 
 
 ;; for now, by default nu is ivy
@@ -20,7 +21,9 @@
   (defalias 'nu-describe-function 'describe-function)
   (defalias 'nu-describe-variable 'describe-variable)
   (defalias 'nu-bookmarks 'list-bookmarks)
-  (defalias 'nu-recentf 'recentf-open-files))
+  (defalias 'nu-recentf 'recentf-open-files)
+  (defalias 'nu-browse-kill-ring 'browse-kill-ring))
+
 
 (defun nu-setup-helm ()
   (defalias 'nu-M-x 'helm-M-x)

@@ -222,64 +222,6 @@ If region is selected, use this as a search string."
  (interactive)
  (nu-prompt-for-keymap nu-help-map))
 
-;(make-help-screen nu-help
-;(purecopy "emacs-NU help")
-;"See there for manual: URL `https://github.com/pyluyten/emacs-nu/blob/master/doc/nu.pdf?raw=true'
-; Space / Backspace to scroll this help screen.
-; (Like any other NU prompt)
-;
-; Enter a key to describe NU shorcuts.
-;
-; Enter <Return> to see _the full_ keymap.
-; m: describe the menu-map, ie, all the prompts
-;
-; // Control Key Prompts
-; h: nu-help-prompt     a: nu-a-prompt
-; p: nu-print-prompt    r: nu-replace-prompt
-; f: nu-find-prompt     o: nu-open-prompt
-;
-; // Alt Key Prompts
-; s: nu-save-prompt     d: nu-delete-prompt (alt)
-; v: nu-insert-prompt
-;
-; q: quit this help. Works for any NU prompt."
-;nu-help-map)
-
-
-(defun nu-yank (&optional n)
-"Yank as many time as numeric-prefix-argument.
-
-Thus, always paste at leat one time.
-Negative argument is not handled."
-  (interactive "p")
-  (if (eq n nil)
-   (yank)
-   (if (< n 0)
-    (message "cannot yank negative arg yet.")
-     (while (> n 0)
-      (yank)
-      (setq n (1- n))))))
-
-
-(defun nu-yank-pop-or-yank (&optional n)
- "Try to yank pop. Otherwise, yank.
-If called with a prefix argument, yank several times.
-In such case, this function will not yank pop.
-
-To go backward several times in history, use
-a browse-kill-ring function."
-  (interactive "p")
-   (if (not (or (eq last-command 'yank)
-              (eq last-command 'nu-yank)
-              (eq last-command 'cua-paste-pop)))
-    (nu-yank n)
-    ; otherwise, if n yank n otherwise yank pop.
-    (if (eq n 1)
-     (yank-pop)
-     (nu-yank n))))
-
-
-
 (defun nu-mark-whole-buffer ()
   (interactive)
   (run-with-timer 0.01 nil 'mark-whole-buffer))
