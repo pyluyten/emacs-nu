@@ -24,6 +24,8 @@
 
 (defvar ibuffer-mode-map)
 (defvar dired-mode-map)
+(defvar nu-keymap-backup)
+
 
 (defun nu-prepare-for-isearch ()
   "I still need to replace this isearch turd."
@@ -54,6 +56,9 @@ since helm-buffers-list allows quick stuff."
 Minibuffer should use same keys are fundamental mode.
 Helm has few shortcuts because it has its maps
 (see eval after load helm mode)"
+
+  ; kill nu keymap
+  (setcdr (assoc 'nu-mode minor-mode-map-alist) nil)
 
   ; if helm
   (if (boundp 'helm-alive-p)
@@ -140,8 +145,14 @@ Still, some keys here help."
   (nu-make-overriding-map dired-mode-map nil))
 
 
+(defun nu-minibuffer-exit ()
+  "restore nu"
+  (setcdr (assoc 'nu-mode minor-mode-map-alist) nu-keymap))
+
+
 (add-hook 'term-mode-hook        'nu-prepare-for-term)
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
+(add-hook 'minibuffer-exit-hook 'nu-minibuffer-exit t)
 (add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
 (add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
