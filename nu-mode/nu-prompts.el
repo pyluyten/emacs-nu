@@ -521,14 +521,11 @@ But if mark is active, exchange point and mark."
 
    (define-key nu-goto-map (kbd "M-e") 'previous-error)
    (define-key nu-goto-map (kbd "M-g") 'nu-goto-line-previousbuffer)
-   (define-key nu-goto-map (kbd "M-i") 'windmove-up)
-   (define-key nu-goto-map (kbd "M-j") 'windmove-left)
 
-   (define-key nu-goto-map (kbd "M-k") 'windmove-down)
-   (define-key nu-goto-map (kbd "M-l") 'windmove-right)
    (define-key nu-goto-map (kbd "M-s") 'org-mark-ring-goto)
    (define-key nu-goto-map (kbd "e") 'next-error)
-   (define-key nu-goto-map (kbd "g") 'goto-line)
+   (define-key nu-goto-map (kbd "g") 'avy-goto-line)
+   (define-key nu-goto-map (kbd "G") 'goto-line)
    (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
    (define-key nu-goto-map (kbd "k") 'end-of-buffer)
    (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
@@ -881,7 +878,13 @@ both navigate, access to essential prompts, and control the terminal."
   (define-key nu-tab-map (kbd "j") 'minimize-window)
   (define-key nu-tab-map (kbd "k") 'delete-window)
   (define-key nu-tab-map (kbd "l") 'split-window-right)
-  (define-key nu-tab-map (kbd "g") 'ido-switch-buffer-other-window))
+
+  (define-key nu-tab-map (kbd "g") 'ido-switch-buffer-other-window)
+
+  (define-key nu-tab-map (kbd "u") 'windmove-up)
+  (define-key nu-tab-map (kbd "h") 'windmove-left)
+  (define-key nu-tab-map (kbd "o") 'windmove-down)
+  (define-key nu-tab-map (kbd "m") 'windmove-right))
 
 (defun nu-tab-prompt ()
   (interactive)
