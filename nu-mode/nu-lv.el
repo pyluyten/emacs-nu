@@ -104,6 +104,8 @@ to describe the function.\n")
 (defhydra hydra-nu-meta-menu (:color pink
                               :hint nil)
 "
+_q_ quit any prompt
+
 PADDLE
 ----------------------------------------------------------------
 _i_: open file  _j_: recent     _k_: delete window   _l_: next buffer
@@ -118,14 +120,13 @@ _d_ delete
 
 OTHER
 --------------------------------------------------------------
-_z_ undo tree         t tab (todo)
-
-_q_ quit any prompt
+_e_ execute command   or use M-x
+_z_ undo tree         _t_ tab (what emacs calls window)
 "
     ;; paddle direct functions.
     ("i" nu-find-files :exit t)
     ("l" nu-next-buffer :exit t)
-    ("k" delete-window :exit t)
+    ("k" kill-region :exit t)
     ("j" nu-recentf :exit t)
     ("u" nu-bookmarks :exit t)
     ("m" delete-other-windows :exit t)
@@ -142,11 +143,11 @@ _q_ quit any prompt
     ("s" (nu-buffer-prompt-for-keymap nu-save-map) :exit t)
     ("d" (nu-buffer-prompt-for-keymap nu-delete-map) :exit t)
     ("n" (nu-buffer-prompt-for-keymap nu-new-map) :exit t)
+    ("t" (nu-buffer-prompt-for-keymap nu-tab-map) :exit t)
 
     ;; other
     ("z" undo-tree-visualize :exit t)
-    ("e" nil :exit t)
-    ("t" nil :exit t)
+    ("e" nu-M-x :exit t)
     ("y" nil :exit t)
     ("w" nil :exit t)
     ("x" nil :exit t)
