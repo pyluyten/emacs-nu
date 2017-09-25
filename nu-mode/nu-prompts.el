@@ -529,6 +529,8 @@ But if mark is active, exchange point and mark."
    (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
    (define-key nu-goto-map (kbd "k") 'end-of-buffer)
    (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
+   (define-key nu-goto-map (kbd "m") 'nu-buffers-list)
+
 
    ;;
    ;; add-ons
@@ -880,6 +882,7 @@ both navigate, access to essential prompts, and control the terminal."
   (define-key nu-tab-map (kbd "l") 'split-window-right)
 
   (define-key nu-tab-map (kbd "g") 'ido-switch-buffer-other-window)
+  (define-key nu-tab-map (kbd "t") 'ace-window)
 
   (define-key nu-tab-map (kbd "u") 'windmove-up)
   (define-key nu-tab-map (kbd "h") 'windmove-left)
