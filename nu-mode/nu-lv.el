@@ -102,7 +102,8 @@ to describe the function.\n")
 
 
 (defhydra hydra-nu-meta-menu (:color pink
-                              :hint nil)
+			      :hint nil
+			      :pre (setq nu-major-mode major-mode))	     
 "
 _q_ quit any prompt
 
@@ -133,17 +134,28 @@ _z_ undo tree         _t_ tab (what emacs calls window)
     ("<SPC>" ibuffer :exit t)
 
     ;; nu prompts
-    ("a" (nu-buffer-prompt-for-keymap nu-a-map) :exit t)
-    ("r" (nu-buffer-prompt-for-keymap nu-replace-map) :exit t)
-    ("o" (nu-buffer-prompt-for-keymap nu-open-map) :exit t)
-    ("g" (nu-buffer-prompt-for-keymap nu-goto-map) :exit t)
-    ("h" (nu-buffer-prompt-for-keymap nu-help-map) :exit t)
-    ("f" (nu-buffer-prompt-for-keymap nu-find-map) :exit t)
-    ("p" (nu-buffer-prompt-for-keymap nu-print-map) :exit t)
-    ("s" (nu-buffer-prompt-for-keymap nu-save-map) :exit t)
-    ("d" (nu-buffer-prompt-for-keymap nu-delete-map) :exit t)
-    ("n" (nu-buffer-prompt-for-keymap nu-new-map) :exit t)
-    ("t" (nu-buffer-prompt-for-keymap nu-tab-map) :exit t)
+    ("a" (progn (nu-populate-a-map)
+		(nu-buffer-prompt-for-keymap nu-a-map)) :exit t)
+    ("r" (progn (nu-populate-replace)
+		(nu-buffer-prompt-for-keymap nu-replace-map)) :exit t)
+    ("o" (progn (nu-populate-open-map)
+		(nu-buffer-prompt-for-keymap nu-open-map)) :exit t)
+    ("g" (progn (nu-populate-goto-map)
+		(nu-buffer-prompt-for-keymap nu-goto-map)) :exit t)
+    ("h" (progn (nu-populate-help)
+		(nu-buffer-prompt-for-keymap nu-help-map)) :exit t)
+    ("f" (progn (nu-populate-find-map)
+		(nu-buffer-prompt-for-keymap nu-find-map)) :exit t)
+    ("p" (progn (nu-populate-print)
+		(nu-buffer-prompt-for-keymap nu-print-map)) :exit t)
+    ("s" (progn (nu-populate-save-map)
+		(nu-buffer-prompt-for-keymap nu-save-map)) :exit t)
+    ("d" (progn (nu-populate-delete)
+		(nu-buffer-prompt-for-keymap nu-delete-map)) :exit t)
+    ("n" (progn (nu-populate-new-map)
+		(nu-buffer-prompt-for-keymap nu-new-map)) :exit t)
+    ("t" (progn (nu-populate-tab)
+		(nu-buffer-prompt-for-keymap nu-tab-map)) :exit t)
 
     ;; other
     ("z" undo-tree-visualize :exit t)

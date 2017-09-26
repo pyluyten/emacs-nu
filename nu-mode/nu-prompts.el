@@ -75,30 +75,30 @@
   (nu-define-prefix 'nu-print-map)
 
   (cond
-   ((or (eq major-mode 'emacs-lisp-mode)
-	(eq major-mode 'lisp-interaction-mode))
+   ((or (eq nu-major-mode 'emacs-lisp-mode)
+	(eq nu-major-mode 'lisp-interaction-mode))
     (define-key nu-print-map (kbd "s") 'eval-last-sexp)
     (define-key nu-print-map (kbd "b") 'eval-buffer)
     (define-key nu-print-map (kbd "M-d") 'eval-defun)
     (define-key nu-print-map (kbd "r") 'eval-region))
-   ((eq major-mode 'magit-status-mode)
+   ((eq nu-major-mode 'magit-status-mode)
     (define-key nu-print-map (kbd "p") 'magit-shell-command)
     (define-key nu-print-map (kbd ":") 'magit-git-command))
-   ((eq major-mode 'dired-mode)
+   ((eq nu-major-mode 'dired-mode)
     (define-key nu-print-map (kbd "C-p") 'dired-do-print)
     (define-key nu-print-map (kbd "C-b") 'dired-do-byte-compile)
     (define-key nu-print-map (kbd "p")   'dired-do-async-shell-command)
     (define-key nu-print-map (kbd "P")   'dired-do-shell-command)
     (define-key nu-print-map (kbd "d")   'dired-diff))
-   ((eq major-mode 'texinfo-mode)
+   ((eq nu-major-mode 'texinfo-mode)
     (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
     (define-key nu-print-map (kbd "P") 'nu-texi2pdf))
-   ((eq major-mode 'ibuffer-mode)
+   ((eq nu-major-mode 'ibuffer-mode)
     (define-key nu-print-map (kbd "M-d") 'ibuffer-diff-with-file)
     (define-key nu-print-map (kbd "P") 'ibuffer-do-shell-command-pipe)
     (define-key nu-print-map (kbd "M-f") 'ibuffer-do-shell-command-file)
     (define-key nu-print-map (kbd "r") 'ibuffer-do-print))
-   ((eq major-mode 'org-mode)
+   ((eq nu-major-mode 'org-mode)
     (define-key nu-print-map (kbd "l") 'pcomplete)))
 
   ; common case
@@ -145,17 +145,17 @@
   (nu-define-prefix 'nu-delete-map)
 
   (cond
-   ((eq major-mode 'magit-status-mode)
+   ((eq nu-major-mode 'magit-status-mode)
     (define-key nu-delete-map (kbd "b") 'magit-delete-branch)
     (define-key nu-delete-map (kbd "h") 'magit-discard-item))
-   ((eq major-mode 'ibuffer-mode)
+   ((eq nu-major-mode 'ibuffer-mode)
     (define-key nu-delete-map (kbd "M-d") 'ibuffer-do-delete)
     (define-key nu-delete-map (kbd "M-k") 'ibuffer-do-kill-lines)
     (define-key nu-delete-map (kbd "c") 'ibuffer-copy-filename-as-kill)
     (define-key nu-delete-map (kbd "d") 'ibuffer-do-delete)
     (define-key nu-delete-map (kbd "k") 'ibuffer-kill-line)
     (define-key nu-delete-map (kbd "m") 'ibuffer-mark-for-delete))
-   ((eq major-mode 'dired-mode)
+   ((eq nu-major-mode 'dired-mode)
     (define-key nu-delete-map (kbd "d") 'dired-flag-file-deletion)
     (define-key nu-delete-map (kbd "k") 'dired-do-flagged-delete)
     (define-key nu-delete-map (kbd "o") 'dired-do-delete))
@@ -179,7 +179,7 @@
   (define-key nu-delete-map (kbd "l") 'delete-window)
 
   ; these ones are additional	.	..
-  (if (equal major-mode 'org-mode)
+  (if (eq nu-major-mode 'org-mode)
       (progn
         (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
         (define-key nu-delete-map (kbd "r") 'org-table-kill-row)
@@ -205,9 +205,9 @@
   (define-key nu-bold-map (kbd "a") 'align)
   (define-key nu-bold-map (kbd "f") 'fill-paragraph)
   (define-key nu-bold-map (kbd "i") 'indent)
-  (if (or (eq major-mode 'c-mode)
-          (eq major-mode 'lisp-interaction-mode)
-          (eq major-mode 'emacs-lisp-mode))
+  (if (or (eq nu-major-mode 'c-mode)
+          (eq nu-major-mode 'lisp-interaction-mode)
+          (eq nu-major-mode 'emacs-lisp-mode))
       (progn
           (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
           (define-key nu-bold-map (kbd "c") 'comment-dwim)
@@ -224,7 +224,7 @@
  "Populate insert map	.	"
   (nu-define-prefix 'nu-insert-map)
 
-  (if (eq major-mode 'dired-mode)
+  (if (eq nu-major-mode 'dired-mode)
         (progn
            (define-key nu-insert-map (kbd "v") 'dired-maybe-insert-subdir)
            (define-key nu-insert-map (kbd "M-v") 'dired-create-directory))
@@ -241,11 +241,11 @@
         (define-key nu-insert-map (kbd "v") 'yank)
 
         ; addon
-        (if (eq major-mode 'texinfo-mode)
+        (if (eq nu-major-mode 'texinfo-mode)
           (progn
             (define-key nu-insert-map (kbd "M-u") 'texinfo-insert-@url)
             (define-key nu-insert-map (kbd "M-k") 'texinfo-insert-@kbd))
-        (if (eq major-mode 'org-mode)
+        (if (eq nu-major-mode 'org-mode)
           (progn
             (define-key nu-insert-map (kbd "L") 'org-insert-link)
             (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
@@ -280,14 +280,14 @@
   (define-key nu-save-map (kbd "r") 'rename-buffer)
   (define-key nu-save-map (kbd "s") 'save-buffer)
   (define-key nu-save-map (kbd "w") 'window-configuration-to-register)
-  (if (eq major-mode 'org-mode)
+  (if (eq nu-major-mode 'org-mode)
       (progn
         (define-key nu-save-map (kbd "o") 'org-refile)
         (define-key nu-save-map (kbd "M-o") 'org-save-all-org-buffers)))
   (define-key nu-save-map (kbd "k") 'kmacro-start-macro-or-insert-counter)
   (define-key nu-save-map (kbd "f") 'nu-create-tags)
 
-  (if (eq major-mode 'magit-status-mode)
+  (if (eq nu-major-mode 'magit-status-mode)
       (progn
         (define-key nu-save-map (kbd "d") 'magit-diff)
         (define-key nu-save-map (kbd "c") 'magit-commit)
@@ -307,12 +307,12 @@
 (defun nu-populate-new-map ()
   (nu-define-prefix 'nu-new-map)
 
-  (if (eq major-mode 'dired-mode)
+  (if (eq nu-major-mode 'dired-mode)
       ; switch what does d according to mode
       (define-key nu-new-map (kbd "d") 'dired-create-directory)
       (define-key nu-new-map (kbd "d") 'make-directory))
 
-  (if (eq major-mode 'magit-status-mode)
+  (if (eq nu-major-mode 'magit-status-mode)
       (progn
       (define-key nu-new-map (kbd "b") 'magit-create-branch)
       (define-key nu-new-map (kbd "a") 'magit-annotated-tag)))
@@ -380,7 +380,7 @@ _q_ quit
   (define-key nu-a-map (kbd "C-f") 'cd)
     
   (cond
-   ((eq major-mode 'proced)
+   ((eq nu-major-mode 'proced)
     (define-key nu-a-map (kbd "M-a") 'proced-unmark-all)
     (define-key nu-a-map (kbd "a") 'proced-mark-all)
     (define-key nu-a-map (kbd "c") 'proced-mark-children)
@@ -388,7 +388,7 @@ _q_ quit
     (define-key nu-a-map (kbd "p") 'proced-mark-parents)
     (define-key nu-a-map (kbd "t") 'proced-toggle-marks)
     (define-key nu-a-map (kbd "u") 'proced-unmark))
-   ((eq major-mode 'ibuffer-mode)
+   ((eq nu-major-mode 'ibuffer-mode)
     (define-key nu-a-map (kbd "D") 'ibuffer-mark-dired-buffers)
     (define-key nu-a-map (kbd "H") 'ibuffer-mark-help-buffers)
     (define-key nu-a-map (kbd "M-d") 'ibuffer-mark-for-delete-backwards)
@@ -413,7 +413,7 @@ _q_ quit
     (define-key nu-a-map (kbd "u") 'ibuffer-unmark-forward)
     (define-key nu-a-map (kbd "x") 'ibuffer-do-kill-on-deletion-marks)
     (define-key nu-a-map (kbd "z") 'ibuffer-mark-compressed-file-buffers))
-   ((eq major-mode 'dired-mode)
+   ((eq nu-major-mode 'dired-mode)
     (define-key nu-a-map (kbd "M-r") 'dired-mark-files-containing-regexp)
     (define-key nu-a-map (kbd "M-u") 'dired-unmark-all-marks)
     (define-key nu-a-map (kbd "d") 'dired-flag-file-deletion)
@@ -464,15 +464,15 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "x")  'list-registers)
 
   (cond
-   ((eq major-mode 'magit-status-mode)
+   ((eq nu-major-mode 'magit-status-mode)
     (define-key nu-open-map (kbd "g") 'magit-log-long)
     (define-key nu-open-map (kbd "C-b") 'magit-branch-manager))
-   ((eq major-mode 'dired-mode)
+   ((eq nu-major-mode 'dired-mode)
     (define-key nu-open-map (kbd "d") 'dired-find-file)
     (define-key nu-open-map (kbd "C-d") 'dired-find-file-other-window))
-   ((eq major-mode 'org-mode)
+   ((eq nu-major-mode 'org-mode)
     (define-key nu-open-map (kbd "L") 'org-open-at-point))
-   ((eq major-mode 'ibuffer-mode)
+   ((eq nu-major-mode 'ibuffer-mode)
     (define-key nu-open-map (kbd "h") 'ibuffer-do-view-horizontally)
     (define-key nu-open-map (kbd "i") 'ibuffer-find-file))))
 
@@ -493,16 +493,16 @@ But if mark is active, exchange point and mark."
 
   ;; actually this case is : all read only modes...
   (cond
-   ((eq major-mode 'dired-mode)
+   ((eq nu-major-mode 'dired-mode)
      ; i should go parent dir. k should try to persistent-action subdir.
     (define-key nu-goto-map (kbd "u") 'dired-prev-marked-file)
     (define-key nu-goto-map (kbd "o") 'dired-next-marked-file))
-   ((eq major-mode 'help-mode)
+   ((eq nu-major-mode 'help-mode)
     (define-key nu-goto-map (kbd "L") 'forward-button)
     (define-key nu-goto-map (kbd "J") 'backward-button)
     (define-key nu-goto-map (kbd "o") 'push-button)
     (define-key nu-goto-map (kbd "u") 'help-go-back))
-   ((eq major-mode 'ibuffer-mode)
+   ((eq nu-major-mode 'ibuffer-mode)
     (define-key nu-goto-map (kbd "J") 'ibuffer-jump-to-buffer))
    (t
       ; else - default goto map.
@@ -536,7 +536,7 @@ But if mark is active, exchange point and mark."
    ;; add-ons
    ;;
 
-   (if (eq major-mode 'org-mode)
+   (if (eq nu-major-mode 'org-mode)
        (progn
          (define-key nu-goto-map (kbd "I") 'org-backward-heading-same-level)
          (define-key nu-goto-map (kbd "K") 'org-forward-heading-same-level)
@@ -607,13 +607,13 @@ _y_ find function on key
   (nu-define-prefix 'nu-find-map)
 
   (cond
-   ((eq major-mode 'dired-mode)
+   ((eq nu-major-mode 'dired-mode)
     (define-key nu-find-map (kbd "f") 'dired-mark-files-containing-regexp)
     (define-key nu-find-map (kbd "s") 'dired-isearch-filenames)
     (define-key nu-find-map (kbd "M-s") 'dired-do-isearch)
     (define-key nu-find-map (kbd "%") 'dired-isearch-filenames-regexp)
     (define-key nu-find-map (kbd "x") 'dired-do-isearch-regexp))
-   ((eq major-mode 'ibuffer-mode)
+   ((eq nu-major-mode 'ibuffer-mode)
     (define-key nu-find-map (kbd "M-o") 'ibuffer-do-occur))
    (t
     (define-key nu-find-map (kbd "F") 'nu-isearch-forward)
@@ -654,7 +654,7 @@ _y_ find function on key
 (defun nu-populate-copy-map ()
   (nu-define-prefix 'nu-copy-map)
   (cond
-   ((eq major-mode 'dired-mode)
+   ((eq nu-major-mode 'dired-mode)
     (define-key nu-copy-map (kbd "c") 'dired-do-copy)
     (define-key nu-copy-map (kbd "C-c") 'dired-copy-filename-as-kill)
     (define-key nu-copy-map (kbd "h") 'dired-do-hardlink)
@@ -753,11 +753,11 @@ _y_ find function on key
       (message "Please install ethan-wspace mode!")))
   (define-key nu-replace-map (kbd "t") 'ethan-wspace-untabify)
 
-  (if (eq major-mode 'c-mode)
+  (if (eq nu-major-mode 'c-mode)
       (define-key nu-replace-map (kbd "y") 'c-set-style))
 
 
-  (if (eq major-mode 'org-mode)
+  (if (eq nu-major-mode 'org-mode)
       (progn
           (define-key nu-replace-map (kbd "J") 'org-shiftleft)
           (define-key nu-replace-map (kbd "K") 'org-shiftdown)
@@ -772,13 +772,13 @@ _y_ find function on key
 (defun nu-replace-prompt ()
   (interactive)
       (cond
-        ((eq major-mode 'dired-mode)
+        ((eq nu-major-mode 'dired-mode)
          (nu-populate-replace-dired)
 	 (nu-prompt-for-keymap nu-replace-map))
-	((eq major-mode 'ibuffer-mode)
+	((eq nu-major-mode 'ibuffer-mode)
 	 (nu-populate-replace-ibuffer)
          (nu-prompt-for-keymap nu-replace-map))
-        ((eq major-mode 'magit-status-mode)
+        ((eq nu-major-mode 'magit-status-mode)
          (nu-populate-replace-magit)
          (nu-prompt-for-keymap nu-replace-map))
         ((or (eq overwrite-mode 'overwrite-mode-textual)

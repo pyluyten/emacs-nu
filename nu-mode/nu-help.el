@@ -25,6 +25,7 @@
 ; defconst?
 (defvar nu-state t "Used by overriding maps alist.")
 
+
 (defun nu-make-overriding-map (keymap unbind-keys-list &rest bindings)
    "Make keymap a minor-mode-overriding-map.
 
@@ -67,9 +68,18 @@ Currently this is only used in order to use read-key-sequence."
  ; (current-global-map) has to be 
  ; stocked for similar reasons.
 
+ ; about nu-major mode
+ ; currently only light-prompt/hydra 
+ ; does set nu-major-mode
+ ; this is fine as long as
+ ; light prompt and/or hydra
+ ; are the sole entry points to prompts
+ ; if that changes, this variable
+ ; might have to be reviewed
+
 (defvar nu-current-keymap nil)
 (defvar nu-current-local-map nil)
-
+(defvar nu-major-mode nil)
 (defvar nu-lv-message nil)
 
 ; for helm
@@ -315,10 +325,11 @@ Press ? to obtain this screen.
 
 From this prompt, press the associated key
 to describe the function.\n")
-       (insert
-         (concat
+     (insert
+	  (concat
                (propertize (format "Prefix = %s" prefixhelp) 'face 'shadow)
                (propertize "\nPress ? for help or to describe function\n" 'face 'italic))))
+   (insert (concat "Major mode = " (symbol-name nu-major-mode) "\n"))
    (map-keymap 'nu-insert-binding-row keymap)
    (insert "\n\n\n"))
 
@@ -403,9 +414,9 @@ to describe the function.\n")
 
 This one is a bit different..."
  (interactive)
-   (setq nu-current-keymap keymap
-         nu-keymap-list nil
-         nu-describe-bind-mode "helm")
+ (setq nu-current-keymap keymap
+       nu-keymap-list nil
+       nu-describe-bind-mode "helm")
    (map-keymap 'nu-insert-binding-row keymap)
    (setq nu-last-command
       (intern-soft
@@ -423,6 +434,7 @@ This one is a bit different..."
 "Light prompt for a keymap. Toggle buffer-prompt with ?"
   (interactive)
   (setq nu-current-keymap keymap
+	nu-major-mode major-mode
 	nu-current-local-map (current-local-map))
   
   (let* ((input nil)
