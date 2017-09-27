@@ -344,6 +344,7 @@ PADDLE
 ----------------------------------------
 _l_: move cursor around mark
 _k_: clear mark
+_d_: kill region
 
 OTHER
 ----------------------------------------
@@ -351,6 +352,7 @@ q: quit
 "
 ("l" exchange-point-and-mark) ; does not exit.
 ("k" pop-to-mark-command :exit t)
+("d" kill-region :exit t)
 ("q" nil :exit t))
 
 (defhydra nu-rectangle-selection-hydra (:color pink
@@ -361,6 +363,7 @@ PADDLE
 _i_ insert string before rectangle
 _j_ replace rect with string
 _l_ move cursor around mark
+_d_ kill rectangle
 _k_ clear mark
 
 OTHER
@@ -368,6 +371,7 @@ OTHER
 _q_ quit
 "
 ("l" rectangle-exchange-point-and-mark)
+("d" kill-rectangle)
 ("j" string-rectangle :exit t)
 ("i" string-insert-rectangle :exit t)
 ("k" pop-to-mark-command :exit t)
