@@ -18,7 +18,7 @@
 
 (defun nu-setup-basic ()
   ;; completion prompt setup.
-  (defalias 'nu-completion-prompt-for-keymap 'nu-ivy-prompt-for-keymap)
+  (defalias 'nu-completion-prompt-for-keymap 'nu-completing-read-prompt-for-keymap)
 
   ;; usual commands.  
   (defalias 'nu-Mx 'execute-extended-command)

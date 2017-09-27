@@ -440,6 +440,20 @@ to describe the function.\n")
    (ignore-errors (call-interactively nu-last-command))
    (setq nu-repeat-prompt nil))
 
+(defun nu-completing-read-prompt-for-keymap (keymap)
+  "Use completing read to prompt for a keymap."
+ (interactive)
+ (setq nu-current-keymap keymap
+       nu-keymap-list nil
+       nu-describe-bind-mode "helm")
+   (map-keymap 'nu-insert-binding-row keymap)
+   (setq nu-last-command
+      (intern-soft
+          (replace-regexp-in-string "\\(\\w\\) .*" "\\1"
+             (completing-read "Execute :" nu-keymap-list :must-match t))))
+   (ignore-errors (call-interactively nu-last-command))
+   (setq nu-repeat-prompt nil))
+
 
 
 (defun nu-light-prompt-for-keymap  (keymap &optional describe)
