@@ -1,5 +1,9 @@
 
 (defun nu-setup-ivy ()
+  ;; completion prompt setup.
+  (defalias 'nu-completion-prompt-for-keymap 'nu-ivy-prompt-for-keymap)
+
+  ;; usual commands.
   (defalias 'nu-M-x 'counsel-M-x)
   (defalias 'nu-find-files 'counsel-find-file)
   (defalias 'nu-buffers-list 'ivy-switch-buffer)
@@ -9,12 +13,14 @@
   (defalias 'nu-recentf 'ivy-recentf)
   (defalias 'nu-browse-kill-ring 'counsel-yank-pop))
 
-
 ;; for now, by default nu is ivy
 (nu-setup-ivy)
 
-
 (defun nu-setup-basic ()
+  ;; completion prompt setup.
+  (defalias 'nu-completion-prompt-for-keymap 'nu-ivy-prompt-for-keymap)
+
+  ;; usual commands.  
   (defalias 'nu-Mx 'execute-extended-command)
   (defalias 'nu-find-files 'find-file)
   (defalias 'nu-buffers-list 'ibuffer)
@@ -26,6 +32,10 @@
 
 
 (defun nu-setup-helm ()
+  ;; completion prompt setup.
+  (defalias 'nu-completion-prompt-for-keymap 'nu-helm-prompt-for-keymap)
+
+  ;; usual commands.  
   (defalias 'nu-M-x 'helm-M-x)
   (defalias 'nu-find-files 'helm-find-files)
   (defalias 'nu-buffers-list 'helm-buffers-list)

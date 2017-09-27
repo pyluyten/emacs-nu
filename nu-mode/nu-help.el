@@ -22,6 +22,7 @@
 
 (defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
 
+
 ; defconst?
 (defvar nu-state t "Used by overriding maps alist.")
 
@@ -410,9 +411,7 @@ to describe the function.\n")
 
 
 (defun nu-helm-prompt-for-keymap (keymap)
-  "Use helm mode to prompt for a keymap.
-
-This one is a bit different..."
+  "Use helm mode to prompt for a keymap."
  (interactive)
  (setq nu-current-keymap keymap
        nu-keymap-list nil
@@ -427,6 +426,19 @@ This one is a bit different..."
    (setq nu-repeat-prompt nil))
 
 
+(defun nu-ivy-prompt-for-keymap (keymap)
+  "Use ivy mode to prompt for a keymap."
+ (interactive)
+ (setq nu-current-keymap keymap
+       nu-keymap-list nil
+       nu-describe-bind-mode "helm")
+   (map-keymap 'nu-insert-binding-row keymap)
+   (setq nu-last-command
+      (intern-soft
+          (replace-regexp-in-string "\\(\\w\\) .*" "\\1"
+             (ivy-read "Execute :" nu-keymap-list))))
+   (ignore-errors (call-interactively nu-last-command))
+   (setq nu-repeat-prompt nil))
 
 
 
@@ -466,7 +478,7 @@ This one is a bit different..."
                 (nu-buffer-prompt-for-keymap keymap))
 
         ((~nu-check-vector key " " t)
-               (nu-helm-prompt-for-keymap keymap)
+	 (nu-completion-prompt-for-keymap keymap)
                (throw 'outside "another prompt is used."))
 
         ; check for negative / digit-argument.
