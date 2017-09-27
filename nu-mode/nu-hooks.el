@@ -28,9 +28,12 @@
 
 
 (defun nu-prepare-for-isearch ()
-  "I still need to replace this isearch turd."
+  "I still need to replace this isearch turd. "
+  (define-key isearch-mode-map (kbd "M-f") 'isearch-repeat-forward)
   (define-key isearch-mode-map (kbd "M-k") 'isearch-repeat-forward)
   (define-key isearch-mode-map (kbd "M-i") 'isearch-repeat-backward)
+  (define-key isearch-mode-map (kbd "M-p") 'isearch-ring-retreat)
+  (define-key isearch-mode-map (kbd "M-n") 'isearch-ring-advance)
   (define-key isearch-mode-map (kbd "M-v") 'isearch-yank-kill)
   (define-key isearch-mode-map (kbd "M-a") 'isearch-yank-word-or-char)
   (define-key isearch-mode-map (kbd "M-g") 'isearch-yank-line)
