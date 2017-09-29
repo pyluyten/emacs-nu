@@ -21,7 +21,7 @@
 ; note : one cannot "advice" a 'map'
 
 (defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
-(defalias 'nu-full-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
+(defalias 'nu-full-prompt-for-keymap 'nu-lv-prompt-for-keymap)
 
 ; defconst?
 (defvar nu-state t "Used by overriding maps alist.")

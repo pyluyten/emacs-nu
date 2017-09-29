@@ -53,10 +53,10 @@ to describe the function.\n")
                (setq current-prefix-arg nil))
               (t
                (setq current-prefix-arg '-)))
-         
-         ;(while (re-search-forward "\\`Prefix = .*?\n" nil t)
-	;(replace-match (propertize (format "Prefix = %s\n" current-prefix-arg) 'face 'underline)))
-	)
+
+	(lv-delete-window)
+	(setq nu-lv-message (replace-regexp-in-string "Prefix = .*?\n" (format "Prefix = %s\n" current-prefix-arg) nu-lv-message))
+	(lv-message nu-lv-message))
 
        ((~nu-check-vector key "[0123456789]" t t)
           (cond
@@ -67,9 +67,10 @@ to describe the function.\n")
                                          (* current-prefix-arg 10))))
              (t
               (setq current-prefix-arg (string-to-number (key-description key)))))
-            ; attention il faut modifier cela.
-	   (while (re-search-forward "\\`Prefix = .*?\n" nil t)
-	   (replace-match (propertize (format "Prefix = %s\n" current-prefix-arg) 'face 'underline))))
+
+	  (lv-delete-window)
+	  (setq nu-lv-message (replace-regexp-in-string "Prefix = .*?\n" (format "Prefix = %s\n" current-prefix-arg) nu-lv-message))
+	   (lv-message nu-lv-message))
 
         ; now, break the loop, no matter a func has been found or not.
         ; eg the user can type not-mapped key to quit. "q" is never boundp.
@@ -91,6 +92,7 @@ to describe the function.\n")
                    (call-interactively defn)))
              ; if no func, make sure not to repeat.
 	   (setq nu-repeat-prompt nil))))))))
+
 
 
 (defhydra hydra-nu-meta-menu (:color pink
