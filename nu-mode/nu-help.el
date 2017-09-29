@@ -214,7 +214,10 @@ and drect keys from both nu-keymap / major-mode."
             majorkeys))))
    (if (> (string-width all-shortcuts) 1)
    (progn
-     (setq all-shortcuts (replace-regexp-in-string "@" " " all-shortcuts))
+     (setq all-shortcuts
+	 ;; replace % to avoid bug with format/propertize.
+	 (replace-regexp-in-string "%" "<percent>"
+	   (replace-regexp-in-string "@" " " all-shortcuts)))
      (cond
          ((string= nu-describe-bind-mode "buffer")
 	  (insert " - or " all-shortcuts))
