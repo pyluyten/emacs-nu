@@ -21,7 +21,7 @@
 ; note : one cannot "advice" a 'map'
 
 (defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
-
+(defalias 'nu-full-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
 
 ; defconst?
 (defvar nu-state t "Used by overriding maps alist.")
@@ -492,7 +492,7 @@ to describe the function.\n")
 
         ; check for tab ; with 9 i try to fix a bug on some platforms...
         ((or (~nu-check-vector key 'tab) (~nu-check-vector key 9))
-                (nu-buffer-prompt-for-keymap keymap))
+                (nu-full-prompt-for-keymap keymap))
 
         ((~nu-check-vector key " " t)
 	 (nu-completion-prompt-for-keymap keymap)

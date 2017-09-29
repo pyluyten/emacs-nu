@@ -41,14 +41,6 @@ to describe the function.\n")
       (setq key (read-key-sequence-vector nil t))
       (cond
 
-       ; check if the user needs to scroll the help. Do not break loop.
-       ; ((~nu-check-vector key ?\d nil)
-       ; (ignore-errors
-       ;   (scroll-down nil)))
-       ; ((~nu-check-vector key ?\s nil)
-       ; (ignore-errors
-       ;   (scroll-up nil)))
-
        ; allow to repeat prompt
        ((~nu-check-vector key "+" t)
           (setq nu-repeat-prompt t))
@@ -135,27 +127,27 @@ _z_ undo tree         _t_ tab (what emacs calls window)
 
     ;; nu prompts
     ("a" (progn (nu-populate-a-map)
-		(nu-buffer-prompt-for-keymap nu-a-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-a-map)) :exit t)
     ("r" (progn (nu-populate-replace)
-		(nu-buffer-prompt-for-keymap nu-replace-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-replace-map)) :exit t)
     ("o" (progn (nu-populate-open-map)
-		(nu-buffer-prompt-for-keymap nu-open-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-open-map)) :exit t)
     ("g" (progn (nu-populate-goto-map)
-		(nu-buffer-prompt-for-keymap nu-goto-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-goto-map)) :exit t)
     ("h" (progn (nu-populate-help)
-		(nu-buffer-prompt-for-keymap nu-help-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-help-map)) :exit t)
     ("f" (progn (nu-populate-find-map)
-		(nu-buffer-prompt-for-keymap nu-find-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-find-map)) :exit t)
     ("p" (progn (nu-populate-print)
-		(nu-buffer-prompt-for-keymap nu-print-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-print-map)) :exit t)
     ("s" (progn (nu-populate-save-map)
-		(nu-buffer-prompt-for-keymap nu-save-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-save-map)) :exit t)
     ("d" (progn (nu-populate-delete)
-		(nu-buffer-prompt-for-keymap nu-delete-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-delete-map)) :exit t)
     ("n" (progn (nu-populate-new-map)
-		(nu-buffer-prompt-for-keymap nu-new-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-new-map)) :exit t)
     ("t" (progn (nu-populate-tab)
-		(nu-buffer-prompt-for-keymap nu-tab-map)) :exit t)
+		(nu-full-prompt-for-keymap nu-tab-map)) :exit t)
 
     ;; other
     ("z" undo-tree-visualize :exit t)
