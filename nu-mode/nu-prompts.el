@@ -340,20 +340,26 @@
 (defhydra nu-selection-hydra (:color pink
                 	      :hint   nil)
 "
-PADDLE
-----------------------------------------
-_l_: move cursor around mark
-_k_: clear mark
-_d_: kill region
+MOVE :_i_ / _j_ / _k_ / _l_ / _u_ / _o_ / _h_ / _m_
 
-OTHER
-----------------------------------------
-q: quit
+_<SPC>_: move cursor around mark
+_c_ : copy region
+_d_ : kill region
+
+QUIT : _q_ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "
-("l" exchange-point-and-mark) ; does not exit.
-("k" pop-to-mark-command :exit t)
+("i" previous-line)
+("j" backward-char)
+("k" next-line)
+("l" forward-char)
+("u" backward-word)
+("o" forward-word)
+("h" beginning-of-line)
+("m" end-of-line)
+("<SPC>" exchange-point-and-mark) ; does not exit.
+("q" pop-to-mark-command :exit t)
 ("d" kill-region :exit t)
-("q" nil :exit t))
+("c" copy-region-as-kill :exit t))
 
 (defhydra nu-rectangle-selection-hydra (:color pink
                 	                :hint   nil)
