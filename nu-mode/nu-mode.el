@@ -72,15 +72,11 @@
    (define-key nu-keymap (kbd "M-u") 'backward-word)
    (define-key universal-argument-map (kbd "C-u") 'backward-kill-word)
 
-   ; C-i is tab. Alt-S-i is selection.
-   (define-key nu-keymap (kbd "C-S-i") 'nu-previous-buffer)
-   (define-key nu-keymap (kbd "C-M-i") 'beginning-of-defun)
+   (define-key nu-keymap (kbd "M-I") 'avy-goto-line)
    (define-key nu-keymap (kbd "M-i") 'previous-line)
 
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
    (define-key nu-menu-map (kbd "o") 'nu-open-map)
-   (define-key nu-keymap (kbd "C-S-o") 'helm-mini)
-   (define-key nu-keymap (kbd "C-M-o") 'forward-list)
    (define-key nu-keymap (kbd "M-o") 'forward-word)
 
    (define-key nu-keymap (kbd "M-p") 'universal-argument)
