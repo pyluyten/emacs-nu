@@ -483,7 +483,16 @@ to describe the function.\n")
       ; or just do something else....
 
       (nu-add-keymap keymap)
-      (setq key (read-key-sequence-vector (propertize "Enter a key or SPC or TAB :" 'face 'italic) t))
+      (setq key (read-key-sequence-vector
+		  (concat
+		      "Enter a key / "
+                       (propertize "SPC" 'face 'nu-face-shortcut)
+                       " for completion / "
+                       (propertize "TAB" 'face 'nu-face-shortcut)
+		       " for list / "
+		       (propertize "q" 'face 'nu-face-shortcut)
+		       " to quit "
+		       (propertize ": " 'face 'nu-face-shortcut)) t))
       (nu-remove-keymap keymap)
       (cond
         ; allow to repeat prompt
