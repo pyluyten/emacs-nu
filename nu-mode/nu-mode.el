@@ -19,7 +19,7 @@
 (require 'nu-common)
 (require 'nu-hooks)
 (require 'nu-setup)
-(require 'nu-lv)
+(require 'nu-prompters-lv)
 
 (require 'help-fns+)
 (require 'iso-transl)

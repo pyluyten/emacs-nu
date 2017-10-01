@@ -23,7 +23,7 @@
 
 
 (require 'windmove)
-(require 'nu-help)
+(require 'nu-prompters)
 (require 'hydra)
 
 (defvar nu-quit-map)
@@ -895,5 +895,72 @@ both navigate, access to essential prompts, and control the terminal."
   (interactive)
   (nu-populate-tab)
   (nu-prompt-for-keymap nu-tab-map))
+
+(defhydra hydra-nu-meta-menu (:color pink
+			      :hint nil
+			      :pre (setq nu-major-mode major-mode))	     
+"
+_q_ quit any prompt
+
+PADDLE
+----------------------------------------------------------------
+_i_: open file  _j_: recent     _k_: kill region   _l_: next buffer
+_u_: bookmarks  _m_: maximize   _<SPC>_ : ibuffers
+
+PROMPTS
+----------------------------------------------------------------
+_a_ select       _r_ replace    _o_ open     _g_ goto
+_h_ help         _f_ find       _p_ print    _s_ save
+_n_ new
+_d_ delete
+
+OTHER
+--------------------------------------------------------------
+_e_ execute command   or use M-x
+_z_ undo tree         _t_ tab (what emacs calls window)
+"
+    ;; paddle direct functions.
+    ("i" nu-find-files :exit t)
+    ("l" nu-next-buffer :exit t)
+    ("k" kill-region :exit t)
+    ("j" nu-recentf :exit t)
+    ("u" nu-bookmarks :exit t)
+    ("m" delete-other-windows :exit t)
+    ("<SPC>" ibuffer :exit t)
+
+    ;; nu prompts
+    ("a" (progn (nu-populate-a-map)
+		(nu-full-prompt-for-keymap nu-a-map)) :exit t)
+    ("r" (progn (nu-populate-replace)
+		(nu-full-prompt-for-keymap nu-replace-map)) :exit t)
+    ("o" (progn (nu-populate-open-map)
+		(nu-full-prompt-for-keymap nu-open-map)) :exit t)
+    ("g" (progn (nu-populate-goto-map)
+		(nu-full-prompt-for-keymap nu-goto-map)) :exit t)
+    ("h" (progn (nu-populate-help)
+		(nu-full-prompt-for-keymap nu-help-map)) :exit t)
+    ("f" (progn (nu-populate-find-map)
+		(nu-full-prompt-for-keymap nu-find-map)) :exit t)
+    ("p" (progn (nu-populate-print)
+		(nu-full-prompt-for-keymap nu-print-map)) :exit t)
+    ("s" (progn (nu-populate-save-map)
+		(nu-full-prompt-for-keymap nu-save-map)) :exit t)
+    ("d" (progn (nu-populate-delete)
+		(nu-full-prompt-for-keymap nu-delete-map)) :exit t)
+    ("n" (progn (nu-populate-new-map)
+		(nu-full-prompt-for-keymap nu-new-map)) :exit t)
+    ("t" (progn (nu-populate-tab)
+		(nu-full-prompt-for-keymap nu-tab-map)) :exit t)
+
+    ;; other
+    ("z" undo-tree-visualize :exit t)
+    ("e" nu-M-x :exit t)
+    ("y" nil :exit t)
+    ("w" nil :exit t)
+    ("x" nil :exit t)
+    ("c" nil :exit t)
+    ("v" nil :exit t)
+    ("b" nil :exit t)
+    ("q" nil :exit t))
 
 (provide 'nu-menus)

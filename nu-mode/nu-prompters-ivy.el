@@ -1,5 +1,5 @@
 ;;; nu-mode.el --- Modern Emacs Keybinding
-;;; Emacs-Nu is an emacs mode which wants to makes Emacs easier.kk
+;;; Emacs-Nu is an emacs mode which wants to makes Emacs easier.
 ;;; Copyright (C) 2017 Pierre-Yves LUYTEN
 ;;;  
 ;;; This program is free software; you can redistribute it and/or
@@ -16,30 +16,20 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
-
-
-; we have the real keymap for real ("nu-keymap").
-; menu-map is only there for where-is sake.
-; thus we define things twice :
-; once a grand tragedy. Once as a farce.
-(defvar nu-keymap (make-sparse-keymap) "Emacs nu keymap")
-(defvar nu-menu-map (make-sparse-keymap) "Nu Menu Keymap")
-
 (require 'nu-prompters)
-(require 'nu-prompters-buffer)
-(require 'nu-prompters-completing-read)
-(require 'nu-prompters-helm)
-(require 'nu-prompters-ivy)
-(require 'nu-prompters-light)
-(require 'nu-prompters-lv)
 
-; external parts
-(require 'transpose-frame) ; play with frames
-(require 'nu-tile) ; still...
+(defun nu-ivy-prompt-for-keymap (keymap)
+  "Use ivy mode to prompt for a keymap."
+ (interactive)
+ (setq nu-current-keymap keymap
+       nu-keymap-list nil
+       nu-describe-bind-mode "helm")
+   (map-keymap 'nu-insert-binding-row keymap)
+   (setq nu-last-command
+      (intern-soft
+          (replace-regexp-in-string "\\(\\w\\) .*" "\\1"
+             (ivy-read "Execute :" nu-keymap-list))))
+   (ignore-errors (call-interactively nu-last-command))
+   (setq nu-repeat-prompt nil))
 
-; internal parts
-(require 'nu-menus) ; open-keymap, replace-keymap,...
-(require 'nu-commands) ; not emacs native commands
-(require 'nu-hooks) ; how to use other modes
-
-(provide 'nu-common)
+(provide 'nu-prompters-ivy)

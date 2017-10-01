@@ -183,7 +183,6 @@ Still, some keys here help."
 (add-hook 'activate-mark-hook    'nu-add-mark-hook)
 (add-hook 'deactivate-mark-hook  'lv-delete-window)
 
-
 (eval-after-load "undo-tree"
   '(progn
      (define-key undo-tree-visualizer-mode-map (kbd "i") 'undo-tree-visualize-undo)
