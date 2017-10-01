@@ -896,4 +896,4 @@ both navigate, access to essential prompts, and control the terminal."
   (nu-populate-tab)
   (nu-prompt-for-keymap nu-tab-map))
 
-(provide 'nu-prompts)
+(provide 'nu-menus)

@@ -32,7 +32,7 @@
 (require 'nu-tile) ; still...
 
 ; internal parts
-(require 'nu-prompts) ; prompters (menu-like)
+(require 'nu-menus) ; open-keymap, replace-keymap,...
 (require 'nu-commands) ; not emacs native commands
 (require 'nu-hooks) ; how to use other modes
 
