@@ -37,11 +37,14 @@
   (define-key isearch-mode-map (kbd "M-v") 'isearch-yank-kill)
   (define-key isearch-mode-map (kbd "M-a") 'isearch-yank-word-or-char)
   (define-key isearch-mode-map (kbd "M-g") 'isearch-yank-line)
+  (define-key isearch-mode-map (kbd "M-h") '(lambda ()
+					     (interactive)
+					     (describe-keymap isearch-mode-map t)))
   (define-key isearch-mode-map (kbd "M-s") 'isearch-edit-string)
   (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
   (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
 
-  (lv-message "M-f or M-k / M-i : search forward / backward.\nM-d cancel search. M-h for help (TODO)"))
+  (lv-message "M-f or M-k / M-i : search forward / backward.\nM-q or M-d cancel search. M-h for more help"))
 
 (defun nu-prepare-for-ibuffer ()
   "Should mainly be used for organization / multi buffers actions
