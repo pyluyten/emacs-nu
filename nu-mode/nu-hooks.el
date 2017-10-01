@@ -38,7 +38,10 @@
   (define-key isearch-mode-map (kbd "M-a") 'isearch-yank-word-or-char)
   (define-key isearch-mode-map (kbd "M-g") 'isearch-yank-line)
   (define-key isearch-mode-map (kbd "M-s") 'isearch-edit-string)
-  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel))
+  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
+  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
+
+  (lv-message "M-f or M-k / M-i : search forward / backward.\nM-d cancel search. M-h for help (TODO)"))
 
 (defun nu-prepare-for-ibuffer ()
   "Should mainly be used for organization / multi buffers actions
@@ -151,14 +154,20 @@ Still, some keys here help."
 
 (defun nu-minibuffer-exit ()
   "restore nu"
+  (lv-delete-window)
   (setcdr (assoc 'nu-mode minor-mode-map-alist) nu-keymap))
 
+
+(defun nu-isearch-exit ()
+  ""
+  (lv-delete-window))
 
 (add-hook 'term-mode-hook        'nu-prepare-for-term)
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
 (add-hook 'minibuffer-exit-hook 'nu-minibuffer-exit t)
 (add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
 (add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
+(add-hook 'isearch-mode-end-hook     'nu-isearch-exit)
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
 
 
