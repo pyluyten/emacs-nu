@@ -236,8 +236,7 @@ If region is selected, use this as a search string."
 	  (nu-rectangle-selection-hydra/body)
 	(nu-selection-hydra/body))
     (progn
-      (push-mark-command nil)
-      (nu-set-mark))))
+      (push-mark-command nil))))
 
 (defun nu-set-rectangle-mark ()
   (interactive)

@@ -340,49 +340,41 @@
 (defhydra nu-selection-hydra (:color pink
                 	      :hint   nil)
 "
-MOVE :_i_ / _j_ / _k_ / _l_ / _u_ / _o_ / _h_ / _m_
-
 _<SPC>_: move cursor around mark
 _c_ : copy region
 _d_ : kill region
+_r_ : replace prompt
 
 QUIT : _q_ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "
-("i" previous-line)
-("j" backward-char)
-("k" next-line)
-("l" forward-char)
-("u" backward-word)
-("o" forward-word)
-("h" beginning-of-line)
-("m" end-of-line)
 ("<SPC>" exchange-point-and-mark) ; does not exit.
 ("q" pop-to-mark-command :exit t)
+("M-q" pop-to-mark-command :exit t)
 ("d" kill-region :exit t)
+("r" (lambda () (interactive) (nu-completion-prompt-for-keymap nu-replace-map)))
 ("c" copy-region-as-kill :exit t))
 
 (defhydra nu-rectangle-selection-hydra (:color pink
                 	                :hint   nil)
 "
-PADDLE
-----------------------------------------
-_i_ insert string before rectangle
-_j_ replace rect with string
-_l_ move cursor around mark
-_d_ kill rectangle
-_k_ clear mark
+_<SPC>_: move cursor around mark
+_c_ : copy rectangle
+_d_ : kill rectangle
+_r_ : replace prompt
+_i_ : insert 
+_j_ : insert 
 
-OTHER
-----------------------------------------
-_q_ quit
+QUIT : _q_ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "
-("l" rectangle-exchange-point-and-mark)
-("d" kill-rectangle)
+("<SPC>" rectangle-exchange-point-and-mark)
+("q" pop-to-mark-command :exit t)
+("M-q" pop-to-mark-command :exit t)
+("c" copy-rectangle-as-kill :exit t)
+("d" kill-rectangle :exit t)
+("r" (lambda () (interactive) (nu-completion-prompt-for-keymap nu-replace-map)))
 ("j" string-rectangle :exit t)
 ("i" string-insert-rectangle :exit t)
-("k" pop-to-mark-command :exit t)
 ("q" nil :exit t))
-
 
 (defun nu-populate-a-map ()
   (nu-define-prefix 'nu-a-map)

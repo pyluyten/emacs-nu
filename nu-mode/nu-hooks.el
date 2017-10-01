@@ -165,13 +165,23 @@ Still, some keys here help."
   ""
   (lv-delete-window))
 
+(defun nu-add-mark-hook ()
+  "Give the user some input about visual mode."
+  (lv-message (concat
+	       (propertize "M-a" 'face 'nu-face-shortcut)
+	       " : selection keys / "
+	       (propertize "M-q" 'face 'nu-face-shortcut)
+               " : quit visual mode")))
+
 (add-hook 'term-mode-hook        'nu-prepare-for-term)
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
 (add-hook 'minibuffer-exit-hook 'nu-minibuffer-exit t)
 (add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
 (add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
-(add-hook 'isearch-mode-end-hook     'nu-isearch-exit)
+(add-hook 'isearch-mode-end-hook 'nu-isearch-exit)
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
+(add-hook 'activate-mark-hook    'nu-add-mark-hook)
+(add-hook 'deactivate-mark-hook  'lv-delete-window)
 
 
 (eval-after-load "undo-tree"
