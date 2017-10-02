@@ -19,6 +19,7 @@
 (require 'nu-common)
 (require 'nu-hooks)
 (require 'nu-isearch)
+(require 'nu-ibuffer)
 (require 'nu-setup)
 (require 'nu-prompters-lv)
 

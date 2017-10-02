@@ -1,3 +1,4 @@
+
 ;;; nu-mode.el --- Modern Emacs Keybinding
 ;;; Emacs-Nu is an emacs mode which wants to makes Emacs easier.kk
 ;;; Copyright (C) 2017 Pierre-Yves LUYTEN
@@ -16,33 +17,23 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
+(defvar ibuffer-mode-map)
+
+(defun nu-prepare-for-ibuffer ()
+  "Should mainly be used for organization / multi buffers actions
+since helm-buffers-list allows quick stuff."
+  (define-key ibuffer-mode-map (kbd "M-i") 'ibuffer-backward-line)
+  (define-key ibuffer-mode-map (kbd "M-k") 'ibuffer-forward-line)
+  (define-key ibuffer-mode-map (kbd "M-l") 'ibuffer-visit-buffer)
+  (define-key ibuffer-mode-map (kbd "M-j") 'ibuffer-visit-buffer-other-window-noselect)
+
+  ; cancel bindings then make override.
+  (nu-make-overriding-map ibuffer-mode-map
+			  '("C-o" "C-y" "M-g" "M-n" "M-p" "M-s")
+			  nil))
 
 
-; we have the real keymap for real ("nu-keymap").
-; menu-map is only there for where-is sake.
-; thus we define things twice :
-; once a grand tragedy. Once as a farce.
-(defvar nu-keymap (make-sparse-keymap) "Emacs nu keymap")
-(defvar nu-menu-map (make-sparse-keymap) "Nu Menu Keymap")
+(add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
 
-(require 'nu-prompters)
-(require 'nu-prompters-buffer)
-(require 'nu-prompters-completing-read)
-(require 'nu-prompters-helm)
-(require 'nu-prompters-ivy)
-(require 'nu-prompters-light)
-(require 'nu-prompters-lv)
 
-; external parts
-(require 'transpose-frame) ; play with frames
-(require 'nu-tile) ; still...
-
-; internal parts
-(require 'nu-menus) ; open-keymap, replace-keymap,...
-(require 'nu-commands) ; not emacs native commands
-
-(require 'nu-hooks) ; how to use other modes
-(require 'nu-ibuffer)
-(require 'nu-isearch)
-
-(provide 'nu-common)
+(provide 'nu-ibuffer)
