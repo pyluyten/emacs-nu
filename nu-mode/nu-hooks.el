@@ -27,25 +27,6 @@
 (defvar nu-keymap-backup)
 
 
-(defun nu-prepare-for-isearch ()
-  "I still need to replace this isearch turd. "
-  (define-key isearch-mode-map (kbd "M-f") 'isearch-repeat-forward)
-  (define-key isearch-mode-map (kbd "M-k") 'isearch-repeat-forward)
-  (define-key isearch-mode-map (kbd "M-i") 'isearch-repeat-backward)
-  (define-key isearch-mode-map (kbd "M-p") 'isearch-ring-retreat)
-  (define-key isearch-mode-map (kbd "M-n") 'isearch-ring-advance)
-  (define-key isearch-mode-map (kbd "M-v") 'isearch-yank-kill)
-  (define-key isearch-mode-map (kbd "M-a") 'isearch-yank-word-or-char)
-  (define-key isearch-mode-map (kbd "M-g") 'isearch-yank-line)
-  (define-key isearch-mode-map (kbd "M-h") '(lambda ()
-					     (interactive)
-					     (describe-keymap isearch-mode-map t)))
-  (define-key isearch-mode-map (kbd "M-s") 'isearch-edit-string)
-  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
-  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
-
-  (lv-message "M-f or M-k / M-i : search forward / backward.\nM-q or M-d cancel search. M-h for more help"))
-
 (defun nu-prepare-for-ibuffer ()
   "Should mainly be used for organization / multi buffers actions
 since helm-buffers-list allows quick stuff."
@@ -161,9 +142,6 @@ Still, some keys here help."
   (setcdr (assoc 'nu-mode minor-mode-map-alist) nu-keymap))
 
 
-(defun nu-isearch-exit ()
-  ""
-  (lv-delete-window))
 
 (defun nu-add-mark-hook ()
   "Give the user some input about visual mode."
@@ -177,8 +155,6 @@ Still, some keys here help."
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
 (add-hook 'minibuffer-exit-hook 'nu-minibuffer-exit t)
 (add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
-(add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
-(add-hook 'isearch-mode-end-hook 'nu-isearch-exit)
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
 (add-hook 'activate-mark-hook    'nu-add-mark-hook)
 (add-hook 'deactivate-mark-hook  'lv-delete-window)
