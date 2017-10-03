@@ -151,7 +151,8 @@ Still, some keys here help."
      (define-key undo-tree-visualizer-mode-map (kbd "j") 'undo-tree-visualize-switch-branch-left)
      (define-key undo-tree-visualizer-mode-map (kbd "l") 'undo-tree-visualize-switch-branch-right)
 
-     (define-key undo-tree-visualizer-mode-map (kbd "M-q")   'undo-tree-visualizer-abort)))
+     (define-key undo-tree-visualizer-mode-map (kbd "M-q")   'undo-tree-visualizer-abort)
+     (define-key undo-tree-map (kbd "C-x") nil)))
 
 
 (eval-after-load "auto-complete"
