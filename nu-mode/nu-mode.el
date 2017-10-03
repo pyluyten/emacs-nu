@@ -228,7 +228,6 @@ eg dired, magit, helm, ...)"
 					; do not keep cua modifier on 'meta
 					; otherwise their rectangle is broken...
 	
-	(cua-selection-mode 1)
 
         ; populate all prompts
 	; so all maps are defined
