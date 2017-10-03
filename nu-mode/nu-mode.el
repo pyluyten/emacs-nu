@@ -26,6 +26,13 @@
 (require 'help-fns+)
 (require 'iso-transl)
 
+
+(defgroup nu nil
+  "Emulate modern key bindings and provides popups."
+  :prefix "nu"
+  :group 'editing-basics
+  :group 'emulations)
+
 (defvar nu-menu-map)
 
 (defun nu-restore-default-keymap ()
@@ -210,24 +217,19 @@ Both direct keys & prompters will adapt to current mode
 eg dired, magit, helm, ...)"
   :global t
   :keymap nu-keymap
+  :lighter " nu"
 
   (if nu-mode
       (progn
 	; the variable allowing to make keymaps override...
 	(setq nu-state t)
-					; this is part of a modern keymap because cursor
-					; is an indicator
+
+	; this is part of a modern keymap because cursor
+	; is an indicator
 	(set-default 'cursor-type 'bar)
 
-					; a real dependency
-	(undo-tree-mode 1)
-
-					; do not use cua-mode because C-x C-c have specific meaning
-					; TODO: test if the user can enable cua-keys on his .emacs
-					;
-					; do not keep cua modifier on 'meta
-					; otherwise their rectangle is broken...
-	
+	(delete-selection-mode 1)
+	(global-undo-tree-mode)
 
         ; populate all prompts
 	; so all maps are defined
