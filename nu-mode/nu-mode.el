@@ -39,17 +39,18 @@
   "Populate nu keymap with defaults."
   (interactive)
 
-   ;  do not respect _any_ emacs convention. Seriously.
-
-   ; <menu> is not a modifier. We need a map.
+   ; <menu> is not a modifier. We need a map
+   ;; so features like which-key still work fine
    (define-key nu-keymap (kbd "<menu>") nu-menu-map)
 
-
    ;;
-   ; azertyuiop. Yes it's the main target, don't care.
-   ; anyway it will work as expected onto qwerty as well.
+   ;; setup the paddle. see setup.el.
+   ;; this is i + j + k + l + h
    ;;
-
+   ;; if another paddle is set
+   ;; this should be same key set.
+   ;;
+   (nu-setup-classic-paddle)
 
    (define-key nu-keymap (kbd "C-a") 'nu-a-prompt)
    (define-key nu-keymap (kbd "C-S-a") 'nu-set-rectangle-mark)
@@ -61,9 +62,7 @@
    (define-key nu-keymap (kbd "C-S-z") 'undo-tree-redo)
    (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize)
 
-
    (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
-
 
    (define-key nu-keymap (kbd "M-r") 'replace-regexp)
    (define-key nu-menu-map (kbd "r") 'nu-replace-map)
@@ -80,9 +79,6 @@
    (define-key nu-keymap (kbd "C-M-u") 'backward-list)
    (define-key nu-keymap (kbd "M-u") 'backward-word)
    (define-key universal-argument-map (kbd "C-u") 'backward-kill-word)
-
-   (define-key nu-keymap (kbd "M-I") 'avy-goto-line)
-   (define-key nu-keymap (kbd "M-i") 'previous-line)
 
    (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
    (define-key nu-menu-map (kbd "o") 'nu-open-map)
@@ -101,7 +97,6 @@
    (define-key nu-menu-map (kbd "q") 'nu-quit-map)
    (define-key nu-keymap (kbd "C-q") 'nu-quit-prompt)
 
-
    (define-key nu-keymap (kbd "M-s") 'save-buffer)
    (define-key nu-keymap (kbd "C-S-s") 'org-store-link)
    (define-key nu-keymap (kbd "C-s") 'nu-save-prompt)
@@ -113,7 +108,6 @@
    (define-key nu-menu-map (kbd "d") 'nu-delete-map)
 
    (define-key nu-keymap (kbd "M-f") 'nu-isearch-forward-regexp)
-   (define-key nu-keymap (kbd "C-S-f") 'avy-goto-char) 
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-menu-map (kbd "f") 'nu-find-map)
 
@@ -124,21 +118,6 @@
 
    (define-key nu-keymap (kbd "C-h") 'nu-help-prompt)
    (define-key nu-menu-map (kbd "h") 'help-map)
-   (define-key nu-keymap (kbd "C-M-h") 'nu-prompt-for-major-mode)
-   (define-key nu-keymap (kbd "M-h") 'nu-back-to-indentation)
-
-   (define-key nu-keymap (kbd "C-j") 'backward-delete-char)
-   (define-key nu-keymap (kbd "C-M-j") 'backward-sexp)
-   (define-key nu-keymap (kbd "M-j") 'backward-char)
-
-   (define-key nu-keymap (kbd "C-k") 'kill-visual-line)
-   (define-key nu-keymap (kbd "C-S-k") 'nu-next-buffer)
-   (define-key nu-keymap (kbd "C-M-k") 'end-of-defun)
-   (define-key nu-keymap (kbd "M-k") 'next-line)
-
-   (define-key nu-keymap (kbd "C-l") 'delete-forward-char)
-   (define-key nu-keymap (kbd "C-M-l") 'forward-sexp)
-   (define-key nu-keymap (kbd "M-l") 'forward-char)
 
    ; C-m stands for enter.
    (define-key nu-keymap (kbd "M-m") 'newline-and-indent)
@@ -151,7 +130,7 @@
    (define-key nu-menu-map (kbd "w") 'nu-window-map)
    (define-key nu-menu-map (kbd "C-S-w") 'transpose-frame)
    (define-key nu-keymap (kbd "C-w") 'nu-window-prompt)
-
+ 
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
    (define-key nu-keymap (kbd "C-S-x") 'nu-global-prompt)
    (define-key nu-keymap (kbd "M-x") 'nu-M-x)
