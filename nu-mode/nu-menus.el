@@ -911,8 +911,8 @@ PROMPTS
 ----------------------------------------------------------------
 _a_ select       _r_ replace    _o_ open     _g_ goto
 _h_ help         _f_ find       _p_ print    _s_ save
-_n_ new
-_d_ delete
+_n_ new          _v_ insert     _b_ bold
+_d_ delete       _Q_ quit
 
 OTHER
 --------------------------------------------------------------
@@ -951,7 +951,12 @@ _z_ undo tree         _t_ tab (what emacs calls window)
 		(nu-full-prompt-for-keymap nu-new-map)) :exit t)
     ("t" (progn (nu-populate-tab)
 		(nu-full-prompt-for-keymap nu-tab-map)) :exit t)
-
+    ("Q" (progn (nu-populate-quit)
+		(nu-full-prompt-for-keymap nu-quit-map)) :exit t)
+    ("v" (progn (nu-populate-insert-map)
+		(nu-full-prompt-for-keymap nu-insert-map)) :exit t)
+    ("b" (progn (nu-populate-bold-map)
+		(nu-full-prompt-for-keymap nu-bold-map)) :exit t)
     ;; other
     ("z" undo-tree-visualize :exit t)
     ("e" nu-M-x :exit t)
@@ -959,8 +964,6 @@ _z_ undo tree         _t_ tab (what emacs calls window)
     ("w" nil :exit t)
     ("x" nil :exit t)
     ("c" nil :exit t)
-    ("v" nil :exit t)
-    ("b" nil :exit t)
     ("q" nil :exit t))
 
 (provide 'nu-menus)
