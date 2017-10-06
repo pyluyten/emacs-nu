@@ -904,7 +904,7 @@ _q_ quit any prompt
 
 PADDLE
 ----------------------------------------------------------------
-_i_: open file  _j_: recent     _k_: kill region   _l_: next buffer
+_i_: open file  _j_: recent     _k_: kill buffer   _l_: switch buffer
 _u_: bookmarks  _m_: maximize   _<SPC>_ : ibuffers
 
 PROMPTS
@@ -921,8 +921,8 @@ _z_ undo tree         _t_ tab (what emacs calls window)
 "
     ;; paddle direct functions.
     ("i" nu-find-files :exit t)
-    ("l" nu-next-buffer :exit t)
-    ("k" kill-region :exit t)
+    ("l" nu-buffers-list :exit t)
+    ("k" kill-buffer :exit t)
     ("j" nu-recentf :exit t)
     ("u" nu-bookmarks :exit t)
     ("m" delete-other-windows :exit t)
