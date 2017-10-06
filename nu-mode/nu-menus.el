@@ -40,7 +40,7 @@
 (defvar nu-find-map)
 (defvar nu-copy-map)
 (defvar nu-tab-map)
-
+(defvar nu-bold-map)
 
  (autoload 'zap-up-to-char "misc"
 "Kill up to, but not including ARGth occurrence of CHAR." t)
@@ -197,7 +197,7 @@
 
 
 
-(defvar nu-bold-map)
+
 
 (defun nu-populate-bold-map ()
  "Populate bold map	.	"
