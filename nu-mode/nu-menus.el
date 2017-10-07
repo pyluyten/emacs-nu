@@ -526,12 +526,13 @@ But if mark is active, exchange point and mark."
 
    (define-key nu-goto-map (kbd "M-s") 'org-mark-ring-goto)
    (define-key nu-goto-map (kbd "e") 'next-error)
-   (define-key nu-goto-map (kbd "g") 'avy-goto-line)
-   (define-key nu-goto-map (kbd "G") 'goto-line)
+   (define-key nu-goto-map (kbd "g") 'ace-window)
+   (define-key nu-goto-map (kbd "m") 'avy-goto-line)
+   (define-key nu-goto-map (kbd "n") 'goto-line)
    (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
    (define-key nu-goto-map (kbd "k") 'end-of-buffer)
    (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
-   (define-key nu-goto-map (kbd "m") 'nu-buffers-list)
+   (define-key nu-goto-map (kbd "b") 'nu-buffers-list)
 
 
    ;;
