@@ -917,7 +917,7 @@ _d_ delete       _Q_ quit
 
 OTHER
 --------------------------------------------------------------
-_e_ execute command   or use M-x
+_M-d_ execute command (or use M-x)
 _z_ undo tree         _t_ tab (what emacs calls window)
 "
     ;; paddle direct functions.
@@ -958,9 +958,10 @@ _z_ undo tree         _t_ tab (what emacs calls window)
 		(nu-full-prompt-for-keymap nu-insert-map)) :exit t)
     ("b" (progn (nu-populate-bold-map)
 		(nu-full-prompt-for-keymap nu-bold-map)) :exit t)
+    ("M-d" (nu-M-x) :exit t)
     ;; other
     ("z" undo-tree-visualize :exit t)
-    ("e" nu-M-x :exit t)
+    ("e" nil :exit t)
     ("y" nil :exit t)
     ("w" nil :exit t)
     ("x" nil :exit t)
