@@ -461,6 +461,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "m")   'menu-bar-read-mail)
   (define-key nu-open-map (kbd "o")  'helm-mini)
   (define-key nu-open-map (kbd "r")  'nu-recentf)
+  (define-key nu-open-map (kbd "R")  'recentf-open-files)
   (define-key nu-open-map (kbd "s") 'org-iswitchb)
   (define-key nu-open-map (kbd "u")  'browse-url)
   (define-key nu-open-map (kbd "x")  'list-registers)
