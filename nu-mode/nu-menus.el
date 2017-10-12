@@ -901,33 +901,29 @@ both navigate, access to essential prompts, and control the terminal."
 			      :hint nil
 			      :pre (setq nu-major-mode major-mode))	     
 "
-_q_ quit any prompt
-
-PADDLE
-----------------------------------------------------------------
-_i_: open file  _j_: recent     _k_: kill buffer   _l_: switch buffer
-_u_: bookmarks  _m_: maximize   _<SPC>_ : ibuffers
-
-PROMPTS
-----------------------------------------------------------------
-_a_ select       _r_ replace    _o_ open     _g_ goto
-_h_ help         _f_ find       _p_ print    _s_ save
-_n_ new          _v_ insert     _b_ bold
-_d_ delete       _Q_ quit
-
-OTHER
---------------------------------------------------------------
-_M-d_ execute command (or use M-x)
-_z_ undo tree         _t_ tab (what emacs calls window)
+|  _q_ quit any prompt
+   
+|  _i_: open file   _j_: recent     _k_: kill buffer   _l_: switch buffer
+|  _M-i_ : ibuffer  _u_: bookmarks  _m_: maximize
+   
+|  _a_ select       _r_ replace    _o_ open     _g_ goto
+|  _h_ help         _f_ find       _p_ print    _s_ save
+|  _n_ new          _v_ insert     _b_ bold
+|  _d_ delete       _t_ tab        _Q_ quit
+   
+|  _<SPC>_ : mode specific            _X_ : C-x prompt
+|  _M-d_ execute command              _z_ :  undo tree
 "
     ;; paddle direct functions.
     ("i" nu-find-files :exit t)
+    ("M-i" ibuffer :exit t)
     ("l" nu-buffers-list :exit t)
     ("k" kill-buffer :exit t)
     ("j" nu-recentf :exit t)
     ("u" nu-bookmarks :exit t)
     ("m" delete-other-windows :exit t)
-    ("<SPC>" ibuffer :exit t)
+    ("<SPC>" nu-trigger-mode-specific-map :exit t)
+    ("x" nu-global-prompt :exit t)
 
     ;; nu prompts
     ("a" (progn (nu-populate-a-map)
@@ -964,7 +960,6 @@ _z_ undo tree         _t_ tab (what emacs calls window)
     ("e" nil :exit t)
     ("y" nil :exit t)
     ("w" nil :exit t)
-    ("x" nil :exit t)
     ("c" nil :exit t)
     ("q" nil :exit t))
 
