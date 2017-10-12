@@ -107,7 +107,7 @@
    (define-key nu-keymap (kbd "M-d") 'hydra-nu-meta-menu/body)
    (define-key nu-menu-map (kbd "d") 'nu-delete-map)
 
-   (define-key nu-keymap (kbd "M-f") 'nu-isearch-forward-regexp)
+   (define-key nu-keymap (kbd "M-f") 'nu-search)
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
    (define-key nu-menu-map (kbd "f") 'nu-find-map)
 
@@ -209,6 +209,10 @@ eg dired, magit, helm, ...)"
 
 	(delete-selection-mode 1)
 	(global-undo-tree-mode)
+
+        ;; completion system
+	;; see nu-setup ; ivy/helm/basic
+        (nu-setup-basic)
 
         ; populate all prompts
 	; so all maps are defined

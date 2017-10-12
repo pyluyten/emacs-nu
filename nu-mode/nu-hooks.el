@@ -63,7 +63,14 @@ Helm has few shortcuts because it has its maps
 	(define-key ivy-minibuffer-map (kbd "M-g") 'ivy-partial-or-done)
 	(define-key ivy-minibuffer-map (kbd "M-f") 'ivy-avy)
         (define-key ivy-minibuffer-map (kbd "M-p") 'ivy-insert-current)
-	(define-key ivy-minibuffer-map (kbd "M-d") 'hydra-ivy/body)))
+	(define-key ivy-minibuffer-map (kbd "M-d") 'hydra-ivy/body)
+
+        ;; swiper
+        (define-key swiper-map (kbd "M-r") 'swiper-query-replace)
+        (define-key swiper-map (kbd "M-d") 'swiper-recenter-top-bottom)
+        (define-key swiper-map (kbd "M-g") 'swiper-avy)
+        (define-key swiper-map (kbd "M-c") 'swiper-mc)
+        (define-key swiper-map (kbd "M-s") 'swiper-toggle-face-matching)))
 
   (nu-make-overriding-map minibuffer-local-map nil "M-q" 'abort-recursive-edit))
 
