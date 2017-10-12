@@ -54,7 +54,8 @@ Helm has few shortcuts because it has its maps
   (if (boundp 'ivy-minibuffer-map)
       (progn
 	;; standard ivy map
-	
+
+        (define-key ivy-minibuffer-map (kbd "M-h") 'nu-help-for-ivy)
         (define-key ivy-minibuffer-map (kbd "M-v") 'ivy-yank-word)
 	(define-key ivy-minibuffer-map (kbd "M-i") 'ivy-previous-line)
 	(define-key ivy-minibuffer-map (kbd "M-k") 'ivy-next-line)
@@ -134,6 +135,37 @@ Still, some keys here help."
   (lv-delete-window)
   (setcdr (assoc 'nu-mode minor-mode-map-alist) nu-keymap))
 
+
+(defun nu-help-for-ivy ()
+  (interactive)
+  (lv-message
+   "
+Ivy is a completion system.
+Type & 'candidates' in the bottom window will be selected.
+Press <RETURN> to confirm.
+
+If you are doing 'save as' or other operations that needs
+to validate what you input - rather than candidates -
+then press <Alt+m>.
+
+For more features please describe-keymap
+ivy-minibuffer-map."))
+
+(defun nu-prepare-for-ivy ()
+  (lv-message
+   (concat
+    "Type or press "
+    (propertize "M-h" 'face 'nu-face-shortcut)
+    " for help, "
+    (propertize "M-q" 'face 'nu-face-shortcut)
+    " to quit "
+   (propertize "M-m" 'face 'nu-face-shortcut)
+   " to validate current input.")))
+
+(defadvice ivy-read (before nu-prepare-for-ivy-read-advice ())
+  (nu-prepare-for-ivy))
+
+(ad-activate 'ivy-read)
 
 
 (defun nu-add-mark-hook ()
