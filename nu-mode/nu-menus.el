@@ -561,7 +561,6 @@ But if mark is active, exchange point and mark."
   (nu-prompt-for-keymap ctl-x-map))
 
 
-;; TODO insert into hydra....
 ;; emacs-nu help page        emacs manual
 ;; info                      describe-function
 ;; search in documentation   describe-key
