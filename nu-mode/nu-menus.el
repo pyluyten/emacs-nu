@@ -911,7 +911,7 @@ both navigate, access to essential prompts, and control the terminal."
 |  _n_ new          _v_ insert     _b_ bold
 |  _d_ delete       _t_ tab        _Q_ quit
    
-|  _<SPC>_ : mode specific            _X_ : C-x prompt
+|  _<SPC>_ : mode specific            _x_ : C-x prompt
 |  _M-d_ execute command              _z_ :  undo tree
 "
     ;; paddle direct functions.
