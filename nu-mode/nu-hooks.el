@@ -62,19 +62,21 @@ Helm has few shortcuts because it has its maps
         (define-key ivy-minibuffer-map (kbd "M-s") 'ivy-dispatching-done)
 	(define-key ivy-minibuffer-map (kbd "M-m") 'ivy-immediate-done)
 	(define-key ivy-minibuffer-map (kbd "M-g") 'ivy-partial-or-done)
-	(define-key ivy-minibuffer-map (kbd "M-f") 'ivy-avy)
+	(define-key ivy-minibuffer-map (kbd "M-n") 'ivy-avy)
         (define-key ivy-minibuffer-map (kbd "M-p") 'ivy-insert-current)
-	(define-key ivy-minibuffer-map (kbd "M-d") 'hydra-ivy/body)
+	(define-key ivy-minibuffer-map (kbd "M-d") 'hydra-ivy/body)))
+
+  (if (boundp 'ivy-minibuffer-map)
+       (progn
 
         ;; swiper
         (define-key swiper-map (kbd "M-r") 'swiper-query-replace)
         (define-key swiper-map (kbd "M-d") 'swiper-recenter-top-bottom)
-        (define-key swiper-map (kbd "M-g") 'swiper-avy)
+        (define-key swiper-map (kbd "M-n") 'swiper-avy)
         (define-key swiper-map (kbd "M-c") 'swiper-mc)
         (define-key swiper-map (kbd "M-s") 'swiper-toggle-face-matching)))
 
   (nu-make-overriding-map minibuffer-local-map nil "M-q" 'abort-recursive-edit))
-
 
 (defun nu-prepare-for-term-raw ()
   "Respect term raw map principle to be an emulator,
