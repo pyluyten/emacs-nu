@@ -380,38 +380,12 @@ If no argument given, copy 1 char."
 
 
 (defun nu-trigger-mode-specific-map ()
-  "Set temporary overlay map mode-specific-map"
   (interactive)
-  (message "C-c active.")
-  (setq prefix-arg current-prefix-arg)
-
-  ; Avoid infinite loop : we deactivate C-c as a key,
+  (which-key-mode 1)
   (define-key nu-keymap (kbd "C-c") nil)
-
-  ; special case : look at C-c C-c
-  ; if possible, use Control Space to toggle this.
-  (let ((defn-target
-        (local-key-binding (kbd "\C-c \C-c"))))
-
-  ; to do this C-c C-c trick, we need this to be bound,
-  ; and also C-c C-<space> not to be...
-  (unless (or (eq nil defn-target)
-          (not (symbolp defn-target))
-          (not (commandp defn-target)))
-    (message (format "C-c active. Assigning %s" (symbol-name defn-target)))
-    (let ((defn-obstruct
-       (local-key-binding (kbd "\C-c C-SPC"))))
-    (if (and (eq nil defn-obstruct)
-             (commandp defn-target))
-        (define-key nu-keymap (kbd "\C-c C-SPC") defn-target))))
-
-    ; then run C-c in order to make it a prefix...
-    (setq unread-command-events
-      (listify-key-sequence "\C-c"))
-
-  ; Now add back function but after some delay
-  ; or this would intercept C-c!
-  (run-with-timer 0.3 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)))
+  (run-with-timer 5 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
+  (setq unread-command-events
+	(listify-key-sequence "\C-c")))
 
 
 (defun nu-cut-region-or-line (&optional arg)
