@@ -95,9 +95,8 @@
    (define-key nu-keymap (kbd "C-s") 'nu-save-prompt)
    (define-key nu-menu-map (kbd "s") 'nu-save-map)
 
-   (define-key nu-keymap (kbd "C-d") 'kill-word)
+   (define-key nu-keymap (kbd "C-d") 'nu-M-x)
    (define-key nu-keymap (kbd "M-d") 'hydra-nu-meta-menu/body)
-   (define-key nu-menu-map (kbd "d") 'nu-delete-map)
 
    (define-key nu-keymap (kbd "M-f") 'nu-search)
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
@@ -121,8 +120,9 @@
    (define-key nu-menu-map (kbd "w") 'nu-window-map)
    (define-key nu-keymap (kbd "C-w") 'nu-window-prompt)
  
-   (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
-   (define-key nu-keymap (kbd "M-x") 'nu-M-x)
+   (define-key nu-keymap (kbd "C-x") 'nu-delete-prompt)
+   (define-key nu-keymap (kbd "M-x") 'nu-cut-region-or-line)
+   (define-key nu-menu-map (kbd "x") 'nu-delete-map)
 
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
    (define-key nu-keymap (kbd "M-c") 'nu-copy-region-or-line)

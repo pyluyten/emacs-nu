@@ -854,11 +854,11 @@ both navigate, access to essential prompts, and control the terminal."
    
 |  _a_ select       _r_ replace    _o_ open     _g_ goto
 |  _h_ help         _f_ find       _p_ print    _s_ save
-|  _n_ new          _v_ insert     _b_ bold
-|  _d_ delete       _t_ tab        _Q_ quit
+|  _n_ new          _v_ insert     _b_ bold     _w_ window
+|  _x_ delete       _t_ tab        _Q_ quit
    
-|  _<SPC>_ : mode specific            _x_ : C-x prompt
-|  _M-d_ execute command              _z_ :  undo tree
+|  _<SPC>_ : mode specific            _e_ : Ctrl-x-map
+|  _<RET>_ execute command            _z_ :  undo tree
 "
     ;; paddle direct functions.
     ("i" nu-find-files :exit t)
@@ -888,7 +888,7 @@ both navigate, access to essential prompts, and control the terminal."
 		(nu-full-prompt-for-keymap nu-print-map)) :exit t)
     ("s" (progn (nu-populate-save-map)
 		(nu-full-prompt-for-keymap nu-save-map)) :exit t)
-    ("d" (progn (nu-populate-delete)
+    ("x" (progn (nu-populate-delete)
 		(nu-full-prompt-for-keymap nu-delete-map)) :exit t)
     ("n" (progn (nu-populate-new-map)
 		(nu-full-prompt-for-keymap nu-new-map)) :exit t)
@@ -900,12 +900,13 @@ both navigate, access to essential prompts, and control the terminal."
 		(nu-full-prompt-for-keymap nu-insert-map)) :exit t)
     ("b" (progn (nu-populate-bold-map)
 		(nu-full-prompt-for-keymap nu-bold-map)) :exit t)
-    ("M-d" (nu-M-x) :exit t)
+    ("w" (progn (nu-populate-window)
+		(nu-full-prompt-for-keymap nu-window-map)) :exit t)
+    ("<RET>" (nu-M-x) :exit t)
     ;; other
     ("z" undo-tree-visualize :exit t)
-    ("e" nil :exit t)
+    ("e" (nu-buffer-prompt-for-keymap ctl-x-map) :exit t)
     ("y" nil :exit t)
-    ("w" nil :exit t)
     ("c" nil :exit t)
     ("q" nil :exit t))
 
