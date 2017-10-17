@@ -61,23 +61,18 @@ we are talking about..."
   (nu-prompt-for-keymap (current-local-map)))
 
 
+; the function that defines nu-bold-function
+; it is made to be adviced by major mode
+; so major mode can override defalias
+(defun nu-set-bold-f ()
+  (defalias 'nu-bold-function 'fill-paragraph))
 
+
+;; this function that calls nu-bold-function
 (defun nu-bold ()
- (interactive)
- (message (format "%s" major-mode))
- (cond
-   ((eq major-mode 'fundamental-mode)
-    (call-interactively 'fill-paragraph))
-   ((eq major-mode 'org-mode)
-    (call-interactively 'org-emphasize))
-   ((eq major-mode 'lisp-interaction-mode)
-    (call-interactively 'comment-dwim))
-   ((eq major-mode 'emacs-lisp-mode)
-    (call-interactively 'comment-dwim))
-   ((eq major-mode 'c-mode)
-    (call-interactively 'comment-dwim))
-   (t
-    (message "nu-bold : no action"))))
+  (interactive)
+  (nu-set-bold-f)
+  (nu-bold-function))
 
 
 (defun nu-zap-up-to-char (arg char)

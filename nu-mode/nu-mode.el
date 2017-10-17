@@ -22,6 +22,7 @@
 (require 'nu-ibuffer)
 (require 'nu-setup)
 (require 'nu-prompters-lv)
+(require 'nu-org)
 
 (require 'help-fns+)
 (require 'iso-transl)

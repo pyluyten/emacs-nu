@@ -97,9 +97,7 @@
     (define-key nu-print-map (kbd "M-d") 'ibuffer-diff-with-file)
     (define-key nu-print-map (kbd "P") 'ibuffer-do-shell-command-pipe)
     (define-key nu-print-map (kbd "M-f") 'ibuffer-do-shell-command-file)
-    (define-key nu-print-map (kbd "r") 'ibuffer-do-print))
-   ((eq nu-major-mode 'org-mode)
-    (define-key nu-print-map (kbd "l") 'pcomplete)))
+    (define-key nu-print-map (kbd "r") 'ibuffer-do-print)))
 
   ; common case
   (define-key nu-print-map (kbd "C-p") 'print-buffer)
@@ -178,14 +176,6 @@
   (define-key nu-delete-map (kbd "j") 'delete-other-windows)
   (define-key nu-delete-map (kbd "l") 'delete-window)
 
-  ; these ones are additional	.	..
-  (if (eq nu-major-mode 'org-mode)
-      (progn
-        (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
-        (define-key nu-delete-map (kbd "r") 'org-table-kill-row)
-        (define-key nu-delete-map (kbd "*") 'org-cut-special)
-        (define-key nu-delete-map (kbd "M-k") 'org-cut-subtree)))
-
   (if mark-active
     (define-key nu-delete-map (kbd "<RET>") 'kill-region)))
 
@@ -193,10 +183,6 @@
   (interactive)
   (nu-populate-delete)
   (nu-prompt-for-keymap nu-delete-map))
-
-
-
-
 
 
 (defun nu-populate-bold-map ()
@@ -244,17 +230,7 @@
         (if (eq nu-major-mode 'texinfo-mode)
           (progn
             (define-key nu-insert-map (kbd "M-u") 'texinfo-insert-@url)
-            (define-key nu-insert-map (kbd "M-k") 'texinfo-insert-@kbd))
-        (if (eq nu-major-mode 'org-mode)
-          (progn
-            (define-key nu-insert-map (kbd "L") 'org-insert-link)
-            (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
-            (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
-            (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
-            (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
-            (define-key nu-insert-map (kbd "m") 'org-time-stamp)
-            (define-key nu-insert-map (kbd "d") 'org-deadline)
-            (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading)))))
+            (define-key nu-insert-map (kbd "M-k") 'texinfo-insert-@kbd))))
 
   ; anycase
   (define-key nu-insert-map (kbd "S") 'shell-command)
@@ -280,10 +256,6 @@
   (define-key nu-save-map (kbd "r") 'rename-buffer)
   (define-key nu-save-map (kbd "s") 'save-buffer)
   (define-key nu-save-map (kbd "w") 'window-configuration-to-register)
-  (if (eq nu-major-mode 'org-mode)
-      (progn
-        (define-key nu-save-map (kbd "o") 'org-refile)
-        (define-key nu-save-map (kbd "M-o") 'org-save-all-org-buffers)))
   (define-key nu-save-map (kbd "k") 'kmacro-start-macro-or-insert-counter)
   (define-key nu-save-map (kbd "f") 'nu-create-tags)
 
@@ -473,8 +445,6 @@ But if mark is active, exchange point and mark."
    ((eq nu-major-mode 'dired-mode)
     (define-key nu-open-map (kbd "d") 'dired-find-file)
     (define-key nu-open-map (kbd "C-d") 'dired-find-file-other-window))
-   ((eq nu-major-mode 'org-mode)
-    (define-key nu-open-map (kbd "L") 'org-open-at-point))
    ((eq nu-major-mode 'ibuffer-mode)
     (define-key nu-open-map (kbd "h") 'ibuffer-do-view-horizontally)
     (define-key nu-open-map (kbd "i") 'ibuffer-find-file))))
@@ -533,19 +503,7 @@ But if mark is active, exchange point and mark."
    (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
    (define-key nu-goto-map (kbd "k") 'end-of-buffer)
    (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
-   (define-key nu-goto-map (kbd "b") 'nu-buffers-list)
-
-
-   ;;
-   ;; add-ons
-   ;;
-
-   (if (eq nu-major-mode 'org-mode)
-       (progn
-         (define-key nu-goto-map (kbd "I") 'org-backward-heading-same-level)
-         (define-key nu-goto-map (kbd "K") 'org-forward-heading-same-level)
-         (define-key nu-goto-map (kbd "J") 'org-backward-element)
-         (define-key nu-goto-map (kbd "L") 'org-forward-element))))
+   (define-key nu-goto-map (kbd "b") 'nu-buffers-list))
 
 
 (defun nu-goto-prompt ()
@@ -757,19 +715,7 @@ _y_ find function on key
   (define-key nu-replace-map (kbd "t") 'ethan-wspace-untabify)
 
   (if (eq nu-major-mode 'c-mode)
-      (define-key nu-replace-map (kbd "y") 'c-set-style))
-
-
-  (if (eq nu-major-mode 'org-mode)
-      (progn
-          (define-key nu-replace-map (kbd "J") 'org-shiftleft)
-          (define-key nu-replace-map (kbd "K") 'org-shiftdown)
-          (define-key nu-replace-map (kbd "L") 'org-shiftright)
-          (define-key nu-replace-map (kbd "I") 'org-shiftup)
-          (define-key nu-replace-map (kbd "C-j") 'org-metaleft)
-          (define-key nu-replace-map (kbd "C-l") 'org-metaright)
-          (define-key nu-replace-map (kbd "C-u") 'org-metaup)
-  (define-key nu-replace-map (kbd "C-o") 'org-metadown))))
+      (define-key nu-replace-map (kbd "y") 'c-set-style)))
 
 
 (defun nu-replace-prompt ()

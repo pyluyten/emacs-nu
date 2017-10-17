@@ -26,6 +26,24 @@
 (defvar dired-mode-map)
 (defvar nu-keymap-backup)
 
+(defun nu-prepare-lisp-interaction-mode ()
+   (defadvice nu-set-bold-f (after nu-set-bold-f-for-lisp-interaction ())
+     (if (eq major-mode 'lisp-interaction-mode)
+	 (defalias 'nu-bold-function '(lambda () (call-interactively 'comment-dwim))))
+   (ad-activate 'nu-set-bold-f)))
+
+(add-hook 'lisp-interaction-mode-hook 'nu-prepare-lisp-interaction-mode)
+
+
+(defun nu-prepare-emacs-lisp-mode ()
+   (defadvice nu-set-bold-f (after nu-set-bold-f-for-emacs-lisp ())
+     (if (eq major-mode 'emacs-lisp-mode)
+	 (defalias 'nu-bold-function '(lambda () (call-interactively 'comment-dwim))))
+   (ad-activate 'nu-set-bold-f)))
+
+(add-hook 'emacs-lisp-mode-hook 'nu-prepare-emacs-lisp-mode)
+
+
 (defun nu-prepare-for-minibuffer ()
   "Minibuffer.
 
