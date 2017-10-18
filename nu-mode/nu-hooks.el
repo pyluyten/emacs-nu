@@ -84,7 +84,7 @@ Helm has few shortcuts because it has its maps
         (define-key ivy-minibuffer-map (kbd "M-p") 'ivy-insert-current)
 	(define-key ivy-minibuffer-map (kbd "M-d") 'hydra-ivy/body)))
 
-  (if (boundp 'ivy-minibuffer-map)
+  (if (boundp 'swiper-map)
        (progn
 
         ;; swiper
