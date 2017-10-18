@@ -621,6 +621,10 @@ _y_ find function on key
     (define-key nu-copy-map (kbd "h") 'dired-do-hardlink)
     (define-key nu-copy-map (kbd "s") 'dired-do-symlink))
    (t
+    (define-key nu-copy-map (kbd "k") 'avy-kill-ring-save-whole-line)
+    (define-key nu-copy-map (kbd "i") 'avy-copy-region)
+    (define-key nu-copy-map (kbd "l") 'avy-copy-line)
+
     (define-key nu-copy-map (kbd "r") 'copy-rectangle-as-kill)
     (define-key nu-copy-map (kbd "c") 'nu-copy-region-or-line)
     (define-key nu-copy-map (kbd "e") 'nu-copy-from-above)

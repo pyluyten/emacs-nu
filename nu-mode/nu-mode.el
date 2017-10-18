@@ -118,7 +118,7 @@
    (define-key nu-keymap (kbd "M-x") 'nu-cut-region-or-line)
    (define-key nu-menu-map (kbd "x") 'nu-delete-map)
 
-   (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
+   (define-key nu-keymap (kbd "C-c") 'nu-copy-prompt)
    (define-key nu-keymap (kbd "M-c") 'nu-copy-region-or-line)
 
    (define-key nu-keymap (kbd "C-v") 'nu-insert-prompt)
