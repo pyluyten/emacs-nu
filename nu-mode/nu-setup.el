@@ -1,8 +1,15 @@
+(require 'nu-prompters)
+
 (defgroup nu nil
   "Emulate modern key bindings and provides popups."
   :prefix "nu"
   :group 'editing-basics
   :group 'emulations)
+
+(defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
+
+(defalias 'nu-full-prompt-for-keymap 'nu-lv-prompt-for-keymap)
+
 
 ;;
 ;; PADDLE

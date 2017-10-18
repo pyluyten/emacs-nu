@@ -18,8 +18,6 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 
-(defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
-(defalias 'nu-full-prompt-for-keymap 'nu-lv-prompt-for-keymap)
 
 ; defconst?
 (defvar nu-state t "Used by overriding maps alist.")
