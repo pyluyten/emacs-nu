@@ -20,8 +20,9 @@
 (defvar ibuffer-mode-map)
 
 (defun nu-prepare-for-ibuffer ()
-  "Should mainly be used for organization / multi buffers actions
-since helm-buffers-list allows quick stuff."
+  ""
+  (define-key ibuffer-mode-map (kbd "h") ibuffer-mode-map)
+
   (define-key ibuffer-mode-map (kbd "M-i") 'ibuffer-backward-line)
   (define-key ibuffer-mode-map (kbd "M-k") 'ibuffer-forward-line)
   (define-key ibuffer-mode-map (kbd "M-l") 'ibuffer-visit-buffer)
