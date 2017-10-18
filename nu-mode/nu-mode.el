@@ -28,12 +28,6 @@
 (require 'iso-transl)
 
 
-(defgroup nu nil
-  "Emulate modern key bindings and provides popups."
-  :prefix "nu"
-  :group 'editing-basics
-  :group 'emulations)
-
 (defvar nu-menu-map)
 
 (defun nu-restore-default-keymap ()
