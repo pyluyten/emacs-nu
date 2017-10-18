@@ -153,24 +153,24 @@ Sometimes it is more convenient not to select text, but rather to directly delet
 
 @enumerate
 @item
-Use @kbd{Control-x} to cut the current line.
+Use @kbd{Alt + x} to cut the current line.
 @item
-Use @kbd{Control+j},@kbd{Control+l} to delete backward, forward char. Backspace / Delete are still available.
+Use @kbd{Control + j},@kbd{Control + l} to delete backward, forward char. Backspace / Delete are still available.
 @item
 Use @kbd{Control + u} to delete previous word.
 @item
 Use @kbd{Control + $} to delete up to end of line.
 @item
-Use @kbd{Alt+d} then @kbd{d} to trigger a delete prompt. This will offer you to delete what you want (function, org-node, sentence, ...).
+Use @kbd{Control +x} to trigger a delete prompt. This will offer you to delete what you want (function, org-node, sentence, ...).
 @item
 As seen above, alternatively, first mark (select) text you want.
 @end enumerate
 
 @section Cut Copy Paste
 
-When no selection is active, use @kbd{Control + x} to cut current line, or a deletion command since deletions actually cut text (as a reminder : emacs `kill-' commands will copy to kill-ring, while emacs `delete-' commands will not).
+When no selection is active, use @kbd{Alt + x} to cut current line, or a deletion command since deletions actually cut text (as a reminder : emacs `kill-' commands will copy to kill-ring, while emacs `delete-' commands will not).
 
-Use @kbd{Control + c} to copy currrent line, or, while a selection is active, copy this selection.
+Use @kbd{Alt + c} to copy currrent line, or, while a selection is active, copy this selection.
 
 Use @kbd{Alt + v} to paste the current clipboard. Or, you can use @kbd{Control + v} to invoke an advanced ``Paste'' prompt.
 
@@ -217,8 +217,8 @@ These prompts offer you to quickly learn where functions are.
 
 If you want to see all available prompts
 @enumerate
-@item Use describe-keymap on nu-keymap
-@item Use @key{Alt+d} do invoke do-prompt
+@item Use @key{Alt+d} do invoke do-prompt.
+@item Alternatively, use describe-keymap on nu-keymap
 @end enumerate
 
 The standard prompt is the ``light'' prompt. It does only popup a little message. A key can directly be pressed to trigger the associated function. If the user does not know yet the function, or the key, he might use
@@ -312,7 +312,7 @@ As seen above, @kbd{Control+b} will run an emphasis-prompt, which allows to comm
 
 @enumerate
 @item
-To trigger a major mode sequence, start with @kbd{Control+Space}. This will invoke vanilla emacs @kbd{Control+c}. For example, into org-mode, use @kbd{Control+Space Control+n} to navigate to next node. I plan to improve nu-mode to create a prompt in order to show the user all available features.
+To trigger a major mode sequence, start with @kbd{Control+Space}. This will invoke vanilla emacs @kbd{Control+c}. After this shortcut is pressed, a list of available functions will appear on the bottom of the screen.
 
 If you already defined you own keys starting with @kbd{Control+c}, do not amend this definition.
 
@@ -323,7 +323,7 @@ If you already defined you own keys starting with @kbd{Control+c}, do not amend 
 To invoke above myfunction example, press @kbd{Control-SPC h}.
 
 @item
-You should not rely on @kbd{Control+x} in its vanilla Emacs meaning, however to trigger x prefix, use @kbd{Alt+d X}. This will raise a prompt to trigger Control-X-Prefix.
+You should not rely on @kbd{Control+x} in its vanilla Emacs meaning, however to trigger x prefix, use @kbd{Alt+d e}. This will raise a prompt to trigger Control-X-Prefix.
 
 @end enumerate
 
@@ -340,7 +340,7 @@ nu-mode is to be responsive - in order for major modes to preserve nu-mode philo
 
 @section Major-mode : dired
 
-As expected, most of vanilla @strong{Dired} keys are respected : these are keys which should, in Fundamental mode for example, run self-insert-key - for example, @key{d} will mark a file for deletion. Modifiers keys will mainly invoke nu-mode commands. This allows to combine both worlds : if you don't know how to run something, use a prompt and read it in order to learn how to directly invoke the key. Eg, using Delete prompt allows to dired-delete a file, but this same prompts also shows a - direct, native - key to run the same. This should make dired learning curve better.
+As expected, most of vanilla @strong{Dired} keys are respected : these are keys which should, in Fundamental mode for example, run self-insert-key - for example, @key{d} will mark a file for deletion. You might also use @key{h} so available keys will be displayed at the bottom of the window.
 
 Dired allows to use nu-mode shortcuts to navigate : the @kbd{Alt+i} & @kbd{k} paddle allow to navigate the list, while @kbd{j} will go up to parent directory and @kbd{l} will find-file at point (for example, visit directory at point).
 
@@ -351,6 +351,7 @@ Use @kbd{Control+p} (uniserval-argument) then @key{s} key to edit the ls command
 @section Major-mode / Minor-mode : org
 
 nu-mode has many features related to org. Rather than storing all org-related features in one place, nu-mode does enrich its usual prompts or even commands given the org-mode context.
+You can also use the @key{Control+Space} to discover all org mode features.
 
 @kbd{Alt+n} new prompt allows to capture a note.
 Using open-prompt, it is possible to open agenda.
@@ -361,14 +362,13 @@ This same prompt offers to org-table-insert-column or row. It is possible to ins
 It is also possible to delete a node from the delete prompt.
 One can org-mark-ring-goto using goto prompt.
 
-The Control+Space Control+Space shortcut will trigger what would have been Control+c Control+c. 
 Note that shift selectections do not work with org-mode.
 
 @section Major-mode : magit
 
-Use Alt+s, ie save-prompt, to gain access to magit-status.
+Use @key{Control+s}, ie save-prompt, to gain access to magit-status.
 
-A work has started to integrate magit properly. For example, replace prompt will offer to toggle whether next commit has --amend. It is possible to use new prompt to create branch, open prompt to open branch manager, and so on.
+Magit already is very easy to use, since you might press @key{h} to discover its features.
 
 
 @section Major-mode : term
@@ -415,11 +415,7 @@ Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, 
 @end lisp
 
 Obviously this only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
-An alternative is to change emacs-nu paddle to be h j k l 
-
-@lisp
-(nu-setup-vi-paddle)
-@end lisp
+An alternative is to change emacs-nu paddle to be h j k l.
 
 @section Other : autojump
 
@@ -429,6 +425,14 @@ autojump is part of the keybinding (Control f prompt).
 @chapter Customization
 
 As ususal with Emacs, customization comes down at the very first usage. So even before to describe edition, customization has to be mentioned. There is not a single defcustom inside nu-mode. All customization is to be done in other ways.
+
+@section I don't like the Alt modifier for the paddle
+
+below code will make h j k l behave like like VI. Beggining of line become i.
+
+@lisp
+(nu-setup-vi-paddle)
+@end lisp
 
 @section I don't like the Alt modifier for the paddle
 Easy. Do bind Control+ [ijkluo] to the movement. Eventually bind Alt + the same to delete, or rely on alt+d. You loose some consistency, since alt key is suppose to offer @strong{any function}. (On the other hand, you could remap Alt+o to open prompt.)
@@ -442,8 +446,14 @@ If you want prompts to automatically prompt a buffer rather than just a 'nu-ligh
 
 If you dislike both nu-buffer-prompt-for-keymap and default nu-light-prompt-for-keymap (why? please report a bug!!), you're free to develop your own function. The only requirement is this function to offer to call-interactively the functions being part of the prompt. Be warned, you'll have to handle a huge amounts of details however if you want your function to be pleasant =)
 
-@section Main keymap
-If you want to amend nu-mode keymap, amend nu-keymap.
+@section Main keymap & free keys
+If you want to amend nu-mode keymap, amend nu-keymap. It is part of minor-mode-overrind-map-alist.
+
+Free keys are :
+- @key{Control+c} + somme letter. This is the standar Emacs convention.
+
+@section Completion
+Please refer to chapter Completion for ivy & helm. Nu-mode might later integrate more completion systems.
 
 @node Drawbacks & Limits
 @chapter Drawbacks & Limits

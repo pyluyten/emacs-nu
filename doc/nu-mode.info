@@ -169,24 +169,24 @@ offer a little popup to help the user discovering how to work.
    Sometimes it is more convenient not to select text, but rather to
 directly delete some text.
 
-  1. Use 'Control-x' to cut the current line.
-  2. Use 'Control+j','Control+l' to delete backward, forward char.
+  1. Use 'Alt + x' to cut the current line.
+  2. Use 'Control + j','Control + l' to delete backward, forward char.
      Backspace / Delete are still available.
   3. Use 'Control + u' to delete previous word.
   4. Use 'Control + $' to delete up to end of line.
-  5. Use 'Alt+d' then 'd' to trigger a delete prompt.  This will offer
-     you to delete what you want (function, org-node, sentence, ...).
+  5. Use 'Control +x' to trigger a delete prompt.  This will offer you
+     to delete what you want (function, org-node, sentence, ...).
   6. As seen above, alternatively, first mark (select) text you want.
 
 1.3 Cut Copy Paste
 ==================
 
-When no selection is active, use 'Control + x' to cut current line, or
-a deletion command since deletions actually cut text (as a reminder :
+When no selection is active, use 'Alt + x' to cut current line, or a
+deletion command since deletions actually cut text (as a reminder :
 emacs 'kill-' commands will copy to kill-ring, while emacs 'delete-'
 commands will not).
 
-   Use 'Control + c' to copy currrent line, or, while a selection is
+   Use 'Alt + c' to copy currrent line, or, while a selection is
 active, copy this selection.
 
    Use 'Alt + v' to paste the current clipboard.  Or, you can use
@@ -241,8 +241,8 @@ while 'Control+s' directly saves the current buffer.
 ===========
 
 If you want to see all available prompts
-  1. Use describe-keymap on nu-keymap
-  2. Use <Alt+d> do invoke do-prompt
+  1. Use <Alt+d> do invoke do-prompt.
+  2. Alternatively, use describe-keymap on nu-keymap
 
    The standard prompt is the "light" prompt.  It does only popup a
 little message.  A key can directly be pressed to trigger the
@@ -410,10 +410,9 @@ File: nu-mode.info,  Node: Advanced Usage,  Next: Integration,  Prev: Hacking,  
 ****************
 
   1. To trigger a major mode sequence, start with 'Control+Space'.
-     This will invoke vanilla emacs 'Control+c'.  For example, into
-     org-mode, use 'Control+Space Control+n' to navigate to next node.
-     I plan to improve nu-mode to create a prompt in order to show the
-     user all available features.
+     This will invoke vanilla emacs 'Control+c'.  After this shortcut
+     is pressed, a list of available functions will appear on the
+     bottom of the screen.
 
      If you already defined you own keys starting with 'Control+c', do
      not amend this definition.
@@ -423,7 +422,7 @@ File: nu-mode.info,  Node: Advanced Usage,  Next: Integration,  Prev: Hacking,  
      To invoke above myfunction example, press 'Control-SPC h'.
 
   2. You should not rely on 'Control+x' in its vanilla Emacs meaning,
-     however to trigger x prefix, use 'Alt+d X'.  This will raise a
+     however to trigger x prefix, use 'Alt+d e'.  This will raise a
      prompt to trigger Control-X-Prefix.
 
    'Repeat' is invoked from 'Control+Return'.  It was hacked to work
@@ -464,13 +463,9 @@ does integrate with other libraries.
 
 As expected, most of vanilla *Dired* keys are respected : these are
 keys which should, in Fundamental mode for example, run
-self-insert-key - for example, <d> will mark a file for deletion.
-Modifiers keys will mainly invoke nu-mode commands.  This allows to
-combine both worlds : if you don't know how to run something, use a
-prompt and read it in order to learn how to directly invoke the key.
-Eg, using Delete prompt allows to dired-delete a file, but this same
-prompts also shows a - direct, native - key to run the same.  This
-should make dired learning curve better.
+self-insert-key - for example, <d> will mark a file for deletion.  You
+might also use <h> so available keys will be displayed at the bottom
+of the window.
 
    Dired allows to use nu-mode shortcuts to navigate : the 'Alt+i' &
 'k' paddle allow to navigate the list, while 'j' will go up to parent
@@ -491,7 +486,8 @@ command.
 
 nu-mode has many features related to org.  Rather than storing all
 org-related features in one place, nu-mode does enrich its usual
-prompts or even commands given the org-mode context.
+prompts or even commands given the org-mode context.  You can also use
+the <Control+Space> to discover all org mode features.
 
    'Alt+n' new prompt allows to capture a note.  Using open-prompt, it
 is possible to open agenda.  'Alt+s' prompt will allow you to
@@ -503,19 +499,15 @@ does correspond to what org-modes binds to Alt+Tab, which is an
 *awful* choice.  It is also possible to delete a node from the delete
 prompt.  One can org-mark-ring-goto using goto prompt.
 
-   The Control+Space Control+Space shortcut will trigger what would
-have been Control+c Control+c.  Note that shift selectections do not
-work with org-mode.
+   Note that shift selectections do not work with org-mode.
 
 6.3 Major-mode : magit
 ======================
 
-Use Alt+s, ie save-prompt, to gain access to magit-status.
+Use <Control+s>, ie save-prompt, to gain access to magit-status.
 
-   A work has started to integrate magit properly.  For example,
-replace prompt will offer to toggle whether next commit has -amend.
-It is possible to use new prompt to create branch, open prompt to open
-branch manager, and so on.
+   Magit already is very easy to use, since you might press <h> to
+discover its features.
 
 6.4 Major-mode : term
 =====================
@@ -586,9 +578,7 @@ purpose.  Simply put below lines on your .emacs:
 
    Obviously this only fixes the basic paddle.  Backward and Foward
 word are different, but fixing the paddle is fine.  An alternative is
-to change emacs-nu paddle to be h j k l
-
-     (nu-setup-vi-paddle)
+to change emacs-nu paddle to be h j k l.
 
 6.9 Other : autojump
 ====================
@@ -609,12 +599,20 @@ customization is to be done in other ways.
 7.1 I don't like the Alt modifier for the paddle
 ================================================
 
+below code will make h j k l behave like like VI. Beggining of line
+become i.
+
+     (nu-setup-vi-paddle)
+
+7.2 I don't like the Alt modifier for the paddle
+================================================
+
 Easy.  Do bind Control+ [ijkluo] to the movement.  Eventually bind Alt
 + the same to delete, or rely on alt+d.  You loose some consistency,
 since alt key is suppose to offer *any function*.  (On the other hand,
 you could remap Alt+o to open prompt.)
 
-7.2 Prompts
+7.3 Prompts
 ===========
 
 If you want prompts to automatically prompt a buffer rather than just
@@ -629,10 +627,20 @@ to offer to call-interactively the functions being part of the prompt.
 Be warned, you'll have to handle a huge amounts of details however if
 you want your function to be pleasant =)
 
-7.3 Main keymap
-===============
+7.4 Main keymap & free keys
+===========================
 
-If you want to amend nu-mode keymap, amend nu-keymap.
+If you want to amend nu-mode keymap, amend nu-keymap.  It is part of
+minor-mode-overrind-map-alist.
+
+   Free keys are : - <Control+c> + somme letter.  This is the standar
+Emacs convention.
+
+7.5 Completion
+==============
+
+Please refer to chapter Completion for ivy & helm.  Nu-mode might
+later integrate more completion systems.
 
 
 File: nu-mode.info,  Node: Drawbacks & Limits,  Next: Contributing,  Prev: Customization,  Up: Top
@@ -1152,15 +1160,15 @@ permit their use in free software.
 Tag Table:
 Node: Top716
 Node: Overview1064
-Node: Files Buffers Windows12456
-Node: Completion14249
-Node: Hacking14751
-Node: Advanced Usage15453
-Node: Integration17477
-Node: Customization23338
-Node: Drawbacks & Limits24762
-Node: Contributing25041
-Node: GNU Free Documentation License25427
+Node: Files Buffers Windows12462
+Node: Completion14255
+Node: Hacking14757
+Node: Advanced Usage15459
+Node: Integration17402
+Node: Customization22785
+Node: Drawbacks & Limits24712
+Node: Contributing24991
+Node: GNU Free Documentation License25377
 
 End Tag Table
 
