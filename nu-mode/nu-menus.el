@@ -519,49 +519,28 @@ But if mark is active, exchange point and mark."
   (nu-prompt-for-keymap ctl-x-map))
 
 
-;; emacs-nu help page        emacs manual
-;; info                      describe-function
-;; search in documentation   describe-key
-;; describe-mode             describe-variable
-
-(defhydra hydra-nu-help-menu (:color pink
-                              :hint nil)
-"
-~~~~~~~~~~~~~  WELCOME TO EMACS NU HELP! ~~~~~~~~~~~~~~~
-Press q to quit any prompt. Press Alt+q to quit commands
-
-MOST FREQUENT HELP FUNCTIONS
---------------------------------------------------------
-_f_ describe function       _j_   describe-variable
-_k_ describe key (then type a key or shortcut)
-_<SPC>_ where-is
-_u_ describe keymap  (for example nu-keymap)
-_i_ info directory
-
-ALL HELP FUNCTIONS : _h_ prompt for help map
--------------------------------------------------------
-
-OTHER
--------------------------------------------------------
-_o_ describe bindings       _m_   describe mode
-_y_ find function on key
-"
-  ("i" info-directory :exit t)
-  ("f" nu-describe-function :exit t)
-  ("j" nu-describe-variable :exit t)
-  ("k" describe-key :exit t)
-  ("u" describe-keymap :exit t)
-  ("o" describe-bindings :exit t)
-  ("m" describe-mode :exit t)
-  ("y" find-function-on-key :exit t)
-  ("<SPC>" where-is :exit t)
-  ("h" (nu-buffer-prompt-for-keymap help-map) :exit t))
-
-
 (defun nu-help-prompt ()
   (interactive)
-  (define-key help-map (kbd "*") 'nu-help)
-  (hydra-nu-help-menu/body))
+  (lv-message
+    (concat
+     "
+       Press any key to quit this message. Then,
+     
+     - "
+     (propertize "Alt+q" 'face 'nu-face-shortcut)
+       " does cancel any pending command.
+     - " (propertize "Alt+d" 'face 'nu-face-shortcut) " then "
+         (propertize "Return" 'face 'nu-face-shortcut) " to execute command.
+     - To obtain a CheatSheet, press " (propertize "Control+h" 'face 'nu-face-shortcut) " then "
+                                       (propertize "space"     'face 'nu-face-shortcut)
+       "
+       " (propertize "This uses which-key-mode." 'face 'italic)  "
+     - "
+       (propertize "Control+h" 'face 'nu-face-shortcut)
+       " offers all help functions
+        like describe-function, describe-variable."))
+  (read-key "")
+  (lv-delete-window))
 
 
 (defun nu-populate-find-map ()
@@ -851,15 +830,15 @@ both navigate, access to essential prompts, and control the terminal."
 			      :hint nil
 			      :pre (setq nu-major-mode major-mode))	     
 "
-|  _q_ quit any prompt
+|  _q_ quit any prompt       _h_ HELP
    
-|  _i_: open file   _j_: recent     _k_: kill buffer   _l_: switch buffer
-|  _M-i_ : ibuffer  _u_: bookmarks  _m_: maximize
+|  _i_: open file  _j_: recent    _k_ill buffer _l_:switch buffer
+|  _M-i_:ibuffer _u_: bookmarks _m_aximize
    
-|  _a_ select       _r_ replace    _o_ open     _g_ goto
-|  _h_ help         _f_ find       _p_ print    _s_ save
-|  _n_ new          _v_ insert     _b_ bold     _w_ window
-|  _x_ delete       _t_ tab        _Q_ quit
+|  _a_ select       _r_eplace   _o_pen         _g_oto
+|  _n_ new          _f_ind      _p_rint        _s_ave
+|  _v_ insert       _b_old      _w_indow
+|  _x_ delete       _t_ab       _Q_uit
    
 |  _<SPC>_ : mode specific            _e_ : Ctrl-x-map
 |  _<RET>_ execute command            _z_ :  undo tree
@@ -884,8 +863,7 @@ both navigate, access to essential prompts, and control the terminal."
 		(nu-full-prompt-for-keymap nu-open-map)) :exit t)
     ("g" (progn (nu-populate-goto-map)
 		(nu-full-prompt-for-keymap nu-goto-map)) :exit t)
-    ("h" (progn (nu-populate-help)
-		(nu-full-prompt-for-keymap nu-help-map)) :exit t)
+    ("h" nu-help-prompt :exit t)
     ("f" (progn (nu-populate-find-map)
 		(nu-full-prompt-for-keymap nu-find-map)) :exit t)
     ("p" (progn (nu-populate-print)

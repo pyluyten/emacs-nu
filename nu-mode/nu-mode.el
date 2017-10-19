@@ -100,7 +100,13 @@
    (define-key nu-keymap (kbd "C-g") 'nu-goto-prompt)
    (define-key nu-menu-map (kbd "g") 'nu-goto-map)
 
-   (define-key nu-keymap (kbd "C-h") 'nu-help-prompt)
+   ; C-h is help-map. Keep this.
+   ; but override some
+   (define-key help-map "f" 'nu-describe-function)
+   (define-key help-map "v" 'nu-describe-variable)
+
+   ; SPC calls nu-keymap. With which-key it's a CheatSheet.
+   (define-key help-map (kbd "<SPC") nu-keymap)
    (define-key nu-menu-map (kbd "h") 'help-map)
 
    ; C-m stands for enter.
@@ -190,6 +196,7 @@ eg dired, magit, helm, ...)"
 
 	(delete-selection-mode 1)
 	(global-undo-tree-mode)
+        (which-key-mode)
 
         ;; completion system
 	;; see nu-setup ; ivy/helm/basic
