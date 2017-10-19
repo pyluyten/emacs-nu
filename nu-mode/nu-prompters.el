@@ -118,14 +118,6 @@ This is a common key to _all_ prompts."
  "describe the nu prompt function point is at."
  (describe-function (function-called-at-point)))
 
-(defface nu-face-shortcut
-  '((((class color) (background light))
-     :foreground "#0f4b77" :bold t)
-    (((class color) (background dark))
-     :foreground "#b1d5ef" :bold t))
-  "nu-face-shortcut")
-
-
 
 (defun nu-describe-bind (bind)
 "This function is used with map-keymap.

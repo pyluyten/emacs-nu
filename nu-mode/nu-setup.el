@@ -11,6 +11,13 @@
 (defalias 'nu-full-prompt-for-keymap 'nu-lv-prompt-for-keymap)
 
 
+(defface nu-face-shortcut
+  '((((class color) (background light))
+     :foreground "#0f4b77" :bold t)
+    (((class color) (background dark))
+     :foreground "#b1d5ef" :bold t))
+  "nu-face-shortcut")
+
 ;;
 ;; PADDLE
 ;;
