@@ -1,6 +1,6 @@
 (define-package
   "nu-mode"
-  "0.4"
+  "0.5"
   "Modern Emacs Prompts Based Keybinding."
   '((undo-tree "0.6.5")
     (help-fns+ "0")
