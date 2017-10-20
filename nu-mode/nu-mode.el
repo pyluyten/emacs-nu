@@ -200,7 +200,7 @@ eg dired, magit, helm, ...)"
         (which-key-mode)
 
         ;; completion system
-	;; see nu-setup ; ivy/helm/basic
+	;; see nu-setup
         (nu-setup-basic)
 
         ; populate all prompts

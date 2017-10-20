@@ -77,21 +77,9 @@
  (nu-push-paddle-to-keymap))
 
 
-(defun nu-setup-ivy ()
-  ;; completion prompt setup.
-  (defalias 'nu-completion-prompt-for-keymap 'nu-ivy-prompt-for-keymap)
-
-  ;; usual commands.
-  (defalias 'nu-search 'swiper)
-  (defalias 'nu-M-x 'counsel-M-x)
-  (defalias 'nu-find-files 'counsel-find-file)
-  (defalias 'nu-buffers-list 'ivy-switch-buffer)
-  (defalias 'nu-describe-function 'counsel-describe-function)
-  (defalias 'nu-describe-variable 'counsel-describe-variable)
-  (defalias 'nu-bookmarks 'list-bookmarks)
-  (defalias 'nu-recentf 'ivy-recentf)
-  (defalias 'nu-browse-kill-ring 'counsel-yank-pop))
-
+;; framework
+;; here is just basic framework
+;; other files define alternatives.
 
 (defun nu-setup-basic ()
   ;; completion prompt setup.

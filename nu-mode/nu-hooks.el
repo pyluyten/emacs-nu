@@ -55,32 +55,6 @@ Minibuffer should use same keys are fundamental mode."
   (define-key minibuffer-local-map (kbd "M-<dead-circumflex>") 'previous-history-element)
   (define-key minibuffer-local-map (kbd "M-$") 'next-history-element)
 
-  ; if ivy
-  (if (boundp 'ivy-minibuffer-map)
-      (progn
-	;; standard ivy map
-
-        (define-key ivy-minibuffer-map (kbd "M-h") 'nu-help-for-ivy)
-        (define-key ivy-minibuffer-map (kbd "M-v") 'ivy-yank-word)
-	(define-key ivy-minibuffer-map (kbd "M-i") 'ivy-previous-line)
-	(define-key ivy-minibuffer-map (kbd "M-k") 'ivy-next-line)
-        (define-key ivy-minibuffer-map (kbd "M-s") 'ivy-dispatching-done)
-	(define-key ivy-minibuffer-map (kbd "M-m") 'ivy-immediate-done)
-	(define-key ivy-minibuffer-map (kbd "M-g") 'ivy-partial-or-done)
-	(define-key ivy-minibuffer-map (kbd "M-n") 'ivy-avy)
-        (define-key ivy-minibuffer-map (kbd "M-p") 'ivy-insert-current)
-	(define-key ivy-minibuffer-map (kbd "M-d") 'hydra-ivy/body)))
-
-  (if (boundp 'swiper-map)
-       (progn
-
-        ;; swiper
-        (define-key swiper-map (kbd "M-r") 'swiper-query-replace)
-        (define-key swiper-map (kbd "M-d") 'swiper-recenter-top-bottom)
-        (define-key swiper-map (kbd "M-n") 'swiper-avy)
-        (define-key swiper-map (kbd "M-c") 'swiper-mc)
-        (define-key swiper-map (kbd "M-s") 'swiper-toggle-face-matching)))
-
   (nu-make-overriding-map minibuffer-local-map nil "M-q" 'abort-recursive-edit))
 
 (defun nu-prepare-for-term-raw ()
@@ -142,38 +116,6 @@ Still, some keys here help."
   "restore nu"
   (lv-delete-window)
   (setcdr (assoc 'nu-mode minor-mode-map-alist) nu-keymap))
-
-
-(defun nu-help-for-ivy ()
-  (interactive)
-  (lv-message
-   "
-Ivy is a completion system.
-Type & 'candidates' in the bottom window will be selected.
-Press <RETURN> to confirm.
-
-If you are doing 'save as' or other operations that needs
-to validate what you input - rather than candidates -
-then press <Alt+m>.
-
-For more features please describe-keymap
-ivy-minibuffer-map."))
-
-(defun nu-prepare-for-ivy ()
-  (lv-message
-   (concat
-    "Type or press "
-    (propertize "M-h" 'face 'nu-face-shortcut)
-    " for help, "
-    (propertize "M-q" 'face 'nu-face-shortcut)
-    " to quit "
-   (propertize "M-m" 'face 'nu-face-shortcut)
-   " to validate current input.")))
-
-(defadvice ivy-read (before nu-prepare-for-ivy-read-advice ())
-  (nu-prepare-for-ivy))
-
-(ad-activate 'ivy-read)
 
 
 (defun nu-add-mark-hook ()

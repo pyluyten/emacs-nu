@@ -29,7 +29,7 @@
 (require 'nu-prompters-buffer)
 (require 'nu-prompters-completing-read)
 (require 'nu-helm)
-(require 'nu-prompters-ivy)
+(require 'nu-ivy)
 (require 'nu-prompters-light)
 (require 'nu-prompters-lv)
 
