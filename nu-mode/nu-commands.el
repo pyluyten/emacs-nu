@@ -383,7 +383,7 @@ If no argument given, copy 1 char."
   (interactive)
   (which-key-mode 1)
   (define-key nu-keymap (kbd "C-c") nil)
-  (run-with-timer 5 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
+  (run-with-timer 5 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-prompt)
   (setq unread-command-events
 	(listify-key-sequence "\C-c")))
 
