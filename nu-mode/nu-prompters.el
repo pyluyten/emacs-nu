@@ -156,7 +156,7 @@ and drect keys from both nu-keymap / major-mode."
 	   ((string= nu-describe-bind-mode "lv")
 	    (setq nu-lv-row (symbol-name bind)))
 	   
-	  ((string= nu-describe-bind-mode "helm")
+	  ((string= nu-describe-bind-mode "completion")
 	   (setq candidate (symbol-name bind))))
 
 	; insert shortcuts _from the prompt_
@@ -212,7 +212,7 @@ and drect keys from both nu-keymap / major-mode."
 	 ((string= nu-describe-bind-mode "lv")
 	  (setq nu-lv-row (concat nu-lv-row " - or " all-shortcuts)))
 
-	 ((string= nu-describe-bind-mode "helm")
+	 ((string= nu-describe-bind-mode "completion")
           (setq candidate (concat candidate " - or " all-shortcuts))))))
    
    ; now it's over. Just append a \n...
@@ -222,7 +222,7 @@ and drect keys from both nu-keymap / major-mode."
 
     ((string= nu-describe-bind-mode "lv")
      (setq nu-lv-message (concat nu-lv-message nu-lv-row "\n")))
-    ((string= nu-describe-bind-mode "helm")
+    ((string= nu-describe-bind-mode "completion")
      (setq nu-keymap-list (cons candidate nu-keymap-list))))))))
 
 

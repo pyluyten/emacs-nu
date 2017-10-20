@@ -109,21 +109,6 @@
   (defalias 'nu-browse-kill-ring 'browse-kill-ring))
 
 
-(defun nu-setup-helm ()
-  ;; completion prompt setup.
-  (defalias 'nu-completion-prompt-for-keymap 'nu-helm-prompt-for-keymap)
-
-  ;; usual commands.  
-  (defalias 'nu-search 'nu-isearch-forward-regexp)
-  (defalias 'nu-M-x 'helm-M-x)
-  (defalias 'nu-find-files 'helm-find-files)
-  (defalias 'nu-buffers-list 'helm-buffers-list)
-  (defalias 'nu-describe-function 'describe-function)
-  (defalias 'nu-describe-variable 'describe-variable)
-  (defalias 'nu-bookmarks 'helm-bookmarks)
-  (defalias 'nu-recentf 'helm-recent))
-
-
 (setq aw-keys '(?k ?l ?j ?i ?u ?o ?a ?k ?p ?m))
 
 (defvar aw-dispatch-alist

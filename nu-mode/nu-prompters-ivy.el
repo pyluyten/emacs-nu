@@ -23,7 +23,7 @@
  (interactive)
  (setq nu-current-keymap keymap
        nu-keymap-list nil
-       nu-describe-bind-mode "helm")
+       nu-describe-bind-mode "completion")
    (map-keymap 'nu-insert-binding-row keymap)
    (setq nu-last-command
       (intern-soft
