@@ -1,30 +1,11 @@
-* Implement nu-mode on top of...
+Last review : 2017 October 20th
 
-- Implement a nu-mode-evil.el to evil-define-keys.
-- Implement an 'on top of ErgoEmacs' nu-mode.
+* Integration (emacs nu 1)
 
+Now that emacs-nu starts to be mature, the most lacking features becomes to be : integration with other modes. Other completiosn like ido, snippets should be integrated, Project management, and more. Some hydra might appear, or not.
 
-* Prompts related feature
+The current code refactoring will help making clear what is, or not, available in emacs-nu. Of course everything is available, but not necessarily integrated. Integration mechanism might evolve, too, if useful, like adding some defmacros to emacs-nu.
 
-Prompts should be more dynamic. Depending on the current context, more keys could be changed.
+* Immediate Keys & Ergonomy / Dvorak (emacs nu 2)
 
-** Customization
-
-Some friendly customization might be offered.
-
-for example
-
-- alt f is a direct shortcut *for one of the control f prompts commands*. The user could assign, *from the prompt*, which function to run from alt f. This, for all prompts.
-
-- alt f is a direct shortcut, control f a prompt. The user could decide to 1) always use control for prompts, 2) always use alt for prompts, 3) decide for each single key.
-  Appart coding, this needs some thinking, since not all keys are both prompts + direct shortcuts.
-
-
-* Integration
-
-Integration with modes could be improved.
-- I almost skipped ido.
-- Org-mode integration is very basic.
-- There is no way to use clang to parse symbols and build a tag table as of today. 
-  This point is crucial for IDE.
-- Inserting snippets will be necessary, too.
+The control keys, & the "do-prompt" main entry point, should remain associated with letters as in modern conventions. But the alt keys are thought for ergonomy. As of today, menu-associated keys use the Alt for an immediate function regarding this same menu. But this does not make sense for Dvorak or other layouts. Also, even for Azerty/Qwerty, while this is rather ergonomic because of the navigation paddle & the do-prompt, is not based on statistics like ErgoEmacs. It might be possible to have best of both worlds, but this requires first integration to be more completion & emacs nu a little more mature. 
