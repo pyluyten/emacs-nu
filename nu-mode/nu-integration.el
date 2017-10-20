@@ -159,4 +159,65 @@ Still, some keys here help."
 
 
 
+;;
+;; isearch
+;;
+
+(defun nu-prepare-for-isearch ()
+  "Vanilla search feature."
+  (define-key isearch-mode-map (kbd "M-f") 'isearch-repeat-forward)
+  (define-key isearch-mode-map (kbd "M-k") 'isearch-repeat-forward)
+  (define-key isearch-mode-map (kbd "M-i") 'isearch-repeat-backward)
+  (define-key isearch-mode-map (kbd "M-p") 'isearch-ring-retreat)
+  (define-key isearch-mode-map (kbd "M-n") 'isearch-ring-advance)
+  (define-key isearch-mode-map (kbd "M-v") 'isearch-yank-kill)
+  (define-key isearch-mode-map (kbd "M-a") 'isearch-yank-word-or-char)
+  (define-key isearch-mode-map (kbd "M-g") 'isearch-yank-line)
+  (define-key isearch-mode-map (kbd "M-h") '(lambda ()
+					     (interactive)
+					     (describe-keymap isearch-mode-map t)))
+  (define-key isearch-mode-map (kbd "M-s") 'isearch-edit-string)
+  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
+  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
+
+  (lv-message "M-f or M-k / M-i : search forward / backward.\nM-q or M-d cancel search. M-h for more help"))
+
+
+
+(defun nu-isearch-exit ()
+  ""
+  (lv-delete-window))
+
+
+(add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
+(add-hook 'isearch-mode-end-hook 'nu-isearch-exit)
+
+
+
+;;
+;; ibuffer
+;;
+
+
+(defvar ibuffer-mode-map)
+
+(defun nu-prepare-for-ibuffer ()
+  ""
+  (define-key ibuffer-mode-map (kbd "h") ibuffer-mode-map)
+
+  (define-key ibuffer-mode-map (kbd "M-i") 'ibuffer-backward-line)
+  (define-key ibuffer-mode-map (kbd "M-k") 'ibuffer-forward-line)
+  (define-key ibuffer-mode-map (kbd "M-l") 'ibuffer-visit-buffer)
+  (define-key ibuffer-mode-map (kbd "M-j") 'ibuffer-visit-buffer-other-window-noselect)
+
+  ; cancel bindings then make override.
+  (nu-make-overriding-map ibuffer-mode-map
+			  '("C-o" "C-y" "M-g" "M-n" "M-p" "M-s")
+			  nil))
+
+
+(add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
+
+
+
 (provide 'nu-integration)

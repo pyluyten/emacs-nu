@@ -18,8 +18,6 @@
 
 (require 'nu-common)
 (require 'nu-integration)
-(require 'nu-isearch)
-(require 'nu-ibuffer)
 (require 'nu-setup)
 (require 'nu-prompters-lv)
 (require 'nu-org)
