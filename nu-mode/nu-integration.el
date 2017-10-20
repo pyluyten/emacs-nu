@@ -159,4 +159,4 @@ Still, some keys here help."
 
 
 
-(provide 'nu-hooks)
+(provide 'nu-integration)

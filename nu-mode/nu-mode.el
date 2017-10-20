@@ -17,7 +17,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 (require 'nu-common)
-(require 'nu-hooks)
+(require 'nu-integration)
 (require 'nu-isearch)
 (require 'nu-ibuffer)
 (require 'nu-setup)
