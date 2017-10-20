@@ -288,4 +288,255 @@ This function ensures no error can occur inside the process..."
 
 (ad-activate 'repeat)
 
+
+
+
+
+
+
+
+;;
+;; completing read prompt
+;;
+
+(defun nu-completing-read-prompt-for-keymap (keymap)
+  "Use completing read to prompt for a keymap."
+ (interactive)
+ (setq nu-current-keymap keymap
+       nu-keymap-list nil
+       nu-describe-bind-mode "completion")
+   (map-keymap 'nu-insert-binding-row keymap)
+   (setq nu-last-command
+      (intern-soft
+          (replace-regexp-in-string "\\(\\w\\) .*" "\\1"
+             (completing-read "Execute :" nu-keymap-list :must-match t))))
+   (ignore-errors (call-interactively nu-last-command))
+   (setq nu-repeat-prompt nil))
+
+
+;;
+;; light prompt
+;;
+
+
+(defun nu-light-prompt-for-keymap  (keymap &optional describe)
+"Light prompt for a keymap. Toggle buffer-prompt with ?"
+  (interactive)
+  (setq nu-current-keymap keymap
+	nu-major-mode major-mode
+	nu-current-local-map (current-local-map))
+  
+  (let* ((input nil)
+         (defn nil)
+         (key)
+         (local-map (make-sparse-keymap)))
+    (setcdr local-map keymap)
+    (define-key local-map [t] 'undefined)
+  (catch 'outside
+    (while (not input)
+      ; read-key-sequence : in order to offer the user to enter
+      ; the sequence he wants, we first need to activate the map
+      ; this is why we make the keymap overriding.
+      ; - as opposed to directly trigger the mapped func.
+      ; after this, we're parsing the sequence to check
+      ; if we should look for the mapped func
+      ; or just do something else....
+
+      (nu-add-keymap keymap)
+      (setq key (read-key-sequence-vector
+		  (concat
+		      "Enter a key / "
+                       (propertize "SPC" 'face 'nu-face-shortcut)
+                       " for completion / "
+                       (propertize "TAB" 'face 'nu-face-shortcut)
+		       " for list / "
+		       (propertize "q" 'face 'nu-face-shortcut)
+		       " to quit "
+		       (propertize ": " 'face 'nu-face-shortcut)) t))
+      (nu-remove-keymap keymap)
+      (cond
+        ; allow to repeat prompt
+        ((~nu-check-vector key "+" t)
+         (setq nu-repeat-prompt t))
+
+        ; check for tab ; with 9 i try to fix a bug on some platforms...
+        ((or (~nu-check-vector key 'tab) (~nu-check-vector key 9))
+                (nu-full-prompt-for-keymap keymap))
+
+        ((~nu-check-vector key " " t)
+	 (nu-completion-prompt-for-keymap keymap)
+               (throw 'outside "another prompt is used."))
+
+        ; check for negative / digit-argument.
+        ((~nu-check-vector key "-" t)
+           (cond ((integerp current-prefix-arg)
+               (setq current-prefix-arg (- current-prefix-arg)))
+              ((eq current-prefix-arg '-)
+               (setq current-prefix-arg nil))
+              (t
+               (setq current-prefix-arg '-))))
+
+        ; digits
+         ((~nu-check-vector key "[0123456789]" t t)
+          (cond
+            ((eq current-prefix-arg '-)
+             (setq current-prefix-arg (- (string-to-number (byte-to-string (elt key 0))))))
+            ((integerp current-prefix-arg)
+             (setq current-prefix-arg (+ (string-to-number (byte-to-string (elt key 0)))
+                                         (* current-prefix-arg 10))))
+             (t
+              (setq current-prefix-arg (string-to-number (byte-to-string (elt key 0)))))))
+       (t
+         (progn
+          (setq defn (lookup-key local-map key))
+
+          ; run the func. Repeat if asked.
+          (if (or (not nu-repeat-prompt)
+                  (eq defn nil))
+            (setq input t))
+          (if defn
+             (if describe
+                (describe-function defn)
+                (setq nu-last-command defn)
+                (ignore-errors
+                   (call-interactively defn)))
+             ; if no func, make sure not to repeat.
+            (setq nu-repeat-prompt nil)))))) "normal exit value")))
+
+
+
+;;
+;; buffer prompt
+;;
+
+
+; buffer-prompt is a heavy description
+; of a prompt keymap.
+; it uses *Help* buffer
+; and was previously
+; the standard nu-mode prompter
+(defun nu-buffer-prompt-for-keymap (keymap &optional describe)
+ "Help to choose a key from a keymap
+
+If describe arg is t, only describe-function."
+
+ ; map-keymap has no way to receive
+ ; more than two args
+ ; we cannot easily communicate
+ ; to this the keymap we are parsing (!)
+ ; thus, use a global var
+ ;
+ ; also, include major mode keys.
+ (setq nu-current-keymap keymap
+       nu-describe-bind-mode "buffer")
+ 
+ (let* ((key)
+        (defn)
+        (prefixhelp)
+        (new-frame)
+        (prev-frame (selected-frame))
+        (config (current-window-configuration))
+        (local-map (make-sparse-keymap)))
+ (setcdr local-map keymap)
+ (define-key local-map [t] 'undefined)
+
+ (with-help-window (help-buffer)
+  (with-current-buffer "*Help*"
+      (if (eq nil current-prefix-arg)
+          (setq prefixhelp "X")
+          (setq prefixhelp current-prefix-arg))
+   (if describe
+       (insert
+"In a standard prompt, press the associated key to run the function.
+Use space or del to scroll down or up.
+Press ? to obtain this screen.
+
+From this prompt, press the associated key
+to describe the function.\n")
+     (insert
+	  (concat
+               (propertize (format "Prefix = %s" prefixhelp) 'face 'shadow)
+               (propertize "\nPress ? for help or to describe function\n" 'face 'italic))))
+   (insert (concat "Major mode = " (symbol-name nu-major-mode) "\n"))
+   (map-keymap 'nu-insert-binding-row keymap)
+   (insert "\n\n\n"))
+
+
+ (switch-to-buffer-other-window "*Help*")
+ (setq new-frame (window-frame (selected-window))))
+
+ (setq cursor-in-echo-area t)
+ (setq input nil)
+ (setq defn nil)
+   (while (not input)
+      (setq key (read-key-sequence-vector (propertize "Enter a key or ? :" 'face 'italic) t))
+      (cond
+
+       ; check if the user needs to scroll the help. Do not break loop.
+       ((~nu-check-vector key ?\d nil)
+        (ignore-errors
+          (scroll-down nil)))
+       ((~nu-check-vector key ?\s nil)
+        (ignore-errors
+          (scroll-up nil)))
+
+       ; allow to repeat prompt
+       ((~nu-check-vector key "+" t)
+          (setq nu-repeat-prompt t))
+
+       ; check for negative / digit-argument.
+       ((~nu-check-vector key "-" t)
+        (cond ((integerp current-prefix-arg)
+               (setq current-prefix-arg (- current-prefix-arg)))
+              ((eq current-prefix-arg '-)
+               (setq current-prefix-arg nil))
+              (t
+               (setq current-prefix-arg '-)))
+
+       (with-current-buffer "*Help*"
+         (goto-char (point-min))
+         (read-only-mode -1)
+         (while (re-search-forward "\\`Prefix = .*?\n" nil t)
+         (replace-match (propertize (format "Prefix = %s\n" current-prefix-arg) 'face 'underline)))))
+
+       ((~nu-check-vector key "[0123456789]" t t)
+          (cond
+            ((eq current-prefix-arg '-)
+             (setq current-prefix-arg (- (string-to-number (key-description key)))))
+            ((integerp current-prefix-arg)
+             (tsetq current-prefix-arg (+ (string-to-number (key-description key))
+                                         (* current-prefix-arg 10))))
+             (t
+              (setq current-prefix-arg (string-to-number (key-description key)))))
+       (with-current-buffer "*Help*"
+         (goto-char (point-min))
+         (read-only-mode -1)
+         (while (re-search-forward "\\`Prefix = .*?\n" nil t)
+         (replace-match (propertize (format "Prefix = %s\n" current-prefix-arg) 'face 'underline)))))
+
+        ; now, break the loop, no matter a func has been found or not.
+        ; eg the user can type not-mapped key to quit. "q" is never boundp.
+
+       (t
+         (progn
+         (setq defn (lookup-key local-map key))
+         (message "")
+         (set-window-configuration config)
+
+         ; run the func. Repeat if asked.
+         (if (or (not nu-repeat-prompt)
+                 (eq defn nil))
+           (setq input t))
+         (if defn
+            (if describe
+                (describe-function defn)
+                (setq nu-last-command defn)
+                (ignore-errors
+                   (call-interactively defn)))
+             ; if no func, make sure not to repeat.
+            (setq nu-repeat-prompt nil))))))))
+
+
+
+
 (provide 'nu-prompters)

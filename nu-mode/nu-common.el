@@ -26,12 +26,10 @@
 (defvar nu-menu-map (make-sparse-keymap) "Nu Menu Keymap")
 
 (require 'nu-prompters)
-(require 'nu-prompters-buffer)
-(require 'nu-prompters-completing-read)
+(require 'nu-prompters-lv)
 (require 'nu-helm)
 (require 'nu-ivy)
-(require 'nu-prompters-light)
-(require 'nu-prompters-lv)
+
 
 ; external parts
 (require 'transpose-frame) ; play with frames
