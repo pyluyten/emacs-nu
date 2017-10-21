@@ -143,6 +143,8 @@ Still, some keys here help."
 
 (eval-after-load "undo-tree"
   '(progn
+     (define-key undo-tree-visualizer-mode-map (kbd "h") undo-tree-visualizer-mode-map)
+
      (define-key undo-tree-visualizer-mode-map (kbd "i") 'undo-tree-visualize-undo)
      (define-key undo-tree-visualizer-mode-map (kbd "k") 'undo-tree-visualize-redo)
      (define-key undo-tree-visualizer-mode-map (kbd "j") 'undo-tree-visualize-switch-branch-left)
