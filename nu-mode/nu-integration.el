@@ -227,7 +227,10 @@ Still, some keys here help."
 ;;
 
   ; the classical one!
-  (define-key bookmark-bmenu-mode-map (kbd "h") bookmark-bmenu-mode-map)
+(eval-after-load "bookmark"
+  '(progn
+    (define-key bookmark-bmenu-mode-map (kbd "h") bookmark-bmenu-mode-map)))
+
 
 
 (provide 'nu-integration)
