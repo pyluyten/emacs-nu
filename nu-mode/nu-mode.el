@@ -28,6 +28,28 @@
 
 (defvar nu-menu-map)
 
+(defvar nu-mode-show-welcome-screen
+"If true, nu-mode does display a help buffer at startup.")
+
+(defun nu-mode-create-welcome-buffer ()
+  ""
+  (with-current-buffer (get-buffer-create "*nu-mode-welcome*")
+    (insert
+     (concat
+      (propertize "\n Welcome to nu-mode\n\n\n" 'face 'bold)
+      " This screen does provide some help to use nu-mode.\n To disable this screen, put this in your init file\n\n\n"
+      (propertize " (require 'nu-mode)\n (setq nu-mode-show-welcome-screen nil)\n (nu-mode)" 'face 'italic)
+      "\n\n To obtain Help, use "
+      (propertize "Control+h" 'face 'nu-face-shortcut)
+      "\n For example, to obtain a Cheat Sheet, use "
+      (propertize "Control+h Space" 'face 'nu-face-shortcut)
+      "\n\n To enter a command (M-x in vanilla Emacs), use "
+      (propertize "Control+d" 'face 'nu-face-shortcut)
+      " or " (propertize "Alt+d Return" 'face 'nu-face-shortcut)
+      ".\n To quit a command, use "
+      (propertize "Alt+q" 'face 'nu-face-shortcut)))))
+
+
 (defun nu-restore-default-keymap ()
   "Populate nu keymap with defaults."
   (interactive)
@@ -216,10 +238,18 @@ eg dired, magit, helm, ...)"
 	(nu-populate-find-map)
 	(nu-populate-replace)
 
-	(nu-restore-default-keymap))
-					; if disabled
-    (setq nu-state nil)))
+	(nu-restore-default-keymap)
 
+        (if nu-mode-show-welcome-screen
+	  (progn
+	   (nu-mode-create-welcome-buffer)
+	   (setq inhibit-startup-screen t)
+	   (add-hook 'emacs-startup-hook '(lambda ()
+	       (switch-to-buffer "*nu-mode-welcome*")
+	       (setq buffer-read-only t))))))
+
+    ; if disabled
+    (setq nu-state nil)))
 
 (provide 'nu-mode)
 
