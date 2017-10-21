@@ -690,6 +690,17 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "u") 'upcase-word)
   (define-key nu-replace-map (kbd "x") 'nu-rot-reg-or-toggle-rot)
 
+  (define-key nu-replace-map (kbd "x") 'flyspell-mode)
+  (if (bound-and-true-p flyspell-mode)
+      (progn
+         (define-key nu-replace-map (kbd "B") 'flyspell-buffer)
+         (define-key nu-replace-map (kbd "R") 'flyspell-region) ;; in region keys?
+
+         (define-key nu-replace-map (kbd "C") 'flyspell-correct-word-before-point)
+         (define-key nu-replace-map (kbd "A") 'flyspell-auto-correct-word)
+         (define-key nu-replace-map (kbd "E") 'flyspell-goto-next-error)
+         (define-key nu-replace-map (kbd "P") 'flyspell-auto-correct-previous-word)))
+
 
   (if (not (fboundp 'ethan-wspace-untabify))
     (defun ethan-wspace-untabify ()
