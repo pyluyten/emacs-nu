@@ -523,22 +523,18 @@ But if mark is active, exchange point and mark."
   (interactive)
   (lv-message
     (concat
-     "
-       Press any key to quit this message. Then,
-     
-     - "
-     (propertize "Alt+q" 'face 'nu-face-shortcut)
-       " does cancel any pending command.
-     - " (propertize "Alt+d" 'face 'nu-face-shortcut) " then "
-         (propertize "Return" 'face 'nu-face-shortcut) " to execute command.
-     - To obtain a CheatSheet, press " (propertize "Control+h" 'face 'nu-face-shortcut) " then "
-                                       (propertize "space"     'face 'nu-face-shortcut)
-       "
-       " (propertize "This uses which-key-mode." 'face 'italic)  "
-     - "
-       (propertize "Control+h" 'face 'nu-face-shortcut)
-       " offers all help functions
-        like describe-function, describe-variable."))
+      (propertize "\n Welcome to nu-mode\n\n" 'face 'bold)
+      " This screen does provide some help to use nu-mode.\n It is shown at startup.\n To disable this screen, put this in your init file\n\n\n"
+      (propertize " (require 'nu-mode)\n (setq nu-mode-show-welcome-screen nil)\n (nu-mode)" 'face 'italic)
+      "\n\n To obtain Help, use "
+      (propertize "Control+h" 'face 'nu-face-shortcut)
+      "\n For example, to obtain a Cheat Sheet, use "
+      (propertize "Control+h Space" 'face 'nu-face-shortcut)
+      "\n\n To enter a command (M-x in vanilla Emacs), use "
+      (propertize "Control+d" 'face 'nu-face-shortcut)
+      " or " (propertize "Alt+d Return" 'face 'nu-face-shortcut)
+      ".\n To quit a command, use "
+      (propertize "Alt+q" 'face 'nu-face-shortcut)))
   (read-key "")
   (lv-delete-window))
 
@@ -840,26 +836,35 @@ both navigate, access to essential prompts, and control the terminal."
 (defhydra hydra-nu-meta-menu (:color pink
 			      :hint nil
 			      :pre (setq nu-major-mode major-mode))	     
-"
-|  _q_ quit any prompt       _h_ HELP
-   
-|  _i_: open file  _j_: recent    _k_ill buffer _l_:switch buffer
-|  _M-i_:ibuffer _u_: bookmarks _m_aximize
-   
-|  _a_ select       _r_eplace   _o_pen         _g_oto
-|  _n_ new          _f_ind      _p_rint        _s_ave
-|  _v_ insert       _b_old      _w_indow
-|  _x_ delete       _t_ab       _Q_uit
-   
-|  _<SPC>_ : mode specific            _e_ : Ctrl-x-map
-|  _<RET>_ execute command            _z_ :  undo tree
+"\n
+  _q_uit any prompt         _h_: ibuffer
+  
+  open f_i_le  _j_: recent    _k_ill buffer   _m_aximize
+  _u_: bookmarks            _l_: switch buffer
+
+  _M-i_ _M-j_ : goto line, char
+  _M-k_ _M-l_ : goto symbol, word 
+  
+  _a_ select   _r_eplace      _o_pen         _g_oto
+  _n_ new      _f_ind         _p_rint        _s_ave
+  _v_ insert   _b_old         _w_indow
+  _x_ delete   _t_ab          _Q_uit
+  
+  _<SPC>_ mode specific     _e_ Ctrl-x-map
+  _<RET>_ execute command   _z_ undo tree
 "
     ;; paddle direct functions.
     ("i" nu-find-files :exit t)
-    ("M-i" ibuffer :exit t)
     ("l" nu-buffers-list :exit t)
     ("k" kill-buffer :exit t)
     ("j" nu-recentf :exit t)
+
+    ;; paddle avy
+    ("M-i" avy-goto-line :exit t)
+    ("M-j" avy-goto-char :exit t)
+    ("M-k" avy-goto-symbol-1 :exit t)
+    ("M-l" avy-goto-word-1 :exit t)
+
     ("u" nu-bookmarks :exit t)
     ("m" delete-other-windows :exit t)
     ("<SPC>" nu-trigger-mode-specific-map :exit t)
@@ -874,7 +879,7 @@ both navigate, access to essential prompts, and control the terminal."
 		(nu-full-prompt-for-keymap nu-open-map)) :exit t)
     ("g" (progn (nu-populate-goto-map)
 		(nu-full-prompt-for-keymap nu-goto-map)) :exit t)
-    ("h" nu-help-prompt :exit t)
+    ("h" ibuffer :exit t)
     ("f" (progn (nu-populate-find-map)
 		(nu-full-prompt-for-keymap nu-find-map)) :exit t)
     ("p" (progn (nu-populate-print)
