@@ -220,4 +220,12 @@ Still, some keys here help."
 
 
 
+;;
+;; bookmark
+;;
+
+  ; the classical one!
+  (define-key bookmark-bmenu-mode-map (kbd "h") bookmark-bmenu-mode-map)
+
+
 (provide 'nu-integration)
