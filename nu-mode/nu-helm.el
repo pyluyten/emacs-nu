@@ -24,7 +24,7 @@
   ;; completion prompt setup.
   (defalias 'nu-completion-prompt-for-keymap 'nu-helm-prompt-for-keymap)
 
-  ;; usual commands.  
+  ;; usual commands
   (defalias 'nu-search 'nu-isearch-forward-regexp)
   (defalias 'nu-M-x 'helm-M-x)
   (defalias 'nu-find-files 'helm-find-files)
