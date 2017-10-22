@@ -71,6 +71,25 @@
 
 (ad-activate 'nu-prepare-for-minibuffer)
 
+;;
+;; menus override
+;;
+
+(defadvice nu-populate-new-map (after nu-populate-new-map-for-helm ())
+    (define-key nu-new-map (kbd "C-n") 'helm-run-external-command))
+(ad-activate 'nu-populate-new-map)
+
+
+(defadvice nu-populate-open-map (after nu-populate-open-map-for-helm ())
+    (define-key nu-open-map (kbd "o") 'helm-mini)
+    (define-key nu-open-map (kbd "C-r") 'helm-register))
+(ad-activate 'nu-populate-open-map)
+
+(defadvice nu-populate-find-map (after nu-populate-find-map-for-helm ())
+    (define-key nu-find-map (kbd "m") 'helm-imenu))
+(ad-activate 'nu-populate-find-map)
+
+
 ;; helm map
 
 (eval-after-load "helm-mode" ;; TODO = helm-M-x-map

@@ -289,7 +289,6 @@
       (define-key nu-new-map (kbd "b") 'magit-create-branch)
       (define-key nu-new-map (kbd "a") 'magit-annotated-tag)))
 
-  (define-key nu-new-map (kbd "C-n") 'helm-run-external-command)
   (define-key nu-new-map (kbd "h") 'split-window-right)
   (define-key nu-new-map (kbd "i") 'ibuffer-other-window)
   (define-key nu-new-map (kbd "m") 'compose-mail)
@@ -420,18 +419,16 @@ But if mark is active, exchange point and mark."
 
   ;; common case
   (define-key nu-open-map (kbd "B")  'bookmark-jump)
-  (define-key nu-open-map (kbd "C-f")  'find-file-other-window) ; useless now that helm fixes this stuff =)
+  (define-key nu-open-map (kbd "C-f")  'find-file-other-window)
   (define-key nu-open-map (kbd "C-j")   'nu-previous-buffer)
   (define-key nu-open-map (kbd "C-l")  'nu-next-buffer)
   (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer)
-  (define-key nu-open-map (kbd "C-r")  'helm-register)
   (define-key nu-open-map (kbd "a")   'org-agenda)
   (define-key nu-open-map (kbd "b")  'nu-bookmarks)
   (define-key nu-open-map (kbd "f")  'nu-find-files)
-  (define-key nu-open-map (kbd "i")   'ibuffer) ; is better at _reorganizing_ buffers...
+  (define-key nu-open-map (kbd "i")   'ibuffer)
   (define-key nu-open-map (kbd "l")   'nu-buffers-list)
   (define-key nu-open-map (kbd "m")   'menu-bar-read-mail)
-  (define-key nu-open-map (kbd "o")  'helm-mini)
   (define-key nu-open-map (kbd "r")  'nu-recentf)
   (define-key nu-open-map (kbd "R")  'recentf-open-files)
   (define-key nu-open-map (kbd "s") 'org-iswitchb)
@@ -566,7 +563,6 @@ But if mark is active, exchange point and mark."
   ; common keys
   (define-key nu-find-map (kbd "b") 'regexp-builder)
   (define-key nu-find-map (kbd "g") 'rgrep)
-  (define-key nu-find-map (kbd "m") 'helm-imenu)
   (define-key nu-find-map (kbd "o") 'occur)
   (define-key nu-find-map (kbd "t") 'find-tag)
   (define-key nu-find-map (kbd "z") 'nu-find-char))
@@ -775,7 +771,7 @@ both navigate, access to essential prompts, and control the terminal."
 
   ; paddle keys are dedicated to direct functions
   ; either to navigate or do something with term.
-  (define-key nu-term-map (kbd "i") 'helm-buffers-list)
+  (define-key nu-term-map (kbd "i") 'nu-buffers-list)
   (define-key nu-term-map (kbd "k") 'ibuffer)
   (define-key nu-term-map (kbd "l") 'term-line-mode)
 

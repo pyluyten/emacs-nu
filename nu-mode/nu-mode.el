@@ -181,8 +181,7 @@ Still powerful : Trying M-f will prompt for which find related function to run.
 C-a : selection, C-r : replacement, M-s (saving), M-d (deletions),
 M-g (goto), M-v (insertions).
 
-Both direct keys & prompters will adapt to current mode
-eg dired, magit, helm, ...)"
+Both direct keys & prompters will adapt to current mode.)"
   :global t
   :keymap nu-keymap
   :lighter " nu"

@@ -78,10 +78,8 @@ Currently this is only used in order to use read-key-sequence."
 (defvar nu-major-mode nil)
 (defvar nu-lv-message nil)
 
-; for helm
-(defvar nu-keymap-list)
 
-; helm style or buffer style
+(defvar nu-keymap-list)
 (defvar nu-describe-bind-mode)
 
 
@@ -129,7 +127,7 @@ global variable : nu-describe-bind.
 if nu-describe-bind='buffer', then *help*
          buffer is used to describe binding.
 
-if nu-describe-bind = helm, then 
+if nu-describe-bind = completion, then 
        a candidate list is built.
 
 if nu-describe-bind= lv, then a lv
@@ -138,7 +136,7 @@ if nu-describe-bind= lv, then a lv
 This includes symbol name, key(s) from prompt,
 and drect keys from both nu-keymap / major-mode."
 
-  (let* ((candidate)      ;; if helm mode, a list element...
+  (let* ((candidate)      ;; if completion, a list element...
          (keyvect)        ;; keys from the prompt
          (majorkeys)      ;; keys from major mode
 	 (nu-lv-row)         ;; if lv mode, a string...
@@ -160,7 +158,7 @@ and drect keys from both nu-keymap / major-mode."
 	   (setq candidate (symbol-name bind))))
 
 	; insert shortcuts _from the prompt_
-        ; for HELM this is not useful since HELM uses completion       
+
         (setq keyvect (where-is-internal bind (list nu-current-keymap)))
         (if (not (eq nil keyvect))
             (cond
