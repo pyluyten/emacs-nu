@@ -51,8 +51,8 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 * Completion::
 * Hacking::
 * Advanced Usage::
-* Integration::
 * Customization::
+* Integration::
 * Drawbacks & Limits::
 * Contributing::
 * GNU Free Documentation License::
@@ -333,6 +333,53 @@ Note that `where-is` function, which sometimes advertises shortcuts, will not wo
 
 Thus for each function accessible from a prompt, an additional shortcut is created, accessible from @kbd{menu} plus the same @kbd{key} than the prompt, in order to make where-is advertise. Hence, if you read `You can run this command with <menu> r k`, please understand, despite it is also true, that you can also run the command with @kbd{Control-r-k}.
 
+@node Customization
+@chapter Customization
+
+As ususal with Emacs, customization comes down at the very first usage. So even before to describe edition, customization has to be mentioned. There is not a single defcustom inside nu-mode. All customization is to be done in other ways.
+
+@section I prefer VI keys for basic movement
+
+Below code will make h j k l behave like like VI. Beggining of line become i.
+
+@lisp
+(nu-setup-vi-paddle)
+@end lisp
+
+@section I don't like the Alt modifier for the paddle
+While it is easy (simply bind Control+ [ijkluo] to the movement, this is not recommended, since alt key is suppose to offer @strong{any function}.
+
+@section Prompts
+If you want prompts to automatically prompt a buffer rather than just a 'nu-light-prompt-for-keymap, which is the default, use :
+
+@lisp
+  (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
+@end lisp
+
+If you dislike both nu-buffer-prompt-for-keymap and default nu-light-prompt-for-keymap, you might also remove prompt mechanism 
+@lisp (defalias 'nu-prompt-for-keymap 'nu-which-key-prompt-for-keymap)
+@end lisp
+
+This way you maintain the benefit of responsive menus, but meet no more prompts.
+
+Finally you might also write your own prompt. See for example which-key prompt for a simple example.
+
+@section Main keymap & free keys
+If you want to amend nu-mode keymap, amend nu-keymap. It is part of minor-mode-overrind-map-alist.
+
+Free keys are
+@enumerate
+@item @key{Control+c} + somme letter. This is the standard Emacs convention.
+@item @key{Control} or @key{Alt} + punctuation, except $ or ^, as in VI.
+@item @key{Control}+@key{Alt} + anything
+@item @key{Control}+@key{Shift} + anything
+@item @key{Alt}+@key{Shift} + anything
+@end enumerate
+
+@section Completion
+Please refer to chapter Completion for ivy & helm. Nu-mode might later integrate more completion systems.
+
+
 @node Integration
 @chapter Integration
 
@@ -381,13 +428,13 @@ term is a major mode which has two components (sub-modes)
 
 Default (startup) is char mode.
 
-Char mode is like a real terminal. This allows you to do real stuff, including terminal embedded interfaces. On the other hand, shortcuts are not available since keys are directly sent to term. There is an exception however : press control+c (or, control+space) and you will access a unique prompt. This prompt allows you to navigate to other buffers, trigger line-mode, cancel current command, or call another prompt.
+Char mode is like a real terminal. This allows you to do real stuff, including terminal embedded interfaces. On the other hand, shortcuts are not available since keys are directly sent to term. There is an exception however : press @key{Control+c l} (or, @key{Control+space l}) and you will access a unique prompt. This prompt allows you to navigate to other buffers, trigger line-mode, cancel current command, or call another prompt.
 
 Basically in term mode you only run commands, plus navigate.
 
-When you want to select output or navigate more seriously, just use the line sub-mode. In line-mode, nu-keymap is not amended. (TODO : adapt it.) The advantage is to gain nu-keymap + some emulation, obviously on the other hand this is not anymore a full term emulation since keys are not directly sent.
+When you want to select output or navigate more seriously, just use the line sub-mode. In line-mode, nu-keymap is not amended. The advantage is to gain nu-keymap + some emulation, obviously on the other hand this is not anymore a full term emulation since keys are not directly sent.
 
-From line mode, press control+space to gain a prompt to come back to char mode (plus, many other stuff...)
+From line mode, press control+space to gain a dedicated prompt, allowing several terminal related features like returning to char moode.
 
 @section Major-mode : texinfo
 
@@ -403,9 +450,9 @@ God mode works but, is not binded. You would have to assign a key yourself to tr
 
 @section Minor-mode : evil-mode
 
-While nu-mode is not a modal editor, and aims at being the most efficient keymap, sometimes using lot of modifiers might still be harassing. Using vim keymap is feasible : you can activate evil-mode, then switch from evil-state to emacs-state as you want.
+While nu-mode is not a modal editor, and aims at being the most efficient keymap, sometimes using lot of modifiers might still be harassing. Technically using vim keymap is feasible : you can activate evil-mode, then switch from evil-state to emacs-state as you want.
 
-Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, and probably many others. However vim paddle (hjkl for left down up right) and nu-mode paddle (ijkl for up left down right) disagree on three of these four keys! If you want to have evil with nu-mode paddle, I recommend you to make vim paddle similar to nu-mode. Since @key{i} will not be available anymore to insert, use @key{h} for this purpose. Simply put below lines on your .emacs:
+Either make VI normal-state use the nu-mode paddle.
 
 @lisp
 (define-key evil-normal-state-map (kbd "h") 'evil-insert)
@@ -414,53 +461,27 @@ Even while in evil-state, you will enjoy a few nu-mode keys, like Alt+v, Alt+f, 
 (define-key evil-normal-state-map (kbd "k") 'evil-next-line)
 @end lisp
 
-Obviously this only fixes the basic paddle. Backward and Foward word are different, but fixing the paddle is fine.
-An alternative is to change emacs-nu paddle to be h j k l.
+Or, make nu-mode use the VI paddle.
+
+However i would not recommend working like this. nu-mode is thought to work
+in non-modal, modern editing. It does not need modes.
+
+Using vanilla evil or spacemacs might be an alternative.
 
 @section Other : autojump
 
 autojump is part of the keybinding (Control f prompt).
-
-@node Customization
-@chapter Customization
-
-As ususal with Emacs, customization comes down at the very first usage. So even before to describe edition, customization has to be mentioned. There is not a single defcustom inside nu-mode. All customization is to be done in other ways.
-
-@section I don't like the Alt modifier for the paddle
-
-below code will make h j k l behave like like VI. Beggining of line become i.
-
-@lisp
-(nu-setup-vi-paddle)
-@end lisp
-
-@section I don't like the Alt modifier for the paddle
-Easy. Do bind Control+ [ijkluo] to the movement. Eventually bind Alt + the same to delete, or rely on alt+d. You loose some consistency, since alt key is suppose to offer @strong{any function}. (On the other hand, you could remap Alt+o to open prompt.)
-
-@section Prompts
-If you want prompts to automatically prompt a buffer rather than just a 'nu-light-prompt-for-keymap, which is the default, use :
-
-@lisp
-  (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
-@end lisp
-
-If you dislike both nu-buffer-prompt-for-keymap and default nu-light-prompt-for-keymap (why? please report a bug!!), you're free to develop your own function. The only requirement is this function to offer to call-interactively the functions being part of the prompt. Be warned, you'll have to handle a huge amounts of details however if you want your function to be pleasant =)
-
-@section Main keymap & free keys
-If you want to amend nu-mode keymap, amend nu-keymap. It is part of minor-mode-overrind-map-alist.
-
-Free keys are :
-- @key{Control+c} + somme letter. This is the standar Emacs convention.
-
-@section Completion
-Please refer to chapter Completion for ivy & helm. Nu-mode might later integrate more completion systems.
 
 @node Drawbacks & Limits
 @chapter Drawbacks & Limits
 
 @enumerate
 @item There might be bugs on emacs-nu
-@item Emacs-nu is meant for azerty, qwzerty. It would not be very good with other layouts.
+@item Emacs-nu is meant for azerty, qwzerty. It would not be very good with other layouts
+However the plan for other layouts might be simple. Control + key should stick to the mnemonic, like Ctrl+s to display save prompt.
+While immediate keys like Alt+s or, obviously, the paddle Alt+i / Alt+j / Alt+k / Alt+l, should be transposed according to layout.
+Control+h key to display Cheat Sheet, plus prompts, will help memorizing.
+
 @end enumerate
 
 

@@ -31,8 +31,8 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 * Completion::
 * Hacking::
 * Advanced Usage::
-* Integration::
 * Customization::
+* Integration::
 * Drawbacks & Limits::
 * Contributing::
 * GNU Free Documentation License::
@@ -404,7 +404,7 @@ toggle comments.
 definitions.
 
 
-File: nu-mode.info,  Node: Advanced Usage,  Next: Integration,  Prev: Hacking,  Up: Top
+File: nu-mode.info,  Node: Advanced Usage,  Next: Customization,  Prev: Hacking,  Up: Top
 
 5 Advanced Usage
 ****************
@@ -448,9 +448,71 @@ the prompt, in order to make where-is advertise.  Hence, if you read
 it is also true, that you can also run the command with 'Control-r-k'.
 
 
-File: nu-mode.info,  Node: Integration,  Next: Customization,  Prev: Advanced Usage,  Up: Top
+File: nu-mode.info,  Node: Customization,  Next: Integration,  Prev: Advanced Usage,  Up: Top
 
-6 Integration
+6 Customization
+***************
+
+As ususal with Emacs, customization comes down at the very first
+usage.  So even before to describe edition, customization has to be
+mentioned.  There is not a single defcustom inside nu-mode.  All
+customization is to be done in other ways.
+
+6.1 I prefer VI keys for basic movement
+=======================================
+
+Below code will make h j k l behave like like VI. Beggining of line
+become i.
+
+     (nu-setup-vi-paddle)
+
+6.2 I don't like the Alt modifier for the paddle
+================================================
+
+While it is easy (simply bind Control+ [ijkluo] to the movement, this
+is not recommended, since alt key is suppose to offer *any function*.
+
+6.3 Prompts
+===========
+
+If you want prompts to automatically prompt a buffer rather than just
+a 'nu-light-prompt-for-keymap, which is the default, use :
+
+       (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
+
+   If you dislike both nu-buffer-prompt-for-keymap and default
+nu-light-prompt-for-keymap, you might also remove prompt mechanism
+
+   This way you maintain the benefit of responsive menus, but meet no
+more prompts.
+
+   Finally you might also write your own prompt.  See for example
+which-key prompt for a simple example.
+
+6.4 Main keymap & free keys
+===========================
+
+If you want to amend nu-mode keymap, amend nu-keymap.  It is part of
+minor-mode-overrind-map-alist.
+
+   Free keys are
+  1. <Control+c> + somme letter.  This is the standard Emacs
+     convention.
+  2. <Control> or <Alt> + punctuation, except $ or ^, as in VI.
+  3. <Control>+<Alt> + anything
+  4. <Control>+<Shift> + anything
+  5. <Alt>+<Shift> + anything
+
+6.5 Completion
+==============
+
+Please refer to chapter Completion for ivy & helm.  Nu-mode might
+later integrate more completion systems.
+
+
+File: nu-mode.info,  Node: Integration,  Next: Drawbacks & Limits,  Prev: Customization,  Up: Top
+
+7 Integration
 *************
 
 nu-mode is to be responsive - in order for major modes to preserve
@@ -458,7 +520,7 @@ nu-mode philosophy, prompts plus some direct keys will change
 according to the context : mainly major-mode.  More globally, nu-mode
 does integrate with other libraries.
 
-6.1 Major-mode : dired
+7.1 Major-mode : dired
 ======================
 
 As expected, most of vanilla *Dired* keys are respected : these are
@@ -481,7 +543,7 @@ useful inside dired are kept.
    Use 'Control+p' (uniserval-argument) then <s> key to edit the ls
 command.
 
-6.2 Major-mode / Minor-mode : org
+7.2 Major-mode / Minor-mode : org
 =================================
 
 nu-mode has many features related to org.  Rather than storing all
@@ -501,7 +563,7 @@ prompt.  One can org-mark-ring-goto using goto prompt.
 
    Note that shift selectections do not work with org-mode.
 
-6.3 Major-mode : magit
+7.3 Major-mode : magit
 ======================
 
 Use <Control+s>, ie save-prompt, to gain access to magit-status.
@@ -509,7 +571,7 @@ Use <Control+s>, ie save-prompt, to gain access to magit-status.
    Magit already is very easy to use, since you might press <h> to
 discover its features.
 
-6.4 Major-mode : term
+7.4 Major-mode : term
 =====================
 
 term is a major mode which has two components (sub-modes)
@@ -521,41 +583,42 @@ term is a major mode which has two components (sub-modes)
    Char mode is like a real terminal.  This allows you to do real
 stuff, including terminal embedded interfaces.  On the other hand,
 shortcuts are not available since keys are directly sent to term.
-There is an exception however : press control+c (or, control+space)
-and you will access a unique prompt.  This prompt allows you to
-navigate to other buffers, trigger line-mode, cancel current command,
-or call another prompt.
+There is an exception however : press <Control+c l> (or,
+<Control+space l>) and you will access a unique prompt.  This prompt
+allows you to navigate to other buffers, trigger line-mode, cancel
+current command, or call another prompt.
 
    Basically in term mode you only run commands, plus navigate.
 
    When you want to select output or navigate more seriously, just use
-the line sub-mode.  In line-mode, nu-keymap is not amended.  (TODO :
-adapt it.)  The advantage is to gain nu-keymap + some emulation,
-obviously on the other hand this is not anymore a full term emulation
-since keys are not directly sent.
+the line sub-mode.  In line-mode, nu-keymap is not amended.  The
+advantage is to gain nu-keymap + some emulation, obviously on the
+other hand this is not anymore a full term emulation since keys are
+not directly sent.
 
-   From line mode, press control+space to gain a prompt to come back
-to char mode (plus, many other stuff...)
+   From line mode, press control+space to gain a dedicated prompt,
+allowing several terminal related features like returning to char
+moode.
 
-6.5 Major-mode : texinfo
+7.5 Major-mode : texinfo
 ========================
 
 Texinfo has little add-ons to prompts : "print" prompt will offer to
 makeinfo or convert to pdf, and "insert" prompt to texinfo-insert...
 
-6.6 Minor-mode : auto-complete
+7.6 Minor-mode : auto-complete
 ==============================
 
 There isn't much to say.  Auto-complete does integrate well, that's
 all!
 
-6.7 Minor-mode : god-mode
+7.7 Minor-mode : god-mode
 =========================
 
 God mode works but, is not binded.  You would have to assign a key
 yourself to trigger god-mode.
 
-6.8 Minor-mode : evil-mode
+7.8 Minor-mode : evil-mode
 ==========================
 
 While nu-mode is not a modal editor, and aims at being the most
@@ -580,77 +643,25 @@ purpose.  Simply put below lines on your .emacs:
 word are different, but fixing the paddle is fine.  An alternative is
 to change emacs-nu paddle to be h j k l.
 
-6.9 Other : autojump
+7.9 Other : autojump
 ====================
 
 autojump is part of the keybinding (Control f prompt).
 
 
-File: nu-mode.info,  Node: Customization,  Next: Drawbacks & Limits,  Prev: Integration,  Up: Top
-
-7 Customization
-***************
-
-As ususal with Emacs, customization comes down at the very first
-usage.  So even before to describe edition, customization has to be
-mentioned.  There is not a single defcustom inside nu-mode.  All
-customization is to be done in other ways.
-
-7.1 I don't like the Alt modifier for the paddle
-================================================
-
-below code will make h j k l behave like like VI. Beggining of line
-become i.
-
-     (nu-setup-vi-paddle)
-
-7.2 I don't like the Alt modifier for the paddle
-================================================
-
-Easy.  Do bind Control+ [ijkluo] to the movement.  Eventually bind Alt
-+ the same to delete, or rely on alt+d.  You loose some consistency,
-since alt key is suppose to offer *any function*.  (On the other hand,
-you could remap Alt+o to open prompt.)
-
-7.3 Prompts
-===========
-
-If you want prompts to automatically prompt a buffer rather than just
-a 'nu-light-prompt-for-keymap, which is the default, use :
-
-       (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
-
-   If you dislike both nu-buffer-prompt-for-keymap and default
-nu-light-prompt-for-keymap (why?  please report a bug!!), you're free
-to develop your own function.  The only requirement is this function
-to offer to call-interactively the functions being part of the prompt.
-Be warned, you'll have to handle a huge amounts of details however if
-you want your function to be pleasant =)
-
-7.4 Main keymap & free keys
-===========================
-
-If you want to amend nu-mode keymap, amend nu-keymap.  It is part of
-minor-mode-overrind-map-alist.
-
-   Free keys are : - <Control+c> + somme letter.  This is the standar
-Emacs convention.
-
-7.5 Completion
-==============
-
-Please refer to chapter Completion for ivy & helm.  Nu-mode might
-later integrate more completion systems.
-
-
-File: nu-mode.info,  Node: Drawbacks & Limits,  Next: Contributing,  Prev: Customization,  Up: Top
+File: nu-mode.info,  Node: Drawbacks & Limits,  Next: Contributing,  Prev: Integration,  Up: Top
 
 8 Drawbacks & Limits
 ********************
 
   1. There might be bugs on emacs-nu
   2. Emacs-nu is meant for azerty, qwzerty.  It would not be very good
-     with other layouts.
+     with other layouts However the plan for other layouts might be
+     simple.  Control + key should stick to the mnemonic, like Ctrl+s
+     to display save prompt.  While immediate keys like Alt+s or,
+     obviously, the paddle Alt+i / Alt+j / Alt+k / Alt+l, should be
+     transposed according to layout.  Control+h key to display Cheat
+     Sheet, plus prompts, will help memorizing.
 
 
 File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: Drawbacks & Limits,  Up: Top
@@ -1164,11 +1175,11 @@ Node: Files Buffers Windows12462
 Node: Completion14255
 Node: Hacking14757
 Node: Advanced Usage15459
-Node: Integration17402
-Node: Customization22785
-Node: Drawbacks & Limits24712
-Node: Contributing24991
-Node: GNU Free Documentation License25377
+Node: Customization17404
+Node: Integration19303
+Node: Drawbacks & Limits24708
+Node: Contributing25349
+Node: GNU Free Documentation License25735
 
 End Tag Table
 
