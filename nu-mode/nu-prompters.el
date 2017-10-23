@@ -547,7 +547,8 @@ nor prefix, not does it allow to switch to another prompter.
 
 Still it allows "
   (interactive)
-  (setq dummymap (make-sparse-keymap))
+  (setq dummymap (make-sparse-keymap)
+	nu-major-mode major-mode)
   (define-key dummymap "g" keymap)
   (set-transient-map dummymap)
   (setq unread-command-events (listify-key-sequence "\g")))
