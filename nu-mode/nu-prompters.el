@@ -534,7 +534,23 @@ to describe the function.\n")
              ; if no func, make sure not to repeat.
             (setq nu-repeat-prompt nil))))))))
 
+;;
+;; which-key-prompt
+;;
 
+(defun nu-which-key-prompt-for-keymap (keymap)
+"which key is sometimes nice, but will only
+work as alias for light-prompt for keymap.
+
+Unlike nu-ligth-prompt, it does not allow repeat,
+nor prefix, not does it allow to switch to another prompter.
+
+Still it allows "
+  (interactive)
+  (setq dummymap (make-sparse-keymap))
+  (define-key dummymap "g" keymap)
+  (set-transient-map dummymap)
+  (setq unread-command-events (listify-key-sequence "\g")))
 
 
 (provide 'nu-prompters)
