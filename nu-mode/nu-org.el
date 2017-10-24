@@ -66,6 +66,7 @@
         (if (eq major-mode 'org-mode)
           (progn
             (define-key nu-insert-map (kbd "L") 'org-insert-link)
+            (define-key nu-insert-map (kbd "H") 'org-table-insert-hline)
             (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
             (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
             (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
