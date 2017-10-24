@@ -419,6 +419,7 @@ But if mark is active, exchange point and mark."
 
   ;; common case
   (define-key nu-open-map (kbd "B")  'bookmark-jump)
+  (define-key nu-open-map (kbd "c")  'calc)
   (define-key nu-open-map (kbd "C-f")  'find-file-other-window)
   (define-key nu-open-map (kbd "C-j")   'nu-previous-buffer)
   (define-key nu-open-map (kbd "C-l")  'nu-next-buffer)
