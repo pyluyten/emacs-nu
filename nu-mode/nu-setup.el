@@ -8,7 +8,7 @@
 
 (defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
 
-(defalias 'nu-full-prompt-for-keymap 'nu-lv-prompt-for-keymap)
+(defalias 'nu-full-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
 
 
 (defface nu-face-shortcut
