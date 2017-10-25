@@ -429,7 +429,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "i")   'ibuffer)
   (define-key nu-open-map (kbd "l")   'nu-buffers-list)
   (define-key nu-open-map (kbd "m")   'menu-bar-read-mail)
-  (define-key nu-new-map (kbd "p") 'package-list-packages)
+  (define-key nu-open-map (kbd "p") 'package-list-packages)
   (define-key nu-open-map (kbd "r")  'nu-recentf)
   (define-key nu-open-map (kbd "R")  'recentf-open-files)
   (define-key nu-open-map (kbd "s") 'org-iswitchb)
