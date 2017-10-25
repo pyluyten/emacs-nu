@@ -17,10 +17,7 @@
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
-
-
-; defconst?
-(defvar nu-state t "Used by overriding maps alist.")
+(require 'nu-vars)
 
 (defun nu-make-overriding-map (keymap unbind-keys-list &rest bindings)
    "Make keymap a minor-mode-overriding-map.

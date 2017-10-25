@@ -21,10 +21,7 @@
 ; this is because describe-keymap need some definition
 ; lambda function appear as ?
 
-
-
-
-(defvar nu-help-map)
+(require 'nu-vars)
 
 (defun nu-next-window () (interactive) (other-window 1))
 (defun nu-previous-window () (interactive) (other-window -1))

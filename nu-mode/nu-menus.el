@@ -21,26 +21,10 @@
 ;; that might be shallowed by other modes
 ;;
 
-
+(require 'nu-vars)
 (require 'windmove)
 (require 'nu-prompters)
 (require 'hydra)
-
-(defvar nu-quit-map)
-(defvar nu-print-map)
-(defvar nu-delete-map)
-(defvar nu-insert-map)
-(defvar nu-save-map)
-(defvar nu-open-map)
-(defvar nu-goto-map)
-(defvar nu-replace-map)
-(defvar nu-window-map)
-(defvar nu-new-map)
-(defvar nu-a-map)
-(defvar nu-find-map)
-(defvar nu-copy-map)
-(defvar nu-tab-map)
-(defvar nu-bold-map)
 
  (autoload 'zap-up-to-char "misc"
 "Kill up to, but not including ARGth occurrence of CHAR." t)

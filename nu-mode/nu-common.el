@@ -17,15 +17,7 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 
-
-; we have the real keymap for real ("nu-keymap").
-; menu-map is only there for where-is sake.
-; thus we define things twice :
-; once a grand tragedy. Once as a farce.
-
-(defvar nu-keymap (make-sparse-keymap) "Emacs nu keymap")
-(defvar nu-menu-map (make-sparse-keymap) "Nu Menu Keymap")
-
+(require 'nu-vars)
 (require 'nu-prompters)
 (require 'nu-prompters-lv)
 (require 'nu-helm)

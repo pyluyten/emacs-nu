@@ -25,12 +25,6 @@
 (require 'help-fns+)
 (require 'iso-transl)
 
-
-(defvar nu-menu-map)
-
-(defvar nu-mode-show-welcome-screen
-"If true, nu-mode does display a help buffer at startup.")
-
 (defun nu-restore-default-keymap ()
   "Populate nu keymap with defaults."
   (interactive)
