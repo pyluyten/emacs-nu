@@ -108,6 +108,8 @@
  (nu-define-prefix 'nu-quit-map)
  (define-key nu-quit-map (kbd "C-m") 'save-buffers-kill-emacs)
  (define-key nu-quit-map (kbd "e") 'kill-emacs)
+ (define-key nu-quit-map (kbd "s") 'suspend-emacs)
+ (define-key nu-quit-map (kbd "t") 'suspend-frame)
  (define-key nu-quit-map (kbd "f") 'delete-frame)
  (define-key nu-quit-map (kbd "q") 'keyboard-escape-quit)
  (define-key nu-quit-map (kbd "w") 'quit-window))
@@ -233,12 +235,14 @@
  "Populate save map	.	"
   (nu-define-prefix 'nu-save-map)
   (define-key nu-save-map (kbd "L") 'org-store-link)
-  (define-key nu-save-map (kbd "M-f") 'frame-configuration-to-register)
-  (define-key nu-save-map (kbd "M-s") 'write-file)
+  (define-key nu-save-map (kbd "e") 'frame-configuration-to-register)
+  (define-key nu-save-map (kbd "h") 'write-file)
+  (define-key nu-save-map (kbd "i") 'recover-session)
   (define-key nu-save-map (kbd "b") 'bookmark-set)
   (define-key nu-save-map (kbd "g") 'nu-toggle-goal-column)
   (define-key nu-save-map (kbd "r") 'rename-buffer)
   (define-key nu-save-map (kbd "s") 'save-buffer)
+  (define-key nu-save-map (kbd "a") 'revert-buffer)
   (define-key nu-save-map (kbd "w") 'window-configuration-to-register)
   (define-key nu-save-map (kbd "k") 'kmacro-start-macro-or-insert-counter)
   (define-key nu-save-map (kbd "f") 'nu-create-tags)
@@ -467,6 +471,8 @@ But if mark is active, exchange point and mark."
       (define-key nu-goto-map (kbd "o") 'forward-paragraph)
       (define-key nu-goto-map (kbd "f") 'end-of-defun)
       (define-key nu-goto-map (kbd "M-f") 'beginning-of-defun)
+      (define-key nu-goto-map (kbd "d") 'forward-sexp)
+      (define-key nu-goto-map (kbd "h") 'backward-sexp)
       (define-key nu-goto-map (kbd "*") 'forward-list)
       (define-key nu-goto-map (kbd "M-*") 'backward-list)))
 
@@ -485,6 +491,8 @@ But if mark is active, exchange point and mark."
    (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
    (define-key nu-goto-map (kbd "k") 'end-of-buffer)
    (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
+   (define-key nu-goto-map (kbd "a") 'forward-page)
+   (define-key nu-goto-map (kbd "c") 'backward-page)
    (define-key nu-goto-map (kbd "b") 'nu-buffers-list))
 
 
@@ -800,6 +808,8 @@ both navigate, access to essential prompts, and control the terminal."
   (define-key nu-tab-map (kbd "j") 'minimize-window)
   (define-key nu-tab-map (kbd "k") 'delete-window)
   (define-key nu-tab-map (kbd "l") 'split-window-right)
+  (define-key nu-tab-map (kbd "n") 'scroll-other-window)
+  (define-key nu-tab-map (kbd "p") 'scroll-other-window-down)
 
   (define-key nu-tab-map (kbd "g") 'ido-switch-buffer-other-window)
   (define-key nu-tab-map (kbd "t") 'ace-window)
