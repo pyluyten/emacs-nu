@@ -285,6 +285,11 @@
   (define-key nu-new-map (kbd "s") 'eshell)
   (define-key nu-new-map (kbd "t") 'term)
   (define-key nu-new-map (kbd "v") 'split-window-below)
+  (define-key nu-new-map (kbd "k") 'kmacro-start-macro)
+  (define-key nu-new-map (kbd "l") 'kmacro-end-macro)
+  (define-key nu-new-map (kbd "u") 'name-last-kbd-macro)
+  (define-key nu-new-map (kbd "x") 'kmacro-call-macro)
+  (define-key nu-new-map (kbd "y") 'insert-kbd-macro)
 
   (define-key nu-new-map (kbd "w") 'make-frame-command))
 
