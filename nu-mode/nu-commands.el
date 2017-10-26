@@ -190,12 +190,7 @@ If region is selected, use this as a search string."
 
 (defun nu-set-mark ()
   (interactive)
-  (if mark-active
-      (if (bound-and-true-p rectangle-mark-mode)
-	  (nu-rectangle-selection-hydra/body)
-	(nu-selection-hydra/body))
-    (progn
-      (push-mark-command nil))))
+  (push-mark-command nil))
 
 (defun nu-set-rectangle-mark ()
   (interactive)

@@ -300,44 +300,34 @@
   (nu-prompt-for-keymap nu-new-map))
 
 
-(defhydra nu-selection-hydra (:color pink
-                	      :hint   nil)
-"
-_<SPC>_: move cursor around mark
-_c_ : copy region
-_d_ : kill region
-_r_ : replace prompt
+(defun nu-populate-visual-map ()
+  (setq nu-visual-map (make-sparse-keymap))
 
-QUIT : _q_ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"
-("<SPC>" exchange-point-and-mark) ; does not exit.
-("q" pop-to-mark-command :exit t)
-("M-q" pop-to-mark-command :exit t)
-("d" kill-region :exit t)
-("r" (lambda () (interactive) (nu-completion-prompt-for-keymap nu-replace-map)))
-("c" copy-region-as-kill :exit t))
+  (define-key nu-visual-map (kbd "x") 'exchange-point-and-mark)
+  (define-key nu-visual-map (kbd "q") 'pop-to-mark-command)
+  (define-key nu-visual-map (kbd "r")  nu-replace-map)
+  (define-key nu-visual-map (kbd "u") 'upcase-region)
+  (define-key nu-visual-map (kbd "l") 'lowercase-region)
+  (define-key nu-visual-map (kbd "o") 'copy-to-register)
 
-(defhydra nu-rectangle-selection-hydra (:color pink
-                	                :hint   nil)
-"
-_<SPC>_: move cursor around mark
-_c_ : copy rectangle
-_d_ : kill rectangle
-_r_ : replace prompt
-_i_ : insert 
-_j_ : insert 
+  (if (bound-and-true-p rectangle-mark-mode)
+      ;; rectangle selection
+      (progn
+	(define-key nu-visual-map (kbd "c") 'copy-rectangle-as-kill)
+	(define-key nu-visual-map (kbd "k") 'kill-rectangle)
+	(define-key nu-visual-map (kbd "t") 'string-rectangle)
+	(define-key nu-visual-map (kbd "v") 'string-insert-rectangle))
 
-QUIT : _q_ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-"
-("<SPC>" rectangle-exchange-point-and-mark)
-("q" pop-to-mark-command :exit t)
-("M-q" pop-to-mark-command :exit t)
-("c" copy-rectangle-as-kill :exit t)
-("d" kill-rectangle :exit t)
-("r" (lambda () (interactive) (nu-completion-prompt-for-keymap nu-replace-map)))
-("j" string-rectangle :exit t)
-("i" string-insert-rectangle :exit t)
-("q" nil :exit t))
+      ;; classical selection
+      ;; todo replace prompt
+      (progn
+	(define-key nu-visual-map (kbd "f") 'flyspell-region)
+	(define-key nu-visual-map (kbd "i") 'indent-region)
+	(define-key nu-visual-map (kbd "k") 'kill-region)
+	(define-key nu-visual-map (kbd "c") 'copy-region-as-kill)
+	(define-key nu-visual-map (kbd "s") 'shell-command-on-region)
+	(define-key nu-visual-map (kbd "p") 'eval-region)
+	(define-key nu-visual-map (kbd "g") 'indent-rigidly))))
 
 (defun nu-populate-a-map ()
   (nu-define-prefix 'nu-a-map)

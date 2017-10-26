@@ -27,6 +27,8 @@
 (defvar nu-keymap (make-sparse-keymap) "nu-mode keymap")
 (defvar nu-menu-map (make-sparse-keymap) "Nu Menu Keymap")
 
+(defvar nu-visual-map (make-sparse-keymap) "Nu Selection Keymap")
+
 (defvar nu-quit-map (make-sparse-keymap) "Nu Quit Keymap")
 (defvar nu-print-map (make-sparse-keymap) "Nu Print, Eval Keymap")
 (defvar nu-delete-map (make-sparse-keymap) "Nu Kill Keymap")

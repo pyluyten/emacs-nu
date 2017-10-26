@@ -120,12 +120,23 @@ Still, some keys here help."
 
 (defun nu-add-mark-hook ()
   "Give the user some input about visual mode."
+
+  ; populate the maps
+  (nu-populate-visual-map)
+  (nu-populate-replace)
+  (define-key nu-keymap (kbd "M-a") nu-visual-map)
+
+  ; message (todo customize this so can be turned off)
   (lv-message (concat
 	       (propertize "M-a" 'face 'nu-face-shortcut)
-	       " : selection keys / "
+	       " actions / "
 	       (propertize "M-q" 'face 'nu-face-shortcut)
-               " : quit visual mode")))
+               " quit.")))
 
+(defun nu-deactivate-mark-hook ()
+  ""
+  (lv-delete-window)
+  (define-key nu-keymap (kbd "M-a") 'nu-set-mark))
 
 
 (defun nu-magit-w-editor-mode-hook ()
@@ -139,7 +150,7 @@ Still, some keys here help."
 (add-hook 'minibuffer-exit-hook 'nu-minibuffer-exit t)
 (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
 (add-hook 'activate-mark-hook    'nu-add-mark-hook)
-(add-hook 'deactivate-mark-hook  'lv-delete-window)
+(add-hook 'deactivate-mark-hook  'nu-deactivate-mark-hook)
 
 (eval-after-load "undo-tree"
   '(progn
