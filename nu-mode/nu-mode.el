@@ -22,7 +22,6 @@
 (require 'nu-prompters-lv)
 (require 'nu-org)
 
-(require 'help-fns+)
 (require 'iso-transl)
 
 (defun nu-restore-default-keymap ()
