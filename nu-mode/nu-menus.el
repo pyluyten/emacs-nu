@@ -316,10 +316,11 @@
 	(define-key nu-visual-map (kbd "c") 'copy-rectangle-as-kill)
 	(define-key nu-visual-map (kbd "k") 'kill-rectangle)
 	(define-key nu-visual-map (kbd "t") 'string-rectangle)
+	(define-key nu-visual-map (kbd "p") 'open-rectangle)
+	(define-key nu-visual-map (kbd "z") 'clear-rectangle)
 	(define-key nu-visual-map (kbd "v") 'string-insert-rectangle))
 
       ;; classical selection
-      ;; todo replace prompt
       (progn
 	(define-key nu-visual-map (kbd "f") 'flyspell-region)
 	(define-key nu-visual-map (kbd "i") 'indent-region)
