@@ -33,11 +33,13 @@
 
 (defun nu-populate-window ()
    (nu-define-prefix 'nu-window-map)
-   (define-key nu-window-map (kbd "b") 'kill-buffer)
+   (define-key nu-window-map (kbd "t") 'kill-buffer)
+   (define-key nu-window-map (kbd "b") 'view-buffer-other-window)
    (define-key nu-window-map (kbd "d") 'scroll-other-window-down)
    (define-key nu-window-map (kbd "u") 'scroll-left)
    (define-key nu-window-map (kbd "o") 'scroll-right)
-   (define-key nu-window-map (kbd "M-w") 'delete-window)
+   (define-key nu-window-map (kbd "e") 'delete-window)
+   (define-key nu-window-map (kbd "r") 'recenter-top-bottom)
    (define-key nu-window-map (kbd "Q") 'save-buffers-kill-emacs)
 
    (define-key nu-window-map (kbd "f") 'transpose-frame)
@@ -412,6 +414,8 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "B")  'bookmark-jump)
   (define-key nu-open-map (kbd "c")  'calc)
   (define-key nu-open-map (kbd "C-f")  'find-file-other-window)
+  (define-key nu-open-map (kbd "e")  'find-file-read-only)
+  (define-key nu-open-map (kbd "E")  'find-file-read-only-other-window)
   (define-key nu-open-map (kbd "C-j")   'nu-previous-buffer)
   (define-key nu-open-map (kbd "C-l")  'nu-next-buffer)
   (define-key nu-open-map (kbd "C-o") 'ido-switch-buffer)
@@ -428,6 +432,8 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "u")  'browse-url)
   (define-key nu-open-map (kbd "z")  'customize)
   (define-key nu-open-map (kbd "x")  'list-registers)
+  (define-key nu-open-map (kbd "d")  'dired)
+  (define-key nu-open-map (kbd "d")  'dired-other-window)
 
   (cond
    ((eq nu-major-mode 'magit-status-mode)
@@ -493,6 +499,7 @@ But if mark is active, exchange point and mark."
    (define-key nu-goto-map (kbd "g") 'ace-window)
    (define-key nu-goto-map (kbd "m") 'avy-goto-line)
    (define-key nu-goto-map (kbd "n") 'goto-line)
+   (define-key nu-goto-map (kbd "t") 'goto-char)
    (define-key nu-goto-map (kbd "r") 'jump-to-register)
    (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
    (define-key nu-goto-map (kbd "k") 'end-of-buffer)
@@ -564,6 +571,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-find-map (kbd "g") 'rgrep)
   (define-key nu-find-map (kbd "o") 'occur)
   (define-key nu-find-map (kbd "t") 'find-tag)
+  (define-key nu-find-map (kbd "T") 'find-tag-other-window)
   (define-key nu-find-map (kbd "z") 'nu-find-char))
 
 (defun nu-find-prompt ()
