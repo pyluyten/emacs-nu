@@ -243,5 +243,11 @@ Still, some keys here help."
     (define-key bookmark-bmenu-mode-map (kbd "h") bookmark-bmenu-mode-map)))
 
 
+;;
+;; Info
+;;
+
+(define-key Info-mode-map (kbd "j") 'Info-help)
+(define-key Info-mode-map (kbd "h") Info-mode-map)
 
 (provide 'nu-integration)
