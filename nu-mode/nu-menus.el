@@ -422,6 +422,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "R")  'recentf-open-files)
   (define-key nu-open-map (kbd "s") 'org-iswitchb)
   (define-key nu-open-map (kbd "u")  'browse-url)
+  (define-key nu-open-map (kbd "z")  'customize)
   (define-key nu-open-map (kbd "x")  'list-registers)
 
   (cond
