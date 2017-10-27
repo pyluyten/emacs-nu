@@ -381,6 +381,9 @@
     (define-key nu-a-map (kbd "x") 'dired-toggle-marks))
    (t
      (define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
+     (define-key nu-a-map (kbd "s") 'nu-mark-sexp)
+     (define-key nu-a-map (kbd "g") 'nu-mark-paragraph)
+     (define-key nu-a-map (kbd "p") 'nu-mark-page)
      (define-key nu-a-map (kbd "f") 'nu-mark-defun)
      (define-key nu-a-map (kbd "i") 'nu-set-mark)
      (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark))))
