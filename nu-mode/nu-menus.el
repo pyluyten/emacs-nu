@@ -206,6 +206,7 @@
         (define-key nu-insert-map (kbd "V") 'nu-yank-pop-or-yank) ; absurd	.	
         (define-key nu-insert-map (kbd "b") 'insert-buffer)
         (define-key nu-insert-map (kbd "c") 'quoted-insert)
+        (define-key nu-insert-map (kbd "e") 'insert-register)
         (define-key nu-insert-map (kbd "f") 'insert-file)
         (define-key nu-insert-map (kbd "i") 'nu-insert-line-above)
         (define-key nu-insert-map (kbd "k") 'nu-insert-line-below)
@@ -243,6 +244,7 @@
   (define-key nu-save-map (kbd "g") 'nu-toggle-goal-column)
   (define-key nu-save-map (kbd "r") 'rename-buffer)
   (define-key nu-save-map (kbd "s") 'save-buffer)
+  (define-key nu-save-map (kbd "t") 'point-to-register)
   (define-key nu-save-map (kbd "a") 'revert-buffer)
   (define-key nu-save-map (kbd "w") 'window-configuration-to-register)
   (define-key nu-save-map (kbd "k") 'kmacro-start-macro-or-insert-counter)
@@ -489,6 +491,7 @@ But if mark is active, exchange point and mark."
    (define-key nu-goto-map (kbd "g") 'ace-window)
    (define-key nu-goto-map (kbd "m") 'avy-goto-line)
    (define-key nu-goto-map (kbd "n") 'goto-line)
+   (define-key nu-goto-map (kbd "r") 'jump-to-register)
    (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
    (define-key nu-goto-map (kbd "k") 'end-of-buffer)
    (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
