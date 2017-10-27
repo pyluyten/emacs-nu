@@ -154,6 +154,7 @@
     (define-key nu-delete-map (kbd "f") 'nu-delete-defun)
     (define-key nu-delete-map (kbd "h") 'delete-horizontal-space)
     (define-key nu-delete-map (kbd "s") 'kill-sexp)
+    (define-key nu-delete-map (kbd "o") 'kill-word)
     (define-key nu-delete-map (kbd "t") 'delete-trailing-whitespace)
     (define-key nu-delete-map (kbd "z")  'zap-up-to-char)))
 
