@@ -35,26 +35,31 @@
   ;; advice menus to make them useful.
 
    (defadvice nu-populate-replace (after nu-populate-replace-for-org ())
-     (if (eq major-mode 'org-mode)
+     (if (eq nu-major-mode 'org-mode)
 	 (progn
-          (define-key nu-replace-map (kbd "J") 'org-shiftleft)
-          (define-key nu-replace-map (kbd "K") 'org-shiftdown)
-          (define-key nu-replace-map (kbd "L") 'org-shiftright)
-          (define-key nu-replace-map (kbd "I") 'org-shiftup)
           (define-key nu-replace-map (kbd "C-j") 'org-metaleft)
           (define-key nu-replace-map (kbd "C-l") 'org-metaright)
           (define-key nu-replace-map (kbd "C-u") 'org-metaup)
           (define-key nu-replace-map (kbd "C-o") 'org-metadown))))
    (ad-activate 'nu-populate-replace)
 
+   (defadvice nu-populate-bold-map (after nu-populate-bold-for-org ())
+     (if (eq nu-major-mode 'org-mode)
+	 (progn
+          (define-key nu-bold-map (kbd "J") 'org-shiftleft)
+          (define-key nu-bold-map (kbd "K") 'org-shiftdown)
+          (define-key nu-bold-map (kbd "L") 'org-shiftright)
+          (define-key nu-bold-map (kbd "I") 'org-shiftup))))
+   (ad-activate 'nu-populate-bold-map)
+
   (defadvice nu-populate-print (after nu-populate-print-for-org ())
-     (if (eq major-mode 'org-mode)
+     (if (eq nu-major-mode 'org-mode)
 	 (progn
           (define-key nu-print-map (kbd "l") 'pcomplete))))
    (ad-activate 'nu-populate-print)
 
   (defadvice nu-populate-delete (after nu-populate-delete-for-org ())
-     (if (eq major-mode 'org-mode)
+     (if (eq nu-major-mode 'org-mode)
 	 (progn
 	   (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
            (define-key nu-delete-map (kbd "r") 'org-table-kill-row)
@@ -77,19 +82,19 @@
    (ad-activate 'nu-populate-insert-map)
 
   (defadvice nu-populate-save-map (after nu-populate-save-for-org ())
-    (if (eq major-mode 'org-mode)
+    (if (eq nu-major-mode 'org-mode)
       (progn
         (define-key nu-save-map (kbd "o") 'org-refile)
         (define-key nu-save-map (kbd "M-o") 'org-save-all-org-buffers))))  
    (ad-activate 'nu-populate-save-map)
 
   (defadvice nu-populate-open-map (after nu-populate-open-for-org ())
-       (if (eq major-mode 'org-mode)
+       (if (eq nu-major-mode 'org-mode)
     (define-key nu-open-map (kbd "L") 'org-open-at-point)))
    (ad-activate 'nu-populate-open-map)
 
   (defadvice nu-populate-goto-map (after nu-populate-goto-for-org ())
-       (if (eq major-mode 'org-mode)
+       (if (eq nu-major-mode 'org-mode)
        (progn
          (define-key nu-goto-map (kbd "I") 'org-backward-heading-same-level)
          (define-key nu-goto-map (kbd "K") 'org-forward-heading-same-level)
