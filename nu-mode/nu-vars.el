@@ -26,6 +26,7 @@
 
 (defvar nu-keymap (make-sparse-keymap) "nu-mode keymap")
 (defvar nu-menu-map (make-sparse-keymap) "Nu Menu Keymap")
+(defvar nu-major-mode nil "Major mode menus are being populated for.")
 
 (defvar nu-visual-map (make-sparse-keymap) "Nu Selection Keymap")
 

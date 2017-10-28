@@ -55,6 +55,7 @@
 
 (defun nu-window-prompt ()
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-window)
   (nu-prompt-for-keymap nu-window-map))
 
@@ -103,6 +104,7 @@
 
 (defun nu-print-prompt ()
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-print)
   (nu-prompt-for-keymap nu-print-map))
 
@@ -122,6 +124,7 @@
 (defun nu-quit-prompt ()
   "Prompt to quit."
   (interactive)
+  (setq nu-major-mode major-mode)
   (if mark-active
       (cua-set-mark)
       (progn
@@ -172,6 +175,7 @@
 
 (defun nu-delete-prompt ()
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-delete)
   (nu-prompt-for-keymap nu-delete-map))
 
@@ -193,6 +197,7 @@
 
 (defun nu-bold-prompt ()
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-bold-map)
   (nu-prompt-for-keymap nu-bold-map))
 
@@ -233,6 +238,7 @@
 
 (defun nu-insert-prompt ()
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-insert-map)
   (nu-prompt-for-keymap nu-insert-map))
 
@@ -267,6 +273,7 @@
 
 (defun nu-save-prompt ()
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-save-map)
   (nu-prompt-for-keymap nu-save-map))
 
@@ -303,6 +310,7 @@
 
 (defun nu-new-prompt ()
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-new-map)
   (nu-prompt-for-keymap nu-new-map))
 
@@ -400,6 +408,7 @@
 
 But if mark is active, exchange point and mark."
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-a-map)
   (nu-prompt-for-keymap nu-a-map))
 
@@ -450,6 +459,7 @@ But if mark is active, exchange point and mark."
 (defun nu-open-prompt ()
 "Maybe temporary prompt."
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-open-map)
   (nu-prompt-for-keymap nu-open-map))
 
@@ -512,6 +522,7 @@ But if mark is active, exchange point and mark."
 (defun nu-goto-prompt ()
 "Offer to goto wherever wished."
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-goto-map)
   (nu-prompt-for-keymap nu-goto-map))
 
@@ -576,6 +587,7 @@ But if mark is active, exchange point and mark."
 
 (defun nu-find-prompt ()
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-find-map)
   (nu-prompt-for-keymap nu-find-map))
 
@@ -611,6 +623,7 @@ But if mark is active, exchange point and mark."
 
 (defun nu-copy-prompt ()
  (interactive)
+  (setq nu-major-mode major-mode)
  (nu-populate-copy-map)
  (nu-prompt-for-keymap nu-copy-map))
 
@@ -717,6 +730,7 @@ But if mark is active, exchange point and mark."
 
 (defun nu-replace-prompt ()
   (interactive)
+  (setq nu-major-mode major-mode)
       (cond
         ((eq nu-major-mode 'dired-mode)
          (nu-populate-replace-dired)
@@ -839,6 +853,7 @@ both navigate, access to essential prompts, and control the terminal."
 
 (defun nu-tab-prompt ()
   (interactive)
+  (setq nu-major-mode major-mode)
   (nu-populate-tab)
   (nu-prompt-for-keymap nu-tab-map))
 

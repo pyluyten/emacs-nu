@@ -61,18 +61,8 @@ Currently this is only used in order to use read-key-sequence."
  ; (current-global-map) has to be 
  ; stocked for similar reasons.
 
- ; about nu-major mode
- ; currently only light-prompt/hydra 
- ; does set nu-major-mode
- ; this is fine as long as
- ; light prompt and/or hydra
- ; are the sole entry points to prompts
- ; if that changes, this variable
- ; might have to be reviewed
-
 (defvar nu-current-keymap nil)
 (defvar nu-current-local-map nil)
-(defvar nu-major-mode nil)
 (defvar nu-lv-message nil)
 
 
@@ -318,7 +308,6 @@ This function ensures no error can occur inside the process..."
 "Light prompt for a keymap. Toggle buffer-prompt with ?"
   (interactive)
   (setq nu-current-keymap keymap
-	nu-major-mode major-mode
 	nu-current-local-map (current-local-map))
   
   (let* ((input nil)
@@ -424,7 +413,7 @@ If describe arg is t, only describe-function."
  ; also, include major mode keys.
  (setq nu-current-keymap keymap
        nu-describe-bind-mode "buffer")
- 
+
  (let* ((key)
         (defn)
         (prefixhelp)
@@ -544,8 +533,7 @@ nor prefix, not does it allow to switch to another prompter.
 
 Still it allows "
   (interactive)
-  (setq dummymap (make-sparse-keymap)
-	nu-major-mode major-mode)
+  (setq dummymap (make-sparse-keymap))
   (define-key dummymap "g" keymap)
   (set-transient-map dummymap)
   (setq unread-command-events (listify-key-sequence "\g")))
