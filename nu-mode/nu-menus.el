@@ -223,7 +223,7 @@
            (define-key nu-insert-map (kbd "M-v") 'dired-create-directory))
          ; else
         (define-key nu-insert-map (kbd "M-v") 'expand-abbrev)
-        (define-key nu-insert-map (kbd "V") 'nu-yank-pop-or-yank) ; absurd	.	
+        (define-key nu-insert-map (kbd "V") 'nu-yank-pop-or-yank)
         (define-key nu-insert-map (kbd "b") 'insert-buffer)
         (define-key nu-insert-map (kbd "c") 'quoted-insert)
         (define-key nu-insert-map (kbd "e") 'insert-register)
@@ -232,6 +232,9 @@
         (define-key nu-insert-map (kbd "k") 'nu-insert-line-below)
         (define-key nu-insert-map (kbd "r") 'yank-rectangle)
         (define-key nu-insert-map (kbd "M-r") 'open-rectangle)
+        (define-key nu-insert-map (kbd "v") 'yank)
+
+        (define-key nu-insert-map (kbd "x") 'expand-abbrev)
         (define-key nu-insert-map (kbd "v") 'yank)
 
         ; addon
@@ -270,6 +273,9 @@
   (define-key nu-save-map (kbd "w") 'window-configuration-to-register)
   (define-key nu-save-map (kbd "k") 'kmacro-start-macro-or-insert-counter)
   (define-key nu-save-map (kbd "f") 'nu-create-tags)
+
+  (define-key nu-save-map (kbd "d") 'add-global-abbrev)
+  (define-key nu-save-map (kbd "j") 'add-mode-abbrev)
 
   (if (eq nu-major-mode 'magit-status-mode)
       (progn
