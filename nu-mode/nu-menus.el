@@ -455,6 +455,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "r")  'nu-recentf)
   (define-key nu-open-map (kbd "R")  'recentf-open-files)
   (define-key nu-open-map (kbd "s") 'org-iswitchb)
+  (define-key nu-open-map (kbd "t") 'visit-tags-table)
   (define-key nu-open-map (kbd "u")  'browse-url)
   (define-key nu-open-map (kbd "z")  'customize)
   (define-key nu-open-map (kbd "x")  'list-registers)
@@ -600,6 +601,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-find-map (kbd "o") 'occur)
   (define-key nu-find-map (kbd "t") 'find-tag)
   (define-key nu-find-map (kbd "T") 'find-tag-other-window)
+  (define-key nu-find-map (kbd "u") 'tags-search)
   (define-key nu-find-map (kbd "z") 'nu-find-char))
 
 (defun nu-find-prompt ()
@@ -656,7 +658,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "o") 'dired-do-chown)
   (define-key nu-replace-map (kbd "r") 'dired-do-rename)
   (define-key nu-replace-map (kbd "s") 'toggle-sorting-by-date-or-name)
-  (define-key nu-replace-map (kbd "t") 'dired-do-touch)
+  (define-key nu-replace-map (kbd "i") 'dired-do-touch)
   (define-key nu-replace-map (kbd "u") 'dired-upcase)
   (define-key nu-replace-map (kbd "w") 'wdired-change-to-wdired-mode)
   (define-key nu-replace-map (kbd "z") 'dired-do-compress))
@@ -718,9 +720,9 @@ But if mark is active, exchange point and mark."
   (define-key nu-replace-map (kbd "r")  'replace-regexp)
   (define-key nu-replace-map (kbd "s")  'replace-string)
   (define-key nu-replace-map (kbd "t")  'transpose-lines)
+  (define-key nu-replace-map (kbd "u") 'tags-query-replace)
   (define-key nu-replace-map (kbd "x") 'nu-rot-reg-or-toggle-rot)
-
-  (define-key nu-replace-map (kbd "x") 'flyspell-mode)
+  (define-key nu-replace-map (kbd "y") 'flyspell-mode)
   (if (bound-and-true-p flyspell-mode)
       (progn
          (define-key nu-replace-map (kbd "B") 'flyspell-buffer)
@@ -736,7 +738,7 @@ But if mark is active, exchange point and mark."
     (defun ethan-wspace-untabify ()
       (interactive)
       (message "Please install ethan-wspace mode!")))
-  (define-key nu-replace-map (kbd "t") 'ethan-wspace-untabify)
+  (define-key nu-replace-map (kbd "w") 'ethan-wspace-untabify)
 
   (if (eq nu-major-mode 'c-mode)
       (define-key nu-replace-map (kbd "y") 'c-set-style)))
