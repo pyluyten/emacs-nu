@@ -529,6 +529,7 @@ But if mark is active, exchange point and mark."
    (define-key nu-goto-map (kbd "n") 'goto-line)
    (define-key nu-goto-map (kbd "t") 'goto-char)
    (define-key nu-goto-map (kbd "r") 'jump-to-register)
+   (define-key nu-goto-map (kbd "v") 'view-register)
    (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
    (define-key nu-goto-map (kbd "k") 'end-of-buffer)
    (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
