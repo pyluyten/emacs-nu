@@ -101,7 +101,7 @@
    (define-key help-map (kbd "C-h") nil)
 
    ; SPC calls nu-keymap. With which-key it's a CheatSheet.
-   (define-key help-map (kbd "<SPC>") nu-keymap)
+   (define-key help-map (kbd "<SPC>") 'nu-cheat-sheet)
    (define-key nu-menu-map (kbd "h") 'help-map)
 
    ; C-m stands for enter.
