@@ -557,8 +557,13 @@ But if mark is active, exchange point and mark."
   (lv-message
     (concat
       (propertize "\n Welcome to nu-mode\n\n" 'face 'bold)
-      " This screen does provide some help to use nu-mode.\n It is shown at startup.\n To disable this screen, put this in your init file\n\n\n"
-      (propertize " (require 'nu-mode)\n (setq nu-mode-show-welcome-screen nil)\n (nu-mode)" 'face 'italic)
+      " This screen does provide some help to use nu-mode.\n It is shown at startup.\n"
+      " Enter any key to quit this prompt or "(propertize "Space" 'face 'nu-face-shortcut)
+      " to obtain the cheat sheet."
+      "\n To disable this screen, put this in your init file\n\n"
+        (propertize " (require 'nu-mode)\n" 'face 'italic)
+	(propertize " (setq nu-mode-show-welcome-screen nil)\n" 'face 'error)
+	(propertize " (nu-mode)" 'face 'italic)
       "\n\n To obtain Help, use "
       (propertize "Control+h" 'face 'nu-face-shortcut)
       "\n For example, to obtain a Cheat Sheet, use "
@@ -568,9 +573,10 @@ But if mark is active, exchange point and mark."
       " or " (propertize "Alt+d Return" 'face 'nu-face-shortcut)
       ".\n To quit a command, use "
       (propertize "Alt+q" 'face 'nu-face-shortcut)))
-  (read-key "")
-  (lv-delete-window))
-
+  (setq answer (read-key ""))
+  (lv-delete-window)
+  (if (eq answer 32)
+      (nu-cheat-sheet)))
 
 (defun nu-populate-find-map ()
   (nu-define-prefix 'nu-find-map)
