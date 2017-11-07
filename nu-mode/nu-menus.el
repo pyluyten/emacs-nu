@@ -322,7 +322,7 @@
   (define-key nu-new-map (kbd "x") 'kmacro-call-macro)
   (define-key nu-new-map (kbd "y") 'insert-kbd-macro)
 
-  (define-key nu-new-map (kbd "w") 'make-frame-command))
+  (define-key nu-new-map (kbd "f") 'make-frame-command))
 
 
 (defun nu-new-prompt ()
