@@ -183,14 +183,14 @@
 
 
 (defun nu-populate-bold-map ()
- "Populate bold map	.	"
+ "Populate bold map"
   (nu-define-prefix 'nu-bold-map)
   (define-key nu-bold-map (kbd "a") 'align)
   (define-key nu-bold-map (kbd "f") 'fill-paragraph)
   (define-key nu-bold-map (kbd "n") 'set-fill-column)
   (define-key nu-bold-map (kbd "r") 'set-fill-prefix)
   (define-key nu-bold-map (kbd "i") 'indent)
-  (define-key nu-bold-map (kbd "e") facemenu-face-menu)
+  (define-key nu-bold-map (kbd "e") 'facemenu-face-menu)
   (define-key nu-bold-map (kbd "s") 'indent-sexp)
   (define-key nu-bold-map (kbd "o") 'indent-for-comment)
   (define-key nu-bold-map (kbd "p") 'capitalize-word)
