@@ -882,77 +882,40 @@ both navigate, access to essential prompts, and control the terminal."
 
 (defhydra hydra-nu-meta-menu (:color pink
 			      :hint nil
-			      :pre (setq nu-major-mode major-mode))	     
+			      :pre (setq nu-major-mode major-mode))
 "\n
-  _q_uit any prompt         _h_: ibuffer
-  
-  open f_i_le  _j_: recent    _k_ill buffer   _m_aximize
-  _u_: bookmarks            _l_: switch buffer
+  _h_ ibuffer        _k_ kill window
+  _i_ open file      _l_ switch buffer
+  _m_ aximize        _u_ new frame
+  _x_ goto line      _a_ goto char
+  _r_ goto symbol    _o_ goto word
+  _g_ global prompt
 
-  _M-i_ _M-j_ : goto line, char
-  _M-k_ _M-l_ : goto symbol, word 
-  
-  _a_ select   _r_eplace      _o_pen         _g_oto
-  _n_ new      _f_ind         _p_rint        _s_ave
-  _v_ insert   _b_old         _w_indow
-  _x_ delete   _t_ab          _Q_uit
-  
-  _<SPC>_ mode specific     _e_ Ctrl-x-map
-  _<RET>_ execute command   _z_ undo tree
+  _n_ mode specific map
+  _p_ M-x (execute command)
+  _f_ Ctrl x maps
 "
-    ;; paddle direct functions.
+    ;; direct func : open
     ("i" nu-find-files :exit t)
     ("l" nu-buffers-list :exit t)
-    ("k" kill-buffer :exit t)
     ("j" nu-recentf :exit t)
-
-    ;; paddle avy
-    ("M-i" avy-goto-line :exit t)
-    ("M-j" avy-goto-char :exit t)
-    ("M-k" avy-goto-symbol-1 :exit t)
-    ("M-l" avy-goto-word-1 :exit t)
-
-    ("u" nu-bookmarks :exit t)
-    ("m" delete-other-windows :exit t)
-    ("<SPC>" nu-trigger-mode-specific-map :exit t)
-    ("x" nu-global-prompt :exit t)
-
-    ;; nu prompts
-    ("a" (progn (nu-populate-a-map)
-		(nu-full-prompt-for-keymap nu-a-map)) :exit t)
-    ("r" (progn (nu-populate-replace)
-		(nu-full-prompt-for-keymap nu-replace-map)) :exit t)
-    ("o" (progn (nu-populate-open-map)
-		(nu-full-prompt-for-keymap nu-open-map)) :exit t)
-    ("g" (progn (nu-populate-goto-map)
-		(nu-full-prompt-for-keymap nu-goto-map)) :exit t)
     ("h" ibuffer :exit t)
-    ("f" (progn (nu-populate-find-map)
-		(nu-full-prompt-for-keymap nu-find-map)) :exit t)
-    ("p" (progn (nu-populate-print)
-		(nu-full-prompt-for-keymap nu-print-map)) :exit t)
-    ("s" (progn (nu-populate-save-map)
-		(nu-full-prompt-for-keymap nu-save-map)) :exit t)
-    ("x" (progn (nu-populate-delete)
-		(nu-full-prompt-for-keymap nu-delete-map)) :exit t)
-    ("n" (progn (nu-populate-new-map)
-		(nu-full-prompt-for-keymap nu-new-map)) :exit t)
-    ("t" (progn (nu-populate-tab)
-		(nu-full-prompt-for-keymap nu-tab-map)) :exit t)
-    ("Q" (progn (nu-populate-quit)
-		(nu-full-prompt-for-keymap nu-quit-map)) :exit t)
-    ("v" (progn (nu-populate-insert-map)
-		(nu-full-prompt-for-keymap nu-insert-map)) :exit t)
-    ("b" (progn (nu-populate-bold-map)
-		(nu-full-prompt-for-keymap nu-bold-map)) :exit t)
-    ("w" (progn (nu-populate-window)
-		(nu-full-prompt-for-keymap nu-window-map)) :exit t)
-    ("<RET>" (nu-M-x) :exit t)
-    ;; other
-    ("z" undo-tree-visualize :exit t)
-    ("e" (nu-buffer-prompt-for-keymap ctl-x-map) :exit t)
-    ("y" nil :exit t)
-    ("c" nil :exit t)
-    ("q" nil :exit t))
+
+    ;; direct func : goto
+    ("x" avy-goto-line :exit t)
+    ("a" avy-goto-char :exit t)
+    ("r" avy-goto-symbol-1 :exit t)
+    ("o" avy-goto-word-1 :exit t)
+
+    ;; direct func : tab/frame/win
+    ("k" kill-buffer-and-window :exit t)
+    ("u" make-frame-command :exit t)
+    ("m" delete-other-windows :exit t)
+
+    ;; prompts / maps / commands
+    ("n" nu-trigger-mode-specific-map :exit t)
+    ("g" nu-global-prompt :exit t)
+    ("p" (nu-M-x) :exit t)
+    ("f" (nu-buffer-prompt-for-keymap ctl-x-map) :exit t))
 
 (provide 'nu-menus)
