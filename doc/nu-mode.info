@@ -237,12 +237,66 @@ while 'Control+s' directly saves the current buffer.
 
    These prompts offer you to quickly learn where functions are.
 
-1.7 Prompts
-===========
+1.7 Menus and Prompters
+=======================
 
-If you want to see all available prompts
-  1. Use <Alt+d> do invoke do-prompt.
-  2. Alternatively, use describe-keymap on nu-keymap
+This section should explain
+  1. the menu that is, the content : the menus are the group of
+     functions that can be accessed.  menus are not organized as menus
+     (toolbar) in vanilla Emacs.  These are more close to Spacemacs :
+     menus are grouped by themes.  Major mode should include its func
+     in various menus, not in one single menus.
+  2. the prompters are the method to trigger a func inside the menu,
+     prompters are the interface.
+
+   If you want to see all available menus, press <Control+h <space>>
+to invoke cheat sheet, then look for prompts functions.
+
+  1. help menu is not a prompt but is a map.  Press 'Control+h' to
+     view many help function.  Install help-fns+ to obtain even more
+     functions.
+
+  2. nu-a-prompt (selection) this menu is an alternative to set mark.
+     it provides few functions regarding selection.
+
+     it also offers to select a directory.
+
+  3. replace This group includes replace, transpose, sort functions.
+     it does not include markdown, indentation => see bold prompt
+
+  4. tab This menu is for windows and buffers.
+
+  5. print component allows printing, but also evaluating, compiling,
+     converting.  it is also macro evaluation.
+
+  6. quit menu allows few quit related func.
+
+  7. save menu offers to save file, register, bookmarks, session,
+     link...  anything you want to keep for later!
+
+  8. find menu allows to search, occur, find tag, grep, build
+     regexp...
+
+  9. goto menu is for other navigation (not found in other prompts).
+     you might also look at tab, window, and obviously find prompts.
+
+  10. window menu is for window management.
+
+  11. delete menu prompt allows to delete text, file, buffer, window.
+
+  12. copy menu menu is currently limited.
+
+  13. insert menu allows to insert text, snippets, command, abbrev...
+     If you want to evaluate, see Print.
+
+  14. bold menu is for capitalize, indent, markdown it does not offer
+     to transpose, sort.  See Replace.
+
+  15. new menu is either for creation (file, dir, mail) or invoke a
+     process (term, calc, command)
+
+  16. open should open something already existing : file, register,
+     buffer, bookmarks, mails
 
    The standard prompt is the "light" prompt.  It does only popup a
 little message.  A key can directly be pressed to trigger the
@@ -623,25 +677,23 @@ yourself to trigger god-mode.
 
 While nu-mode is not a modal editor, and aims at being the most
 efficient keymap, sometimes using lot of modifiers might still be
-harassing.  Using vim keymap is feasible : you can activate evil-mode,
-then switch from evil-state to emacs-state as you want.
+harassing.  Technically using vim keymap is feasible : you can
+activate evil-mode, then switch from evil-state to emacs-state as you
+want.
 
-   Even while in evil-state, you will enjoy a few nu-mode keys, like
-Alt+v, Alt+f, and probably many others.  However vim paddle (hjkl for
-left down up right) and nu-mode paddle (ijkl for up left down right)
-disagree on three of these four keys!  If you want to have evil with
-nu-mode paddle, I recommend you to make vim paddle similar to nu-mode.
-Since <i> will not be available anymore to insert, use <h> for this
-purpose.  Simply put below lines on your .emacs:
+   Either make VI normal-state use the nu-mode paddle.
 
      (define-key evil-normal-state-map (kbd "h") 'evil-insert)
      (define-key evil-normal-state-map (kbd "j") 'evil-backward-char)
      (define-key evil-normal-state-map (kbd "i") 'evil-previous-line)
      (define-key evil-normal-state-map (kbd "k") 'evil-next-line)
 
-   Obviously this only fixes the basic paddle.  Backward and Foward
-word are different, but fixing the paddle is fine.  An alternative is
-to change emacs-nu paddle to be h j k l.
+   Or, make nu-mode use the VI paddle.
+
+   However i would not recommend working like this.  nu-mode is
+thought to work in non-modal, modern editing.  It does not need modes.
+
+   Using vanilla evil or spacemacs might be an alternative.
 
 7.9 Other : autojump
 ====================
@@ -1171,15 +1223,15 @@ permit their use in free software.
 Tag Table:
 Node: Top716
 Node: Overview1064
-Node: Files Buffers Windows12462
-Node: Completion14255
-Node: Hacking14757
-Node: Advanced Usage15459
-Node: Customization17404
-Node: Integration19303
-Node: Drawbacks & Limits24708
-Node: Contributing25349
-Node: GNU Free Documentation License25735
+Node: Files Buffers Windows14522
+Node: Completion16315
+Node: Hacking16817
+Node: Advanced Usage17519
+Node: Customization19464
+Node: Integration21363
+Node: Drawbacks & Limits26427
+Node: Contributing27068
+Node: GNU Free Documentation License27454
 
 End Tag Table
 

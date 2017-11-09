@@ -213,12 +213,83 @@ Prompts are usually triggered using a @kbd{Alt} modifier and advertise a functio
 These prompts offer you to quickly learn where functions are.
 
 
-@section Prompts
+@section Menus and Prompters
 
-If you want to see all available prompts
+This section should explain
 @enumerate
-@item Use @key{Alt+d} do invoke do-prompt.
-@item Alternatively, use describe-keymap on nu-keymap
+@item the menu
+that is, the content : the menus are the group of functions that can be accessed.
+menus are not organized as menus (toolbar) in vanilla Emacs.
+These are more close to Spacemacs : menus are grouped by themes.
+Major mode should include its func in various menus, not in one single menus.
+@item the prompters
+are the method to trigger a func inside the menu,
+prompters are the interface.
+@end enumerate
+
+If you want to see all available menus, press @key{Control+h <space>} to invoke cheat sheet, then look for prompts functions.
+
+@enumerate
+@item help
+menu is not a prompt but is a map. Press @kbd{Control+h} to view many help function.
+Install help-fns+ to obtain even more functions.
+
+@item nu-a-prompt (selection)
+      this menu is an alternative to set mark.
+      it provides few functions regarding selection.
+
+      it also offers to select a directory.
+
+@item replace
+      This group includes replace, transpose, sort functions.
+      it does not include markdown, indentation => see bold prompt 
+
+@item tab
+This menu is for windows and buffers.
+
+@item print
+component allows printing, but also evaluating, compiling, converting.
+it is also macro evaluation.
+
+@item quit
+menu allows few quit related func.
+
+@item save
+menu offers to save file, register, bookmarks, session, link...
+anything you want to keep for later!
+
+@item find
+menu allows to search, occur, find tag, grep, build regexp...
+
+@item goto
+menu is for other navigation (not found in other prompts).
+you might also look at tab, window, and obviously find prompts.
+
+@item window
+menu is for window management.
+
+@item delete
+menu prompt allows to delete text, file, buffer, window.
+
+@item copy
+menu menu is currently limited.
+
+@item insert
+menu allows to insert text, snippets, command, abbrev...
+If you want to evaluate, see Print.
+
+@item bold
+menu is for capitalize, indent, markdown
+it does not offer to transpose, sort. See Replace.
+
+@item new
+      menu is either for creation (file, dir, mail)
+      or invoke a process (term, calc, command)
+
+@item open
+      should open something already existing : 
+      file, register, buffer, bookmarks, mails
+
 @end enumerate
 
 The standard prompt is the ``light'' prompt. It does only popup a little message. A key can directly be pressed to trigger the associated function. If the user does not know yet the function, or the key, he might use
