@@ -111,7 +111,7 @@
    ;; wxcvbn
    ;;
 
-   (define-key nu-keymap (kbd "M-w") 'kill-buffer)
+   (define-key nu-keymap (kbd "M-w") 'delete-window)
    (define-key nu-menu-map (kbd "w") 'nu-window-map)
    (define-key nu-keymap (kbd "C-w") 'nu-window-prompt)
  
