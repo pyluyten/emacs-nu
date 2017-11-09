@@ -308,6 +308,7 @@
       (define-key nu-new-map (kbd "b") 'magit-create-branch)
       (define-key nu-new-map (kbd "a") 'magit-annotated-tag)))
 
+  (define-key nu-new-map (kbd "c")  'calc)
   (define-key nu-new-map (kbd "h") 'split-window-right)
   (define-key nu-new-map (kbd "i") 'ibuffer-other-window)
   (define-key nu-new-map (kbd "m") 'compose-mail)
@@ -438,8 +439,7 @@ But if mark is active, exchange point and mark."
 
   ;; common case
   (define-key nu-open-map (kbd "B")  'bookmark-jump)
-  (define-key nu-open-map (kbd "c")  'calc)
-  (define-key nu-open-map (kbd "C-f")  'find-file-other-window)
+  (define-key nu-open-map (kbd "c")  'find-file-other-window)
   (define-key nu-open-map (kbd "e")  'find-file-read-only)
   (define-key nu-open-map (kbd "E")  'find-file-read-only-other-window)
   (define-key nu-open-map (kbd "C-j")   'nu-previous-buffer)
