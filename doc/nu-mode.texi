@@ -61,6 +61,8 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 @node Overview
 @chapter Overview
 
+WARNING : this package has not yet reached 1.0. It is subject to change.
+
 ``nu-mode `` is a modern keybinding for Emacs. It aims at respecting modern conventions like @kbd{Ctrl+c}, @kbd{Ctrl+v}, while making editing as comfortable as possible. It also aims at making Emacs pretty easy & discoverable. It is, currently, primarily designed for azerty and qwerty. Dvoark or Bépo users might prefer ErgoEmacs at the moment.
 
 Technically, nu-mode is a global minor mode, its keymap (nu-keymap),
@@ -434,6 +436,24 @@ If you dislike both nu-buffer-prompt-for-keymap and default nu-light-prompt-for-
 This way you maintain the benefit of responsive menus, but meet no more prompts.
 
 Finally you might also write your own prompt. See for example which-key prompt for a simple example.
+
+@section Menus
+
+if you want to amend a menu, either to customize your own setup or to develop a package to integrate a mode with nu-mode, you should define a function which add keybindings to one or more nu-mode menus.
+
+@lisp
+(defun my-nu-mode-menu-customization ()
+  (if (eq nu-major-mode 'org-mode)
+      (define-key nu-window-map "a" 'delete-window)))
+@end lisp
+
+Then add the function to nu-populate-hook
+
+@lisp
+(add-hook 'nu-populate-hook 'my-nu-mode-menu-customization)
+@end lisp
+
+The hook documentations does provide some conventions.
 
 @section Main keymap & free keys
 If you want to amend nu-mode keymap, amend nu-keymap. It is part of minor-mode-overrind-map-alist.

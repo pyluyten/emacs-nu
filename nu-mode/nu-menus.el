@@ -29,6 +29,27 @@
  (autoload 'zap-up-to-char "misc"
 "Kill up to, but not including ARGth occurrence of CHAR." t)
 
+(defvar nu-populate-hook nil
+  "Hook running *after* a menu is populated.
+
+This hook normaly allows to add keys to some menus,
+either regarding some conditions like a mode being active,
+or in order to let the user customize
+
+There is a convention. nu-mode uses letters for prompts.
+q is forbidden in *any* prompt, as for '?' '-' '[0-9]'.
+
+A major mode func added to the populate hook might rebind
+an existing func (like i j k l),
+or define a new capitalized letter (like I J K L).
+
+A minor mode might add new func with Alt- as prefix
+(like Alt-i Alt-j Alt-k Alt-l)
+or Ctrl as prefix.
+
+As in nu-keymap, the user owns the punctation.")
+
+
 
 
 (defun nu-populate-window ()
@@ -57,6 +78,7 @@
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-window)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-window-map))
 
 
@@ -106,6 +128,7 @@
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-print)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-print-map))
 
 
@@ -129,6 +152,7 @@
       (cua-set-mark)
       (progn
         (nu-populate-quit)
+	(run-hooks 'nu-populate-hook)
         (nu-prompt-for-keymap nu-quit-map))))
 
 (defun nu-populate-delete ()
@@ -179,6 +203,7 @@
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-delete)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-delete-map))
 
 
@@ -210,6 +235,7 @@
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-bold-map)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-bold-map))
 
 
@@ -254,6 +280,7 @@
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-insert-map)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-insert-map))
 
 
@@ -292,6 +319,7 @@
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-save-map)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-save-map))
 
 
@@ -330,6 +358,7 @@
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-new-map)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-new-map))
 
 
@@ -428,6 +457,7 @@ But if mark is active, exchange point and mark."
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-a-map)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-a-map))
 
 ; on #master this is C,
@@ -479,6 +509,7 @@ But if mark is active, exchange point and mark."
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-open-map)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-open-map))
 
 
@@ -543,6 +574,7 @@ But if mark is active, exchange point and mark."
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-goto-map)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-goto-map))
 
 
@@ -615,6 +647,7 @@ But if mark is active, exchange point and mark."
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-find-map)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-find-map))
 
 
@@ -771,6 +804,7 @@ But if mark is active, exchange point and mark."
          (nu-toggle-read-only))
         (t
          (nu-populate-replace)
+         (run-hooks 'nu-populate-hook)
          (nu-prompt-for-keymap nu-replace-map))))
 
 
@@ -878,6 +912,7 @@ both navigate, access to essential prompts, and control the terminal."
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-tab)
+  (run-hooks 'nu-populate-hook)
   (nu-prompt-for-keymap nu-tab-map))
 
 (defhydra hydra-nu-meta-menu (:color pink
