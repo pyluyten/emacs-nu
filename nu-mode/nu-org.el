@@ -40,7 +40,9 @@
           (define-key nu-replace-map (kbd "C-j") 'org-metaleft)
           (define-key nu-replace-map (kbd "C-l") 'org-metaright)
           (define-key nu-replace-map (kbd "C-u") 'org-metaup)
-          (define-key nu-replace-map (kbd "C-o") 'org-metadown))))
+          (define-key nu-replace-map (kbd "C-o") 'org-metadown)
+
+          (define-key nu-replace-map (kbd "T") 'org-table-sort-lines))))
    (ad-activate 'nu-populate-replace)
 
    (defadvice nu-populate-bold-map (after nu-populate-bold-for-org ())
