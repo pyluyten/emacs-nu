@@ -43,7 +43,10 @@ File: nu-mode.info,  Node: Overview,  Next: Files Buffers Windows,  Prev: Top,  
 1 Overview
 **********
 
-"nu-mode " is a modern keybinding for Emacs.  It aims at respecting
+WARNING : this package has not yet reached 1.0.  It is subject to
+change.
+
+   "nu-mode " is a modern keybinding for Emacs.  It aims at respecting
 modern conventions like 'Ctrl+c', 'Ctrl+v', while making editing as
 comfortable as possible.  It also aims at making Emacs pretty easy &
 discoverable.  It is, currently, primarily designed for azerty and
@@ -252,6 +255,17 @@ This section should explain
    If you want to see all available menus, press <Control+h <space>>
 to invoke cheat sheet, then look for prompts functions.
 
+   The menus are organized by actions, like : finding, opening,
+deleting, replacing.  The menus are *not* organized by objects, like :
+buffers, frames, registers.  Regarding this organization, the
+disadvantage is to split a set of functions accross various menus.
+Advantages - It feels intuitive to use a logic like <new> <window>,
+<delete> <window> rather than <window> <new>, <window> <delete> though
+it might depend on native language of user - It helps having a
+balanced number of menus, with balanced items.  - It is more
+consistent with CUA shortcuts.  CUA shortcuts like control+f find,
+control+n new, are not representing objects, but functions.
+
   1. help menu is not a prompt but is a map.  Press 'Control+h' to
      view many help function.  Install help-fns+ to obtain even more
      functions.
@@ -264,38 +278,41 @@ to invoke cheat sheet, then look for prompts functions.
   3. replace This group includes replace, transpose, sort functions.
      it does not include markdown, indentation => see bold prompt
 
-  4. tab This menu is for windows and buffers.
-
-  5. print component allows printing, but also evaluating, compiling,
+  4. print component allows printing, but also evaluating, compiling,
      converting.  it is also macro evaluation.
 
-  6. quit menu allows few quit related func.
+  5. quit menu allows few quit related func.
 
-  7. save menu offers to save file, register, bookmarks, session,
+  6. save menu offers to save file, register, bookmarks, session,
      link...  anything you want to keep for later!
 
-  8. find menu allows to search, occur, find tag, grep, build
+  7. find menu allows to search, occur, find tag, grep, build
      regexp...
 
-  9. goto menu is for other navigation (not found in other prompts).
-     you might also look at tab, window, and obviously find prompts.
+  8. goto menu is for other navigation (not found in other prompts).
+     This includes going to other window (ace-window).
 
-  10. window menu is for window management.
+     you might also look at window, and obviously find prompts.
 
-  11. delete menu prompt allows to delete text, file, buffer, window.
+  9. window menu is for window management.
 
-  12. copy menu menu is currently limited.
+     This inludes scrolling, sizing, transpose.  This does not include
+     window creation (Alt+t or new menu)
 
-  13. insert menu allows to insert text, snippets, command, abbrev...
+  10. delete menu prompt allows to delete text, file, buffer, window.
+
+  11. copy menu menu is currently limited.
+
+  12. insert menu allows to insert text, snippets, command, abbrev...
      If you want to evaluate, see Print.
 
-  14. bold menu is for capitalize, indent, markdown it does not offer
+  13. bold menu is for capitalize, indent, markdown it does not offer
      to transpose, sort.  See Replace.
 
-  15. new menu is either for creation (file, dir, mail) or invoke a
+  14. new menu is either for creation (file, dir, mail) or invoke a
      process (term, calc, command)
 
-  16. open should open something already existing : file, register,
+  15. open should open something already existing : file, register,
      buffer, bookmarks, mails
 
    The standard prompt is the "light" prompt.  It does only popup a
@@ -543,7 +560,24 @@ more prompts.
    Finally you might also write your own prompt.  See for example
 which-key prompt for a simple example.
 
-6.4 Main keymap & free keys
+6.4 Menus
+=========
+
+if you want to amend a menu, either to customize your own setup or to
+develop a package to integrate a mode with nu-mode, you should define
+a function which add keybindings to one or more nu-mode menus.
+
+     (defun my-nu-mode-menu-customization ()
+       (if (eq nu-major-mode 'org-mode)
+           (define-key nu-window-map "a" 'delete-window)))
+
+   Then add the function to nu-populate-hook
+
+     (add-hook 'nu-populate-hook 'my-nu-mode-menu-customization)
+
+   The hook documentations does provide some conventions.
+
+6.5 Main keymap & free keys
 ===========================
 
 If you want to amend nu-mode keymap, amend nu-keymap.  It is part of
@@ -557,7 +591,7 @@ minor-mode-overrind-map-alist.
   4. <Control>+<Shift> + anything
   5. <Alt>+<Shift> + anything
 
-6.5 Completion
+6.6 Completion
 ==============
 
 Please refer to chapter Completion for ivy & helm.  Nu-mode might
@@ -1223,15 +1257,15 @@ permit their use in free software.
 Tag Table:
 Node: Top716
 Node: Overview1064
-Node: Files Buffers Windows14522
-Node: Completion16315
-Node: Hacking16817
-Node: Advanced Usage17519
-Node: Customization19464
-Node: Integration21363
-Node: Drawbacks & Limits26427
-Node: Contributing27068
-Node: GNU Free Documentation License27454
+Node: Files Buffers Windows15370
+Node: Completion17163
+Node: Hacking17665
+Node: Advanced Usage18367
+Node: Customization20312
+Node: Integration22752
+Node: Drawbacks & Limits27816
+Node: Contributing28457
+Node: GNU Free Documentation License28843
 
 End Tag Table
 

@@ -231,6 +231,19 @@ prompters are the interface.
 
 If you want to see all available menus, press @key{Control+h <space>} to invoke cheat sheet, then look for prompts functions.
 
+The menus are organized by actions, like : finding, opening, deleting, replacing.
+The menus are *not* organized by objects, like : buffers, frames, registers.
+Regarding this organization, the disadvantage is to split a set of functions accross various menus.
+Advantages
+- It feels intuitive to use a logic like <new> <window>, <delete> <window>
+  rather than <window> <new>, <window> <delete>
+  though it might depend on native language of user
+- It helps having a balanced number of menus, with balanced items.
+- It is more consistent with CUA shortcuts.
+  CUA shortcuts like control+f find, control+n new, are not representing
+  objects, but functions.
+
+
 @enumerate
 @item help
 menu is not a prompt but is a map. Press @kbd{Control+h} to view many help function.
@@ -245,9 +258,6 @@ Install help-fns+ to obtain even more functions.
 @item replace
       This group includes replace, transpose, sort functions.
       it does not include markdown, indentation => see bold prompt 
-
-@item tab
-This menu is for windows and buffers.
 
 @item print
 component allows printing, but also evaluating, compiling, converting.
@@ -265,10 +275,15 @@ menu allows to search, occur, find tag, grep, build regexp...
 
 @item goto
 menu is for other navigation (not found in other prompts).
-you might also look at tab, window, and obviously find prompts.
+This includes going to other window (ace-window).
+
+you might also look at window, and obviously find prompts.
 
 @item window
 menu is for window management.
+
+This inludes scrolling, sizing, transpose.
+This does not include window creation (Alt+t or new menu)
 
 @item delete
 menu prompt allows to delete text, file, buffer, window.
