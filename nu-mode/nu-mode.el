@@ -55,7 +55,6 @@
    (define-key nu-keymap (kbd "C-r") 'nu-replace-prompt)
 
    (define-key nu-keymap (kbd "M-t") 'split-window-right)
-   (define-key nu-keymap (kbd "C-t") 'nu-tab-prompt)
 
    ; y? yes? customize?
    (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)

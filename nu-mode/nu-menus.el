@@ -54,25 +54,24 @@ As in nu-keymap, the user owns the punctation.")
 
 (defun nu-populate-window ()
    (nu-define-prefix 'nu-window-map)
-   (define-key nu-window-map (kbd "t") 'kill-buffer)
-   (define-key nu-window-map (kbd "b") 'view-buffer-other-window)
+   (define-key nu-window-map (kbd "c") 'minimize-window)
+
    (define-key nu-window-map (kbd "d") 'scroll-other-window-down)
    (define-key nu-window-map (kbd "u") 'scroll-left)
+   (define-key nu-window-map (kbd "s") 'scroll-other-window)
    (define-key nu-window-map (kbd "o") 'scroll-right)
-   (define-key nu-window-map (kbd "e") 'delete-window)
    (define-key nu-window-map (kbd "r") 'recenter-top-bottom)
-   (define-key nu-window-map (kbd "Q") 'save-buffers-kill-emacs)
 
    (define-key nu-window-map (kbd "f") 'transpose-frame)
+
    (define-key nu-window-map (kbd "i") 'enlarge-window)
-   (define-key nu-window-map (kbd "j") 'shrink-window-horizontally)
-   (define-key nu-window-map (kbd "k") 'shrink-window)
    (define-key nu-window-map (kbd "l") 'enlarge-window-horizontally)
-   (define-key nu-window-map (kbd "n")   'nu-next-window)
-   (define-key nu-window-map (kbd "s") 'scroll-other-window)
-   (define-key nu-window-map (kbd "p")   'nu-previous-window)
-   (define-key nu-window-map (kbd "w") 'delete-other-windows)
+
+   (define-key nu-window-map (kbd "k") 'shrink-window)
+   (define-key nu-window-map (kbd "j") 'shrink-window-horizontally)
+   (define-key nu-window-map (kbd "t") 'quit-window)
    (define-key nu-window-map (kbd "x") 'nu-close-document))
+
 
 (defun nu-window-prompt ()
   (interactive)
@@ -468,6 +467,7 @@ But if mark is active, exchange point and mark."
   (nu-define-prefix 'nu-open-map)
 
   ;; common case
+  (define-key nu-open-map (kbd "g") 'nu-view-buffer-other-window)
   (define-key nu-open-map (kbd "B")  'bookmark-jump)
   (define-key nu-open-map (kbd "c")  'find-file-other-window)
   (define-key nu-open-map (kbd "e")  'find-file-read-only)
@@ -490,7 +490,7 @@ But if mark is active, exchange point and mark."
   (define-key nu-open-map (kbd "z")  'customize)
   (define-key nu-open-map (kbd "x")  'list-registers)
   (define-key nu-open-map (kbd "d")  'dired)
-  (define-key nu-open-map (kbd "d")  'dired-other-window)
+  (define-key nu-open-map (kbd "D")  'dired-other-window)
 
   (cond
    ((eq nu-major-mode 'magit-status-mode)
@@ -565,8 +565,7 @@ But if mark is active, exchange point and mark."
    (define-key nu-goto-map (kbd "k") 'end-of-buffer)
    (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
    (define-key nu-goto-map (kbd "a") 'forward-page)
-   (define-key nu-goto-map (kbd "c") 'backward-page)
-   (define-key nu-goto-map (kbd "b") 'nu-buffers-list))
+   (define-key nu-goto-map (kbd "c") 'backward-page))
 
 
 (defun nu-goto-prompt ()
@@ -857,17 +856,6 @@ both navigate, access to essential prompts, and control the terminal."
   (define-key nu-term-map (kbd "k") 'ibuffer)
   (define-key nu-term-map (kbd "l") 'term-line-mode)
 
-
-  ; This includes internal windows
-  ; or other functions using modified buffers keys.
-  ; since control is necessary to run this prompt
-  ; we use control as the unique modifier...
-   (define-key nu-term-map (kbd "C-i") 'windmove-up)
-   (define-key nu-term-map (kbd "C-j") 'windmove-left)
-   (define-key nu-term-map (kbd "C-k") 'windmove-down)
-   (define-key nu-term-map (kbd "C-l") 'windmove-right)
-
-
   ; Prompt keys will run prompt, but that means
   ; at least three keys to run a func :
   ; term prompt -> nu prompt -> func
@@ -889,31 +877,6 @@ both navigate, access to essential prompts, and control the terminal."
   (define-key nu-term-map (kbd "C-<SPC>") 'term-pager-toggle)
 
   (nu-prompt-for-keymap nu-term-map))
-
-
-(defun nu-populate-tab ()
-  (nu-define-prefix 'nu-tab-map)
-  (define-key nu-tab-map (kbd "i") 'delete-other-windows)
-  (define-key nu-tab-map (kbd "j") 'minimize-window)
-  (define-key nu-tab-map (kbd "k") 'delete-window)
-  (define-key nu-tab-map (kbd "l") 'split-window-right)
-  (define-key nu-tab-map (kbd "n") 'scroll-other-window)
-  (define-key nu-tab-map (kbd "p") 'scroll-other-window-down)
-
-  (define-key nu-tab-map (kbd "g") 'ido-switch-buffer-other-window)
-  (define-key nu-tab-map (kbd "t") 'ace-window)
-
-  (define-key nu-tab-map (kbd "u") 'windmove-up)
-  (define-key nu-tab-map (kbd "h") 'windmove-left)
-  (define-key nu-tab-map (kbd "o") 'windmove-down)
-  (define-key nu-tab-map (kbd "m") 'windmove-right))
-
-(defun nu-tab-prompt ()
-  (interactive)
-  (setq nu-major-mode major-mode)
-  (nu-populate-tab)
-  (run-hooks 'nu-populate-hook)
-  (nu-prompt-for-keymap nu-tab-map))
 
 (defhydra hydra-nu-meta-menu (:color pink
 			      :hint nil

@@ -94,8 +94,25 @@
   (defalias 'nu-describe-variable 'describe-variable)
   (defalias 'nu-bookmarks 'list-bookmarks)
   (defalias 'nu-recentf 'recentf-open-files)
-  (defalias 'nu-browse-kill-ring 'browse-kill-ring))
+  (defalias 'nu-browse-kill-ring 'browse-kill-ring)
+  (defalias 'nu-view-buffer-other-window 'view-buffer-other-window))
 
+;; framework for ido
+(defun nu-setup-ido ()
+  ;; completion prompt setup.
+  (defalias 'nu-completion-prompt-for-keymap 'nu-completing-read-prompt-for-keymap)
+
+  ;; usual commands.
+  (defalias 'nu-search 'nu-isearch-forward-regexp)
+  (defalias 'nu-Mx 'execute-extended-command)
+  (defalias 'nu-find-files 'ido-find-file)
+  (defalias 'nu-buffers-list 'ibuffer)
+  (defalias 'nu-describe-function 'describe-function)
+  (defalias 'nu-describe-variable 'describe-variable)
+  (defalias 'nu-bookmarks 'list-bookmarks)
+  (defalias 'nu-recentf 'recentf-open-files)
+  (defalias 'nu-browse-kill-ring 'browse-kill-ring)
+  (defalias 'nu-view-buffer-other-window 'ido-switch-buffer-other-window))
 
 (setq aw-keys '(?k ?l ?j ?i ?u ?o ?a ?k ?p ?m))
 

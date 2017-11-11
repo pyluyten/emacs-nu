@@ -23,8 +23,6 @@
 
 (require 'nu-vars)
 
-(defun nu-next-window () (interactive) (other-window 1))
-(defun nu-previous-window () (interactive) (other-window -1))
 (defun nu-no-goal-column () (interactive) (setq goal-column nil) (message "No goal column"))
 (defun nu-join-with-following-line () (interactive) (join-line 1))
 (defun nu-rot-reg-or-toggle-rot () (interactive) (if mark-active (rot13-region) (toggle-rot13-mode)))

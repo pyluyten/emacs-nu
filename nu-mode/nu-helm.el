@@ -32,7 +32,8 @@
   (defalias 'nu-describe-function 'describe-function)
   (defalias 'nu-describe-variable 'describe-variable)
   (defalias 'nu-bookmarks 'helm-bookmarks)
-  (defalias 'nu-recentf 'helm-recentf))
+  (defalias 'nu-recentf 'helm-recentf)
+  (defalias 'nu-view-buffer-other-widow 'helm-buffers-list))
 
 
 ;; prompters

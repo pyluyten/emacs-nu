@@ -33,7 +33,8 @@
   (defalias 'nu-describe-variable 'counsel-describe-variable)
   (defalias 'nu-bookmarks 'list-bookmarks)
   (defalias 'nu-recentf 'ivy-recentf)
-  (defalias 'nu-browse-kill-ring 'counsel-yank-pop))
+  (defalias 'nu-browse-kill-ring 'counsel-yank-pop)
+  (defalias 'nu-view-buffer-other-window 'view-buffer-other-window))
 
 ;; prompt
 
