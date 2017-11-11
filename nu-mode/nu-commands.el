@@ -401,17 +401,7 @@ If no argument given, copy 1 char."
 
 
 
-(defun nu-new-empty-buffer ()
-  "Opens a new empty buffer."
-  (interactive)
-  (let ((buf (generate-new-buffer "untitled")))
-    (switch-to-buffer buf)
-    (funcall (and initial-major-mode))
-    (setq buffer-offer-save t)))
-
-
-
-(defun nu-close-document ()
+(defun nu-quit-document ()
   "Closes current document.
 If tab is the only one, closes window.
 If window is the only one, kill buffer."
@@ -423,6 +413,15 @@ If window is the only one, kill buffer."
          (delete-window)))))
 
 
+
+
+(defun nu-new-empty-buffer ()
+  "Opens a new empty buffer."
+  (interactive)
+  (let ((buf (generate-new-buffer "untitled")))
+    (switch-to-buffer buf)
+    (funcall (and initial-major-mode))
+    (setq buffer-offer-save t)))
 
 (defalias 'nu-insert-line-below 'open-line)
 
