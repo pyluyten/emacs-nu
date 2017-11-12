@@ -404,60 +404,21 @@ As in nu-keymap, the user owns the punctation.")
   (nu-prompt-for-keymap nu-open-map))
 
 
-
-
 (defun nu-populate-goto-map ()
 "Populate goto map."
   (setq nu-goto-map nil)
   (nu-define-prefix 'nu-goto-map)
 
-  ;; actually this case is : all read only modes...
-  (cond
-   ((eq nu-major-mode 'dired-mode)
-     ; i should go parent dir. k should try to persistent-action subdir.
-    (define-key nu-goto-map (kbd "u") 'dired-prev-marked-file)
-    (define-key nu-goto-map (kbd "o") 'dired-next-marked-file))
-   ((eq nu-major-mode 'help-mode)
-    (define-key nu-goto-map (kbd "L") 'forward-button)
-    (define-key nu-goto-map (kbd "J") 'backward-button)
-    (define-key nu-goto-map (kbd "o") 'push-button)
-    (define-key nu-goto-map (kbd "u") 'help-go-back))
-   ((eq nu-major-mode 'ibuffer-mode)
-    (define-key nu-goto-map (kbd "J") 'ibuffer-jump-to-buffer))
-   (t
-      ; else - default goto map.
-      (define-key nu-goto-map (kbd "L") 'forward-sentence)
-      (define-key nu-goto-map (kbd "J") 'backward-sentence)
-      (define-key nu-goto-map (kbd "u") 'backward-paragraph)
-      (define-key nu-goto-map (kbd "o") 'forward-paragraph)
-      (define-key nu-goto-map (kbd "f") 'end-of-defun)
-      (define-key nu-goto-map (kbd "M-f") 'beginning-of-defun)
-      (define-key nu-goto-map (kbd "d") 'forward-sexp)
-      (define-key nu-goto-map (kbd "h") 'backward-sexp)
-      (define-key nu-goto-map (kbd "*") 'forward-list)
-      (define-key nu-goto-map (kbd "M-*") 'backward-list)))
-
-   ;
-   ; common keys
-   ;
-
-   (define-key nu-goto-map (kbd "M-e") 'previous-error)
-   (define-key nu-goto-map (kbd "M-g") 'nu-goto-line-previousbuffer)
-
-   (define-key nu-goto-map (kbd "M-s") 'org-mark-ring-goto)
-   (define-key nu-goto-map (kbd "e") 'next-error)
-   (define-key nu-goto-map (kbd "g") 'ace-window)
-   (define-key nu-goto-map (kbd "m") 'avy-goto-line)
-   (define-key nu-goto-map (kbd "n") 'goto-line)
-   (define-key nu-goto-map (kbd "t") 'goto-char)
-   (define-key nu-goto-map (kbd "r") 'jump-to-register)
-   (define-key nu-goto-map (kbd "v") 'view-register)
-   (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
-   (define-key nu-goto-map (kbd "k") 'end-of-buffer)
-   (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
-   (define-key nu-goto-map (kbd "a") 'forward-page)
-   (define-key nu-goto-map (kbd "c") 'backward-page))
-
+  (define-key nu-goto-map (kbd "L") 'forward-sentence)
+  (define-key nu-goto-map (kbd "J") 'backward-sentence)
+  (define-key nu-goto-map (kbd "u") 'backward-paragraph)
+  (define-key nu-goto-map (kbd "o") 'forward-paragraph)
+  (define-key nu-goto-map (kbd "f") 'end-of-defun)
+  (define-key nu-goto-map (kbd "M-f") 'beginning-of-defun)
+  (define-key nu-goto-map (kbd "d") 'forward-sexp)
+  (define-key nu-goto-map (kbd "h") 'backward-sexp)
+  (define-key nu-goto-map (kbd "*") 'forward-list)
+  (define-key nu-goto-map (kbd "M-*") 'backward-list))
 
 (defun nu-goto-prompt ()
 "Offer to goto wherever wished."
@@ -465,6 +426,27 @@ As in nu-keymap, the user owns the punctation.")
   (setq nu-major-mode major-mode)
   (nu-populate-goto-map)
   (run-hooks 'nu-populate-hook)
+
+  ;
+  ; common keys
+  ;
+
+  (define-key nu-goto-map (kbd "M-e") 'previous-error)
+  (define-key nu-goto-map (kbd "M-g") 'nu-goto-line-previousbuffer)
+
+  (define-key nu-goto-map (kbd "M-s") 'org-mark-ring-goto)
+  (define-key nu-goto-map (kbd "e") 'next-error)
+  (define-key nu-goto-map (kbd "g") 'ace-window)
+  (define-key nu-goto-map (kbd "m") 'avy-goto-line)
+  (define-key nu-goto-map (kbd "n") 'goto-line)
+  (define-key nu-goto-map (kbd "t") 'goto-char)
+  (define-key nu-goto-map (kbd "r") 'jump-to-register)
+  (define-key nu-goto-map (kbd "v") 'view-register)
+  (define-key nu-goto-map (kbd "i") 'beginning-of-buffer)
+  (define-key nu-goto-map (kbd "k") 'end-of-buffer)
+  (define-key nu-goto-map (kbd "s") 'nu-find-previous-mark)
+  (define-key nu-goto-map (kbd "a") 'forward-page)
+  (define-key nu-goto-map (kbd "c") 'backward-page)
   (nu-prompt-for-keymap nu-goto-map))
 
 

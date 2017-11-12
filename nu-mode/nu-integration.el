@@ -250,6 +250,19 @@ Still, some keys here help."
 
 
 ;;
+;; help
+;;
+
+(add-hook 'help-mode-hook '(lambda ()
+  (add-hook 'nu-populate-hook '(lambda ()
+    (if (eq nu-major-mode 'help-mode)
+	(progn
+          (define-key nu-goto-map (kbd "L") 'forward-button)
+          (define-key nu-goto-map (kbd "J") 'backward-button)
+          (define-key nu-goto-map (kbd "o") 'push-button)
+          (define-key nu-goto-map (kbd "u") 'help-go-back)))))))
+
+;;
 ;; Info
 ;;
 
