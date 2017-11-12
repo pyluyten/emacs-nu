@@ -231,6 +231,12 @@ Still, some keys here help."
 
 (add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
 
+;;
+;; proced
+;;
+
+(add-hook 'proced-mode-hook '(lambda ()
+				(define-key proced-mode-map "h" proced-mode-map)))
 
 
 ;;
