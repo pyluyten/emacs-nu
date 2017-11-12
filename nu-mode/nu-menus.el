@@ -344,34 +344,21 @@ As in nu-keymap, the user owns the punctation.")
 (defun nu-populate-a-map ()
   (nu-define-prefix 'nu-a-map)
 
-  (define-key nu-a-map (kbd "C-f") 'cd)
-    
-  (cond
-   ((eq nu-major-mode 'proced)
-    (define-key nu-a-map (kbd "M-a") 'proced-unmark-all)
-    (define-key nu-a-map (kbd "a") 'proced-mark-all)
-    (define-key nu-a-map (kbd "c") 'proced-mark-children)
-    (define-key nu-a-map (kbd "l") 'proced-mark)
-    (define-key nu-a-map (kbd "p") 'proced-mark-parents)
-    (define-key nu-a-map (kbd "t") 'proced-toggle-marks)
-    (define-key nu-a-map (kbd "u") 'proced-unmark))
-   (t
-     (define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
-     (define-key nu-a-map (kbd "s") 'nu-mark-sexp)
-     (define-key nu-a-map (kbd "g") 'nu-mark-paragraph)
-     (define-key nu-a-map (kbd "p") 'nu-mark-page)
-     (define-key nu-a-map (kbd "f") 'nu-mark-defun)
-     (define-key nu-a-map (kbd "i") 'nu-set-mark)
-     (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark))))
+  (define-key nu-a-map (kbd "a") 'nu-mark-whole-buffer)
+  (define-key nu-a-map (kbd "s") 'nu-mark-sexp)
+  (define-key nu-a-map (kbd "g") 'nu-mark-paragraph)
+  (define-key nu-a-map (kbd "p") 'nu-mark-page)
+  (define-key nu-a-map (kbd "f") 'nu-mark-defun)
+  (define-key nu-a-map (kbd "i") 'nu-set-mark)
+  (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark))
 
 (defun nu-a-prompt ()
-  "Triggers nu-a-map.
-
-But if mark is active, exchange point and mark."
+  "Triggers nu-a-map"
   (interactive)
   (setq nu-major-mode major-mode)
   (nu-populate-a-map)
   (run-hooks 'nu-populate-hook)
+  (define-key nu-a-map (kbd "C-f") 'cd)
   (nu-prompt-for-keymap nu-a-map))
 
 ; on #master this is C,
