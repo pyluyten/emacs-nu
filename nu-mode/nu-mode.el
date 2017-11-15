@@ -24,6 +24,70 @@
 
 (require 'iso-transl)
 
+(defun nu-set-control-mode ()
+  "Use nu with Control key for immediate actions.
+
+The alt keys will be used for menus.
+This function is not called. It is available for user convenience."
+  (interactive)
+
+   (nu-setup-classic-paddle)
+
+   (define-key nu-keymap (kbd "M-a") 'nu-a-prompt)
+   (define-key nu-keymap (kbd "C-a") 'nu-set-mark)
+
+   (define-key nu-keymap (kbd "C-z") 'undo-tree-undo)
+   (define-key nu-keymap (kbd "M-z") 'undo-tree-visualize)
+
+   (define-key nu-keymap (kbd "C-r") 'replace-regexp)
+   (define-key nu-keymap (kbd "M-r") 'nu-replace-prompt)
+
+   (define-key nu-keymap (kbd "C-t") 'split-window-right)
+
+   (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)
+
+   (define-key nu-keymap (kbd "M-u") 'backward-kill-word)
+   (define-key nu-keymap (kbd "C-u") 'backward-word)
+
+   (define-key nu-keymap (kbd "M-o") 'nu-open-prompt)
+   (define-key nu-keymap (kbd "C-o") 'forward-word)
+
+   (define-key nu-keymap (kbd "C-p") 'universal-argument)
+   (define-key nu-keymap (kbd "M-p") 'nu-print-prompt)
+
+   (define-key nu-keymap (kbd "C-q") 'keyboard-escape-quit)
+   (define-key nu-keymap (kbd "M-q") 'nu-quit-prompt)
+
+   (define-key nu-keymap (kbd "M-s") 'save-buffer)
+   (define-key nu-keymap (kbd "C-s") 'nu-save-prompt)
+
+   (define-key nu-keymap (kbd "M-d") 'nu-M-x)
+   (define-key nu-keymap (kbd "C-d") 'hydra-nu-meta-menu/body)
+
+   (define-key nu-keymap (kbd "C-f") 'nu-search)
+   (define-key nu-keymap (kbd "M-f") 'nu-find-prompt)
+
+   (define-key nu-keymap (kbd "C-g") 'ace-window)
+   (define-key nu-keymap (kbd "M-g") 'nu-goto-prompt)
+
+   (define-key nu-keymap (kbd "C-w") 'nu-quit-document)
+   (define-key nu-keymap (kbd "M-w") 'nu-window-prompt)
+ 
+   (define-key nu-keymap (kbd "M-x") 'nu-delete-prompt)
+   (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
+
+   (define-key nu-keymap (kbd "C-c") 'nu-copy-prompt)
+   (define-key nu-keymap (kbd "M-c") 'nu-copy-region-or-line)
+
+   (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
+   (define-key nu-keymap (kbd "C-v") 'yank)
+
+   (define-key nu-keymap (kbd "C-b") 'nu-bold)
+   (define-key nu-keymap (kbd "M-b") 'nu-bold-prompt)
+
+   (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
+   (define-key nu-keymap (kbd "M-n") 'nu-new-prompt))
+
 (defun nu-restore-default-keymap ()
   "Populate nu keymap with defaults."
   (interactive)
