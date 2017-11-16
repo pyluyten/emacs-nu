@@ -445,7 +445,7 @@ If Emacs is a limited application in time, then it is more difficult to determin
 Control mode : menus are not accessed using Control+key, and immediate functions using Alt. It is the opposite. Control keys trigger immediate functions, so for example Control+c to copy, and menus are accessed using Alt+key, like Alt+c for copy menu. This was the first design when nu-mode was developped, because it makes using both Emacs and other applications easy, or because it is easy for fingers. It makes learning nu-mode very easy. It has a drawback however : using this Control-mode flavour for extended time, it becomes frustating to have to use a) either control keys too much or b) constantly the alt key then another key. In other words immediate keys are not easy enough, while menus are actually too easy to reach.
 To enable control mode, throw this in your dot emacs : after the (nu-mode 1), put (nu-set-control-mode).
 
-Modal mode : this work-in-progress flavour is based on evil. The evil normal state is revisited to be bound to nu-mode keys. The insert state should not allow to do much - one has to go back to normal state. In this case do not require and activate (nu-mode). Rather, do require (angel).
+Modal mode : this work-in-progress flavour is based on evil. The evil normal state is revisited to be bound to nu-mode keys. The insert state should not allow to do much - one has to go back to normal state. In this case do not require and activate (nu-mode). Rather, do require (nu-mode-evil), then activate evil mode.
 
 @chapter Setup
 
