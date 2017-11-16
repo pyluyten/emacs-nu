@@ -47,6 +47,7 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 
 @menu
 * Overview::
+* Flavours::
 * Files Buffers Windows::
 * Completion::
 * Hacking::
@@ -78,7 +79,9 @@ Modern, means respecting conventions like
 @item @kbd{Control-x}, @kbd{Control-c}, @kbd{Control-v} to cut, copy, paste.
 @end enumerate
 
-To allow user to leverage large panel of functions, nu-mode relies on prompts. For example, @kbd{Control+f} will raise a ``find-prompt'' offering several search related features.
+Actually there are several flavours of nu-mode, so @kbd{Ctrl+c} for example, will not have the same meaning depending on the flavour you load. Each flavour is adapted to one usecase. THese are described in their own part in this documentation.
+
+To allow user to leverage large panel of functions, nu-mode relies on (its own) menus. For example, @kbd{Control+f} will raise a ``find-prompt'' offering several search related features.
 A prompt is a pop-up displaying a menu. Each feature is accessible with a key.
 This prompt allows to discover features, and run many different commands easily.
 
@@ -422,7 +425,27 @@ Note that `where-is` function, which sometimes advertises shortcuts, will not wo
 Thus for each function accessible from a prompt, an additional shortcut is created, accessible from @kbd{menu} plus the same @kbd{key} than the prompt, in order to make where-is advertise. Hence, if you read `You can run this command with <menu> r k`, please understand, despite it is also true, that you can also run the command with @kbd{Control-r-k}.
 
 @node Customization
-@chapter Customization
+@chapter Flavours
+The manual did expose standard keybindings, for default flavour. This use case is adapted for rather intensive usage of Emacs, with much typing. It might be not adapted in two different cases.
+
+@list
+@item Very intensive usage.
+If Emacs is used, not several hours, but many hours, then one should rely on modal mode.
+@item Not so intensive, but without much typing.
+If Emacs usage is more code review than typing text/code, then again modal mode editing be more adapted.
+@item Usage mixed with other applications which are not keyboard-friendly
+Some applications rely on mouse, or, force shortcuts like @kbd{Control c}. In this case, it is better to get Emacs behave like the other applications.
+So, for example, one can @kbd{Control c} in one app and @kbd{Control v} in another, one of these being Emacs (no matter which).
+@item Light usage of Emacs
+If Emacs is a limited application in time, then it is more difficult to determine which mode to use. Default mode or Control mode are adapted.
+@end list
+
+Control mode : menus are not accessed using Control+key, and immediate functions using Alt. It is the opposite. Control keys trigger immediate functions, so for example Control+c to copy, and menus are accessed using Alt+key, like Alt+c for copy menu. This was the first design when nu-mode was developped, because it makes using both Emacs and other applications easy, or because it is easy for fingers. It makes learning nu-mode very easy. It has a drawback however : using this Control-mode flavour for extended time, it becomes frustating to have to use a) either control keys too much or b) constantly the alt key then another key. In other words immediate keys are not easy enough, while menus are actually too easy to reach.
+To enable control mode, throw this in your dot emacs : after the (nu-mode 1), put (nu-set-control-mode).
+
+Modal mode : this work-in-progress flavour is based on evil. The evil normal state is revisited to be bound to nu-mode keys. The insert state should not allow to do much - one has to go back to normal state. In this case do not require and activate (nu-mode). Rather, do require (angel).
+
+@chapter Setup
 
 As ususal with Emacs, customization comes down at the very first usage. So even before to describe edition, customization has to be mentioned. There is not a single defcustom inside nu-mode. All customization is to be done in other ways.
 

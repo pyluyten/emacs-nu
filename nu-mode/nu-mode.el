@@ -95,6 +95,7 @@ This function is not called. It is available for user convenience."
    ; <menu> is not a modifier. We need a map
    ;; so features like which-key still work fine
    (define-key nu-keymap (kbd "<menu>") nu-menu-map)
+   (define-key nu-keymap (kbd "²") nu-menu-map)
 
    ;;
    ;; setup the paddle. see setup.el.
