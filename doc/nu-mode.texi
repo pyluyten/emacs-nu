@@ -323,9 +323,11 @@ The standard prompt is the ``light'' prompt. It does only popup a little message
 @item A prompt can be toggled to some `repeat' state. Run a prompt, then press @key{+}. You can then use the prompt as usual, except that after running the function, prompt will ask you again for a key, with the same keymap. Escape the prompt pressing any unbound key.
 @end enumerate
 
-The ``do-prompt'' from @key{Alt+d} is different.  ``do-prompt'' directly displays all possible keys. It offers several frequent features, and also offers to open a prompt. This makes possible to completely skip the @key{Control} key.
+The ``do-prompt'' from @key{Alt+d} is different.  ``do-prompt'' directly displays all possible keys. It offers several frequent features.
 
 While it would be possible to handle buffers or open files using prompts, ``do-prompt'' offers direct keys for this, making it possible to avoid other prompts most of the time. On the other hand the ``do-prompt'' does not add anything to Nu. It is only a matter of convenience, but usage has shown this to be very useful.
+
+keys @kbd{menu} or, @kbd{²}, trigger ``menu map''. Menu map then o does run the open menu, menu map then n the new menus, and so on. This makes possible to completely skip the @key{Control} key.
 
 @section Advanced Edition
 
@@ -352,7 +354,7 @@ Use @kbd{Control+o} prompt to open a buffer. @kbd{Alt+n} allows you to create an
 
 Use @kbd{Alt+t} to open another tab (horizontal-split). @kbd{Control+t} will prompt for which buffer to open in another window.
 
-The delete prompt (@kbd{Alt+d d}) allows to delete either this window or all other windows. The save prompt (@kbd{Control+s}) allows to save current configuration, which you can open from open prompt (@kbd{Control+o}).
+The delete prompt (@kbd{Control+x}) allows to delete either this window or all other windows. The save prompt (@kbd{Control+s}) allows to save current configuration, which you can open from open prompt (@kbd{Control+o}).
 
 To navigate current internal windows, use the tab prompt (@kbd{Control+t}). Note that, in order to switch to another tab, you could also call ace-jump-char-mode (@kbd{Control+f l}. If you actually just need to scroll another tab, stay in current one and use @kbd{Control+Alt+Space} to 'scroll-other-window'.
 
