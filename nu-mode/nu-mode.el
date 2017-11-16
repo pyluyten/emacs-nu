@@ -58,8 +58,8 @@ This function is not called. It is available for user convenience."
    (define-key nu-keymap (kbd "C-q") 'keyboard-escape-quit)
    (define-key nu-keymap (kbd "M-q") 'nu-quit-prompt)
 
-   (define-key nu-keymap (kbd "M-s") 'save-buffer)
-   (define-key nu-keymap (kbd "C-s") 'nu-save-prompt)
+   (define-key nu-keymap (kbd "C-s") 'save-buffer)
+   (define-key nu-keymap (kbd "M-s") 'nu-save-prompt)
 
    (define-key nu-keymap (kbd "M-d") 'nu-M-x)
    (define-key nu-keymap (kbd "C-d") 'hydra-nu-meta-menu/body)
@@ -76,8 +76,8 @@ This function is not called. It is available for user convenience."
    (define-key nu-keymap (kbd "M-x") 'nu-delete-prompt)
    (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
 
-   (define-key nu-keymap (kbd "C-c") 'nu-copy-prompt)
-   (define-key nu-keymap (kbd "M-c") 'nu-copy-region-or-line)
+   (define-key nu-keymap (kbd "M-c") 'nu-copy-prompt)
+   (define-key nu-keymap (kbd "c-c") 'nu-copy-region-or-line)
 
    (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
    (define-key nu-keymap (kbd "C-v") 'yank)
