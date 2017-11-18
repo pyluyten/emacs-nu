@@ -534,9 +534,8 @@ nor prefix, not does it allow to switch to another prompter.
 Still it allows "
   (interactive)
   (setq dummymap (make-sparse-keymap))
-  (define-key dummymap "g" keymap)
+  (define-key dummymap ">" keymap)
   (set-transient-map dummymap)
-  (setq unread-command-events (listify-key-sequence "\g")))
-
+  (setq unread-command-events (listify-key-sequence "\>")))
 
 (provide 'nu-prompters)
