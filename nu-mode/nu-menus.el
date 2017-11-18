@@ -673,10 +673,6 @@ both navigate, access to essential prompts, and control the terminal."
   (define-key nu-term-map (kbd "p") 'nu-print-prompt)
   (define-key nu-term-map (kbd "q") 'nu-quit-prompt)
   (define-key nu-term-map (kbd "w") 'nu-window-prompt)
-
-
-  ; some specific stuff that do not fit well
-  ; elsewhere...
   (define-key nu-term-map (kbd "C-c") 'term-interrupt-subjob)
   (define-key nu-term-map (kbd "C-<SPC>") 'term-pager-toggle)
 
