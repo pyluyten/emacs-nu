@@ -227,6 +227,34 @@ This function is not called. It is available for user convenience."
 
    (define-key nu-keymap (kbd "<f10>") 'tmm-menubar))
 
+(defun nu-initialize ()
+"Initialize nu,
+
+either for nu-mode or other, like evil mode using nu prompts.
+yeah like spacemacs."
+	; the variable allowing to make keymaps override...
+	(setq nu-state t)
+
+        ;; completion system
+	;; see nu-setup
+        (nu-setup-basic)
+
+	(global-undo-tree-mode)
+        (which-key-mode)
+        ; populate all prompts
+	; so all maps are defined
+	(nu-populate-print)
+	(nu-populate-quit)
+	(nu-populate-delete)
+	(nu-populate-bold-map)
+	(nu-populate-insert-map)
+	(nu-populate-save-map)
+	(nu-populate-new-map)
+	(nu-populate-a-map)
+	(nu-populate-open-map)
+	(nu-populate-goto-map)
+	(nu-populate-find-map)
+	(nu-populate-replace))
 
 (define-minor-mode nu-mode
   "Modern Emacs keys.
@@ -245,35 +273,13 @@ Both direct keys & prompters will adapt to current mode.)"
 
   (if nu-mode
       (progn
-	; the variable allowing to make keymaps override...
-	(setq nu-state t)
+        (nu-initialize)
 
 	; this is part of a modern keymap because cursor
 	; is an indicator
 	(set-default 'cursor-type 'bar)
 
 	(delete-selection-mode 1)
-	(global-undo-tree-mode)
-        (which-key-mode)
-
-        ;; completion system
-	;; see nu-setup
-        (nu-setup-basic)
-
-        ; populate all prompts
-	; so all maps are defined
-	(nu-populate-print)
-	(nu-populate-quit)
-	(nu-populate-delete)
-	(nu-populate-bold-map)
-	(nu-populate-insert-map)
-	(nu-populate-save-map)
-	(nu-populate-new-map)
-	(nu-populate-a-map)
-	(nu-populate-open-map)
-	(nu-populate-goto-map)
-	(nu-populate-find-map)
-	(nu-populate-replace)
 
 	(nu-restore-default-keymap)
 
