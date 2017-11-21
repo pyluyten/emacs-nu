@@ -38,29 +38,31 @@ Enforces new buffers being insert state."
 
   ;; which key mode + menus init
   (nu-initialize)
+  (defalias 'nu-prompt-for-keymap 'nu-which-key-prompt-for-keymap)
 
-  ;; TODO : fix nu help prompt
+  ;; TODO : fix this help prompt
   (when nu-mode-show-welcome-screen
 	   (add-hook 'emacs-startup-hook '(lambda ()
              (nu-help-prompt))))
 
-  ;; force insert state everywhere. violent.
+  ;; force insert state everywhere.
   (evil-set-initial-state 'which-key-mode 'insert)
 
   ;; redefine insert state map 
+  ;; easiest is to just take nu-mode like keymap,
+  ;; then slightly adapt
   (nu-restore-default-keymap)
   (nu-setup-vi-paddle)
-  (setq evil-insert-state-map nu-keymap) ;; ouch probably bugz!
+  (setq evil-insert-state-map nu-keymap)
 
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
-  (define-key evil-insert-state-map "M-a" 'evil-visual-char)
+  (define-key evil-insert-state-map (kbd "M-a") 'evil-visual-block)
   
   ;; fix menus
   (add-hook 'nu-populate-hook '(lambda ()
     (progn
        ;; reset!
        (nu-define-prefix 'nu-a-map)
-
        ;; so instead we use evil
 
         ;; todo
@@ -69,13 +71,9 @@ Enforces new buffers being insert state."
         ;; g paragraph
         ;; p page
         ;; f defun
-
        (define-key nu-a-map (kbd "r") 'evil-visual-block)
        (define-key nu-a-map (kbd "l") 'evil-visual-line)
        (define-key nu-a-map (kbd "k") 'evil-visual-char))))
-
-  ;; TODO : visual, replace state should switch to insert (?)
-  ;;
 
   ;; finally trigger evil-mode
   (evil-mode))
