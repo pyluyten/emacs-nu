@@ -58,7 +58,36 @@ Enforces new buffers being insert state."
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "M-a") 'evil-visual-block)
   
-  ;; fix menus
+  ;; which key key = ²
+  (define-key evil-normal-state-map (kbd "²") evil-normal-state-map)
+  (define-key evil-insert-state-map (kbd "²") evil-insert-state-map)
+  (define-key evil-visual-state-map (kbd "²") evil-visual-state-map)
+
+  ;; SPACE key
+  (setq nu-evil-map (make-sparse-keymap))
+  (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
+
+  (define-key nu-evil-map "z" 'undo-tree-visualize)
+  (define-key nu-evil-map "r" 'nu-replace-prompt)
+  (define-key nu-evil-map "p" 'nu-print-prompt)
+  (define-key nu-evil-map "q" 'nu-quit-prompt)
+  (define-key nu-evil-map "s" 'nu-save-prompt)
+  (define-key nu-evil-map "d" 'hydra-nu-meta-menu/body)
+  (define-key nu-evil-map "f" 'nu-find-prompt)
+  (define-key nu-evil-map "g" 'nu-goto-prompt)
+  (define-key nu-evil-map "h" 'help-map)
+  (define-key nu-evil-map "w" 'nu-window-prompt)
+  (define-key nu-evil-map "x" 'nu-delete-prompt)
+  (define-key nu-evil-map "c" 'nu-copy-prompt)
+  (define-key nu-evil-map "v" 'nu-insert-prompt)
+  (define-key nu-evil-map "b" 'nu-bold-prompt)
+  (define-key nu-evil-map "o" 'nu-open-prompt)
+  (define-key nu-evil-map "n" 'nu-new-prompt)
+  (define-key nu-evil-map (kbd "<SPC>") 'nu-M-x)
+
+  ;;
+  ;; now adapt menus
+  ;;
   (add-hook 'nu-populate-hook '(lambda ()
     (progn
        ;; reset!
