@@ -1,4 +1,5 @@
 (require 'evil)
+(require 'nu-mode)
 
 ;;
 ;; normal map
