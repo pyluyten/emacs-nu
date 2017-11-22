@@ -96,17 +96,18 @@ As in nu-keymap, the user owns the punctation.")
     (define-key nu-print-map (kbd "a") 'nu-texi2pdf)))
 
   ; common case
-  (define-key nu-print-map (kbd "e") 'print-buffer)
-  (define-key nu-print-map (kbd "p") 'async-shell-command)
-  (define-key nu-print-map (kbd "d") 'ediff)
   (define-key nu-print-map (kbd "c") 'subword-mode)
+  (define-key nu-print-map (kbd "d") 'ediff)
+  (define-key nu-print-map (kbd "e") 'print-buffer)
   (define-key nu-print-map (kbd "f") 'find-grep)
   (define-key nu-print-map (kbd "g") 'grep)
   (define-key nu-print-map (kbd "k") 'kmacro-end-or-call-macro)
   (define-key nu-print-map (kbd "m") 'compile)
   (define-key nu-print-map (kbd "n") 'negative-argument)
+  (define-key nu-print-map (kbd "p") 'async-shell-command)
   (define-key nu-print-map (kbd "u") 'universal-argument)
-  (define-key nu-print-map (kbd "w") 'pwd))
+  (define-key nu-print-map (kbd "w") 'pwd)
+  (define-key nu-print-map (kbd "x") 'eval-expression))
 
 
 (defun nu-print-prompt ()
