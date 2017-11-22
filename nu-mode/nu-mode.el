@@ -106,12 +106,10 @@ This function is not called. It is available for user convenience."
 
    ;;
    ;; setup the paddle. see setup.el.
-   ;; this is i + j + k + l + h
    ;;
-   ;; if another paddle is set
-   ;; this should be same key set.
-   ;;
-   (nu-setup-classic-paddle)
+   (if nu-use-vi-paddle
+       (nu-setup-vi-paddle)
+       (nu-setup-classic-paddle))
 
    (define-key nu-keymap (kbd "C-a") 'nu-a-prompt)
    (define-key nu-menu-map (kbd "a") 'nu-a-map)

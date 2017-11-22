@@ -51,8 +51,8 @@ Enforces new buffers being insert state."
   ;; redefine insert state map 
   ;; easiest is to just take nu-mode like keymap,
   ;; then slightly adapt
+  (setq nu-use-vi-paddle t)
   (nu-restore-default-keymap)
-  (nu-setup-vi-paddle)
   (setq evil-insert-state-map nu-keymap)
 
   (define-key evil-insert-state-map [escape] 'evil-normal-state)

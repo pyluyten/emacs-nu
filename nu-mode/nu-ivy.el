@@ -63,13 +63,21 @@
   (if (boundp 'ivy-minibuffer-map)
       (progn
 	;; standard ivy map
-        ;; normaly M-i	= ivy-insert-current -> rebind to M-l
-
-        (define-key ivy-minibuffer-map (kbd "M-h") ivy-minibuffer-map)
-        (define-key ivy-minibuffer-map (kbd "M-i") 'previous-line)
-        (define-key ivy-minibuffer-map (kbd "M-k") 'next-line)
+        (define-key ivy-minibuffer-map (kbd "M-h") 'ivy-minibuffer-map)
         (define-key ivy-minibuffer-map (kbd "M-m") 'ivy-immediate-done)
-        (define-key ivy-minibuffer-map (kbd "M-l") 'ivy-insert-current))))
+
+        (if nu-use-vi-paddle
+	   ;; normaly M-j = ivy-yank-word. rebind to M-l.
+	   (progn
+	       (define-key ivy-minibuffer-map (kbd "M-k") 'previous-line)
+	       (define-key ivy-minibuffer-map (kbd "M-j") 'next-line)
+               (define-key ivy-minibuffer-map (kbd "M-l") 'ivy-yank-word))
+
+            ;; normaly M-i = ivy insert current. rebind to M-l.
+	    (progn
+               (define-key ivy-minibuffer-map (kbd "M-i") 'previous-line)
+               (define-key ivy-minibuffer-map (kbd "M-k") 'next-line)
+               (define-key ivy-minibuffer-map (kbd "M-l") 'ivy-insert-current))))))
 
 (defadvice nu-prepare-for-minibuffer (after nu-prepare-for-minibuffer-ivy-advice ())
   (nu-set-minibuffer-ivy))

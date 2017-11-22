@@ -18,6 +18,9 @@
 (defvar nu-mode-show-welcome-screen
 "If true, nu-mode does display a help buffer at startup.")
 
+(defvar nu-use-vi-paddle nil
+  "If true, nu uses h j k l. Otherwise it uses i j k l.")
+
 (defvar nu-state t "Used by overriding maps alist.")
 
 ;;
