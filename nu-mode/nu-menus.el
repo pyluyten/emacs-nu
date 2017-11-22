@@ -371,7 +371,6 @@ As in nu-keymap, the user owns the punctation.")
 
   ;; common case
   (define-key nu-open-map (kbd "g") 'nu-view-buffer-other-window)
-  (define-key nu-open-map (kbd "B")  'bookmark-jump)
   (define-key nu-open-map (kbd "c")  'find-file-other-window)
   (define-key nu-open-map (kbd "e")  'find-file-read-only)
   (define-key nu-open-map (kbd "E")  'find-file-read-only-other-window)
@@ -410,6 +409,7 @@ As in nu-keymap, the user owns the punctation.")
   (setq nu-goto-map nil)
   (nu-define-prefix 'nu-goto-map)
 
+  (define-key nu-open-map (kbd "b")  'bookmark-jump)
   (define-key nu-goto-map (kbd "L") 'forward-sentence)
   (define-key nu-goto-map (kbd "J") 'backward-sentence)
   (define-key nu-goto-map (kbd "u") 'backward-paragraph)
