@@ -282,11 +282,14 @@ Both direct keys & prompters will adapt to current mode.)"
       (progn
         (nu-initialize)
 
-	; this is part of a modern keymap because cursor
-	; is an indicator
+        ;;
+	;; the following is only nu-mode initializion
+	;; while common parts was above
+	;;
 	(set-default 'cursor-type 'bar)
-
 	(delete-selection-mode 1)
+        (add-hook 'deactivate-mark-hook  'nu-deactivate-mark-hook)
+        (add-hook 'activate-mark-hook    'nu-add-mark-hook)
 
 	(nu-restore-default-keymap)
 

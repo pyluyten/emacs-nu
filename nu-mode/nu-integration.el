@@ -144,13 +144,13 @@ Still, some keys here help."
   (define-key global-map (kbd "C-c C-c") 'with-editor-finish)
   (define-key global-map (kbd "C-c C-k") 'with-editor-cancel))
 
-(add-hook 'with-editor-mode-hook 'nu-magit-w-editor-mode-hook)
-(add-hook 'term-mode-hook        'nu-prepare-for-term)
-(add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
-(add-hook 'minibuffer-exit-hook 'nu-minibuffer-exit t)
-(add-hook 'dired-mode-hook       'nu-prepare-for-dired)
-(add-hook 'activate-mark-hook    'nu-add-mark-hook)
-(add-hook 'deactivate-mark-hook  'nu-deactivate-mark-hook)
+
+  (add-hook 'with-editor-mode-hook 'nu-magit-w-editor-mode-hook)
+  (add-hook 'term-mode-hook        'nu-prepare-for-term)
+  (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
+  (add-hook 'minibuffer-exit-hook  'nu-minibuffer-exit t)
+  (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
+
 
 (eval-after-load "undo-tree"
   '(progn
