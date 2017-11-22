@@ -30,6 +30,32 @@
 (require 'evil)
 (require 'nu-mode)
 
+(defun nu-state-help-prompt ()
+  (interactive)
+  (lv-message
+    (concat
+      (propertize "\n Welcome to nu-state\n\n" 'face 'bold)
+      " This screen does provide some help to use nu-state.\n It is shown at startup.\n"
+      " Enter any key to quit this prompt or "(propertize "Space" 'face 'nu-face-shortcut)
+      " to obtain the cheat sheet."
+      "\n To disable this screen, put this in your init file\n\n"
+        (propertize " (require 'nu-state)\n" 'face 'italic)
+	(propertize " (setq nu-mode-show-welcome-screen nil)\n" 'face 'error)
+      "\n\n To obtain Help, use "
+      (propertize "Control+h" 'face 'nu-face-shortcut)
+      "\n For example, to obtain a Cheat Sheet, use "
+      (propertize "Control+h Space" 'face 'nu-face-shortcut)
+      "\n\n To enter a command (M-x in vanilla Emacs), use "
+      (propertize "Control+d" 'face 'nu-face-shortcut)
+      " or " (propertize "Alt+d Return" 'face 'nu-face-shortcut)
+      ".\n To quit a command, use "
+      (propertize "Alt+q" 'face 'nu-face-shortcut)))
+  (setq answer (read-key ""))
+  (lv-delete-window)
+  (if (eq answer 32)
+      (nu-cheat-sheet)))
+
+
 (defun nu-state ()
   "Requires evil and nu and enables evil mode.
 
@@ -43,7 +69,7 @@ Enforces new buffers being insert state."
   ;; TODO : fix this help prompt
   (when nu-mode-show-welcome-screen
 	   (add-hook 'emacs-startup-hook '(lambda ()
-             (nu-help-prompt))))
+             (nu-state-help-prompt))))
 
   ;; force insert state everywhere.
   (evil-set-initial-state 'which-key-mode 'insert)
