@@ -56,7 +56,7 @@ Enforces new buffers being insert state."
   (setq evil-insert-state-map nu-keymap)
 
   (define-key evil-insert-state-map [escape] 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "M-a") 'evil-visual-block)
+  (define-key evil-insert-state-map (kbd "M-a") 'evil-visual-char)
   
   ;; which key key = ²
   (define-key evil-normal-state-map (kbd "²") evil-normal-state-map)
