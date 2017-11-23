@@ -47,7 +47,6 @@
       (propertize "Control+h Space" 'face 'nu-face-shortcut)
       "\n\n To enter a command (M-x in vanilla Emacs), use "
       (propertize "Control+d" 'face 'nu-face-shortcut)
-      " or " (propertize "Alt+d Return" 'face 'nu-face-shortcut)
       ".\n To quit a command, use "
       (propertize "Alt+q" 'face 'nu-face-shortcut)))
   (setq answer (read-key ""))
