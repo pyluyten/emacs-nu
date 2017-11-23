@@ -47,7 +47,6 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 
 @menu
 * Overview::
-* Flavours::
 * Files Buffers Windows::
 * Completion::
 * Hacking::
@@ -60,6 +59,51 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 @end menu
 
 @node Overview
+@chapter Which Emacs to use?
+
+Emacs is not a text editor, its an interface, because it allows you to control, from one program, others, in order to read mail or run commands, manage files and so on.
+
+Actually Emacs is a choice between several interfaces. Which one you need, it all depends on your usage, and your tastes. This documentation does cover nu-mode and nu-state, but you should also consider evil, spacemacs, and ergoemacs.
+
+evil is an emulation of vim. it makes emacs behave like vim.
+spacemacs does like evil, and adds tons of stuff, sometimes at a cost.
+
+ergoemacs is not modal. It hopes to makes non modal editing possible, efficient. So it does rebinds most common emacs commands in order to make keybindings fine enough.
+
+nu-mode is close to ergoemacs. It prefers easy to remember shortcuts (control+c, control+v...) and sort of menus. It is a mode and its keymap
+
+nu-state looks like nu-mode, but there is a vim like mode. it is based on evil.
+The documentation assumes nu-mode, and a dedicated chapter explains nu-state.
+
+So, what to use?
+
+- I am new to Emacs. I do not know vi. I'm scared
+    - Use nu-mode
+- I am new to Emacs, but i use vi.
+   - Use bare evil or nu state. See more below.
+- I want Emacs to be as close as possible to
+  notepad. So it would be notepad improved.
+    - Use nu-mode, and use (nu-set-control-mode)
+- I want Emacs easy, but also ergonomic.
+    - Use nu-mode
+- I want Emacs features, but i prefer vi editing.
+  * I want shiny rainbows and unicorns.
+    - Use spacemacs.
+  * I just want something minimal i can customize
+    - Use evil.
+    - Or, Use nu-state, but customize so
+      default state is normal state.
+- I want Emacs features, like vi editing,
+  but also want non modal editing.
+    - Use nu-state
+- I want to learn vi but to stay in a non modal editing
+   - Use nu state
+- I often use M-x to run commands, but i want
+  comfortable keys for most common operations.
+   - Use ErgoEmacs.
+- I have dvorak or bépo
+   - Use ErgoEmacs.
+
 @chapter Overview
 
 WARNING : this package has not yet reached 1.0. It is subject to change.
@@ -430,7 +474,7 @@ Thus for each function accessible from a prompt, an additional shortcut is creat
 @chapter Flavours
 The manual did expose standard keybindings, for default flavour. This use case is adapted for rather intensive usage of Emacs, with much typing. It might be not adapted in two different cases.
 
-@list
+@enumerate
 @item Very intensive usage.
 If Emacs is used, not several hours, but many hours, then one should rely on modal mode.
 @item Not so intensive, but without much typing.
@@ -440,7 +484,7 @@ Some applications rely on mouse, or, force shortcuts like @kbd{Control c}. In th
 So, for example, one can @kbd{Control c} in one app and @kbd{Control v} in another, one of these being Emacs (no matter which).
 @item Light usage of Emacs
 If Emacs is a limited application in time, then it is more difficult to determine which mode to use. Default mode or Control mode are adapted.
-@end list
+@end enumerate
 
 Control mode : menus are not accessed using Control+key, and immediate functions using Alt. It is the opposite. Control keys trigger immediate functions, so for example Control+c to copy, and menus are accessed using Alt+key, like Alt+c for copy menu. This was the first design when nu-mode was developped, because it makes using both Emacs and other applications easy, or because it is easy for fingers. It makes learning nu-mode very easy. It has a drawback however : using this Control-mode flavour for extended time, it becomes frustating to have to use a) either control keys too much or b) constantly the alt key then another key. In other words immediate keys are not easy enough, while menus are actually too easy to reach.
 To enable control mode, throw this in your dot emacs : after the (nu-mode 1), put (nu-set-control-mode).

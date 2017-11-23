@@ -1,7 +1,7 @@
-This is nu-mode.info, produced by makeinfo version 6.4 from
+This is nu-mode.info, produced by makeinfo version 6.5 from
 nu-mode.texi.
 
-This manual is for nu-mode (version 0.8 of 2014-09-12), a modern
+This manual is for nu-mode (version 0.8.1 of 2017-11-16), a modern
 keybinding for Emacs.  Copyright � 2017 Pierre-Yves Luyten.
 
      Permission is granted to copy, distribute and/or modify this
@@ -40,7 +40,51 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 
 File: nu-mode.info,  Node: Overview,  Next: Files Buffers Windows,  Prev: Top,  Up: Top
 
-1 Overview
+1 Which Emacs to use?
+*********************
+
+Emacs is not a text editor, its an interface, because it allows you to
+control, from one program, others, in order to read mail or run
+commands, manage files and so on.
+
+   Actually Emacs is a choice between several interfaces.  Which one
+you need, it all depends on your usage, and your tastes.  This
+documentation does cover nu-mode and nu-state, but you should also
+consider evil, spacemacs, and ergoemacs.
+
+   evil is an emulation of vim.  it makes emacs behave like vim.
+spacemacs does like evil, and adds tons of stuff, sometimes at a cost.
+
+   ergoemacs is not modal.  It hopes to makes non modal editing
+possible, efficient.  So it does rebinds most common emacs commands in
+order to make keybindings fine enough.
+
+   nu-mode is close to ergoemacs.  It prefers easy to remember
+shortcuts (control+c, control+v...)  and sort of menus.  It is a mode
+and its keymap
+
+   nu-state looks like nu-mode, but there is a vim like mode.  it is
+based on evil.  The documentation assumes nu-mode, and a dedicated
+chapter explains nu-state.
+
+   So, what to use?
+
+   - I am new to Emacs.  I do not know vi.  I'm scared - Use nu-mode -
+I am new to Emacs, but i use vi.  - Use bare evil or nu state.  See
+more below.  - I want Emacs to be as close as possible to notepad.  So
+it would be notepad improved.  - Use nu-mode, and use
+(nu-set-control-mode) - I want Emacs easy, but also ergonomic.  - Use
+nu-mode - I want Emacs features, but i prefer vi editing.  * I want
+shiny rainbows and unicorns.  - Use spacemacs.  * I just want
+something minimal i can customize - Use evil.  - Or, Use nu-state, but
+customize so default state is normal state.  - I want Emacs features,
+like vi editing, but also want non modal editing.  - Use nu-state - I
+want to learn vi but to stay in a non modal editing - Use nu state - I
+often use M-x to run commands, but i want comfortable keys for most
+common operations.  - Use ErgoEmacs.  - I have dvorak or bépo - Use
+ErgoEmacs.
+
+2 Overview
 **********
 
 WARNING : this package has not yet reached 1.0.  It is subject to
@@ -64,12 +108,17 @@ completion mechanism.
   3. 'Control-s' to save
   4. 'Control-x', 'Control-c', 'Control-v' to cut, copy, paste.
 
+   Actually there are several flavours of nu-mode, so 'Ctrl+c' for
+example, will not have the same meaning depending on the flavour you
+load.  Each flavour is adapted to one usecase.  THese are described in
+their own part in this documentation.
+
    To allow user to leverage large panel of functions, nu-mode relies
-on prompts.  For example, 'Control+f' will raise a "find-prompt"
-offering several search related features.  A prompt is a pop-up
-displaying a menu.  Each feature is accessible with a key.  This
-prompt allows to discover features, and run many different commands
-easily.
+on (its own) menus.  For example, 'Control+f' will raise a
+"find-prompt" offering several search related features.  A prompt is a
+pop-up displaying a menu.  Each feature is accessible with a key.
+This prompt allows to discover features, and run many different
+commands easily.
 
    There are, on the other hands, "immediate keys".  For example, to
 isearch-forward-regexp (that is, "Find"), 'Alt+f' will directly run
@@ -86,7 +135,7 @@ ace-jump-word-mode, m for imenu, b for regexp-builder, o for occur,
 selected : according to major mode or selection state, different
 functions will be available or not.
 
-1.1 Navigate
+2.1 Navigate
 ============
 
       I
@@ -156,7 +205,7 @@ emacs-nu principles :
 
    These same principles apply to other prompts.
 
-1.2 Selections and Deletion
+2.2 Selections and Deletion
 ===========================
 
 Now that you can input text plus navigate, let's examine several
@@ -181,7 +230,7 @@ directly delete some text.
      to delete what you want (function, org-node, sentence, ...).
   6. As seen above, alternatively, first mark (select) text you want.
 
-1.3 Cut Copy Paste
+2.3 Cut Copy Paste
 ==================
 
 When no selection is active, use 'Alt + x' to cut current line, or a
@@ -195,7 +244,7 @@ active, copy this selection.
    Use 'Alt + v' to paste the current clipboard.  Or, you can use
 'Control + v' to invoke an advanced "Paste" prompt.
 
-1.4 Undo or Redo
+2.4 Undo or Redo
 ================
 
 As expected, use 'Alt+z' to undo or 'Control+z' to access the full
@@ -207,7 +256,7 @@ the paddle : 'i' (redo), 'j' (switch to left branch), 'Alt+k' (redo),
 'Alt+q' to abort.  You can also toggle selection mode with <s> or
 toggle timestamps using <t>.
 
-1.5 Dependencies
+2.5 Dependencies
 ================
 
 nu-mode depends on several libraries, both native or external ones.
@@ -224,7 +273,7 @@ following completion framework.
   2. ace-jump
   3. magit
 
-1.6 Help
+2.6 Help
 ========
 
 Use 'Control+q' to quit a sequence or a command in progress.  Use
@@ -240,7 +289,7 @@ while 'Control+s' directly saves the current buffer.
 
    These prompts offer you to quickly learn where functions are.
 
-1.7 Menus and Prompters
+2.7 Menus and Prompters
 =======================
 
 This section should explain
@@ -352,9 +401,7 @@ the key, he might use
      unbound key.
 
    The "do-prompt" from <Alt+d> is different.  "do-prompt" directly
-displays all possible keys.  It offers several frequent features, and
-also offers to open a prompt.  This makes possible to completely skip
-the <Control> key.
+displays all possible keys.  It offers several frequent features.
 
    While it would be possible to handle buffers or open files using
 prompts, "do-prompt" offers direct keys for this, making it possible
@@ -362,7 +409,11 @@ to avoid other prompts most of the time.  On the other hand the
 "do-prompt" does not add anything to Nu.  It is only a matter of
 convenience, but usage has shown this to be very useful.
 
-1.8 Advanced Edition
+   keys 'menu' or, '²', trigger "menu map".  Menu map then o does run
+the open menu, menu map then n the new menus, and so on.  This makes
+possible to completely skip the <Control> key.
+
+2.8 Advanced Edition
 ====================
 
 Some advanced editon features rely on 'Alt+r', which will invoke
@@ -387,10 +438,10 @@ prompt, allowing to indent, fill-paragraph, and so on.
 
 File: nu-mode.info,  Node: Files Buffers Windows,  Next: Completion,  Prev: Overview,  Up: Top
 
-2 Files Buffers Windows
+3 Files Buffers Windows
 ***********************
 
-2.1 Internal Windows and Tabs
+3.1 Internal Windows and Tabs
 =============================
 
 Use 'Control+o' prompt to open a buffer.  'Alt+n' allows you to create
@@ -401,7 +452,7 @@ example to vertical split or open another external frame or so.
    Use 'Alt+t' to open another tab (horizontal-split).  'Control+t'
 will prompt for which buffer to open in another window.
 
-   The delete prompt ('Alt+d d') allows to delete either this window
+   The delete prompt ('Control+x') allows to delete either this window
 or all other windows.  The save prompt ('Control+s') allows to save
 current configuration, which you can open from open prompt
 ('Control+o').
@@ -412,7 +463,7 @@ could also call ace-jump-char-mode ('Control+f l'.  If you actually
 just need to scroll another tab, stay in current one and use
 'Control+Alt+Space' to 'scroll-other-window'.
 
-2.2 Files, Bookmarks
+3.2 Files, Bookmarks
 ====================
 
 Use 'Alt+s' to save current file, 'Control+s' to invoke a prompt to
@@ -426,7 +477,7 @@ open, delete, copy, rename files.  And since you are using nu-mode,
 this is regexp-file-management-for-human-beings ,).  See the relevant
 section on Integration.
 
-2.3 External Windows
+3.3 External Windows
 ====================
 
 It is possible, from Emacs to handle a bit of window management.  But
@@ -436,7 +487,7 @@ save proompt...
 
 File: nu-mode.info,  Node: Completion,  Next: Hacking,  Prev: Files Buffers Windows,  Up: Top
 
-3 Completion
+4 Completion
 ************
 
 It is possible not to use any completion system using emacs-nu.
@@ -456,7 +507,7 @@ yet.
 
 File: nu-mode.info,  Node: Hacking,  Next: Advanced Usage,  Prev: Completion,  Up: Top
 
-4 Hacking
+5 Hacking
 *********
 
 The print buffer, invoked from 'Control+p', will offer you to eval
@@ -477,7 +528,7 @@ definitions.
 
 File: nu-mode.info,  Node: Advanced Usage,  Next: Customization,  Prev: Hacking,  Up: Top
 
-5 Advanced Usage
+6 Advanced Usage
 ****************
 
   1. To trigger a major mode sequence, start with 'Control+Space'.
@@ -521,15 +572,57 @@ it is also true, that you can also run the command with 'Control-r-k'.
 
 File: nu-mode.info,  Node: Customization,  Next: Integration,  Prev: Advanced Usage,  Up: Top
 
-6 Customization
-***************
+7 Flavours
+**********
+
+The manual did expose standard keybindings, for default flavour.  This
+use case is adapted for rather intensive usage of Emacs, with much
+typing.  It might be not adapted in two different cases.
+
+  1. Very intensive usage.  If Emacs is used, not several hours, but
+     many hours, then one should rely on modal mode.
+  2. Not so intensive, but without much typing.  If Emacs usage is
+     more code review than typing text/code, then again modal mode
+     editing be more adapted.
+  3. Usage mixed with other applications which are not
+     keyboard-friendly Some applications rely on mouse, or, force
+     shortcuts like 'Control c'.  In this case, it is better to get
+     Emacs behave like the other applications.  So, for example, one
+     can 'Control c' in one app and 'Control v' in another, one of
+     these being Emacs (no matter which).
+  4. Light usage of Emacs If Emacs is a limited application in time,
+     then it is more difficult to determine which mode to use.
+     Default mode or Control mode are adapted.
+
+   Control mode : menus are not accessed using Control+key, and
+immediate functions using Alt.  It is the opposite.  Control keys
+trigger immediate functions, so for example Control+c to copy, and
+menus are accessed using Alt+key, like Alt+c for copy menu.  This was
+the first design when nu-mode was developped, because it makes using
+both Emacs and other applications easy, or because it is easy for
+fingers.  It makes learning nu-mode very easy.  It has a drawback
+however : using this Control-mode flavour for extended time, it
+becomes frustating to have to use a) either control keys too much or
+b) constantly the alt key then another key.  In other words immediate
+keys are not easy enough, while menus are actually too easy to reach.
+To enable control mode, throw this in your dot emacs : after the
+(nu-mode 1), put (nu-set-control-mode).
+
+   Modal mode : this work-in-progress flavour is based on evil.  The
+evil normal state is revisited to be bound to nu-mode keys.  The
+insert state should not allow to do much - one has to go back to
+normal state.  In this case do not require and activate (nu-mode).
+Rather, do require (nu-mode-evil), then activate evil mode.
+
+8 Setup
+*******
 
 As ususal with Emacs, customization comes down at the very first
 usage.  So even before to describe edition, customization has to be
 mentioned.  There is not a single defcustom inside nu-mode.  All
 customization is to be done in other ways.
 
-6.1 I prefer VI keys for basic movement
+8.1 I prefer VI keys for basic movement
 =======================================
 
 Below code will make h j k l behave like like VI. Beggining of line
@@ -537,13 +630,13 @@ become i.
 
      (nu-setup-vi-paddle)
 
-6.2 I don't like the Alt modifier for the paddle
+8.2 I don't like the Alt modifier for the paddle
 ================================================
 
 While it is easy (simply bind Control+ [ijkluo] to the movement, this
 is not recommended, since alt key is suppose to offer *any function*.
 
-6.3 Prompts
+8.3 Prompts
 ===========
 
 If you want prompts to automatically prompt a buffer rather than just
@@ -560,7 +653,7 @@ more prompts.
    Finally you might also write your own prompt.  See for example
 which-key prompt for a simple example.
 
-6.4 Menus
+8.4 Menus
 =========
 
 if you want to amend a menu, either to customize your own setup or to
@@ -577,7 +670,7 @@ a function which add keybindings to one or more nu-mode menus.
 
    The hook documentations does provide some conventions.
 
-6.5 Main keymap & free keys
+8.5 Main keymap & free keys
 ===========================
 
 If you want to amend nu-mode keymap, amend nu-keymap.  It is part of
@@ -591,7 +684,7 @@ minor-mode-overrind-map-alist.
   4. <Control>+<Shift> + anything
   5. <Alt>+<Shift> + anything
 
-6.6 Completion
+8.6 Completion
 ==============
 
 Please refer to chapter Completion for ivy & helm.  Nu-mode might
@@ -600,7 +693,7 @@ later integrate more completion systems.
 
 File: nu-mode.info,  Node: Integration,  Next: Drawbacks & Limits,  Prev: Customization,  Up: Top
 
-7 Integration
+9 Integration
 *************
 
 nu-mode is to be responsive - in order for major modes to preserve
@@ -608,7 +701,7 @@ nu-mode philosophy, prompts plus some direct keys will change
 according to the context : mainly major-mode.  More globally, nu-mode
 does integrate with other libraries.
 
-7.1 Major-mode : dired
+9.1 Major-mode : dired
 ======================
 
 As expected, most of vanilla *Dired* keys are respected : these are
@@ -631,7 +724,7 @@ useful inside dired are kept.
    Use 'Control+p' (uniserval-argument) then <s> key to edit the ls
 command.
 
-7.2 Major-mode / Minor-mode : org
+9.2 Major-mode / Minor-mode : org
 =================================
 
 nu-mode has many features related to org.  Rather than storing all
@@ -651,7 +744,7 @@ prompt.  One can org-mark-ring-goto using goto prompt.
 
    Note that shift selectections do not work with org-mode.
 
-7.3 Major-mode : magit
+9.3 Major-mode : magit
 ======================
 
 Use <Control+s>, ie save-prompt, to gain access to magit-status.
@@ -659,7 +752,7 @@ Use <Control+s>, ie save-prompt, to gain access to magit-status.
    Magit already is very easy to use, since you might press <h> to
 discover its features.
 
-7.4 Major-mode : term
+9.4 Major-mode : term
 =====================
 
 term is a major mode which has two components (sub-modes)
@@ -688,25 +781,25 @@ not directly sent.
 allowing several terminal related features like returning to char
 moode.
 
-7.5 Major-mode : texinfo
+9.5 Major-mode : texinfo
 ========================
 
 Texinfo has little add-ons to prompts : "print" prompt will offer to
 makeinfo or convert to pdf, and "insert" prompt to texinfo-insert...
 
-7.6 Minor-mode : auto-complete
+9.6 Minor-mode : auto-complete
 ==============================
 
 There isn't much to say.  Auto-complete does integrate well, that's
 all!
 
-7.7 Minor-mode : god-mode
+9.7 Minor-mode : god-mode
 =========================
 
 God mode works but, is not binded.  You would have to assign a key
 yourself to trigger god-mode.
 
-7.8 Minor-mode : evil-mode
+9.8 Minor-mode : evil-mode
 ==========================
 
 While nu-mode is not a modal editor, and aims at being the most
@@ -729,7 +822,7 @@ thought to work in non-modal, modern editing.  It does not need modes.
 
    Using vanilla evil or spacemacs might be an alternative.
 
-7.9 Other : autojump
+9.9 Other : autojump
 ====================
 
 autojump is part of the keybinding (Control f prompt).
@@ -737,8 +830,8 @@ autojump is part of the keybinding (Control f prompt).
 
 File: nu-mode.info,  Node: Drawbacks & Limits,  Next: Contributing,  Prev: Integration,  Up: Top
 
-8 Drawbacks & Limits
-********************
+10 Drawbacks & Limits
+*********************
 
   1. There might be bugs on emacs-nu
   2. Emacs-nu is meant for azerty, qwzerty.  It would not be very good
@@ -752,8 +845,8 @@ File: nu-mode.info,  Node: Drawbacks & Limits,  Next: Contributing,  Prev: Integ
 
 File: nu-mode.info,  Node: Contributing,  Next: GNU Free Documentation License,  Prev: Drawbacks & Limits,  Up: Top
 
-9 Contributing
-**************
+11 Contributing
+***************
 
 Emacs nu is moving to a "one file per feature" style.  There are files
 for common, core nu-mode, then files for integrating it.  For example
@@ -1255,17 +1348,17 @@ permit their use in free software.
 
 
 Tag Table:
-Node: Top716
-Node: Overview1064
-Node: Files Buffers Windows15370
-Node: Completion17163
-Node: Hacking17665
-Node: Advanced Usage18367
-Node: Customization20312
-Node: Integration22752
-Node: Drawbacks & Limits27816
-Node: Contributing28457
-Node: GNU Free Documentation License28843
+Node: Top718
+Node: Overview1066
+Node: Files Buffers Windows17717
+Node: Completion19512
+Node: Hacking20014
+Node: Advanced Usage20716
+Node: Customization22661
+Node: Integration27311
+Node: Drawbacks & Limits32375
+Node: Contributing33018
+Node: GNU Free Documentation License33406
 
 End Tag Table
 
