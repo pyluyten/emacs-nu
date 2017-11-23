@@ -22,6 +22,7 @@
 ;;
 ;;
 
+(require 'nu-vars)
 
 (defvar dired-mode-map)
 (defvar nu-keymap-backup)
@@ -99,11 +100,11 @@ Always start at char mode."
 
 Still, some keys here help."
   (define-key dired-mode-map  (kbd "h") dired-mode-map)
- 
-  (define-key dired-mode-map  (kbd "M-i") 'dired-previous-line)
-  (define-key dired-mode-map  (kbd "M-l") 'dired-find-file)
-  (define-key dired-mode-map  (kbd "M-j") 'dired-up-directory)
-  (define-key dired-mode-map  (kbd "M-k") 'dired-next-line)
+
+  (define-key dired-mode-map nu-previous-line-binding 'dired-previous-line)
+  (define-key dired-mode-map nu-forward-char-binding 'dired-find-file)
+  (define-key dired-mode-map nu-backward-char-binding 'dired-up-directory)
+  (define-key dired-mode-map nu-next-line-binding 'dired-next-line)
 
   (define-key dired-mode-map  (kbd "C-z") 'dired-undo)
   (define-key dired-mode-map  (kbd "M-s") 'nu-save-prompt)
@@ -154,12 +155,12 @@ Still, some keys here help."
 
 (eval-after-load "undo-tree"
   '(progn
-     (define-key undo-tree-visualizer-mode-map (kbd "h") undo-tree-visualizer-mode-map)
+     (define-key undo-tree-visualizer-mode-map nu-back-to-indentation-key undo-tree-visualizer-mode-map)
 
-     (define-key undo-tree-visualizer-mode-map (kbd "i") 'undo-tree-visualize-undo)
-     (define-key undo-tree-visualizer-mode-map (kbd "k") 'undo-tree-visualize-redo)
-     (define-key undo-tree-visualizer-mode-map (kbd "j") 'undo-tree-visualize-switch-branch-left)
-     (define-key undo-tree-visualizer-mode-map (kbd "l") 'undo-tree-visualize-switch-branch-right)
+     (define-key undo-tree-visualizer-mode-map nu-previous-line-key 'undo-tree-visualize-undo)
+     (define-key undo-tree-visualizer-mode-map nu-next-line-key 'undo-tree-visualize-redo)
+     (define-key undo-tree-visualizer-mode-map nu-backward-char-key 'undo-tree-visualize-switch-branch-left)
+     (define-key undo-tree-visualizer-mode-map nu-forward-char-key 'undo-tree-visualize-switch-branch-right)
 
      (define-key undo-tree-visualizer-mode-map (kbd "M-q")   'undo-tree-visualizer-abort)
      (define-key undo-tree-map (kbd "C-x") nil)))
@@ -167,8 +168,8 @@ Still, some keys here help."
 
 (eval-after-load "auto-complete"
   '(progn
-     (define-key ac-completing-map (kbd "M-k") 'ac-next)
-     (define-key ac-completing-map (kbd "M-i") 'ac-previous)))
+     (define-key ac-completing-map nu-next-line-binding 'ac-next)
+     (define-key ac-completing-map nu-previous-line-binding 'ac-previous)))
 
 
 
@@ -179,8 +180,9 @@ Still, some keys here help."
 (defun nu-prepare-for-isearch ()
   "Vanilla search feature."
   (define-key isearch-mode-map (kbd "M-f") 'isearch-repeat-forward)
-  (define-key isearch-mode-map (kbd "M-k") 'isearch-repeat-forward)
-  (define-key isearch-mode-map (kbd "M-i") 'isearch-repeat-backward)
+
+  (define-key isearch-mode-map nu-next-line-binding 'isearch-repeat-forward)
+  (define-key isearch-mode-map nu-previous-line-binding 'isearch-repeat-backward)
   (define-key isearch-mode-map (kbd "M-p") 'isearch-ring-retreat)
   (define-key isearch-mode-map (kbd "M-n") 'isearch-ring-advance)
   (define-key isearch-mode-map (kbd "M-v") 'isearch-yank-kill)
@@ -191,11 +193,11 @@ Still, some keys here help."
 					     (describe-keymap isearch-mode-map t)))
   (define-key isearch-mode-map (kbd "M-s") 'isearch-edit-string)
   (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
-  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
 
-  (lv-message "M-f or M-k / M-i : search forward / backward.\nM-q or M-d cancel search. M-h for more help"))
-
-
+  (lv-message
+     (concat "M-f or M-" nu-next-line-key
+	     " / M-" nu-previous-line-key
+	     ": search forward / backward.\nM-q or M-d cancel search. M-h for more help")))
 
 (defun nu-isearch-exit ()
   ""
@@ -216,12 +218,12 @@ Still, some keys here help."
 
 (defun nu-prepare-for-ibuffer ()
   ""
-  (define-key ibuffer-mode-map (kbd "h") ibuffer-mode-map)
+  (define-key ibuffer-mode-map "h" ibuffer-mode-map)
 
-  (define-key ibuffer-mode-map (kbd "M-i") 'ibuffer-backward-line)
-  (define-key ibuffer-mode-map (kbd "M-k") 'ibuffer-forward-line)
-  (define-key ibuffer-mode-map (kbd "M-l") 'ibuffer-visit-buffer)
-  (define-key ibuffer-mode-map (kbd "M-j") 'ibuffer-visit-buffer-other-window-noselect)
+  (define-key ibuffer-mode-map nu-previous-line-binding 'ibuffer-backward-line)
+  (define-key ibuffer-mode-map nu-next-line-binding 'ibuffer-forward-line)
+  (define-key ibuffer-mode-map nu-forward-char-binding 'ibuffer-visit-buffer)
+  (define-key ibuffer-mode-map nu-previous-line-binding 'ibuffer-visit-buffer-other-window-noselect)
 
   ; cancel bindings then make override.
   (nu-make-overriding-map ibuffer-mode-map
@@ -246,7 +248,7 @@ Still, some keys here help."
   ; the classical one!
 (eval-after-load "bookmark"
   '(progn
-    (define-key bookmark-bmenu-mode-map (kbd "h") bookmark-bmenu-mode-map)))
+    (define-key bookmark-bmenu-mode-map "h" bookmark-bmenu-mode-map)))
 
 
 ;;

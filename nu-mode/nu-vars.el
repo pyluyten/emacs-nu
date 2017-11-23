@@ -24,6 +24,26 @@
 (defvar nu-state t "Used by overriding maps alist.")
 
 ;;
+;; paddles
+;;
+
+(defvar nu-previous-line-binding (kbd "M-i") "Shortcut to move up.")
+(defvar nu-backward-char-binding (kbd "M-j") "Shortcut to move left.")
+(defvar nu-next-line-binding (kbd "M-k") "Shortcut to move down.")
+(defvar nu-forward-char-binding (kbd "M-l") "Shortcut to move right.")
+(defvar nu-back-to-indentation-binding (kbd "M-h") "Shortcut to move to bol.")
+
+(defvar nu-previous-line-key "i" "Char to move up.")
+(defvar nu-backward-char-key "j" "Char to move left.")
+(defvar nu-next-line-key "k" "Char to move down.")
+(defvar nu-forward-char-key "l" "Char to move right.")
+(defvar nu-back-to-indentation-key "h" "Char to move to bol")
+
+(defvar nu-kill-visual-line-key (kbd "C-k") "Shortcuts to kill vline.")
+(defvar nu-del-backward-char-key (kbd "C-j") "Shortcuts to backspace.")
+(defvar nu-del-forward-char-key (kbd "C-l") "Shortcuts to backspace.")
+
+;;
 ;; keymaps
 ;;
 
