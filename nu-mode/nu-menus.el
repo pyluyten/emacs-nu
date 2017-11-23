@@ -467,7 +467,7 @@ As in nu-keymap, the user owns the punctation.")
       " to obtain the cheat sheet."
       "\n To disable this screen, put this in your init file\n\n"
         (propertize " (require 'nu-mode)\n" 'face 'italic)
-	(propertize " (setq nu-mode-show-welcome-screen nil)\n" 'face 'error)
+	(propertize " (setq nu-show-welcome-screen nil)\n" 'face 'error)
 	(propertize " (nu-mode)" 'face 'italic)
       "\n\n To obtain Help, use "
       (propertize "Control+h" 'face 'nu-face-shortcut)

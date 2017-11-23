@@ -40,7 +40,7 @@
       " to obtain the cheat sheet."
       "\n To disable this screen, put this in your init file\n\n"
         (propertize " (require 'nu-state)\n" 'face 'italic)
-	(propertize " (setq nu-mode-show-welcome-screen nil)\n" 'face 'error)
+	(propertize " (setq nu-show-welcome-screen nil)\n" 'face 'error)
       "\n\n To obtain Help, use "
       (propertize "Control+h" 'face 'nu-face-shortcut)
       "\n For example, to obtain a Cheat Sheet, use "
@@ -67,7 +67,7 @@ Enforces new buffers being insert state."
   (defalias 'nu-prompt-for-keymap 'nu-which-key-prompt-for-keymap)
 
   ;; TODO : fix this help prompt
-  (when nu-mode-show-welcome-screen
+  (when nu-show-welcome-screen
 	   (add-hook 'emacs-startup-hook '(lambda ()
              (nu-state-help-prompt))))
 

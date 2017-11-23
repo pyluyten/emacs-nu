@@ -291,7 +291,7 @@ Both direct keys & prompters will adapt to current mode.)"
 
 	(nu-restore-default-keymap)
 
-        (if nu-mode-show-welcome-screen
+        (if nu-show-welcome-screen
 	   (add-hook 'emacs-startup-hook '(lambda ()
              (nu-help-prompt)))))
 

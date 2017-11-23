@@ -15,7 +15,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this program; if not, write to the Free Software
 
-(defvar nu-mode-show-welcome-screen
+(defvar nu-show-welcome-screen
 "If true, nu-mode does display a help buffer at startup.")
 
 (defvar nu-use-vi-paddle nil
