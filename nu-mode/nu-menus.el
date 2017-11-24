@@ -679,42 +679,32 @@ both navigate, access to essential prompts, and control the terminal."
 
   (nu-prompt-for-keymap nu-term-map))
 
-(defhydra hydra-nu-meta-menu (:color pink
-			      :hint nil
-			      :pre (setq nu-major-mode major-mode))
-"\n
-  _h_ ibuffer        _k_ kill window
-  _i_ open file      _l_ switch buffer
-  _m_ aximize        _u_ new frame
-  _x_ goto line      _a_ goto char
-  _r_ goto symbol    _o_ goto word
-  _g_ global prompt
 
-  _n_ mode specific map
-  _p_ M-x (execute command)
-  _f_ Ctrl x maps
-"
-    ;; direct func : open
-    ("i" nu-find-files :exit t)
-    ("l" nu-buffers-list :exit t)
-    ("j" nu-recentf :exit t)
-    ("h" ibuffer :exit t)
+;;
+;; nu do map is only populated @ startup
+;;
 
-    ;; direct func : goto
-    ("x" avy-goto-line :exit t)
-    ("a" avy-goto-char :exit t)
-    ("r" avy-goto-symbol-1 :exit t)
-    ("o" avy-goto-word-1 :exit t)
+(defvar nu-do-map (make-sparse-keymap))
+(nu-define-prefix 'nu-do-map)
+(define-key nu-do-map "i" 'ibuffer)
+(define-key nu-do-map "k" 'kill-buffer-and-window)
+(define-key nu-do-map "l" 'nu-buffers-list)
+(define-key nu-do-map "j" 'nu-recentf)
+(define-key nu-do-map "h" 'nu-find-files)
 
-    ;; direct func : tab/frame/win
-    ("k" kill-buffer-and-window :exit t)
-    ("u" make-frame-command :exit t)
-    ("m" delete-other-windows :exit t)
+(define-key nu-do-map "x" 'avy-goto-line)
+(define-key nu-do-map "a" 'avy-goto-char)
+(define-key nu-do-map "r" 'avy-goto-symbol-1)
+(define-key nu-do-map "o" 'avy-goto-word-1)
 
-    ;; prompts / maps / commands
-    ("n" nu-trigger-mode-specific-map :exit t)
-    ("g" nu-global-prompt :exit t)
-    ("p" (nu-M-x) :exit t)
-    ("f" (nu-buffer-prompt-for-keymap ctl-x-map) :exit t))
+(define-key nu-do-map "u" 'make-frame-command)
+(define-key nu-do-map "m" 'delete-other-windows)
+(define-key nu-do-map "n" 'nu-trigger-mode-specific-map)
+(define-key nu-do-map "g" 'nu-global-prompt)
+(define-key nu-do-map "p" 'nu-M-x)
+
+(defun nu-do-prompt ()
+  (interactive)
+  (nu-prompt-for-keymap nu-do-map))
 
 (provide 'nu-menus)

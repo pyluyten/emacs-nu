@@ -97,7 +97,7 @@ Enforces new buffers being insert state."
   (define-key nu-evil-map "p" 'nu-print-prompt)
   (define-key nu-evil-map "q" 'nu-quit-prompt)
   (define-key nu-evil-map "s" 'nu-save-prompt)
-  (define-key nu-evil-map "d" 'hydra-nu-meta-menu/body)
+  (define-key nu-evil-map "d" 'nu-do-prompt)
   (define-key nu-evil-map "f" 'nu-find-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)
   (define-key nu-evil-map "h" 'help-map)

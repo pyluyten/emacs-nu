@@ -48,7 +48,7 @@ This function is not called. It is available for user convenience."
    (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
 
    (define-key nu-keymap (kbd "M-d") 'nu-M-x)
-   (define-key nu-keymap (kbd "C-d") 'hydra-nu-meta-menu/body)
+   (define-key nu-keymap (kbd "C-d") 'nu-do-prompt)
 
    (define-key nu-keymap (kbd "C-f") 'nu-search)
    (define-key nu-keymap (kbd "M-f") 'nu-find-prompt)
@@ -153,7 +153,7 @@ This function is not called. It is available for user convenience."
    (define-key nu-menu-map (kbd "s") 'nu-save-map)
 
    (define-key nu-keymap (kbd "C-d") 'nu-M-x)
-   (define-key nu-keymap (kbd "M-d") 'hydra-nu-meta-menu/body)
+   (define-key nu-keymap (kbd "M-d") 'nu-do-prompt)
 
    (define-key nu-keymap (kbd "M-f") 'nu-search)
    (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
