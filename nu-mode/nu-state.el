@@ -60,10 +60,9 @@
 
   ;; Control+o (alternative is space o)
   ;; push the vi keys to open menu;
-  ;; use control+o to invoke this menu.
+  ;; use control+o to invoke this menu
+  ;; do not shadown native C-o.
    (define-key evil-normal-state-map (kbd "C-o") 'nu-open-prompt)
-   (define-key evil-insert-state-map (kbd "C-o") 'nu-open-prompt)
-   (define-key evil-visual-state-map (kbd "C-o") 'nu-open-prompt)
 
   ;; C-c
    (global-set-key (kbd "C-<SPC>") 'nu-trigger-mode-specific-map))
