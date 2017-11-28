@@ -59,50 +59,33 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 @end menu
 
 @node Overview
-@chapter Which Emacs to use?
+@chapter What is Emacs by the way
 
 Emacs is not a text editor, its an interface, because it allows you to control, from one program, others, in order to read mail or run commands, manage files and so on.
 
-Actually Emacs is a choice between several interfaces. Which one you need, it all depends on your usage, and your tastes. This documentation does cover nu-mode and nu-state, but you should also consider evil, spacemacs, and ergoemacs.
+Actually Emacs is a choice between several interfaces. Which one you need, it all depends on your usage, and your tastes. 
+
+VIM is more popular than Emacs. This is for a reason : its keys are more efficient. Learning VIM is easier than learning Emacs.
+
+This documentation does cover nu-mode and nu-state, but you should also consider evil, spacemacs, and ergoemacs.
 
 evil is an emulation of vim. it makes emacs behave like vim.
 spacemacs does like evil, and adds tons of stuff, sometimes at a cost.
 
 ergoemacs is not modal. It hopes to makes non modal editing possible, efficient. So it does rebinds most common emacs commands in order to make keybindings fine enough.
 
-nu-mode is close to ergoemacs. It prefers easy to remember shortcuts (control+c, control+v...) and sort of menus. It is a mode and its keymap
-
 nu-state looks like nu-mode, but there is a vim like mode. it is based on evil.
-The documentation assumes nu-mode, and a dedicated chapter explains nu-state.
+the normal state is like vim, and by default each buffer opens in normal state.
+so, like vim. visual mode is also the same. but
+ * like spacemacs, nu offers a space key to open menus. Except these menus
+   follow operator-motion logic. nu is minimal.
+ * insert state is not vim insert state. it is a full keymap, and actually,
+   it is perfectly usable on its own.
 
-So, what to use?
+nu-mode is different than nu-state. It is close to ergoemacs. It prefers easy to remember shortcuts (control+c, control+v...) and sort-of menus, which are actually quite powerful since this principle allows to provide quick and easy access to many commands. nu-mode is a mode, and its keymap.
 
-- I am new to Emacs. I do not know vi. I'm scared
-    - Use nu-mode
-- I am new to Emacs, but i use vi.
-   - Use bare evil or nu state. See more below.
-- I want Emacs to be as close as possible to
-  notepad. So it would be notepad improved.
-    - Use nu-mode, and use (nu-set-control-mode)
-- I want Emacs easy, but also ergonomic.
-    - Use nu-mode
-- I want Emacs features, but i prefer vi editing.
-  * I want shiny rainbows and unicorns.
-    - Use spacemacs.
-  * I just want something minimal i can customize
-    - Use evil.
-    - Or, Use nu-state, but customize so
-      default state is normal state.
-- I want Emacs features, like vi editing,
-  but also want non modal editing.
-    - Use nu-state
-- I want to learn vi but to stay in a non modal editing
-   - Use nu state
-- I often use M-x to run commands, but i want
-  comfortable keys for most common operations.
-   - Use ErgoEmacs.
-- I have dvorak or bépo
-   - Use ErgoEmacs.
+If you use dvorak or bépo, ErgoEmacs might be more adapted.
+
 
 @chapter Overview
 
