@@ -85,9 +85,10 @@ This includes the paddle."
    (nu-setup-vi-paddle)
 
    (global-set-key (kbd "M-a") 'evil-normal-state)
-   (global-set-key (kbd "M-b") 'nu-bold-prompt)
+   (global-set-key (kbd "M-b") 'backward-word)
+   (global-set-key (kbd "M-c") 'nu-bold-prompt)
    (global-set-key (kbd "M-d") 'nu-delete-prompt)
-   (global-set-key (kbd "M-e") 'nu-M-x)
+   (global-set-key (kbd "M-e") 'forward-word)
    (global-set-key (kbd "M-f") 'nu-find-prompt)
    (global-set-key (kbd "M-g") 'ace-window) ; menu is rare => space g
    (global-set-key (kbd "M-h") 'backward-char)
@@ -105,6 +106,7 @@ This includes the paddle."
    (global-set-key (kbd "M-t") 'split-window-right)
    (global-set-key (kbd "M-u") 'undo-tree-visualize)
    (global-set-key (kbd "M-w") 'nu-quit-document) ; menu is space
+   (global-set-key (kbd "M-x") 'nu-M-x)
    (global-set-key (kbd "M-y") 'nu-copy-region-or-line) ; menu is space
    (global-set-key (kbd "M-z") 'nu-quit-prompt)
 
