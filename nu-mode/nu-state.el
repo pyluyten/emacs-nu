@@ -55,6 +55,67 @@
       (nu-cheat-sheet)))
 
 
+(defun nu-state-set-ctrl-func ()
+  "Define some control keys. By default do not override vi keys."
+
+  ;; Control+o (alternative is space o)
+  ;; push the vi keys to open menu;
+  ;; use control+o to invoke this menu.
+   (define-key evil-normal-state-map (kbd "C-o") 'nu-open-prompt)
+   (define-key evil-insert-state-map (kbd "C-o") 'nu-open-prompt)
+   (define-key evil-visual-state-map (kbd "C-o") 'nu-open-prompt)
+
+  ;; C-c
+   (global-set-key (kbd "C-<SPC>") 'nu-trigger-mode-specific-map))
+
+
+
+(defun nu-state-set-alt-func ()
+ "populate alt keys, with vi disposition, to invoke
+nu specific immediate funcs and menus.
+
+This includes the paddle."
+
+   ;; TODO : see if required here
+   (global-set-key (kbd "<menu>") nu-menu-map)
+
+   ;;
+   ;; setup the paddle. see setup.el.
+   ;;
+   (nu-setup-vi-paddle)
+
+   (global-set-key (kbd "M-a") 'evil-normal-state)
+   (global-set-key (kbd "M-b") 'nu-bold-prompt)
+   (global-set-key (kbd "M-d") 'nu-delete-prompt)
+   (global-set-key (kbd "M-e") 'nu-M-x)
+   (global-set-key (kbd "M-f") 'nu-find-prompt)
+   (global-set-key (kbd "M-g") 'ace-window) ; menu is rare => space g
+   (global-set-key (kbd "M-h") 'backward-char)
+   (global-set-key (kbd "M-i") 'nu-back-to-indentation)
+   (global-set-key (kbd "M-j") 'next-line)
+   (global-set-key (kbd "M-k") 'previous-line)
+   (global-set-key (kbd "M-l") 'forward-char)
+   (global-set-key (kbd "M-m") 'newline-and-indent)
+   (global-set-key (kbd "M-n") 'nu-new-prompt)
+   (global-set-key (kbd "M-o") 'nu-do-prompt)
+   (global-set-key (kbd "M-p") 'yank) ; menu is rare => space p 
+   (global-set-key (kbd "M-q") 'nu-print-prompt)
+   (global-set-key (kbd "M-r") 'nu-replace-prompt)
+   (global-set-key (kbd "M-s") 'save-buffer) ; menu is rare. space s
+   (global-set-key (kbd "M-t") 'split-window-right)
+   (global-set-key (kbd "M-u") 'undo-tree-visualize)
+   (global-set-key (kbd "M-w") 'nu-quit-document) ; menu is space
+   (global-set-key (kbd "M-y") 'nu-copy-region-or-line) ; menu is space
+   (global-set-key (kbd "M-z") 'nu-quit-prompt)
+
+   (global-set-key (kbd "M-<SPC>") 'scroll-up)
+   (global-set-key (kbd "M-<backspace>") 'scroll-down)
+
+   (define-key help-map "f" 'nu-describe-function)
+   (define-key help-map "v" 'nu-describe-variable)
+   (define-key help-map (kbd "<SPC>") 'nu-cheat-sheet))
+
+
 (defun nu-state ()
   "Requires evil and nu and enables evil mode.
 
@@ -70,44 +131,37 @@ Enforces new buffers being insert state."
 	   (add-hook 'emacs-startup-hook '(lambda ()
              (nu-state-help-prompt))))
 
-  ;; force insert state everywhere.
-  (evil-set-initial-state 'which-key-mode 'insert)
+  ;; because we have alt to navigate in mode like
+  ;; ibuffer, dired, mu4e, or so.
+  ;; so, really, we do not need emacs mode.
+  ;(evil-set-initial-state 'which-key-mode 'normal)
+  (setq evil-default-state 'normal)
 
-  ;; redefine insert state map 
-  ;; easiest is to just take nu-mode like keymap,
-  ;; then slightly adapt
-  (setq nu-use-vi-paddle t)
-  (nu-restore-default-keymap)
-  (setq evil-insert-state-map nu-keymap)
+  (nu-state-set-alt-func)
+  (nu-state-set-ctrl-func)
 
-  (define-key evil-insert-state-map [escape] 'evil-normal-state)
-  (define-key evil-insert-state-map (kbd "M-a") 'evil-visual-char)
-  
   ;; which key key = ²
-  (define-key evil-normal-state-map (kbd "²") evil-normal-state-map)
-  (define-key evil-insert-state-map (kbd "²") evil-insert-state-map)
-  (define-key evil-visual-state-map (kbd "²") evil-visual-state-map)
+  (global-set-key "²" 'which-key-show-top-level)
 
   ;; SPACE key
   (setq nu-evil-map (make-sparse-keymap))
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
-
-  (define-key nu-evil-map "z" 'undo-tree-visualize)
-  (define-key nu-evil-map "r" 'nu-replace-prompt)
-  (define-key nu-evil-map "p" 'nu-print-prompt)
-  (define-key nu-evil-map "q" 'nu-quit-prompt)
-  (define-key nu-evil-map "s" 'nu-save-prompt)
-  (define-key nu-evil-map "d" 'nu-do-prompt)
+  (define-key nu-evil-map "b" 'nu-bold-prompt)
+  (define-key nu-evil-map "d" 'nu-delete-prompt)
+  (define-key nu-evil-map "e" 'nu-do-prompt)
   (define-key nu-evil-map "f" 'nu-find-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)
   (define-key nu-evil-map "h" 'help-map)
-  (define-key nu-evil-map "w" 'nu-window-prompt)
-  (define-key nu-evil-map "x" 'nu-delete-prompt)
-  (define-key nu-evil-map "c" 'nu-copy-prompt)
-  (define-key nu-evil-map "v" 'nu-insert-prompt)
-  (define-key nu-evil-map "b" 'nu-bold-prompt)
-  (define-key nu-evil-map "o" 'nu-open-prompt)
   (define-key nu-evil-map "n" 'nu-new-prompt)
+  (define-key nu-evil-map "o" 'nu-open-prompt)
+  (define-key nu-evil-map "p" 'nu-insert-prompt)
+  (define-key nu-evil-map "q" 'nu-print-prompt)
+  (define-key nu-evil-map "r" 'nu-replace-prompt)
+  (define-key nu-evil-map "s" 'nu-save-prompt)
+  (define-key nu-evil-map "p" 'nu-insert-prompt)
+  (define-key nu-evil-map "w" 'nu-window-prompt)
+  (define-key nu-evil-map "y" 'nu-copy-prompt)
+  (define-key nu-evil-map "z" 'undo-tree-visualize)
   (define-key nu-evil-map (kbd "<SPC>") 'nu-M-x)
 
   ;;
@@ -115,16 +169,12 @@ Enforces new buffers being insert state."
   ;;
   (add-hook 'nu-populate-hook '(lambda ()
     (progn
+
+       ;; inserted inside open menu
+       (define-key nu-open-map "o" 'evil-jump-backward)
+
        ;; reset!
        (nu-define-prefix 'nu-a-map)
-       ;; so instead we use evil
-
-        ;; todo
-        ;; a => all buffer
-        ;; s mark sexp
-        ;; g paragraph
-        ;; p page
-        ;; f defun
        (define-key nu-a-map (kbd "r") 'evil-visual-block)
        (define-key nu-a-map (kbd "l") 'evil-visual-line)
        (define-key nu-a-map (kbd "k") 'evil-visual-char))))
