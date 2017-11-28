@@ -229,8 +229,6 @@ As in nu-keymap, the user owns the punctation.")
         (define-key nu-insert-map (kbd "k") 'nu-insert-line-below)
         (define-key nu-insert-map (kbd "r") 'yank-rectangle)
         (define-key nu-insert-map (kbd "M-r") 'open-rectangle)
-        (define-key nu-insert-map (kbd "v") 'yank)
-
         (define-key nu-insert-map (kbd "x") 'expand-abbrev)
         (define-key nu-insert-map (kbd "v") 'yank)
 
@@ -542,7 +540,7 @@ As in nu-keymap, the user owns the punctation.")
  (interactive)
   (setq nu-major-mode major-mode)
  (nu-populate-copy-map)
- (nu-prompt-for-keymap nu-copy-map))
+    (nu-prompt-for-keymap nu-copy-map))
 
 
 (defun nu-populate-replace ()
