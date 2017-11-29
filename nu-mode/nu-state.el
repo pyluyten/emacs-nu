@@ -45,10 +45,9 @@
       (propertize "Control+h" 'face 'nu-face-shortcut)
       "\n For example, to obtain a Cheat Sheet, use "
       (propertize "Control+h Space" 'face 'nu-face-shortcut)
-      "\n\n To enter a command (M-x in vanilla Emacs), use "
-      (propertize "Control+d" 'face 'nu-face-shortcut)
-      ".\n To quit a command, use "
-      (propertize "Alt+q" 'face 'nu-face-shortcut)))
+      "\n Or press ² at any time.\n To enter a command, use "
+      (propertize "Alt+x" 'face 'nu-face-shortcut)
+      " like in vanilla Emacs)."))
   (setq answer (read-key ""))
   (lv-delete-window)
   (if (eq answer 32)
