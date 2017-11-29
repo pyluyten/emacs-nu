@@ -132,10 +132,6 @@ Enforces new buffers being insert state."
 	   (add-hook 'emacs-startup-hook '(lambda ()
              (nu-state-help-prompt))))
 
-  ;; because we have alt to navigate in mode like
-  ;; ibuffer, dired, mu4e, or so.
-  ;; so, really, we do not need emacs mode.
-  ;(evil-set-initial-state 'which-key-mode 'normal)
   (setq evil-default-state 'normal)
 
   (nu-state-set-alt-func)
@@ -143,6 +139,10 @@ Enforces new buffers being insert state."
 
   ;; which key key = ²
   (global-set-key "²" 'which-key-show-top-level)
+
+  ;; nu creates aliases sometimes
+  (define-key evil-normal-state-map (kbd "/") 'nu-search)
+
 
   ;; SPACE key
   (setq nu-evil-map (make-sparse-keymap))

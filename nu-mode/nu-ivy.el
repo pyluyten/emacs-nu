@@ -63,7 +63,7 @@
   (if (boundp 'ivy-minibuffer-map)
       (progn
 	;; standard ivy map
-        (define-key ivy-minibuffer-map (kbd "M-h") 'ivy-minibuffer-map)
+        (define-key ivy-minibuffer-map (kbd "M-h") ivy-minibuffer-map)
         (define-key ivy-minibuffer-map (kbd "M-m") 'ivy-immediate-done)
 
         (if nu-use-vi-paddle
