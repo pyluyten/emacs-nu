@@ -124,6 +124,7 @@ Enforces new buffers being insert state."
 
   ;; which key mode + menus init
   (nu-initialize)
+  (setq nu-use-vi-paddle t)
   (defalias 'nu-prompt-for-keymap 'nu-which-key-prompt-for-keymap)
 
   ;; TODO : fix this help prompt
