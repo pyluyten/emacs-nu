@@ -24,6 +24,43 @@
 
 (require 'iso-transl)
 
+(defun nu-fill-mode-map-with-nu-menus ()
+  "Make Control+c <key> call the associated nu menu.
+
+This func is not called by nu-mode nor nu-state.
+This is designed to be used in vanilla Emacs, or ErgoEmacs."
+  (interactive)
+
+  (nu-populate-print)
+  (nu-populate-quit)
+  (nu-populate-delete)
+  (nu-populate-bold-map)
+  (nu-populate-insert-map)
+  (nu-populate-save-map)
+  (nu-populate-new-map)
+  (nu-populate-a-map)
+  (nu-populate-open-map)
+  (nu-populate-goto-map)
+  (nu-populate-find-map)
+  (nu-populate-replace)
+
+  (global-set-key (kbd "C-c a") 'nu-a-prompt)
+  (global-set-key (kbd "C-c b") 'nu-bold-prompt)
+  (global-set-key (kbd "C-c c") 'nu-copy-prompt)
+  (global-set-key (kbd "C-c d") 'nu-do-prompt)
+  (global-set-key (kbd "C-c f") 'nu-find-prompt)
+  (global-set-key (kbd "C-c g") 'nu-goto-prompt)
+  (global-set-key (kbd "C-c n") 'nu-new-prompt)
+  (global-set-key (kbd "C-c o") 'nu-open-prompt)
+  (global-set-key (kbd "C-c p") 'nu-print-prompt)
+  (global-set-key (kbd "C-c q") 'nu-quit-prompt)
+  (global-set-key (kbd "C-c r") 'nu-replace-prompt)
+  (global-set-key (kbd "C-c s") 'nu-replace-prompt)
+  (global-set-key (kbd "C-c v") 'nu-save-prompt)
+  (global-set-key (kbd "C-c w") 'nu-window-prompt)
+  (global-set-key (kbd "C-c x") 'nu-delete-prompt)
+  (global-set-key (kbd "C-c z") 'undo-tree-visualize))
+
 (defun nu-set-control-mode ()
 
   "Use nu with Control key for immediate actions.
