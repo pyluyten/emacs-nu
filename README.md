@@ -1,53 +1,63 @@
-_Welcome to emacs-nu!_
+_OVERVIEW_
 
-Emacs is the best editor in the universe.
-But it is so hard to learn & discovers its features!
+NU does not propose any new feature in Emacs.
+It merely changes the Emacs interface. But do not worry it's minimal, lightweight, and have poneys.
 
-Nu-mode is an Emacs package.
-What is nu-mode?
-nu-mode wants to make Emacs : easier and faster.
-Easier and faster to learn, memorize, easier and faster
-to discover, and even easier and faster to use.
+NU is about menus, but not GUI menus. Yes, rather like spacemacs : "which-key" menu (but there are other prompters than which keys. HelpBuffer, Helm or Ivy work, too)
+Text based menus, allow to discover or simply invoke many commands.
+This is a very powerful system. (There is a reason why hydra is a popular package ; but sticky menus are not always useful)
 
-To achieve this nu-mode is several pieces.
+Emacs has prefixes, like Ctrl-x, but not menus.
+Which-key transforms prefixes in menus, but what if prefixes were wrong?
+So, we need properly designed menus : "operator->motion" (like a delete menu to delete anything : delete  file, buffer, this.window, other windows,…)
+This is way more easy than potatoes menus like "File menu" "Buffers menu"
 
-- nu-mode is a consistent and easy keymap.
+Also menus needs to have a hook to allows packages to populate these menus (either add or even remove parts of menus)
+For example, for major mode it is better to add its features to existing menus ("new", "delete", "open"), rather than having a distinct "major mode menus" which is a bag of noodles.
 
-  Usual commands, navigation can be done keeping thumb on
-  Alt (err, "Meta" in Emacs world.. no! let's say Alt!)
+Right, but where do i call menus from?
+Hmm, if you love Emacs keybindings (seriously?), you can bind C-c o to open, C-c d to delete and so on. There is a func for this. But i do not recommend.
+(Unless you are already ErgoEmacs user.)
+ i recommend to use : either a comfortable keybinding "nu-mode" ; or an addon to evil "nu state" if you want modal editing
+These are described below but a few words are needed to understand.
 
-  Navigation is done using a paddle : i j k l
-  stand for up left down right.
+_WORDING_
 
-- nu-mode is a prompter mechanism
+MENUS : the different commands available for one "menu key". Its very close to Emacs prefix keys bound to a keymap.
+PROMPTER : the func that opens the menus. It might be which-key, or a simple message, it might be a help buffer, it might be 
+PADDLE : the shortcuts to move cursor (up down left right).
+IMMEDIATE : an "immediate" binding is a key that directly triggers a command, like "yank"
+                            as opposed to "yank menu", which contains several "insertion related" features (insert file; quoted insert and so on)
 
-  A prompt is a menu displaying commands.
-  Call it then you are discovering many things.
-  The prompt also offers to describe these commands.
-  It allows to use unversal argument or "repeat" mode
-  (like hydra, which sometimes emacs-nu uses).
+_Flavour 1 : just add nu menus to Emacs_
 
-  Finally, whenever a command appears in a prompt
-  but have a direct shortcut, the prompt tells the user
-  about it. So, it is easy enough to learn new shortcuts.
+Actually this flavour is just addind nu menus to your Emacs. It is nice if you want to keep Emacs keybindings or if you already rebind, for example with ErgoEmacs.
 
-_WHAT KEYMAP_ and _WHAT PROMPTS_ ?
+_Flavour 2 : Nu Mode is just a keybinding_
 
-  any very useful command should be available keeping your thumb on Alt.
-  This obviously includes navigation.
-  This includes also searching for text, saving file, selecting...
+It's a modern keybinding (c =copy, v=insert, x=cut, f=find)
+Everything is done in insert mode.
+Hands remain most of time in homerow because of alt keys.
+Paddle is like evil (hjkl) or T-like (ijkl).
+Default is to have alt keys do "immediate" funcs
+So, menus , which are generally not necessary, are invoked using Control key like Control+f to have "Find menu"
+nu mode also allows to have alt keys do menus, and control do immediate func.
+This is compabilble with today's conventiosn (conrol+c copy, control+v find and so on)
 
-  Less common functions are available using a prompt.
-  The usual way to call a prompt is to use the classic shortcuts, eg control+f. Instead of "find", emacs-nu binds control+f to find-prompt.
-   So type ctrl+f in emacs-nu and you will discover many search features,
-   see their direct shortcuts when it is there.
-  
-See its texinfo manual.
-(http://nupad.wordpress.com/ blog is not yet up to date.)
 
-_How to install?_
+_Flavour 3 : Nu State is based on evil_
 
-* Using Emacs Package Manager
+
+So, vim states (normal, insert, visual) are used. Command state is available but not useful.
+It does preserve vim keys but adds some alt keys
+(y=copy, p=paste, d=cut, f=find)
+
+Some alt keys trigger immeidate func (eg to switch windows without leaving home row), some trigger menus
+
+_INSTALLATION_
+
+Common for just menus or nu-mode or nu-state
+Install package on melpa
 
 Nu-mode is in Melpa. So it's the usual deal.
 (or look at https://melpa.org)
@@ -56,21 +66,66 @@ Nu-mode is in Melpa. So it's the usual deal.
 
     (add-to-list 'package-archives
     '("melpa" . "https://melpa.org/packages") t)
+ 
+ 
 
 Then, M-x package-list-packages, then search for nu-mode.
 Finally add this to your init.el.
 
-      (require 'nu-mode)
-      (nu-mode 1)
 
-* Manually
 
-Well, clone github, and add path to your list
+_NO KEYMAP : JUST BIND MENUS TO CONTROL-C._
 
-    (add-to-list 'load-path "~/path/to/git/emacs-nu/nu-mode/")
+    (require 'nu-mode)
+    (nu-fill-mode-map-with-nu-menus)
 
-Then the usual require & acitvation.
-But to visit info file the simpler is to call
+_NU-MODE_
 
-     (info "~/path/to/git/emacs-nu/doc/nu-mode.info")
+a global minor mode to push a keymap. Also add some hooks to help the user.
 
+    (require 'nu-mode)
+    (nu-mode)
+
+if you want to use ijkl paddle rather than default (vi).
+    (nu-set-classic-paddle)
+
+if you want control to be like CUA ; and alt keys trigger menus
+
+    (nu-set-control-mode)
+
+_NU-STATE (evil)_
+
+nu state preserves vi keys, but adds alt keys to invoke immediate funcs and some menus.
+for example in vi, d is delete.
+with nu state, both in normal state and insert state, you can use altd for delete menu.
+
+     (require 'nu-state)
+     (nu-state)
+
+Nu state cannot be customized yet (appart below)
+
+
+_COMMON CUSTOMIZATIONS_
+
+no matter if you use just menus, nu-mode, or nu-state, you have some common customizations.
+
+=Prompter=
+Default prompter is which-key
+
+You can refer to which key to customize it.
+Or you can use another prompter
+Other prompter allow more features : "+" to trigger repeat menu , "-" or "1", "2", … to customize universal argument, "?" to run help of command
+
+    (defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
+    (defalias 'nu-prompt-for-keymap 'nu-completion-prompt-for-keymap)
+    (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
+
+
+=Completion framework=
+
+Things should be ok if you just enable your ido / helm / ivy or whatever
+Anyway i'd recommend to tell nu about your usage
+
+
+    (nu-set-ivy)
+    (nu-set-helm)
