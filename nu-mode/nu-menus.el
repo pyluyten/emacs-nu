@@ -84,18 +84,6 @@ As in nu-keymap, the user owns the punctation.")
 (defun nu-populate-print ()
   (nu-define-prefix 'nu-print-map)
 
-  (cond
-   ((or (eq nu-major-mode 'emacs-lisp-mode)
-	(eq nu-major-mode 'lisp-interaction-mode))
-    (define-key nu-print-map (kbd "s") 'eval-last-sexp)
-    (define-key nu-print-map (kbd "b") 'eval-buffer)
-    (define-key nu-print-map (kbd "a") 'eval-defun)
-    (define-key nu-print-map (kbd "r") 'eval-region))
-   ((eq nu-major-mode 'texinfo-mode)
-    (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
-    (define-key nu-print-map (kbd "a") 'nu-texi2pdf)))
-
-  ; common case
   (define-key nu-print-map (kbd "c") 'subword-mode)
   (define-key nu-print-map (kbd "d") 'ediff)
   (define-key nu-print-map (kbd "e") 'print-buffer)
@@ -191,16 +179,8 @@ As in nu-keymap, the user owns the punctation.")
   (define-key nu-bold-map (kbd "o") 'indent-for-comment)
   (define-key nu-bold-map (kbd "p") 'capitalize-word)
   (define-key nu-bold-map (kbd "d") 'downcase-word)
-  (define-key nu-bold-map (kbd "u") 'upcase-word)
+  (define-key nu-bold-map (kbd "u") 'upcase-word))
 
-  (if (or (eq nu-major-mode 'c-mode)
-          (eq nu-major-mode 'lisp-interaction-mode)
-          (eq nu-major-mode 'emacs-lisp-mode))
-      (progn
-          (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
-          (define-key nu-bold-map (kbd "c") 'comment-dwim)
-          (define-key nu-bold-map (kbd "m") 'comment-indent-new-line)
-          (define-key nu-bold-map (kbd "l") 'comment-indent))))
 
 (defun nu-bold-prompt ()
   (interactive)
@@ -214,35 +194,22 @@ As in nu-keymap, the user owns the punctation.")
  "Populate insert map	.	"
   (nu-define-prefix 'nu-insert-map)
 
-  (if (eq nu-major-mode 'dired-mode)
-        (progn
-           (define-key nu-insert-map (kbd "v") 'dired-maybe-insert-subdir)
-           (define-key nu-insert-map (kbd "M-v") 'dired-create-directory))
-         ; else
-        (define-key nu-insert-map (kbd "M-v") 'expand-abbrev)
-        (define-key nu-insert-map (kbd "V") 'nu-yank-pop-or-yank)
-        (define-key nu-insert-map (kbd "b") 'insert-buffer)
-        (define-key nu-insert-map (kbd "c") 'quoted-insert)
-        (define-key nu-insert-map (kbd "e") 'insert-register)
-        (define-key nu-insert-map (kbd "f") 'insert-file)
-        (define-key nu-insert-map (kbd "i") 'nu-insert-line-above)
-        (define-key nu-insert-map (kbd "k") 'nu-insert-line-below)
-        (define-key nu-insert-map (kbd "r") 'yank-rectangle)
-        (define-key nu-insert-map (kbd "M-r") 'open-rectangle)
-        (define-key nu-insert-map (kbd "x") 'expand-abbrev)
-        (define-key nu-insert-map (kbd "v") 'yank)
-
-        ; addon
-        (if (eq nu-major-mode 'texinfo-mode)
-          (progn
-            (define-key nu-insert-map (kbd "M-u") 'texinfo-insert-@url)
-            (define-key nu-insert-map (kbd "M-k") 'texinfo-insert-@kbd))))
-
-  ; anycase
-  (define-key nu-insert-map (kbd "S") 'shell-command)
+  (define-key nu-insert-map (kbd "a") 'nu-yank-pop-or-yank)
+  (define-key nu-insert-map (kbd "b") 'insert-buffer)
+  (define-key nu-insert-map (kbd "c") 'quoted-insert)
+  (define-key nu-insert-map (kbd "d") 'expand-abbrev)
+  (define-key nu-insert-map (kbd "e") 'insert-register)
+  (define-key nu-insert-map (kbd "f") 'insert-file)
   (define-key nu-insert-map (kbd "g") 'define-global-abbrev)
   (define-key nu-insert-map (kbd "h")  'nu-browse-kill-ring)
-  (define-key nu-insert-map (kbd "s") 'async-shell-command))
+  (define-key nu-insert-map (kbd "i") 'nu-insert-line-above)
+  (define-key nu-insert-map (kbd "j") 'shell-command)
+  (define-key nu-insert-map (kbd "k") 'nu-insert-line-below)
+  (define-key nu-insert-map (kbd "l") 'open-rectangle)
+  (define-key nu-insert-map (kbd "r") 'yank-rectangle)
+  (define-key nu-insert-map (kbd "s") 'async-shell-command)
+  (define-key nu-insert-map (kbd "v") 'yank)
+  (define-key nu-insert-map (kbd "x") 'expand-abbrev))
 
 
 (defun nu-insert-prompt ()

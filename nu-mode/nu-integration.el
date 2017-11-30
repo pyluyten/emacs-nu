@@ -19,31 +19,236 @@
 
 ;;
 ;; hooks and eval-after-load stuff.
+;; most often, the principle is : 
+;; when the mode loads, we add a function to nu-populate-hook,
+;;                      to add the mode related features to nu menus
 ;;
 ;;
+;; another override is nu-bold, which is a dwim like func
+;;
+;; finally hooks might provide user visual help to
+;; use several stuff in Emacs
+;;
+;; Modes with too much code, or outside or emacs,
+;; shall have their own files. eg org-mode, ivy
+;; here is (alphabetical order) :
+;; 
+;; Info
+;; auto-complete
+;; bookmark
+;; c mode
+;; dired
+;; emacs lisp mode
+;; help
+;; ibuffer
+;; isearch
+;; lisp interaction mode
+;; magit
+;; mark-hook
+;; minibuffer
+;; proced
+;; term (term-line-mode, term-char-mode)
+;; texinfo
+;; undo-tree
 
 (require 'nu-vars)
 
-(defvar dired-mode-map)
 (defvar nu-keymap-backup)
 
-(defun nu-prepare-lisp-interaction-mode ()
-   (defadvice nu-set-bold-f (after nu-set-bold-f-for-lisp-interaction ())
-     (if (eq major-mode 'lisp-interaction-mode)
+;;
+;; Info
+;;
+
+(define-key Info-mode-map (kbd "j") 'Info-help)
+(define-key Info-mode-map (kbd "h") Info-mode-map)
+
+;;
+;; autocomplete
+;;
+
+(eval-after-load "auto-complete"
+  '(progn
+     (define-key ac-completing-map nu-next-line-binding 'ac-next)
+     (define-key ac-completing-map nu-previous-line-binding 'ac-previous)))
+
+
+;;
+;; bookmark
+;;
+
+  ; the classical one!
+(eval-after-load "bookmark"
+  '(progn
+    (define-key bookmark-bmenu-mode-map "h" bookmark-bmenu-mode-map)))
+
+;;
+;; c mode
+;;
+
+(defun nu-prepare-c-mode ()
+   (defadvice nu-set-bold-f (after nu-set-bold-f-for-emacs-lisp ())
+     (if (eq major-mode 'c-mode)
 	 (defalias 'nu-bold-function '(lambda () (call-interactively 'comment-dwim))))
-   (ad-activate 'nu-set-bold-f)))
+   (ad-activate 'nu-set-bold-f))
+   
+   (add-hook 'nu-populate-hook '(lambda ()
+     (if (eq nu-major-mode 'c-mode)
+	(progn
+          (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
+          (define-key nu-bold-map (kbd "c") 'comment-dwim)
+          (define-key nu-bold-map (kbd "m") 'comment-indent-new-line)
+          (define-key nu-bold-map (kbd "l") 'comment-indent))))))
 
-(add-hook 'lisp-interaction-mode-hook 'nu-prepare-lisp-interaction-mode)
+(add-hook 'emacs-lisp-mode-hook 'nu-prepare-emacs-lisp-mode)
 
+;;
+;; dired
+;;
+
+(defvar dired-mode-map)
+
+(defun nu-prepare-for-dired ()
+  "Most dired adaptation is done using prompts.
+
+Still, some keys here help."
+  (define-key dired-mode-map  (kbd "h") dired-mode-map)
+
+  (define-key dired-mode-map nu-previous-line-binding 'dired-previous-line)
+  (define-key dired-mode-map nu-forward-char-binding 'dired-find-file)
+  (define-key dired-mode-map nu-backward-char-binding 'dired-up-directory)
+  (define-key dired-mode-map nu-next-line-binding 'dired-next-line)
+
+  (define-key dired-mode-map  (kbd "C-z") 'dired-undo)
+  (define-key dired-mode-map  (kbd "M-s") 'nu-save-prompt)
+  (define-key dired-mode-map  (kbd "C-o") 'nu-open-prompt)
+  (define-key dired-mode-map  (kbd "C-c") 'nu-copy-prompt)
+  (nu-make-overriding-map dired-mode-map nil))
+
+  (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
+
+;;
+;; emacs lisp mode
+;;
 
 (defun nu-prepare-emacs-lisp-mode ()
    (defadvice nu-set-bold-f (after nu-set-bold-f-for-emacs-lisp ())
      (if (eq major-mode 'emacs-lisp-mode)
 	 (defalias 'nu-bold-function '(lambda () (call-interactively 'comment-dwim))))
-   (ad-activate 'nu-set-bold-f)))
+   (ad-activate 'nu-set-bold-f))
+   
+   (add-hook 'nu-populate-hook '(lambda ()
+     (if (eq nu-major-mode 'emacs-lisp-mode)
+	(progn
+          (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
+          (define-key nu-bold-map (kbd "c") 'comment-dwim)
+          (define-key nu-bold-map (kbd "m") 'comment-indent-new-line)
+          (define-key nu-bold-map (kbd "l") 'comment-indent)
+          (define-key nu-print-map (kbd "s") 'eval-last-sexp)
+          (define-key nu-print-map (kbd "b") 'eval-buffer)
+          (define-key nu-print-map (kbd "a") 'eval-defun)
+          (define-key nu-print-map (kbd "r") 'eval-region))))))
 
 (add-hook 'emacs-lisp-mode-hook 'nu-prepare-emacs-lisp-mode)
 
+;;
+;; help
+;;
+
+(add-hook 'help-mode-hook '(lambda ()
+  (add-hook 'nu-populate-hook '(lambda ()
+    (if (eq nu-major-mode 'help-mode)
+	(progn
+          (define-key nu-goto-map (kbd "L") 'forward-button)
+          (define-key nu-goto-map (kbd "J") 'backward-button)
+          (define-key nu-goto-map (kbd "o") 'push-button)
+          (define-key nu-goto-map (kbd "u") 'help-go-back)))))))
+
+;;
+;; ibuffer
+;;
+
+
+(defvar ibuffer-mode-map)
+
+(defun nu-prepare-for-ibuffer ()
+  ""
+  (define-key ibuffer-mode-map "h" ibuffer-mode-map)
+
+  (define-key ibuffer-mode-map nu-previous-line-binding 'ibuffer-backward-line)
+  (define-key ibuffer-mode-map nu-next-line-binding 'ibuffer-forward-line)
+  (define-key ibuffer-mode-map nu-forward-char-binding 'ibuffer-visit-buffer)
+  (define-key ibuffer-mode-map nu-previous-line-binding 'ibuffer-visit-buffer-other-window-noselect)
+
+  ; cancel bindings then make override.
+  (nu-make-overriding-map ibuffer-mode-map
+			  '("C-o" "C-y" "M-g" "M-n" "M-p" "M-s")
+			  nil))
+
+(add-hook 'ibuffer-hook 'nu-prepare-for-ibuffer)
+
+;;
+;; isearch
+;;
+
+(defun nu-prepare-for-isearch ()
+  "Vanilla search feature."
+  (define-key isearch-mode-map (kbd "M-f") 'isearch-repeat-forward)
+
+  (define-key isearch-mode-map nu-next-line-binding 'isearch-repeat-forward)
+  (define-key isearch-mode-map nu-previous-line-binding 'isearch-repeat-backward)
+  (define-key isearch-mode-map (kbd "M-p") 'isearch-ring-retreat)
+  (define-key isearch-mode-map (kbd "M-n") 'isearch-ring-advance)
+  (define-key isearch-mode-map (kbd "M-v") 'isearch-yank-kill)
+  (define-key isearch-mode-map (kbd "M-a") 'isearch-yank-word-or-char)
+  (define-key isearch-mode-map (kbd "M-g") 'isearch-yank-line)
+  (define-key isearch-mode-map (kbd "M-h") '(lambda ()
+					     (interactive)
+					     (describe-keymap isearch-mode-map t)))
+  (define-key isearch-mode-map (kbd "M-s") 'isearch-edit-string)
+  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
+
+  (lv-message
+     (concat "M-f or M-" nu-next-line-key
+	     " / M-" nu-previous-line-key
+	     ": search forward / backward.\nM-q or M-d cancel search. M-h for more help")))
+
+(defun nu-isearch-exit ()
+  ""
+  (lv-delete-window))
+
+
+(add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
+(add-hook 'isearch-mode-end-hook 'nu-isearch-exit)
+
+
+;; lisp interaction mode
+;;
+
+(defun nu-prepare-lisp-interaction-mode ()
+   (defadvice nu-set-bold-f (after nu-set-bold-f-for-lisp-interaction ())
+     (if (eq major-mode 'lisp-interaction-mode)
+	 (defalias 'nu-bold-function '(lambda () (call-interactively 'comment-dwim))))
+   (ad-activate 'nu-set-bold-f))
+
+   (add-hook 'nu-populate-hook '(lambda ()
+     (if (eq nu-major-mode 'lisp-interaction-mode)
+	  (progn
+            (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
+            (define-key nu-bold-map (kbd "c") 'comment-dwim)
+            (define-key nu-bold-map (kbd "m") 'comment-indent-new-line)
+            (define-key nu-bold-map (kbd "l") 'comment-indent)
+            (define-key nu-print-map (kbd "s") 'eval-last-sexp)
+            (define-key nu-print-map (kbd "b") 'eval-buffer)
+            (define-key nu-print-map (kbd "a") 'eval-defun)
+            (define-key nu-print-map (kbd "r") 'eval-region))))))
+
+(add-hook 'lisp-interaction-mode-hook 'nu-prepare-lisp-interaction-mode)
+
+
+
+;;
+;; minibuffer
+;;
 
 (defun nu-prepare-for-minibuffer ()
   "Minibuffer.
@@ -57,6 +262,69 @@ Minibuffer should use same keys are fundamental mode."
   (define-key minibuffer-local-map (kbd "M-$") 'next-history-element)
 
   (nu-make-overriding-map minibuffer-local-map nil "M-q" 'abort-recursive-edit))
+
+
+
+
+(defun nu-minibuffer-exit ()
+  "restore nu"
+  (lv-delete-window)
+  (setcdr (assoc 'nu-mode minor-mode-map-alist) nu-keymap))
+
+
+(add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
+(add-hook 'minibuffer-exit-hook  'nu-minibuffer-exit t)
+
+
+;;
+;; magit
+;;
+
+(defun nu-magit-w-editor-mode-hook ()
+  "Assign keys for with-editor-finish / cancel"
+  (define-key global-map (kbd "C-c C-c") 'with-editor-finish)
+  (define-key global-map (kbd "C-c C-k") 'with-editor-cancel))
+
+
+(add-hook 'with-editor-mode-hook 'nu-magit-w-editor-mode-hook)
+
+
+
+;;
+;; mark
+;;
+
+(defun nu-add-mark-hook ()
+  "Give the user some input about visual mode."
+
+  ; populate the maps
+  (nu-populate-visual-map)
+  (nu-populate-replace)
+  (define-key nu-keymap (kbd "M-a") nu-visual-map)
+
+  ; message (todo customize this so can be turned off)
+  (lv-message (concat
+	       (propertize "M-a" 'face 'nu-face-shortcut)
+	       " actions / "
+	       (propertize "M-q" 'face 'nu-face-shortcut)
+               " quit.")))
+
+(defun nu-deactivate-mark-hook ()
+  ""
+  (lv-delete-window)
+  (define-key nu-keymap (kbd "M-a") 'nu-set-mark))
+
+;;
+;; proced
+;;
+
+(add-hook 'proced-mode-hook '(lambda ()
+				(define-key proced-mode-map "h" proced-mode-map)))
+
+
+;;
+;; term
+;;
 
 (defun nu-prepare-for-term-raw ()
   "Respect term raw map principle to be an emulator,
@@ -94,64 +362,24 @@ thus we only trick C-c."
 Always start at char mode."
   (nu-prepare-for-term-raw))
 
+(add-hook 'term-mode-hook        'nu-prepare-for-term)
 
-(defun nu-prepare-for-dired ()
-  "Most dired adaptation is done using prompts.
+;;
+;; texinfo
+;;
 
-Still, some keys here help."
-  (define-key dired-mode-map  (kbd "h") dired-mode-map)
+(add-hook 'texinfo-mode-hook '(lambda ()
+   (add-hook 'nu-populate-hook '(lambda ()
+     (if (eq nu-major-mode 'texinfo-mode)
+         (progn
+           (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
+           (define-key nu-print-map (kbd "a") 'nu-texi2pdf)
+	   (define-key nu-insert-map (kbd "M-u") 'texinfo-insert-@url)
+	   (define-key nu-insert-map (kbd "M-k") 'texinfo-insert-@kbd)))))))
 
-  (define-key dired-mode-map nu-previous-line-binding 'dired-previous-line)
-  (define-key dired-mode-map nu-forward-char-binding 'dired-find-file)
-  (define-key dired-mode-map nu-backward-char-binding 'dired-up-directory)
-  (define-key dired-mode-map nu-next-line-binding 'dired-next-line)
-
-  (define-key dired-mode-map  (kbd "C-z") 'dired-undo)
-  (define-key dired-mode-map  (kbd "M-s") 'nu-save-prompt)
-  (define-key dired-mode-map  (kbd "C-o") 'nu-open-prompt)
-  (define-key dired-mode-map  (kbd "C-c") 'nu-copy-prompt)
-  (nu-make-overriding-map dired-mode-map nil))
-
-
-(defun nu-minibuffer-exit ()
-  "restore nu"
-  (lv-delete-window)
-  (setcdr (assoc 'nu-mode minor-mode-map-alist) nu-keymap))
-
-
-(defun nu-add-mark-hook ()
-  "Give the user some input about visual mode."
-
-  ; populate the maps
-  (nu-populate-visual-map)
-  (nu-populate-replace)
-  (define-key nu-keymap (kbd "M-a") nu-visual-map)
-
-  ; message (todo customize this so can be turned off)
-  (lv-message (concat
-	       (propertize "M-a" 'face 'nu-face-shortcut)
-	       " actions / "
-	       (propertize "M-q" 'face 'nu-face-shortcut)
-               " quit.")))
-
-(defun nu-deactivate-mark-hook ()
-  ""
-  (lv-delete-window)
-  (define-key nu-keymap (kbd "M-a") 'nu-set-mark))
-
-
-(defun nu-magit-w-editor-mode-hook ()
-  "Assign keys for with-editor-finish / cancel"
-  (define-key global-map (kbd "C-c C-c") 'with-editor-finish)
-  (define-key global-map (kbd "C-c C-k") 'with-editor-cancel))
-
-
-  (add-hook 'with-editor-mode-hook 'nu-magit-w-editor-mode-hook)
-  (add-hook 'term-mode-hook        'nu-prepare-for-term)
-  (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
-  (add-hook 'minibuffer-exit-hook  'nu-minibuffer-exit t)
-  (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
-
+;;
+;; undo-tree
+;;
 
 (eval-after-load "undo-tree"
   '(progn
@@ -165,110 +393,5 @@ Still, some keys here help."
      (define-key undo-tree-visualizer-mode-map (kbd "M-q")   'undo-tree-visualizer-abort)
      (define-key undo-tree-map (kbd "C-x") nil)))
 
-
-(eval-after-load "auto-complete"
-  '(progn
-     (define-key ac-completing-map nu-next-line-binding 'ac-next)
-     (define-key ac-completing-map nu-previous-line-binding 'ac-previous)))
-
-
-
-;;
-;; isearch
-;;
-
-(defun nu-prepare-for-isearch ()
-  "Vanilla search feature."
-  (define-key isearch-mode-map (kbd "M-f") 'isearch-repeat-forward)
-
-  (define-key isearch-mode-map nu-next-line-binding 'isearch-repeat-forward)
-  (define-key isearch-mode-map nu-previous-line-binding 'isearch-repeat-backward)
-  (define-key isearch-mode-map (kbd "M-p") 'isearch-ring-retreat)
-  (define-key isearch-mode-map (kbd "M-n") 'isearch-ring-advance)
-  (define-key isearch-mode-map (kbd "M-v") 'isearch-yank-kill)
-  (define-key isearch-mode-map (kbd "M-a") 'isearch-yank-word-or-char)
-  (define-key isearch-mode-map (kbd "M-g") 'isearch-yank-line)
-  (define-key isearch-mode-map (kbd "M-h") '(lambda ()
-					     (interactive)
-					     (describe-keymap isearch-mode-map t)))
-  (define-key isearch-mode-map (kbd "M-s") 'isearch-edit-string)
-  (define-key isearch-mode-map (kbd "M-d") 'isearch-cancel)
-
-  (lv-message
-     (concat "M-f or M-" nu-next-line-key
-	     " / M-" nu-previous-line-key
-	     ": search forward / backward.\nM-q or M-d cancel search. M-h for more help")))
-
-(defun nu-isearch-exit ()
-  ""
-  (lv-delete-window))
-
-
-(add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
-(add-hook 'isearch-mode-end-hook 'nu-isearch-exit)
-
-
-
-;;
-;; ibuffer
-;;
-
-
-(defvar ibuffer-mode-map)
-
-(defun nu-prepare-for-ibuffer ()
-  ""
-  (define-key ibuffer-mode-map "h" ibuffer-mode-map)
-
-  (define-key ibuffer-mode-map nu-previous-line-binding 'ibuffer-backward-line)
-  (define-key ibuffer-mode-map nu-next-line-binding 'ibuffer-forward-line)
-  (define-key ibuffer-mode-map nu-forward-char-binding 'ibuffer-visit-buffer)
-  (define-key ibuffer-mode-map nu-previous-line-binding 'ibuffer-visit-buffer-other-window-noselect)
-
-  ; cancel bindings then make override.
-  (nu-make-overriding-map ibuffer-mode-map
-			  '("C-o" "C-y" "M-g" "M-n" "M-p" "M-s")
-			  nil))
-
-
-(add-hook 'ibuffer-hook          'nu-prepare-for-ibuffer)
-
-;;
-;; proced
-;;
-
-(add-hook 'proced-mode-hook '(lambda ()
-				(define-key proced-mode-map "h" proced-mode-map)))
-
-
-;;
-;; bookmark
-;;
-
-  ; the classical one!
-(eval-after-load "bookmark"
-  '(progn
-    (define-key bookmark-bmenu-mode-map "h" bookmark-bmenu-mode-map)))
-
-
-;;
-;; help
-;;
-
-(add-hook 'help-mode-hook '(lambda ()
-  (add-hook 'nu-populate-hook '(lambda ()
-    (if (eq nu-major-mode 'help-mode)
-	(progn
-          (define-key nu-goto-map (kbd "L") 'forward-button)
-          (define-key nu-goto-map (kbd "J") 'backward-button)
-          (define-key nu-goto-map (kbd "o") 'push-button)
-          (define-key nu-goto-map (kbd "u") 'help-go-back)))))))
-
-;;
-;; Info
-;;
-
-(define-key Info-mode-map (kbd "j") 'Info-help)
-(define-key Info-mode-map (kbd "h") Info-mode-map)
 
 (provide 'nu-integration)
