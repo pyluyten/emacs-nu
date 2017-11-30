@@ -1,18 +1,18 @@
-_OVERVIEW_
+__OVERVIEW__
 
-NU does not propose any new feature in Emacs.
-It merely changes the Emacs interface. But do not worry it's minimal, lightweight, and have poneys.
+_nu_ does not propose any shiny new feature in Emacs.
+Rather, it merely changes Emacs interface. But do not worry it's minimal, lightweight, and have poneys.
 
-NU is about menus, but not GUI menus. Yes, rather like spacemacs : "which-key" menu (but there are other prompters than which keys. HelpBuffer, Helm or Ivy work, too)
+nu is about menus, but not GUI menus. Yes, rather like spacemacs : "which-key" menu (but there are other prompters than which keys. HelpBuffer, Helm or Ivy work, too)
 Text based menus, allow to discover or simply invoke many commands.
 This is a very powerful system. (There is a reason why hydra is a popular package ; but sticky menus are not always useful)
 
 Emacs has prefixes, like Ctrl-x, but not menus.
-Which-key transforms prefixes in menus, but what if prefixes were wrong?
+Which-key transforms prefixes in menus, so it makes C-x somewhat usable, but what if Emacs native prefixes were wrong?
 So, we need properly designed menus : "operator->motion" (like a delete menu to delete anything : delete  file, buffer, this.window, other windows,…)
-This is way more easy than potatoes menus like "File menu" "Buffers menu"
+This is way more easy than potatoes menus like "File menu" "Buffers menu".
 
-Also menus needs to have a hook to allows packages to populate these menus (either add or even remove parts of menus)
+Also menus needs to have a hook to allows packages to populate these menus (either add or even remove parts of menus).
 For example, for major mode it is better to add its features to existing menus ("new", "delete", "open"), rather than having a distinct "major mode menus" which is a bag of noodles.
 
 Right, but where do i call menus from?
@@ -21,13 +21,17 @@ Hmm, if you love Emacs keybindings (seriously?), you can bind C-c o to open, C-c
  i recommend to use : either a comfortable keybinding "nu-mode" ; or an addon to evil "nu state" if you want modal editing
 These are described below but a few words are needed to understand.
 
-_WORDING_
+__WORDING__
 
 MENUS : the different commands available for one "menu key". Its very close to Emacs prefix keys bound to a keymap.
 PROMPTER : the func that opens the menus. It might be which-key, or a simple message, it might be a help buffer, it might be 
 PADDLE : the shortcuts to move cursor (up down left right).
 IMMEDIATE : an "immediate" binding is a key that directly triggers a command, like "yank"
                             as opposed to "yank menu", which contains several "insertion related" features (insert file; quoted insert and so on)
+
+__FLAVOURS__
+
+so, nu comes with several flavours.
 
 _Flavour 1 : just add nu menus to Emacs_
 
