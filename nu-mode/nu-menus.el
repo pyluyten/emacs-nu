@@ -540,26 +540,7 @@ As in nu-keymap, the user owns the punctation.")
   (define-key nu-replace-map (kbd "t")  'transpose-lines)
   (define-key nu-replace-map (kbd "u") 'tags-query-replace)
   (define-key nu-replace-map (kbd "x") 'nu-rot-reg-or-toggle-rot)
-  (define-key nu-replace-map (kbd "y") 'flyspell-mode)
-  (if (bound-and-true-p flyspell-mode)
-      (progn
-         (define-key nu-replace-map (kbd "B") 'flyspell-buffer)
-         (define-key nu-replace-map (kbd "R") 'flyspell-region) ;; in region keys?
-
-         (define-key nu-replace-map (kbd "C") 'flyspell-correct-word-before-point)
-         (define-key nu-replace-map (kbd "A") 'flyspell-auto-correct-word)
-         (define-key nu-replace-map (kbd "E") 'flyspell-goto-next-error)
-         (define-key nu-replace-map (kbd "P") 'flyspell-auto-correct-previous-word)))
-
-
-  (if (not (fboundp 'ethan-wspace-untabify))
-    (defun ethan-wspace-untabify ()
-      (interactive)
-      (message "Please install ethan-wspace mode!")))
-  (define-key nu-replace-map (kbd "w") 'ethan-wspace-untabify)
-
-  (if (eq nu-major-mode 'c-mode)
-      (define-key nu-replace-map (kbd "y") 'c-set-style)))
+  (define-key nu-replace-map (kbd "y") 'flyspell-mode))
 
 
 (defun nu-replace-prompt ()

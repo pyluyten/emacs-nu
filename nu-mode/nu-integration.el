@@ -94,6 +94,7 @@
    (add-hook 'nu-populate-hook '(lambda ()
      (if (eq nu-major-mode 'c-mode)
 	(progn
+          (define-key nu-replace-map (kbd "y") 'c-set-style)))
           (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
           (define-key nu-bold-map (kbd "c") 'comment-dwim)
           (define-key nu-bold-map (kbd "m") 'comment-indent-new-line)
@@ -149,6 +150,30 @@ Still, some keys here help."
           (define-key nu-print-map (kbd "r") 'eval-region))))))
 
 (add-hook 'emacs-lisp-mode-hook 'nu-prepare-emacs-lisp-mode)
+
+;;
+;; ethan whitespace untabify
+
+(defun nu-populate-for-ethan-whitespace ()
+  (unless (not (fboundp 'ethan-wspace-untabify))
+    (define-key nu-replace-map (kbd "w") 'ethan-wspace-untabify)))
+
+
+;;
+;; flyspell
+;;
+
+(defun nu-populate-for-flyspell ()
+  (when (bound-and-true-p flyspell-mode)
+      (progn
+         (define-key nu-replace-map (kbd "B") 'flyspell-buffer)
+         (define-key nu-replace-map (kbd "R") 'flyspell-region) ;; in region keys?
+         (define-key nu-replace-map (kbd "C") 'flyspell-correct-word-before-point)
+         (define-key nu-replace-map (kbd "A") 'flyspell-auto-correct-word)
+         (define-key nu-replace-map (kbd "E") 'flyspell-goto-next-error)
+         (define-key nu-replace-map (kbd "P") 'flyspell-auto-correct-previous-word))))
+
+(add-hook 'nu-populate-hook 'nu-populate-for-flyspell ())
 
 ;;
 ;; help
