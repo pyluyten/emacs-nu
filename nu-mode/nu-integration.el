@@ -98,7 +98,7 @@
           (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
           (define-key nu-bold-map (kbd "c") 'comment-dwim)
           (define-key nu-bold-map (kbd "m") 'comment-indent-new-line)
-          (define-key nu-bold-map (kbd "l") 'comment-indent))))))
+          (define-key nu-bold-map (kbd "l") 'comment-indent))))
 
 (add-hook 'emacs-lisp-mode-hook 'nu-prepare-emacs-lisp-mode)
 
