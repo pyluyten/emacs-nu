@@ -43,7 +43,6 @@
 ;; ibuffer
 ;; isearch
 ;; lisp interaction mode
-;; magit
 ;; mark-hook
 ;; minibuffer
 ;; proced
@@ -299,21 +298,6 @@ Minibuffer should use same keys are fundamental mode."
 
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
 (add-hook 'minibuffer-exit-hook  'nu-minibuffer-exit t)
-
-
-;;
-;; magit
-;;
-
-(defun nu-magit-w-editor-mode-hook ()
-  "Assign keys for with-editor-finish / cancel"
-  (define-key global-map (kbd "C-c C-c") 'with-editor-finish)
-  (define-key global-map (kbd "C-c C-k") 'with-editor-cancel))
-
-
-(add-hook 'with-editor-mode-hook 'nu-magit-w-editor-mode-hook)
-
-
 
 ;;
 ;; mark
