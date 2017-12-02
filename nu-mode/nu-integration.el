@@ -87,19 +87,21 @@
 (defun nu-prepare-c-mode ()
    (defadvice nu-set-bold-f (after nu-set-bold-f-for-emacs-lisp ())
      (if (eq major-mode 'c-mode)
-	 (defalias 'nu-bold-function '(lambda () (call-interactively 'comment-dwim))))
-   (ad-activate 'nu-set-bold-f))
+	 (defalias 'nu-bold-function '(lambda () (call-interactively 'comment-dwim)))))
+   (ad-activate 'nu-set-bold-f)
    
    (add-hook 'nu-populate-hook '(lambda ()
+     (message "testing if c mode")
      (if (eq nu-major-mode 'c-mode)
 	(progn
+	  (message "prepareing for c mode")
           (define-key nu-replace-map (kbd "y") 'c-set-style)))
           (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
           (define-key nu-bold-map (kbd "c") 'comment-dwim)
           (define-key nu-bold-map (kbd "m") 'comment-indent-new-line)
           (define-key nu-bold-map (kbd "l") 'comment-indent))))
 
-(add-hook 'emacs-lisp-mode-hook 'nu-prepare-emacs-lisp-mode)
+(add-hook 'c-mode-hook 'nu-prepare-c-mode)
 
 ;;
 ;; dired
