@@ -37,6 +37,7 @@
 ;; auto-complete
 ;; bookmark
 ;; c mode
+;; company
 ;; dired
 ;; emacs lisp mode
 ;; help
@@ -102,6 +103,13 @@
           (define-key nu-bold-map (kbd "l") 'comment-indent))))
 
 (add-hook 'c-mode-hook 'nu-prepare-c-mode)
+
+;;
+;; company
+;;
+
+(define-key company-active-map "²" company-active-map)
+
 
 ;;
 ;; dired
