@@ -108,7 +108,8 @@
 ;; company
 ;;
 
-(define-key company-active-map "²" company-active-map)
+(with-eval-after-load "company"
+  (define-key company-active-map "²" company-active-map))
 
 
 ;;
