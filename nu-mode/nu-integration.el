@@ -96,11 +96,11 @@
      (if (eq nu-major-mode 'c-mode)
 	(progn
 	  (message "prepareing for c mode")
-          (define-key nu-replace-map (kbd "y") 'c-set-style)))
-          (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
-          (define-key nu-bold-map (kbd "c") 'comment-dwim)
-          (define-key nu-bold-map (kbd "m") 'comment-indent-new-line)
-          (define-key nu-bold-map (kbd "l") 'comment-indent))))
+          (define-key nu-replace-map "Y" 'c-set-style)))
+          (define-key nu-bold-map "R" 'comment-or-uncomment-region)
+          (define-key nu-bold-map "C" 'comment-dwim)
+          (define-key nu-bold-map "N" 'comment-indent-new-line)
+          (define-key nu-bold-map "L" 'comment-indent))))
 
 (add-hook 'c-mode-hook 'nu-prepare-c-mode)
 
@@ -150,14 +150,14 @@ Still, some keys here help."
    (add-hook 'nu-populate-hook '(lambda ()
      (if (eq nu-major-mode 'emacs-lisp-mode)
 	(progn
-          (define-key nu-bold-map (kbd "M-c") 'comment-or-uncomment-region)
-          (define-key nu-bold-map (kbd "c") 'comment-dwim)
-          (define-key nu-bold-map (kbd "m") 'comment-indent-new-line)
-          (define-key nu-bold-map (kbd "l") 'comment-indent)
-          (define-key nu-print-map (kbd "s") 'eval-last-sexp)
-          (define-key nu-print-map (kbd "b") 'eval-buffer)
-          (define-key nu-print-map (kbd "a") 'eval-defun)
-          (define-key nu-print-map (kbd "r") 'eval-region))))))
+          (define-key nu-bold-map "R" 'comment-or-uncomment-region)
+          (define-key nu-bold-map "C" 'comment-dwim)
+          (define-key nu-bold-map "N" 'comment-indent-new-line)
+          (define-key nu-bold-map "L" 'comment-indent)
+          (define-key nu-print-map "X" 'eval-last-sexp)
+          (define-key nu-print-map "B" 'eval-buffer)
+          (define-key nu-print-map "F" 'eval-defun)
+          (define-key nu-print-map "R" 'eval-region))))))
 
 (add-hook 'emacs-lisp-mode-hook 'nu-prepare-emacs-lisp-mode)
 
@@ -166,7 +166,7 @@ Still, some keys here help."
 
 (defun nu-populate-for-ethan-whitespace ()
   (unless (not (fboundp 'ethan-wspace-untabify))
-    (define-key nu-replace-map (kbd "w") 'ethan-wspace-untabify)))
+    (define-key nu-replace-map (kbd "W") 'ethan-wspace-untabify)))
 
 
 ;;
@@ -176,12 +176,12 @@ Still, some keys here help."
 (defun nu-populate-for-flyspell ()
   (when (bound-and-true-p flyspell-mode)
       (progn
-         (define-key nu-replace-map (kbd "B") 'flyspell-buffer)
-         (define-key nu-replace-map (kbd "R") 'flyspell-region) ;; in region keys?
-         (define-key nu-replace-map (kbd "C") 'flyspell-correct-word-before-point)
-         (define-key nu-replace-map (kbd "A") 'flyspell-auto-correct-word)
-         (define-key nu-replace-map (kbd "E") 'flyspell-goto-next-error)
-         (define-key nu-replace-map (kbd "P") 'flyspell-auto-correct-previous-word))))
+         (define-key nu-replace-map "B" 'flyspell-buffer)
+         (define-key nu-replace-map "R" 'flyspell-region) ;; in region keys?
+         (define-key nu-replace-map "C" 'flyspell-correct-word-before-point)
+         (define-key nu-replace-map "A" 'flyspell-auto-correct-word)
+         (define-key nu-replace-map "E" 'flyspell-goto-next-error)
+         (define-key nu-replace-map "P" 'flyspell-auto-correct-previous-word))))
 
 (add-hook 'nu-populate-hook 'nu-populate-for-flyspell ())
 
@@ -193,10 +193,10 @@ Still, some keys here help."
   (add-hook 'nu-populate-hook '(lambda ()
     (if (eq nu-major-mode 'help-mode)
 	(progn
-          (define-key nu-goto-map (kbd "L") 'forward-button)
-          (define-key nu-goto-map (kbd "J") 'backward-button)
-          (define-key nu-goto-map (kbd "o") 'push-button)
-          (define-key nu-goto-map (kbd "u") 'help-go-back)))))))
+          (define-key nu-goto-map "L" 'forward-button)
+          (define-key nu-goto-map "J" 'backward-button)
+          (define-key nu-goto-map "o" 'push-button)
+          (define-key nu-goto-map "u" 'help-go-back)))))))
 
 ;;
 ;; ibuffer
@@ -314,6 +314,7 @@ Minibuffer should use same keys are fundamental mode."
 ;; mark
 ;;
 
+;; only in nu-mode backend
 (defun nu-add-mark-hook ()
   "Give the user some input about visual mode."
 
@@ -392,10 +393,10 @@ Always start at char mode."
    (add-hook 'nu-populate-hook '(lambda ()
      (if (eq nu-major-mode 'texinfo-mode)
          (progn
-           (define-key nu-print-map (kbd "i") 'makeinfo-buffer)
-           (define-key nu-print-map (kbd "a") 'nu-texi2pdf)
-	   (define-key nu-insert-map (kbd "M-u") 'texinfo-insert-@url)
-	   (define-key nu-insert-map (kbd "M-k") 'texinfo-insert-@kbd)))))))
+           (define-key nu-print-map "I" 'makeinfo-buffer)
+           (define-key nu-print-map "A" 'nu-texi2pdf)
+	   (define-key nu-insert-map "U" 'texinfo-insert-@url)
+	   (define-key nu-insert-map "K" 'texinfo-insert-@kbd)))))))
 
 ;;
 ;; undo-tree
