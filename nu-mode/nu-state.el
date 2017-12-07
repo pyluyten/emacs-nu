@@ -98,7 +98,7 @@ This includes the paddle."
    (global-set-key (kbd "M-m") 'newline-and-indent)
    (global-set-key (kbd "M-n") 'nu-new-prompt)
    (global-set-key (kbd "M-o") 'nu-do-prompt)
-   (global-set-key (kbd "M-p") 'yank) ; menu is rare => space p 
+   (global-set-key (kbd "M-p") 'nu-insert-prompt)
    (global-set-key (kbd "M-q") 'nu-print-prompt)
    (global-set-key (kbd "M-r") 'nu-replace-prompt)
    (global-set-key (kbd "M-s") 'save-buffer) ; menu is rare. space s
