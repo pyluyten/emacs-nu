@@ -3,23 +3,29 @@ __OVERVIEW__
 _nu_ does not propose any shiny new feature in Emacs.
 Rather, it merely changes Emacs interface. But do not worry it's minimal, lightweight, and have poneys.
 
-nu is about menus, but not GUI menus. Yes, rather like spacemacs : "which-key" menu (but there are other prompters than which keys. HelpBuffer, Helm or Ivy work, too)
+nu is about menus, but not GUI menus. Yes, rather like spacemacs : "which-key" menu (but there are other prompters than which keys : *Help* buffer, Helm or Ivy work, too)
 Text based menus, allow to discover or simply invoke many commands.
-This is a very powerful system. (There is a reason why hydra is a popular package ; but sticky menus are not always useful)
+This is a very powerful system. There is a reason why hydra is a popular package. But since sticky menus are not always useful nu is not based on hydra.)
 
 Emacs has prefixes, like Ctrl-x, but not menus.
 Which-key transforms prefixes in menus, so it makes C-x somewhat usable, but what if Emacs native prefixes were wrong?
-So, we need properly designed menus : "operator->motion" (like a delete menu to delete anything : delete  file, buffer, this.window, other windows,…)
-This is way more easy than potatoes menus like "File menu" "Buffers menu".
+So, we need properly designed menus : "verb->object" (like a delete menu to delete anything : delete  file, buffer, this.window, other windows,…)
+This is way more easy than potatoes menus like "File menu" "Buffers menu". Verbs are easy to understand. CUA menus like copy/paste are verbs. VI operator->motion is also a verb->object description.
 
-Also menus needs to have a hook to allows packages to populate these menus (either add or even remove parts of menus).
-For example, for major mode it is better to add its features to existing menus ("new", "delete", "open"), rather than having a distinct "major mode menus" which is a bag of noodles.
+Also menus have a hook to allow packages to populate them - either add or even remove parts.
+For example, for a mode it is better to add its features to existing menus ("new", "delete", "open"), rather than having a distinct "major mode menus" which is a bag of noodles.
 
 Right, but where do i call menus from?
-Hmm, if you love Emacs keybindings (seriously?), you can bind C-c o to open, C-c d to delete and so on. There is a func for this. But i do not recommend.
-(Unless you are already ErgoEmacs user.)
- i recommend to use : either a comfortable keybinding "nu-mode" ; or an addon to evil "nu state" if you want modal editing
-These are described below but a few words are needed to understand.
+Hmm, if you love Emacs keybindings (seriously?), you can bind C-c o to open, C-c d to delete and so on. There is a func for this. While it is not what i recommend first, it is fair to prefer vanilla Emacs keys, which are also bash keys after all! It might also be good if you already use one of the many keybinding, like ErgoEmacs.
+If you use evil, there is *nu-state*, which mostly adds menus to evil. This is what i use currently.
+If you want to stick to Emacs & Notepad like non-modal editing, then nu-mode is a CUA binding including nu menus. It is both very easy to learn and ergonomic. Actually nu-menus started with this.
+
+__IS THAT ALL?__
+Well, yes and no.
+Yes, because i do not want to revisit every single emacs package. So dired binding remain dired binding.
+
+No, because there are still few addon. First, the key ² stands for *CheatSheet*. In every circumstance it should display available bindings. When there is a pop up, when editing, when selecting, always.
+Also, alt+j alt+k is useful for example to select ivy or helm candidated, navigating into dired and so on.
 
 __WORDING__
 
