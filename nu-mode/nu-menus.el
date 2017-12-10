@@ -93,7 +93,7 @@ As in nu-keymap, the user owns the punctation.")
   (define-key nu-print-map "P" 'kmacro-call-macro)
   (define-key nu-print-map "r" 're-builder)
   (define-key nu-print-map "u" 'universal-argument)
-  (define-key nu-print-map "x" 'eval-expression)
+  (define-key nu-print-map ":" 'eval-expression)
   (define-key nu-print-map "z" 'async-shell-command))
 
 
