@@ -22,7 +22,19 @@
 (require 'nu-prompters-lv)
 (require 'nu-org)
 
+(require 'evil)
 (require 'iso-transl)
+
+
+(defmacro nu-mode-dkey (keymap letter immediate def)
+"define-key modifier+letter to invoke def on keymap
+
+modifier is nu-immediate-key if immediate is t,
+otherwise   nu-menu-key."
+    `(define-key ,keymap (kbd (concat
+			       (if ,immediate nu-immediate-key
+				              nu-menu-key) "-" ,letter)) ',def))
+
 
 (defun nu-fill-mode-map-with-nu-menus ()
   "Make Control+c <key> call the associated nu menu.

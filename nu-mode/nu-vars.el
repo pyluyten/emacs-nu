@@ -18,6 +18,14 @@
 (defvar nu-show-welcome-screen
 "If true, nu-mode does display a help buffer at startup.")
 
+(defvar nu-immediate-key "M"
+"Default modifier for invoking most current functions.
+By default it is Alt.")
+
+(defvar nu-menu-key "C"
+"Default modifier for invoking menus or less current functions.
+By default it is Control.")
+
 (defvar nu-use-vi-paddle nil
   "If true, nu uses h j k l. Otherwise it uses i j k l.")
 
