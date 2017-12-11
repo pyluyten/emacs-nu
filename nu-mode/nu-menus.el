@@ -448,7 +448,7 @@ As in nu-keymap, the user owns the punctation.")
   (define-key nu-find-map "c" 'occur)
   (define-key nu-find-map "t" 'find-tag)
   (define-key nu-find-map "o" 'find-tag-other-window)
-  (define-key nu-find-map "g" 'tags-search))
+  (define-key nu-find-map "s" 'tags-search))
 
 (defun nu-find-prompt ()
   (interactive)
