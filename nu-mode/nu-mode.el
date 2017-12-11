@@ -27,10 +27,14 @@
 
 
 (defmacro nu-mode-dkey (keymap letter immediate def)
-"define-key modifier+letter to invoke def on keymap
+  "define-key modifier+letter to invoke def on keymap
 
 modifier is nu-immediate-key if immediate is t,
-otherwise   nu-menu-key."
+otherwise   nu-menu-key.
+
+if immediate is nil, nu-mode-dkey checks for last optional parameter,
+menu. Unless menu is setup to nil, define-key is invoked to populate nu-menu-map
+so binding is known by emacs on specific menu map."
     `(define-key ,keymap (kbd (concat
 			       (if ,immediate nu-immediate-key
 				              nu-menu-key) "-" ,letter)) ',def))
@@ -73,143 +77,72 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
   (global-set-key (kbd "C-c x") 'nu-delete-prompt)
   (global-set-key (kbd "C-c z") 'undo-tree-visualize))
 
-(defun nu-set-control-mode ()
-
-  "Use nu with Control key for immediate actions.
-
-
-
-The alt keys will be used for menus.
-
-This function is not called. It is available for user convenience."
-
-  (interactive)
-
-   (nu-setup-classic-paddle)
-
-   (define-key nu-keymap (kbd "M-a") 'nu-a-prompt)
-   (define-key nu-keymap (kbd "C-a") 'nu-set-mark)
-
-   (define-key nu-keymap (kbd "C-b") 'nu-bold)
-   (define-key nu-keymap (kbd "M-b") 'nu-bold-prompt)
-
-   (define-key nu-keymap (kbd "M-c") 'nu-copy-prompt)
-   (define-key nu-keymap (kbd "C-c") 'nu-copy-region-or-line)
-
-   (define-key nu-keymap (kbd "M-d") 'nu-M-x)
-   (define-key nu-keymap (kbd "C-d") 'nu-do-prompt)
-
-   (define-key nu-keymap (kbd "C-f") 'nu-search)
-   (define-key nu-keymap (kbd "M-f") 'nu-find-prompt)
-
-   (define-key nu-keymap (kbd "C-g") 'ace-window)
-   (define-key nu-keymap (kbd "M-g") 'nu-goto-prompt)
-
-   (define-key nu-keymap (kbd "C-n") 'nu-new-empty-buffer)
-   (define-key nu-keymap (kbd "M-n") 'nu-new-prompt)
-
-    ;; o is  not changed.
-   (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
-   (define-key nu-keymap (kbd "M-o") 'forward-word)
-
-   (define-key nu-keymap (kbd "C-p") 'universal-argument)
-   (define-key nu-keymap (kbd "M-p") 'nu-print-prompt)
-
-   (define-key nu-keymap (kbd "C-q") 'keyboard-escape-quit)
-   (define-key nu-keymap (kbd "M-q") 'nu-quit-prompt)
-
-   (define-key nu-keymap (kbd "C-r") 'replace-regexp)
-   (define-key nu-keymap (kbd "M-r") 'nu-replace-prompt)
-
-   (define-key nu-keymap (kbd "C-s") 'save-buffer)
-   (define-key nu-keymap (kbd "M-s") 'nu-save-prompt)
-
-   (define-key nu-keymap (kbd "C-t") 'split-window-right)
-
-   ;; u is not changed
-   (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
-   (define-key nu-keymap (kbd "M-u") 'backward-word)
-
-   (define-key nu-keymap (kbd "M-v") 'nu-insert-prompt)
-   (define-key nu-keymap (kbd "C-v") 'yank)
-
-   (define-key nu-keymap (kbd "C-w") 'nu-quit-document)
-   (define-key nu-keymap (kbd "M-w") 'nu-window-prompt)
-
-   (define-key nu-keymap (kbd "M-x") 'nu-delete-prompt)
-   (define-key nu-keymap (kbd "C-x") 'nu-cut-region-or-line)
-
-   (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)
-
-   (define-key nu-keymap (kbd "C-z") 'undo-tree-undo)
-   (define-key nu-keymap (kbd "M-z") 'undo-tree-visualize))
-
 (defun nu-restore-default-keymap ()
   "Populate nu keymap with defaults."
   (interactive)
 
    ; <menu> is not a modifier. We need a map
    ;; so features like which-key still work fine
-   (define-key nu-keymap (kbd "<menu>") nu-menu-map)
-   (define-key nu-keymap (kbd "²") nu-keymap)
+   (define-key evil-emacs-state-map (kbd "<menu>") nu-menu-map)
+   (define-key evil-emacs-state-map (kbd "²") evil-emacs-state-map)
 
    ;;
    ;; setup the paddle. see setup.el.
+   ;; note the paddle is always Alt+keys.
    ;;
    (if nu-use-vi-paddle
        (nu-setup-vi-paddle)
        (nu-setup-classic-paddle))
 
-   (define-key nu-keymap (kbd "C-a") 'nu-a-prompt)
    (define-key nu-menu-map (kbd "a") 'nu-a-map)
-   (define-key nu-keymap (kbd "M-a") 'nu-set-mark)
+   (nu-mode-dkey evil-emacs-state-map "a" t evil-visual-line)
+   (nu-mode-dkey evil-emacs-state-map "a" nil nu-a-prompt)
 
-   (define-key nu-keymap (kbd "M-z") 'undo-tree-undo)
-   (define-key nu-keymap (kbd "C-z") 'undo-tree-visualize)
+   (nu-mode-dkey evil-emacs-state-map "z" t undo-tree-undo)
+   (nu-mode-dkey evil-emacs-state-map "z" nil 'undo-tree-visualize)
 
-   (define-key nu-keymap (kbd "M-e") 'nu-copy-from-above)
+   (define-key evil-emacs-state-map (kbd "M-e") 'nu-copy-from-above)
 
-   (define-key nu-keymap (kbd "M-r") 'replace-regexp)
    (define-key nu-menu-map (kbd "r") 'nu-replace-map)
-   (define-key nu-keymap (kbd "C-r") 'nu-replace-prompt)
+   (nu-mode-dkey evil-emacs-state-map "r" t replace-regexp)
+   (nu-mode-dkey evil-emacs-state-map "r" nil nu-replace-prompt)
 
-   (define-key nu-keymap (kbd "M-t") 'split-window-right)
+   (nu-mode-dkey  evil-emacs-state-map "t" t split-window-right)
 
    ; y? yes? customize?
-   (define-key nu-keymap (kbd "M-y") 'nu-copy-from-below)
+   (define-key evil-emacs-state-map (kbd "M-y") 'nu-copy-from-below)
 
-   (define-key nu-keymap (kbd "C-u") 'backward-kill-word)
-   (define-key nu-keymap (kbd "M-u") 'backward-word)
+   (nu-mode-dkey evil-emacs-state-map "u" nil backward-kill-word)
+   (nu-mode-dkey evil-emacs-state-map "u" t backward-word)
    (define-key universal-argument-map (kbd "C-u") 'backward-kill-word)
 
-   (define-key nu-keymap (kbd "C-o") 'nu-open-prompt)
+   ;; o remains as is no matter cua or ergonomic.
+   (define-key evil-emacs-state-map (kbd "C-o") 'nu-open-prompt)
    (define-key nu-menu-map (kbd "o") 'nu-open-map)
-   (define-key nu-keymap (kbd "M-o") 'forward-word)
+   (define-key evil-emacs-state-map (kbd "M-o") 'forward-word)
 
-   (define-key nu-keymap (kbd "M-p") 'universal-argument)
+   (nu-mode-dkey evil-emacs-state-map "p" t universal-argument)
    (define-key nu-menu-map (kbd "p") 'nu-print-map)
-   (define-key nu-keymap (kbd "C-p") 'nu-print-prompt)
-   (define-key nu-keymap (kbd "M-P") 'async-shell-command)
+   (nu-mode-dkey evil-emacs-state-map "p" nil nu-print-prompt)
    (define-key universal-argument-map (kbd "M-p") 'universal-argument-more)
 
-
-   (define-key nu-keymap (kbd "M-q") 'keyboard-escape-quit)
+   (nu-mode-dkey evil-emacs-state-map "q" t keyboard-escape-quit)
    (define-key nu-menu-map (kbd "q") 'nu-quit-map)
-   (define-key nu-keymap (kbd "C-q") 'nu-quit-prompt)
+   (nu-mode-dkey evil-emacs-state-map "q" nil nu-quit-prompt)
 
-   (define-key nu-keymap (kbd "M-s") 'save-buffer)
-   (define-key nu-keymap (kbd "C-s") 'nu-save-prompt)
+   (nu-mode-dkey evil-emacs-state-map "s" t save-buffer)
+   (nu-mode-dkey evil-emacs-state-map "s" nil nu-save-prompt)
    (define-key nu-menu-map (kbd "s") 'nu-save-map)
 
-   (define-key nu-keymap (kbd "C-d") 'nu-M-x)
-   (define-key nu-keymap (kbd "M-d") 'nu-do-prompt)
+   (define-key evil-emacs-state-map (kbd "C-d") 'nu-M-x)
+   (define-key evil-emacs-state-map (kbd "M-d") 'nu-do-prompt)
 
-   (define-key nu-keymap (kbd "M-f") 'nu-search)
-   (define-key nu-keymap (kbd "C-f") 'nu-find-prompt)
+   (nu-mode-dkey evil-emacs-state-map "f" t nu-search)
+   (nu-mode-dkey evil-emacs-state-map "f" nil nu-find-prompt)
    (define-key nu-menu-map (kbd "f") 'nu-find-map)
 
-   (define-key nu-keymap (kbd "M-g") 'ace-window)
-   (define-key nu-keymap (kbd "C-g") 'nu-goto-prompt)
+   (nu-mode-dkey evil-emacs-state-map "g" t ace-window)
+   (nu-mode-dkey evil-emacs-state-map "g" nil nu-goto-prompt)
    (define-key nu-menu-map (kbd "g") 'nu-goto-map)
 
    ; C-h is help-map. Keep this.
@@ -218,68 +151,53 @@ This function is not called. It is available for user convenience."
    (define-key help-map "v" 'nu-describe-variable)
    (define-key help-map (kbd "C-h") nil)
 
-   ; SPC calls nu-keymap. With which-key it's a CheatSheet.
+   ; SPC calls evil-emacs-state-map. With which-key it's a CheatSheet.
    (define-key help-map (kbd "<SPC>") 'nu-cheat-sheet)
    (define-key nu-menu-map (kbd "h") 'help-map)
 
    ; C-m stands for enter.
-   (define-key nu-keymap (kbd "M-m") 'newline-and-indent)
+   (define-key evil-emacs-state-map (kbd "M-m") 'newline-and-indent)
 
    ;;
    ;; wxcvbn
    ;;
 
-   (define-key nu-keymap (kbd "M-w") 'nu-quit-document)
+   (nu-mode-dkey evil-emacs-state-map "w" t nu-quit-document)
    (define-key nu-menu-map (kbd "w") 'nu-window-map)
-   (define-key nu-keymap (kbd "C-w") 'nu-window-prompt)
+   (nu-mode-dkey evil-emacs-state-map "w" nil nu-window-prompt)
  
-   (define-key nu-keymap (kbd "C-x") 'nu-delete-prompt)
-   (define-key nu-keymap (kbd "M-x") 'nu-cut-region-or-line)
-   (define-key nu-menu-map (kbd "x") 'nu-delete-map)
+   (nu-mode-dkey evil-emacs-state-map "x" nil nu-delete-prompt)
+   (nu-mode-dkey evil-emacs-state-map "x" t evil-delete)
+   (define-key nu-menu-map (kbd "x") 'nu-delete-prompt)
 
-   (define-key nu-keymap (kbd "C-c") 'nu-copy-prompt)
-   (define-key nu-keymap (kbd "M-c") 'nu-copy-region-or-line)
+   (nu-mode-dkey evil-emacs-state-map "c" nil nu-copy-prompt)
+   (nu-mode-dkey evil-emacs-state-map "c" t nu-copy-region-or-line)
 
-   (define-key nu-keymap (kbd "C-v") 'nu-insert-prompt)
-   (define-key nu-keymap (kbd "M-v") 'yank)
+   (nu-mode-dkey evil-emacs-state-map "v" nil nu-insert-prompt)
+   (nu-mode-dkey evil-emacs-state-map "v" t yank)
    (define-key nu-menu-map (kbd "v") 'nu-insert-map)
-   (define-key nu-keymap (kbd "C-S-v") 'quoted-insert)
 
-   (define-key nu-keymap (kbd "M-b") 'nu-bold)
+   (nu-mode-dkey evil-emacs-state-map "b" t nu-bold)
    (define-key nu-menu-map (kbd "b") 'nu-bold-map)
-   (define-key nu-keymap (kbd "C-b") 'nu-bold-prompt)
+   (nu-mode-dkey evil-emacs-state-map "b" nil nu-bold-prompt)
 
-   (define-key nu-keymap (kbd "M-n") 'nu-new-empty-buffer)
-   (define-key nu-keymap (kbd "C-n") 'nu-new-prompt)
-   (define-key nu-keymap (kbd "M-N") 'split-window-horizontally)
-
+   (nu-mode-dkey evil-emacs-state-map "n" t nu-new-empty-buffer)
+   (nu-mode-dkey evil-emacs-state-map "n" nil nu-new-prompt)
 
    ;;
    ;; ^ $ up down prior next spc backspace
    ;;
 
-   (define-key nu-keymap (kbd "C-$") 'kill-line)
-   (define-key nu-keymap (kbd "M-$") 'nu-end-of-line)
+   (define-key evil-emacs-state-map (kbd "C-$") 'kill-line)
+   (define-key evil-emacs-state-map (kbd "M-$") 'nu-end-of-line)
 
-   (define-key nu-keymap (kbd "M-<dead-circumflex>") 'nu-back-to-indentation)
-   (define-key nu-keymap (kbd "C-<dead-circumflex>") 'nu-backward-kill-line)
+   (define-key evil-emacs-state-map (kbd "M-<dead-circumflex>") 'nu-back-to-indentation)
+   (define-key evil-emacs-state-map (kbd "C-<dead-circumflex>") 'nu-backward-kill-line)
 
-   (define-key nu-keymap (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
+   (define-key evil-emacs-state-map (kbd "C-<SPC>") 'nu-trigger-mode-specific-map) ; C-c
 
-   (define-key nu-keymap (kbd "C-M-<SPC>") 'scroll-other-window)
-   (define-key nu-keymap (kbd "M-<SPC>") 'scroll-up)
-
-   (define-key nu-keymap (kbd "M-<backspace>") 'scroll-down)
-
-   (define-key nu-keymap (kbd "C-<next>") 'next-buffer)
-   (define-key nu-keymap (kbd "C-<prior>") 'previous-buffer)
-   (define-key nu-keymap (kbd "C-<return>") 'repeat)
-
-   ;;
-   ;; FN keys?
-   ;;
-
-   (define-key nu-keymap (kbd "<f10>") 'tmm-menubar))
+   (define-key evil-emacs-state-map (kbd "M-<SPC>") 'scroll-up)
+   (define-key evil-emacs-state-map (kbd "M-<backspace>") 'scroll-down))
 
 (defun nu-initialize ()
 "Initialize nu,
@@ -295,6 +213,7 @@ yeah like spacemacs."
 
 	(global-undo-tree-mode)
         (which-key-mode)
+
         ; populate all prompts
 	; so all maps are defined
 	(nu-populate-print)
@@ -310,42 +229,42 @@ yeah like spacemacs."
 	(nu-populate-find-map)
 	(nu-populate-replace))
 
-(define-minor-mode nu-mode
-  "Modern Emacs keys.
 
-CUA+ : use most important standard shortcuts : C-s, C-f, C-c, C-x, C-v.
-Convenient : To move, use M-i M-j M-k M-l.
+  (defun nu-visual-block ()
+    (interactive)
+    (run-with-timer 0.01 nil 'evil-visual-block))
 
-Still powerful : Trying M-f will prompt for which find related function to run.
-C-a : selection, C-r : replacement, M-s (saving), M-d (deletions),
-M-g (goto), M-v (insertions).
 
-Both direct keys & prompters will adapt to current mode.)"
-  :global t
-  :keymap nu-keymap
-  :lighter " nu"
+(defun nu-mode ()
+"Activate nu bindings. These are non modal, CUA friendly bindings,
+extensively using which-key or similar menus.
 
-  (if nu-mode
-      (progn
+Technically this function activates evil-mode, but not vi bindings."
+	(evil-mode)
         (nu-initialize)
-
-        ;;
-	;; the following is only nu-mode initializion
-	;; while common parts was above
-	;;
-	(set-default 'cursor-type 'bar)
-	(delete-selection-mode 1)
-        (add-hook 'deactivate-mark-hook  'nu-deactivate-mark-hook)
-        (add-hook 'activate-mark-hook    'nu-add-mark-hook)
-
+        (setq evil-default-state 'emacs)
 	(nu-restore-default-keymap)
 
         (if nu-show-welcome-screen
 	   (add-hook 'emacs-startup-hook '(lambda ()
-             (nu-help-prompt)))))
+             (nu-help-prompt))))
 
-    ; if disabled
-    (setq nu-state nil)))
+  ;;
+  ;; now adapt menus
+  ;;
+
+  (add-hook 'nu-populate-hook '(lambda ()
+    (progn
+
+       ;; inserted inside open menu
+       (define-key nu-open-map "o" 'evil-jump-backward)
+
+       ;; reset!
+       (nu-define-prefix 'nu-a-map)
+       (define-key nu-a-map (kbd "r") 'nu-visual-block)
+       (define-key nu-a-map (kbd "l") 'evil-visual-line)
+       (define-key nu-a-map (kbd "k") 'evil-visual-char)))))
+
 
 (provide 'nu-mode)
 

@@ -1,4 +1,5 @@
 (require 'nu-prompters)
+(require 'evil)
 
 (defgroup nu nil
   "Emulate modern key bindings and provides popups."
@@ -29,15 +30,15 @@
 ;;  both j / k / l also allow to delete
 
 (defun nu-push-paddle-to-keymap ()
-  (define-key nu-keymap nu-previous-line-binding 'previous-line)
-  (define-key nu-keymap nu-backward-char-binding 'backward-char)
-  (define-key nu-keymap nu-next-line-binding 'next-line)
-  (define-key nu-keymap nu-forward-char-binding 'forward-char)
-  (define-key nu-keymap nu-back-to-indentation-binding 'nu-back-to-indentation)
+  (define-key evil-emacs-state-map nu-previous-line-binding 'previous-line)
+  (define-key evil-emacs-state-map nu-backward-char-binding 'backward-char)
+  (define-key evil-emacs-state-map nu-next-line-binding 'next-line)
+  (define-key evil-emacs-state-map nu-forward-char-binding 'forward-char)
+  (define-key evil-emacs-state-map nu-back-to-indentation-binding 'nu-back-to-indentation)
 
-  (define-key nu-keymap nu-kill-visual-line-key 'kill-visual-line)
-  (define-key nu-keymap nu-del-backward-char-key 'delete-backward-char)
-  (define-key nu-keymap nu-del-forward-char-key 'delete-forward-char))
+  (define-key evil-emacs-state-map nu-kill-visual-line-key 'kill-visual-line)
+  (define-key evil-emacs-state-map nu-del-backward-char-key 'delete-backward-char)
+  (define-key evil-emacs-state-map nu-del-forward-char-key 'delete-forward-char))
 
 
 (defun nu-setup-classic-paddle ()
@@ -95,7 +96,7 @@
 
   ;; usual commands.
   (defalias 'nu-search 'nu-isearch-forward-regexp)
-  (defalias 'nu-Mx 'execute-extended-command)
+  (defalias 'nu-M-x 'execute-extended-command)
   (defalias 'nu-find-files 'find-file)
   (defalias 'nu-buffers-list 'ibuffer)
   (defalias 'nu-describe-function 'describe-function)
@@ -112,7 +113,7 @@
 
   ;; usual commands.
   (defalias 'nu-search 'nu-isearch-forward-regexp)
-  (defalias 'nu-Mx 'execute-extended-command)
+  (defalias 'nu-M-x 'execute-extended-command)
   (defalias 'nu-find-files 'ido-find-file)
   (defalias 'nu-buffers-list 'ibuffer)
   (defalias 'nu-describe-function 'describe-function)

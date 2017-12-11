@@ -290,8 +290,8 @@ Still, some keys here help."
 
 Minibuffer should use same keys are fundamental mode."
 
-  ; kill nu keymap
-  (setcdr (assoc 'nu-mode minor-mode-map-alist) nil)
+  ; kill nu keymap code was here when nu-mode was a mode.
+  ;(setcdr (assoc 'nu-mode minor-mode-map-alist) nil)
 
   (define-key minibuffer-local-map (kbd "M-<dead-circumflex>") 'previous-history-element)
   (define-key minibuffer-local-map (kbd "M-$") 'next-history-element)
@@ -304,8 +304,8 @@ Minibuffer should use same keys are fundamental mode."
 (defun nu-minibuffer-exit ()
   "restore nu"
   (lv-delete-window)
-  (setcdr (assoc 'nu-mode minor-mode-map-alist) nu-keymap))
-
+  ;(setcdr (assoc 'nu-mode minor-mode-map-alist) nu-keymap))
+  )
 
 (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
 (add-hook 'minibuffer-exit-hook  'nu-minibuffer-exit t)
