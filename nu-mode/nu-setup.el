@@ -30,16 +30,15 @@
 ;;  both j / k / l also allow to delete
 
 (defun nu-push-paddle-to-keymap ()
-  (define-key evil-emacs-state-map nu-previous-line-binding 'previous-line)
-  (define-key evil-emacs-state-map nu-backward-char-binding 'backward-char)
-  (define-key evil-emacs-state-map nu-next-line-binding 'next-line)
-  (define-key evil-emacs-state-map nu-forward-char-binding 'forward-char)
-  (define-key evil-emacs-state-map nu-back-to-indentation-binding 'nu-back-to-indentation)
+  ;(define-key evil-insert-state-map nu-kill-visual-line-key 'kill-visual-line)
+  ;(define-key evil-insert-state-map nu-del-backward-char-key 'delete-backward-char)
+  ;(define-key evil-insert-state-map nu-del-forward-char-key 'delete-forward-char))
 
-  (define-key evil-emacs-state-map nu-kill-visual-line-key 'kill-visual-line)
-  (define-key evil-emacs-state-map nu-del-backward-char-key 'delete-backward-char)
-  (define-key evil-emacs-state-map nu-del-forward-char-key 'delete-forward-char))
-
+  (global-set-key nu-previous-line-binding 'previous-line)
+  (global-set-key nu-backward-char-binding 'backward-char)
+  (global-set-key nu-next-line-binding 'next-line)
+  (global-set-key nu-forward-char-binding 'forward-char)
+  (global-set-key nu-back-to-indentation-binding 'nu-back-to-indentation))
 
 (defun nu-setup-classic-paddle ()
  (setq nu-previous-line-binding (kbd "M-i"))
