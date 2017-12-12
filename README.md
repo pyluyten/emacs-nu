@@ -15,6 +15,8 @@ This is way more easy than potatoes menus like "File menu" "Buffers menu". Verbs
 Also menus have a hook to allow packages to populate them - either add or even remove parts.
 For example, for a mode it is better to add its features to existing menus ("new", "delete", "open"), rather than having a distinct "major mode menus" which is a bag of noodles.
 
+the content of _nu_ menus first follow a guideline which is provided at the end of this README.
+
 Right, but where do i call menus from?
 Hmm, if you love Emacs keybindings (seriously?), you can bind C-c o to open, C-c d to delete and so on. There is a func for this. While it is not what i recommend first, it is fair to prefer vanilla Emacs keys, which are also bash keys after all! It might also be good if you already use one of the many keybinding, like ErgoEmacs.
 If you use evil, there is *nu-state*, which mostly adds menus to evil. This is what i use currently.
@@ -139,3 +141,41 @@ Anyway i'd recommend to tell nu about your usage
 
     (nu-set-ivy)
     (nu-set-helm)
+
+
+__MENU CONTENT GUIDELINE__
+
+When a function is to be mapped to a menu key,
+it is mapped to the dedicated key if possible.
+For example, a "file" is binded to "f" when possible,
+so inside save menu one can type "f" to call "write-file".
+
+| key | functions              | example                         |
+|-----+------------------------+---------------------------------|
+| a   | bookmark, rectangle    | bookmark-set                    |
+| b   | buffer                 | insert-buffer                   |
+| c   | calc                   | calc                            |
+| d   | directory, dired       |                                 |
+| e   |                        |                                 |
+| f   | file, frame            | write-file                      |
+| g   | agenda                 |                                 |
+| h   |                        |                                 |
+| i   | interactive, list      |                                 |
+| j   | next, down             |                                 |
+| k   | previous, up           |                                 |
+| l   | link                   |                                 |
+| m   | mail                   |                                 |
+| n   |                        |                                 |
+| o   | other, inversed        | other-window, save-some-buffers |
+| p   | macro, package, eval   | kmacro-end-or-call-macro        |
+| q   | ======NO ============  |                                 |
+| r   | recent, register, mark | point-to-register               |
+| s   | string, save           |                                 |
+| t   | tag                    |                                 |
+| u   | undo, url, revert      |                                 |
+| v   | abbrev                 |                                 |
+| w   | window                 | ace-window                      |
+| x   | [reg]exp               |                                 |
+| y   | all                    |                                 |
+| z   | command                | term                            |
+
