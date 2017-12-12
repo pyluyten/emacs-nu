@@ -143,6 +143,7 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
 
    (nu-mode-dkey evil-insert-state-map "g" t ace-window)
    (nu-mode-dkey evil-visual-state-map "g" t ace-window)
+   (nu-mode-dkey evil-emacs-state-map "g" t ace-window)
    (nu-mode-dkey evil-insert-state-map "g" nil nu-goto-prompt)
    (define-key nu-menu-map (kbd "g") 'nu-goto-map)
 

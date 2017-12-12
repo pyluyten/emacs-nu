@@ -7,7 +7,10 @@
   :group 'editing-basics
   :group 'emulations)
 
-(defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
+;; nu-prompt for keymap : the main prompter
+;; default to which key,
+;; light-prompt offers to switch to completion or full prompt
+(defalias 'nu-prompt-for-keymap 'nu-which-key-prompt-for-keymap)
 
 (defalias 'nu-full-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
 

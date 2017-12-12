@@ -359,8 +359,8 @@ If no argument given, copy 1 char."
 (defun nu-trigger-mode-specific-map ()
   (interactive)
   (which-key-mode 1)
-  (define-key nu-keymap (kbd "C-c") nil)
-  (run-with-timer 5 nil 'define-key nu-keymap (kbd "C-c") 'nu-copy-prompt)
+  (define-key evil-insert-state-map (kbd "C-c") nil)
+  (run-with-timer 5 nil 'define-key evil-insert-state-map (kbd "C-c") 'nu-copy-prompt)
   (setq unread-command-events
 	(listify-key-sequence "\C-c")))
 
