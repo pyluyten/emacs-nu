@@ -151,7 +151,7 @@ For example, a "file" is binded to "f" when possible,
 so inside save menu one can type "f" to call "write-file".
 
 | key | functions              | example                         |
-|-----+------------------------+---------------------------------|
+|-----|------------------------|---------------------------------|
 | a   | bookmark, rectangle    | bookmark-set                    |
 | b   | buffer                 | insert-buffer                   |
 | c   | calc                   | calc                            |

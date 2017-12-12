@@ -135,6 +135,7 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
    (define-key nu-menu-map (kbd "s") 'nu-save-map)
 
    (define-key evil-insert-state-map (kbd "C-d") 'nu-M-x)
+   (define-key evil-visual-state-map (kbd "C-d") 'nu-M-x)
    (define-key evil-insert-state-map (kbd "M-d") 'nu-do-prompt)
 
    (nu-mode-dkey evil-insert-state-map "f" t nu-search)
