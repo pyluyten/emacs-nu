@@ -72,9 +72,9 @@ This documentation does cover nu-mode and nu-state, but you should also consider
 evil is an emulation of vim. it makes emacs behave like vim.
 spacemacs does like evil, and adds tons of stuff, sometimes at a cost.
 
-ergoemacs is not modal. It hopes to makes non modal editing possible, efficient. So it does rebinds most common emacs commands in order to make keybindings fine enough.
+ergoemacs is a different approach : it is an ergonomic keybinding for emacs. Not modal. It hopes to makes non modal editing possible, efficient. So it does rebinds most common emacs commands in order to make keybindings fine enough.
 
-nu-state looks like nu-mode, but there is a vim like mode. it is based on evil.
+nu-state is based on evil.
 the normal state is like vim, and by default each buffer opens in normal state.
 so, like vim. visual mode is also the same. but
  * like spacemacs, nu offers a space key to open menus. Except these menus
@@ -84,7 +84,7 @@ so, like vim. visual mode is also the same. but
 
 nu-mode is different than nu-state. It is close to ergoemacs. It prefers easy to remember shortcuts (control+c, control+v...) and sort-of menus, which are actually quite powerful since this principle allows to provide quick and easy access to many commands. nu-mode is a mode, and its keymap.
 
-If you use dvorak or bépo, ErgoEmacs might be more adapted.
+If you use dvorak or bépo, ErgoEmacs might be more adapted, or nu-state.
 
 
 @chapter Overview
@@ -181,13 +181,17 @@ Now that you can input text plus navigate, let's examine several alternatives to
 
 Rectangle selection need to invoke the selection prompt : @kbd{Control+a}. Similarly to classic selection, rectangle selection offer a little popup to help the user discovering how to work.
 
+nu-mode uses evil-mode to implement the keybinding. Generally vim keys are not invited to the party, but selection actually authorize vi keys. So for example it's possible while selecting text, to 3w ~ to toggle capitalization up to next 3 words. This specific selection state allows to leverage vim power for selection. (Who needs to input text while selecting?)
+
 Sometimes it is more convenient not to select text, but rather to directly delete some text.
 
 @enumerate
 @item
-Use @kbd{Alt + x} to cut the current line.
+Use @kbd{Alt+x Alt+x} to cut the current line.
 @item
-Use @kbd{Control + j},@kbd{Control + l} to delete backward, forward char. Backspace / Delete are still available.
+Use @kbd{Alt+x} + a vim motion to delete like vim. For example, Alt+x e to delete up to end of word. Numbers are authorized.
+@item
+Backspace / Delete are still available.
 @item
 Use @kbd{Control + u} to delete previous word.
 @item
@@ -199,8 +203,6 @@ As seen above, alternatively, first mark (select) text you want.
 @end enumerate
 
 @section Cut Copy Paste
-
-When no selection is active, use @kbd{Alt + x} to cut current line, or a deletion command since deletions actually cut text (as a reminder : emacs `kill-' commands will copy to kill-ring, while emacs `delete-' commands will not).
 
 Use @kbd{Alt + c} to copy currrent line, or, while a selection is active, copy this selection.
 
@@ -449,9 +451,7 @@ You should not rely on @kbd{Control+x} in its vanilla Emacs meaning, however to 
 
 `Repeat' is invoked from @kbd{Control+Return}. It was hacked to work with prompts : thus, you can repeat a command ran from a prompt. Prefix arguments (numeric-argument, negative-argument) can work : either use standard @kbd{Alt+1}, @kbd{Alt+2} ... shortcuts plus one command. Or, from a prompts, directly type a figure (or, a number) then choose the command (eg, from delete prompt, type @key{3} then invoke kill-word to kill 3 words ; or type @key{2} then @key{3} to input 23). Alternatively, first trigger the argument from standard shortcuts, then call the prompt. What is invoked from the prompt will make use of that argument.
 
-Note that `where-is` function, which sometimes advertises shortcuts, will not work as usual, since a prompt is not a keymap : `where-is` do not know how to invoke @kbd{Control-r} then @kbd{r} to invoke replace-regexp.
-
-Thus for each function accessible from a prompt, an additional shortcut is created, accessible from @kbd{menu} plus the same @kbd{key} than the prompt, in order to make where-is advertise. Hence, if you read `You can run this command with <menu> r k`, please understand, despite it is also true, that you can also run the command with @kbd{Control-r-k}.
+Note that `where-is` function, which sometimes advertises shortcuts, will not work as usual, since a prompt is not a keymap : `where-is` do not know how to invoke @kbd{Control-r} then @kbd{r} to invoke replace-regexp. Thus for each function accessible from a prompt, if you read `You can run this command with <menu> r k`, please understand, despite it is also true, that you can also run the command with @kbd{Control-r-k}.
 
 @node Customization
 @chapter Flavours
@@ -471,8 +471,6 @@ If Emacs is a limited application in time, then it is more difficult to determin
 
 Control mode : menus are not accessed using Control+key, and immediate functions using Alt. It is the opposite. Control keys trigger immediate functions, so for example Control+c to copy, and menus are accessed using Alt+key, like Alt+c for copy menu. This was the first design when nu-mode was developped, because it makes using both Emacs and other applications easy, or because it is easy for fingers. It makes learning nu-mode very easy. It has a drawback however : using this Control-mode flavour for extended time, it becomes frustating to have to use a) either control keys too much or b) constantly the alt key then another key. In other words immediate keys are not easy enough, while menus are actually too easy to reach.
 To enable control mode, throw this in your dot emacs : after the (nu-mode 1), put (nu-set-control-mode).
-
-Modal mode : this work-in-progress flavour is based on evil. The evil normal state is revisited to be bound to nu-mode keys. The insert state should not allow to do much - one has to go back to normal state. In this case do not require and activate (nu-mode). Rather, do require (nu-mode-evil), then activate evil mode.
 
 @chapter Setup
 
@@ -523,12 +521,12 @@ Then add the function to nu-populate-hook
 The hook documentations does provide some conventions.
 
 @section Main keymap & free keys
-If you want to amend nu-mode keymap, amend nu-keymap. It is part of minor-mode-overrind-map-alist.
+If you want to amend nu-mode keymap, amend evil-insert-state-map. Or, you can define-key which are not used by nu-mode.
 
 Free keys are
 @enumerate
 @item @key{Control+c} + somme letter. This is the standard Emacs convention.
-@item @key{Control} or @key{Alt} + punctuation, except $ or ^, as in VI.
+@item @key{Control} or @key{Alt} + punctuation, except $ or ^, as in vi.
 @item @key{Control}+@key{Alt} + anything
 @item @key{Control}+@key{Shift} + anything
 @item @key{Alt}+@key{Shift} + anything
@@ -619,7 +617,7 @@ Either make VI normal-state use the nu-mode paddle.
 (define-key evil-normal-state-map (kbd "k") 'evil-next-line)
 @end lisp
 
-Or, make nu-mode use the VI paddle.
+Or, make nu-mode use the vi paddle.
 
 However i would not recommend working like this. nu-mode is thought to work
 in non-modal, modern editing. It does not need modes.

@@ -3,9 +3,9 @@ __OVERVIEW__
 _nu_ does not propose any shiny new feature in Emacs.
 Rather, it merely changes Emacs interface. But do not worry it's minimal, lightweight, and have poneys.
 
-nu is about menus, but not GUI menus. Yes, rather like spacemacs : "which-key" menu (but there are other prompters than which keys : *Help* buffer, Helm or Ivy work, too)
+nu is about menus, but not GUI menus. Text. Yes, rather like spacemacs : "which-key" menu by default (but there are other available prompters : *Help* buffer, Helm or Ivy work, too)
 Text based menus, allow to discover or simply invoke many commands.
-This is a very powerful system. There is a reason why hydra is a popular package. But since sticky menus are not always useful nu is not based on hydra.)
+This is a very powerful system. There is a reason why hydra is a popular package. (But since sticky menus are not always useful nu is not based on hydra.)
 
 Emacs has prefixes, like Ctrl-x, but not menus.
 Which-key transforms prefixes in menus, so it makes C-x somewhat usable, but what if Emacs native prefixes were wrong?
@@ -41,7 +41,7 @@ so, nu comes with several flavours.
 
 _Flavour 1 : just add nu menus to Emacs_
 
-Actually this flavour is just addind nu menus to your Emacs. It is nice if you want to keep Emacs keybindings or if you already rebind, for example with ErgoEmacs.
+Actually this flavour is just addind nu menus to your Emacs. It is nice if you want to keep Emacs keybindings or if you already rebind, for example with ErgoEmacs. Obviously the drawback is that if menus are too difficult to reach, they might lose their power.
 
 _Flavour 2 : Nu Mode is just a keybinding_
 
@@ -53,16 +53,14 @@ Default is to have alt keys do "immediate" funcs
 So, menus , which are generally not necessary, are invoked using Control key like Control+f to have "Find menu"
 nu mode also allows to have alt keys do menus, and control do immediate func.
 This is compabilble with today's conventiosn (conrol+c copy, control+v find and so on)
-
+Technically nu mode is now based on evil.
 
 _Flavour 3 : Nu State is based on evil_
 
-
+nu state does preserve vim keys but adds some alt keys (y=copy, p=paste, d=cut, f=find)
 So, vim states (normal, insert, visual) are used. Command state is available but not useful.
-It does preserve vim keys but adds some alt keys
-(y=copy, p=paste, d=cut, f=find)
 
-Some alt keys trigger immeidate func (eg to switch windows without leaving home row), some trigger menus
+Some alt keys trigger immediate func (eg to switch windows without leaving home row), some trigger menus.
 
 _INSTALLATION_
 
@@ -77,11 +75,13 @@ Nu-mode is in Melpa. So it's the usual deal.
     (add-to-list 'package-archives
     '("melpa" . "https://melpa.org/packages") t)
  
- 
+
 
 Then, M-x package-list-packages, then search for nu-mode.
 Finally add this to your init.el.
 
+You can also install git repo but then you're a big boy and do not need
+instructions, do you?
 
 
 _NO KEYMAP : JUST BIND MENUS TO CONTROL-C._
