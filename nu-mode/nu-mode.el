@@ -247,6 +247,8 @@ Technically this function activates evil-mode, but not vi bindings."
 	(evil-mode)
         (nu-initialize)
         (setq evil-default-state 'insert)
+	(setq evil-emacs-state-modes nil)
+	(setq evil-motion-state-modes nil)
 	(nu-restore-default-keymap)
 
         (if nu-show-welcome-screen
