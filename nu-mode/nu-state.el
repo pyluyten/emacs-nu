@@ -36,7 +36,7 @@
     (concat
       (propertize "\n Welcome to nu-state\n\n" 'face 'bold)
       " This screen does provide some help to use nu-state.\n It is shown at startup.\n"
-      " Enter any key to quit this prompt or "(propertize "Space" 'face 'nu-face-shortcut)
+      " Enter any key to quit this prompt or "(propertize "SPC" 'face 'nu-face-shortcut)
       " to obtain the cheat sheet."
       "\n To disable this screen, put this in your init file\n\n"
         (propertize " (require 'nu-state)\n" 'face 'italic)
@@ -44,9 +44,9 @@
       "\n\n To obtain Help, use "
       (propertize "Control+h" 'face 'nu-face-shortcut)
       "\n For example, to obtain a Cheat Sheet, use "
-      (propertize "Control+h Space" 'face 'nu-face-shortcut)
+      (propertize (substitute-command-keys "\\[nu-cheat-sheet]") 'face 'nu-face-shortcut)
       "\n Or press ² at any time.\n To enter a command, use "
-      (propertize "Alt+x" 'face 'nu-face-shortcut)
+      (propertize (substitute-command-keys "\\[nu-M-x]") 'face 'nu-face-shortcut)
       " like in vanilla Emacs)."))
   (setq answer (read-key ""))
   (lv-delete-window)

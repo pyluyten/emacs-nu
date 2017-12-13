@@ -411,10 +411,10 @@ As in nu-keymap, the user owns the punctation.")
 (defun nu-help-prompt ()
   (interactive)
   (lv-message
-    (concat
+     (concat
       (propertize "\n Welcome to nu-mode\n\n" 'face 'bold)
       " This screen does provide some help to use nu-mode.\n It is shown at startup.\n"
-      " Enter any key to quit this prompt or "(propertize "Space" 'face 'nu-face-shortcut)
+      " Enter any key to quit this prompt or "(propertize "SPC" 'face 'nu-face-shortcut)
       " to obtain the cheat sheet."
       "\n To disable this screen, put this in your init file\n\n"
         (propertize " (require 'nu-mode)\n" 'face 'italic)
@@ -423,12 +423,11 @@ As in nu-keymap, the user owns the punctation.")
       "\n\n To obtain Help, use "
       (propertize "Control+h" 'face 'nu-face-shortcut)
       "\n For example, to obtain a Cheat Sheet, use "
-      (propertize "Control+h Space" 'face 'nu-face-shortcut)
+      (propertize (substitute-command-keys "\\[nu-cheat-sheet]") 'face 'nu-face-shortcut)
       "\n\n To enter a command (M-x in vanilla Emacs), use "
-      (propertize "Control+d" 'face 'nu-face-shortcut)
-      " or " (propertize "Alt+d Return" 'face 'nu-face-shortcut)
+      (propertize (substitute-command-keys "\\[nu-M-x]") 'face 'nu-face-shortcut)
       ".\n To quit a command, use "
-      (propertize "Alt+q" 'face 'nu-face-shortcut)))
+      (propertize (substitute-command-keys "\\[keyboard-escape-quit]") 'face 'nu-face-shortcut)))
   (setq answer (read-key ""))
   (lv-delete-window)
   (if (eq answer 32)
