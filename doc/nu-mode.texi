@@ -127,11 +127,11 @@ Prompts are responsive according to mode or text being currently selected : acco
 @end verbatim
 @end cartouche
 
-nu-mode navigation is based on a paddle, an inversed T : while arrows still work, nu-mode relies on @key{Alt} key to navigate. @key{i} @key{j} @key{k} @key{l} go up, left, down, right (previous line, backward char, next line, forward char). If @kbd{Shift} is pressed while moving, this will select or extend selection, as @kbd{Shift} plus arrow does.
+nu-mode navigation is based on a paddle : while arrows still work, nu-mode relies on @key{Alt} key to navigate. By default the paddle is an inversed T : @key{i} @key{j} @key{k} @key{l} go up, left, down, right (previous line, backward char, next line, forward char). If @kbd{Shift} is pressed while moving, this will select or extend selection, as @kbd{Shift} plus arrow does.
 
-If user prefers to use VI like keys to navigate, it is possible to invoke
-@code{(vi-setup-vi-paddle)}
-This function will maintain @key{Alt} to navigate, but @key{h} @key{j} @key{k} @key{l} will have the same meaning as in VI.
+If user prefers to use vi like keys to navigate, it is possible to set
+@code{(setq nu-use-vi-paddle)}
+This variable will maintain @key{Alt} to navigate, but @key{h} @key{j} @key{k} @key{l} will have the same meaning as in vi.
 
 The classic Nu paddle is the same as ErgoEmacs.
 There are several reasons leading to this choice ; the most important being @key{Alt} an easy key to press with the thumb, thus sparing pinky finger. Another obvious reason is that many CUA keys are mainly on the bottom left part of the keyboard, while @kbd{Control} key associated with the paddle, has a specific meaning.
@@ -476,29 +476,26 @@ To enable control mode, throw this in your dot emacs : after the (nu-mode 1), pu
 
 As ususal with Emacs, customization comes down at the very first usage. So even before to describe edition, customization has to be mentioned. There is not a single defcustom inside nu-mode. All customization is to be done in other ways.
 
-@section I prefer VI keys for basic movement
+@section I prefer vi keys for basic movement
 
 Below code will make h j k l behave like like VI. Beggining of line become i.
 
 @lisp
-(nu-setup-vi-paddle)
+(setq nu-use-vi-paddle)
 @end lisp
 
 @section I don't like the Alt modifier for the paddle
 While it is easy (simply bind Control+ [ijkluo] to the movement, this is not recommended, since alt key is suppose to offer @strong{any function}.
 
 @section Prompts
-If you want prompts to automatically prompt a buffer rather than just a 'nu-light-prompt-for-keymap, which is the default, use :
-
+If you want prompts to automatically prompt a buffer rather than invoking which-key, use : 
 @lisp
   (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
 @end lisp
 
-If you dislike both nu-buffer-prompt-for-keymap and default nu-light-prompt-for-keymap, you might also remove prompt mechanism 
-@lisp (defalias 'nu-prompt-for-keymap 'nu-which-key-prompt-for-keymap)
+Or also 
+@lisp (defalias 'nu-prompt-for-keymap 'nu-completion-prompt-for-keymap)
 @end lisp
-
-This way you maintain the benefit of responsive menus, but meet no more prompts.
 
 Finally you might also write your own prompt. See for example which-key prompt for a simple example.
 

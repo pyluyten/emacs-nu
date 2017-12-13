@@ -1,7 +1,7 @@
 This is nu-mode.info, produced by makeinfo version 6.5 from
 nu-mode.texi.
 
-This manual is for nu-mode (version 0.8.1 of 2017-11-16), a modern
+This manual is for nu-mode (version 0.8.2 of 2017-12-13), a modern
 keybinding for Emacs.  Copyright � 2017 Pierre-Yves Luyten.
 
      Permission is granted to copy, distribute and/or modify this
@@ -40,49 +40,45 @@ This is the manual for nu-mode, a modern keybinding for Emacs.
 
 File: nu-mode.info,  Node: Overview,  Next: Files Buffers Windows,  Prev: Top,  Up: Top
 
-1 Which Emacs to use?
-*********************
+1 What is Emacs by the way
+**************************
 
 Emacs is not a text editor, its an interface, because it allows you to
 control, from one program, others, in order to read mail or run
 commands, manage files and so on.
 
    Actually Emacs is a choice between several interfaces.  Which one
-you need, it all depends on your usage, and your tastes.  This
-documentation does cover nu-mode and nu-state, but you should also
-consider evil, spacemacs, and ergoemacs.
+you need, it all depends on your usage, and your tastes.
+
+   VIM is more popular than Emacs.  This is for a reason : its keys
+are more efficient.  Learning VIM is easier than learning Emacs.
+
+   This documentation does cover nu-mode and nu-state, but you should
+also consider evil, spacemacs, and ergoemacs.
 
    evil is an emulation of vim.  it makes emacs behave like vim.
 spacemacs does like evil, and adds tons of stuff, sometimes at a cost.
 
-   ergoemacs is not modal.  It hopes to makes non modal editing
-possible, efficient.  So it does rebinds most common emacs commands in
-order to make keybindings fine enough.
+   ergoemacs is a different approach : it is an ergonomic keybinding
+for emacs.  Not modal.  It hopes to makes non modal editing possible,
+efficient.  So it does rebinds most common emacs commands in order to
+make keybindings fine enough.
 
-   nu-mode is close to ergoemacs.  It prefers easy to remember
-shortcuts (control+c, control+v...)  and sort of menus.  It is a mode
-and its keymap
+   nu-state is based on evil.  the normal state is like vim, and by
+default each buffer opens in normal state.  so, like vim.  visual mode
+is also the same.  but * like spacemacs, nu offers a space key to open
+menus.  Except these menus follow operator-motion logic.  nu is
+minimal.  * insert state is not vim insert state.  it is a full
+keymap, and actually, it is perfectly usable on its own.
 
-   nu-state looks like nu-mode, but there is a vim like mode.  it is
-based on evil.  The documentation assumes nu-mode, and a dedicated
-chapter explains nu-state.
+   nu-mode is different than nu-state.  It is close to ergoemacs.  It
+prefers easy to remember shortcuts (control+c, control+v...)  and
+sort-of menus, which are actually quite powerful since this principle
+allows to provide quick and easy access to many commands.  nu-mode is
+a mode, and its keymap.
 
-   So, what to use?
-
-   - I am new to Emacs.  I do not know vi.  I'm scared - Use nu-mode -
-I am new to Emacs, but i use vi.  - Use bare evil or nu state.  See
-more below.  - I want Emacs to be as close as possible to notepad.  So
-it would be notepad improved.  - Use nu-mode, and use
-(nu-set-control-mode) - I want Emacs easy, but also ergonomic.  - Use
-nu-mode - I want Emacs features, but i prefer vi editing.  * I want
-shiny rainbows and unicorns.  - Use spacemacs.  * I just want
-something minimal i can customize - Use evil.  - Or, Use nu-state, but
-customize so default state is normal state.  - I want Emacs features,
-like vi editing, but also want non modal editing.  - Use nu-state - I
-want to learn vi but to stay in a non modal editing - Use nu state - I
-often use M-x to run commands, but i want comfortable keys for most
-common operations.  - Use ErgoEmacs.  - I have dvorak or bépo - Use
-ErgoEmacs.
+   If you use dvorak or bépo, ErgoEmacs might be more adapted, or
+nu-state.
 
 2 Overview
 **********
@@ -141,15 +137,16 @@ functions will be available or not.
       I
     J K L
 
-   nu-mode navigation is based on a paddle, an inversed T : while
-arrows still work, nu-mode relies on <Alt> key to navigate.  <i> <j>
-<k> <l> go up, left, down, right (previous line, backward char, next
-line, forward char).  If 'Shift' is pressed while moving, this will
-select or extend selection, as 'Shift' plus arrow does.
+   nu-mode navigation is based on a paddle : while arrows still work,
+nu-mode relies on <Alt> key to navigate.  By default the paddle is an
+inversed T : <i> <j> <k> <l> go up, left, down, right (previous line,
+backward char, next line, forward char).  If 'Shift' is pressed while
+moving, this will select or extend selection, as 'Shift' plus arrow
+does.
 
-   If user prefers to use VI like keys to navigate, it is possible to
-invoke '(vi-setup-vi-paddle)' This function will maintain <Alt> to
-navigate, but <h> <j> <k> <l> will have the same meaning as in VI.
+   If user prefers to use vi like keys to navigate, it is possible to
+set '(setq nu-use-vi-paddle)' This variable will maintain <Alt> to
+navigate, but <h> <j> <k> <l> will have the same meaning as in vi.
 
    The classic Nu paddle is the same as ErgoEmacs.  There are several
 reasons leading to this choice ; the most important being <Alt> an
@@ -218,28 +215,31 @@ features.
 'Control+a'.  Similarly to classic selection, rectangle selection
 offer a little popup to help the user discovering how to work.
 
+   nu-mode uses evil-mode to implement the keybinding.  Generally vim
+keys are not invited to the party, but selection actually authorize vi
+keys.  So for example it's possible while selecting text, to 3w ~ to
+toggle capitalization up to next 3 words.  This specific selection
+state allows to leverage vim power for selection.  (Who needs to input
+text while selecting?)
+
    Sometimes it is more convenient not to select text, but rather to
 directly delete some text.
 
-  1. Use 'Alt + x' to cut the current line.
-  2. Use 'Control + j','Control + l' to delete backward, forward char.
-     Backspace / Delete are still available.
-  3. Use 'Control + u' to delete previous word.
-  4. Use 'Control + $' to delete up to end of line.
-  5. Use 'Control +x' to trigger a delete prompt.  This will offer you
+  1. Use 'Alt+x Alt+x' to cut the current line.
+  2. Use 'Alt+x' + a vim motion to delete like vim.  For example,
+     Alt+x e to delete up to end of word.  Numbers are authorized.
+  3. Backspace / Delete are still available.
+  4. Use 'Control + u' to delete previous word.
+  5. Use 'Control + $' to delete up to end of line.
+  6. Use 'Control +x' to trigger a delete prompt.  This will offer you
      to delete what you want (function, org-node, sentence, ...).
-  6. As seen above, alternatively, first mark (select) text you want.
+  7. As seen above, alternatively, first mark (select) text you want.
 
 2.3 Cut Copy Paste
 ==================
 
-When no selection is active, use 'Alt + x' to cut current line, or a
-deletion command since deletions actually cut text (as a reminder :
-emacs 'kill-' commands will copy to kill-ring, while emacs 'delete-'
-commands will not).
-
-   Use 'Alt + c' to copy currrent line, or, while a selection is
-active, copy this selection.
+Use 'Alt + c' to copy currrent line, or, while a selection is active,
+copy this selection.
 
    Use 'Alt + v' to paste the current clipboard.  Or, you can use
 'Control + v' to invoke an advanced "Paste" prompt.
@@ -561,13 +561,10 @@ argument.
    Note that 'where-is' function, which sometimes advertises
 shortcuts, will not work as usual, since a prompt is not a keymap :
 'where-is' do not know how to invoke 'Control-r' then 'r' to invoke
-replace-regexp.
-
-   Thus for each function accessible from a prompt, an additional
-shortcut is created, accessible from 'menu' plus the same 'key' than
-the prompt, in order to make where-is advertise.  Hence, if you read
-'You can run this command with <menu> r k', please understand, despite
-it is also true, that you can also run the command with 'Control-r-k'.
+replace-regexp.  Thus for each function accessible from a prompt, if
+you read 'You can run this command with <menu> r k', please
+understand, despite it is also true, that you can also run the command
+with 'Control-r-k'.
 
 
 File: nu-mode.info,  Node: Customization,  Next: Integration,  Prev: Advanced Usage,  Up: Top
@@ -608,12 +605,6 @@ keys are not easy enough, while menus are actually too easy to reach.
 To enable control mode, throw this in your dot emacs : after the
 (nu-mode 1), put (nu-set-control-mode).
 
-   Modal mode : this work-in-progress flavour is based on evil.  The
-evil normal state is revisited to be bound to nu-mode keys.  The
-insert state should not allow to do much - one has to go back to
-normal state.  In this case do not require and activate (nu-mode).
-Rather, do require (nu-mode-evil), then activate evil mode.
-
 8 Setup
 *******
 
@@ -622,13 +613,13 @@ usage.  So even before to describe edition, customization has to be
 mentioned.  There is not a single defcustom inside nu-mode.  All
 customization is to be done in other ways.
 
-8.1 I prefer VI keys for basic movement
+8.1 I prefer vi keys for basic movement
 =======================================
 
 Below code will make h j k l behave like like VI. Beggining of line
 become i.
 
-     (nu-setup-vi-paddle)
+     (setq nu-use-vi-paddle)
 
 8.2 I don't like the Alt modifier for the paddle
 ================================================
@@ -639,16 +630,11 @@ is not recommended, since alt key is suppose to offer *any function*.
 8.3 Prompts
 ===========
 
-If you want prompts to automatically prompt a buffer rather than just
-a 'nu-light-prompt-for-keymap, which is the default, use :
-
+If you want prompts to automatically prompt a buffer rather than
+invoking which-key, use :
        (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
 
-   If you dislike both nu-buffer-prompt-for-keymap and default
-nu-light-prompt-for-keymap, you might also remove prompt mechanism
-
-   This way you maintain the benefit of responsive menus, but meet no
-more prompts.
+   Or also
 
    Finally you might also write your own prompt.  See for example
 which-key prompt for a simple example.
@@ -673,13 +659,13 @@ a function which add keybindings to one or more nu-mode menus.
 8.5 Main keymap & free keys
 ===========================
 
-If you want to amend nu-mode keymap, amend nu-keymap.  It is part of
-minor-mode-overrind-map-alist.
+If you want to amend nu-mode keymap, amend evil-insert-state-map.  Or,
+you can define-key which are not used by nu-mode.
 
    Free keys are
   1. <Control+c> + somme letter.  This is the standard Emacs
      convention.
-  2. <Control> or <Alt> + punctuation, except $ or ^, as in VI.
+  2. <Control> or <Alt> + punctuation, except $ or ^, as in vi.
   3. <Control>+<Alt> + anything
   4. <Control>+<Shift> + anything
   5. <Alt>+<Shift> + anything
@@ -815,7 +801,7 @@ want.
      (define-key evil-normal-state-map (kbd "i") 'evil-previous-line)
      (define-key evil-normal-state-map (kbd "k") 'evil-next-line)
 
-   Or, make nu-mode use the VI paddle.
+   Or, make nu-mode use the vi paddle.
 
    However i would not recommend working like this.  nu-mode is
 thought to work in non-modal, modern editing.  It does not need modes.
@@ -1350,15 +1336,15 @@ permit their use in free software.
 Tag Table:
 Node: Top718
 Node: Overview1066
-Node: Files Buffers Windows17717
-Node: Completion19512
-Node: Hacking20014
-Node: Advanced Usage20716
-Node: Customization22661
-Node: Integration27311
-Node: Drawbacks & Limits32375
-Node: Contributing33018
-Node: GNU Free Documentation License33406
+Node: Files Buffers Windows17709
+Node: Completion19504
+Node: Hacking20006
+Node: Advanced Usage20708
+Node: Customization22510
+Node: Integration26614
+Node: Drawbacks & Limits31678
+Node: Contributing32321
+Node: GNU Free Documentation License32709
 
 End Tag Table
 
