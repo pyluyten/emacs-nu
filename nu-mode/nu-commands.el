@@ -45,13 +45,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defun nu-cheat-sheet ()
-"Displays cheat sheet for nu-mode.
-
-This command uses which-key."
-  (interactive)
-  (nu-which-key-prompt-for-keymap nu-keymap))
-
+(defalias 'nu-cheat-sheet 'which-key-show-top-level)
 
 (defun nu-prompt-for-major-mode ()
   "Promt for major mode keymap.
