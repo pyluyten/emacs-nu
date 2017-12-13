@@ -98,12 +98,17 @@ a global minor mode to push a keymap. Also add some hooks to help the user.
     (require 'nu-mode)
     (nu-mode)
 
-if you want to use ijkl paddle rather than default (vi).
-    (nu-set-classic-paddle)
+if you want to use ijkl paddle rather than default (vi),
+use the variable nu-use-vi-paddle.
+If you want control to be like CUA ; and alt keys trigger menus,
+then use variables nu-immediate-key and nu-menu-key.
 
-if you want control to be like CUA ; and alt keys trigger menus
+     (require 'nu-mode)
+     (setq nu-immediate-key "C"
+           nu-menu-key      "M"
+           nu-use-vi-paddle t)
+     (nu-mode)
 
-    (nu-set-control-mode)
 
 _NU-STATE (evil)_
 
@@ -124,14 +129,14 @@ no matter if you use just menus, nu-mode, or nu-state, you have some common cust
 =Prompter=
 Default prompter is which-key
 
-You can refer to which key to customize it.
+You can refer to which-key to customize behaviour like, how long it takes for menu to appear.
+
 Or you can use another prompter
-Other prompter allow more features : "+" to trigger repeat menu , "-" or "1", "2", … to customize universal argument, "?" to run help of command
+Other prompter allow more features : "+" to trigger repeat menu , "-" or "1", "2", … to customize universal argument, "?" to describe a command rather than describing it.
 
     (defalias 'nu-prompt-for-keymap 'nu-light-prompt-for-keymap)
     (defalias 'nu-prompt-for-keymap 'nu-completion-prompt-for-keymap)
     (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
-
 
 =Completion framework=
 
@@ -147,8 +152,10 @@ __MENU CONTENT GUIDELINE__
 
 When a function is to be mapped to a menu key,
 it is mapped to the dedicated key if possible.
-For example, a "file" is binded to "f" when possible,
-so inside save menu one can type "f" to call "write-file".
+
+For example, a "file" command is binded to "f" when possible,
+so inside save menu one can type "f" to call "write-file",
+while inside delete menu "f" will call "delete-file".
 
 | key | functions              | example                         |
 |-----|------------------------|---------------------------------|
