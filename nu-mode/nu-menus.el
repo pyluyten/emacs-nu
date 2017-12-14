@@ -425,7 +425,7 @@ As in nu-keymap, the user owns the punctation.")
       (propertize "Control+h" 'face 'nu-face-shortcut)
       "\n For example, to obtain a Cheat Sheet, use "
       (propertize (substitute-command-keys "\\[nu-cheat-sheet]") 'face 'nu-face-shortcut)
-      "\n\n To enter a command (M-x in vanilla Emacs), use "
+      "\nor press ² at any time.\nTo enter a command (M-x in vanilla Emacs), use "
       (propertize (substitute-command-keys "\\[nu-M-x]") 'face 'nu-face-shortcut)
       ".\n To quit a command, use "
       (propertize (substitute-command-keys "\\[keyboard-escape-quit]") 'face 'nu-face-shortcut)))
