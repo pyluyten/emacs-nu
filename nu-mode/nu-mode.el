@@ -100,7 +100,7 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
    (nu-mode-dkey evil-insert-state-map "z" t undo-tree-undo)
    (nu-mode-dkey evil-insert-state-map "z" nil 'undo-tree-visualize)
 
-   (define-key evil-insert-state-map (kbd "M-e") 'nu-copy-from-above)
+   (define-key evil-insert-state-map (kbd "M-e") 'evil-copy-from-below)
 
    (define-key nu-menu-map (kbd "r") 'nu-replace-map)
    (nu-mode-dkey evil-insert-state-map "r" t replace-regexp)
@@ -109,7 +109,7 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
    (nu-mode-dkey  evil-insert-state-map "t" t split-window-right)
 
    ; y? yes? customize?
-   (define-key evil-insert-state-map (kbd "M-y") 'nu-copy-from-below)
+   (define-key evil-insert-state-map (kbd "M-y") 'evil-copy-from-above)
 
    (nu-mode-dkey evil-insert-state-map "u" nil backward-kill-word)
    (nu-mode-dkey evil-insert-state-map "u" t backward-word)
