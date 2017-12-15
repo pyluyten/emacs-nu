@@ -353,6 +353,7 @@ As in nu-keymap, the user owns the punctation.")
   (define-key nu-open-map "t" 'visit-tags-table)
   (define-key nu-open-map "u" 'browse-url)
   (define-key nu-open-map "v" 'dired-other-window)
+  (define-key nu-open-map "w" 'ibuffer-other-window)
   (define-key nu-open-map "x" 'list-registers)
   (define-key nu-open-map "z" 'customize))
 
