@@ -98,7 +98,7 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
    (nu-mode-dkey evil-insert-state-map "a" nil nu-a-prompt)
 
    (nu-mode-dkey evil-insert-state-map "z" t undo-tree-undo)
-   (nu-mode-dkey evil-insert-state-map "z" nil 'undo-tree-visualize)
+   (nu-mode-dkey evil-insert-state-map "z" nil undo-tree-visualize)
 
    (define-key evil-insert-state-map (kbd "M-e") 'evil-copy-from-below)
 
