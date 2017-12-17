@@ -287,8 +287,8 @@ If region is selected, use this as a search string."
 (defun nu-trigger-mode-specific-map ()
   (interactive)
   (which-key-mode 1)
+  (run-with-timer 5 nil 'define-key evil-insert-state-map (kbd "C-c") (key-binding (kbd "C-c")))
   (define-key evil-insert-state-map (kbd "C-c") nil)
-  (run-with-timer 5 nil 'define-key evil-insert-state-map (kbd "C-c") 'nu-copy-prompt)
   (setq unread-command-events
 	(listify-key-sequence "\C-c")))
 
