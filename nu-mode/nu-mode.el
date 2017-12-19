@@ -111,8 +111,8 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
 
    (nu-mode-dkey  evil-insert-state-map "t" t split-window-right nil)
 
-   ; y? yes? customize?
    (define-key evil-insert-state-map (kbd "M-y") 'evil-copy-from-above)
+   (define-key evil-insert-state-map (kbd "C-y") 'evil-execute-in-normal-state)
 
    ;; u remains as is
    (define-key evil-insert-state-map (kbd "C-u") 'backward-kill-word)
