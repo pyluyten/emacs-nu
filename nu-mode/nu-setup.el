@@ -37,19 +37,13 @@
   ;(define-key evil-insert-state-map nu-del-backward-char-key 'delete-backward-char)
   ;(define-key evil-insert-state-map nu-del-forward-char-key 'delete-forward-char))
 
-  (global-set-key nu-previous-line-binding 'previous-line)
-  (global-set-key nu-backward-char-binding 'backward-char)
-  (global-set-key nu-next-line-binding 'next-line)
-  (global-set-key nu-forward-char-binding 'forward-char)
-  (global-set-key nu-back-to-indentation-binding 'nu-back-to-indentation))
+  (global-set-key (kbd (concat "M-" nu-previous-line-key)) 'previous-line)
+  (global-set-key (kbd (concat "M-" nu-backward-char-key)) 'backward-char)
+  (global-set-key (kbd (concat "M-" nu-next-line-key)) 'next-line)
+  (global-set-key (kbd (concat "M-" nu-forward-char-key)) 'forward-char)
+  (global-set-key (kbd (concat "M-" nu-back-to-indentation-key)) 'back-to-indentation))
 
 (defun nu-setup-classic-paddle ()
- (setq nu-previous-line-binding (kbd "M-i"))
- (setq nu-backward-char-binding (kbd "M-j"))
- (setq nu-next-line-binding (kbd "M-k"))
- (setq nu-forward-char-binding (kbd "M-l"))
- (setq nu-back-to-indentation-binding (kbd "M-h"))
-
  (setq nu-previous-line-key "i")
  (setq nu-backward-char-key "j")
  (setq nu-next-line-key "k")
@@ -69,12 +63,6 @@
 ;;
 
 (defun nu-setup-vi-paddle ()
- (setq nu-previous-line-binding (kbd "M-k"))
- (setq nu-backward-char-binding (kbd "M-h"))
- (setq nu-next-line-binding (kbd "M-j"))
- (setq nu-forward-char-binding (kbd "M-l"))
- (setq nu-back-to-indentation-binding (kbd "M-i"))
-
  (setq nu-previous-line-key "k")
  (setq nu-backward-char-key "h")
  (setq nu-next-line-key "j")
