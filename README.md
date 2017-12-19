@@ -43,23 +43,27 @@ so, nu comes with several flavours.
 
 _Flavour 1 : just add nu menus to Emacs_
 
-Actually this flavour is just addind nu menus to your Emacs. It is nice if you want to keep Emacs keybindings or if you already rebind, for example with ErgoEmacs. Obviously the drawback is that if menus are too difficult to reach, they might lose their power.
+Actually this flavour is just adding nu menus to your Emacs. It is nice if you want to keep Emacs keybindings or if you already rebind, for example with ErgoEmacs. Obviously the drawback is that if menus are too difficult to reach, they might lose their power.
 
 _Flavour 2 : Nu Mode is just a keybinding_
 
 It's a modern keybinding (c =copy, v=insert, x=cut, f=find)
 Everything is done in insert mode.
-Hands remain most of time in homerow because of alt keys.
-Paddle is like evil (hjkl) or T-like (ijkl).
+Hands remain most of time in home row because of alt keys.
+Paddle is like evil (hjkl) or invesed T-like (jkil).
 Default is to have alt keys do "immediate" funcs
 So, menus , which are generally not necessary, are invoked using Control key like Control+f to have "Find menu"
 nu mode also allows to have alt keys do menus, and control do immediate func.
-This is compabilble with today's conventiosn (conrol+c copy, control+v find and so on)
-Technically nu mode is now based on evil.
+This is compabilble with today's conventions (conrol+c copy, control+v find and so on)
+
+Technically nu mode is now based on evil. This allows not to reinvet few functions.
+This includes selecting text (like vim selection mode), which is the only modal part of nu mode.
+This also includes a keybinding to run evil-delete, like vi "d" operator to delete any vi motion.
 
 _Flavour 3 : Nu State is based on evil_
 
-nu state does preserve vim keys but adds some alt keys (y=copy, p=paste, d=cut, f=find)
+nu state is vim.
+Well, nu state does preserve vim keys but adds some alt keys (y=copy, p=paste, d=cut, f=find)
 So, vim states (normal, insert, visual) are used. Command state is available but not useful.
 
 Some alt keys trigger immediate func (eg to switch windows without leaving home row), some trigger menus.
@@ -109,6 +113,7 @@ then use variables nu-immediate-key and nu-menu-key.
            nu-use-vi-paddle t)
      (nu-mode)
 
+nu-mode also has other customization, see below.
 
 _NU-STATE (evil)_
 
@@ -130,7 +135,7 @@ no matter if you use just menus, nu-mode, or nu-state, you have some common cust
 Default prompter is which-key
 
 You can refer to which-key to customize behaviour like, how long it takes for menu to appear.
-
+Actually which-key already offers a lot of options.
 Or you can use another prompter
 Other prompter allow more features : "+" to trigger repeat menu , "-" or "1", "2", … to customize universal argument, "?" to describe a command rather than describing it.
 
@@ -143,19 +148,23 @@ Other prompter allow more features : "+" to trigger repeat menu , "-" or "1", "2
 Things should be ok if you just enable your ido / helm / ivy or whatever
 Anyway i'd recommend to tell nu about your usage
 
-
     (nu-set-ivy)
     (nu-set-helm)
 
 
 __MENU CONTENT GUIDELINE__
 
+Menus are like operators : *save*; *open*, *new*, ...
+Menus content are like objects : *buffer*, *file*, *frame*, ...
+
+emacs nu tries to dedicated keys to these objects.
 When a function is to be mapped to a menu key,
 it is mapped to the dedicated key if possible.
 
 For example, a "file" command is binded to "f" when possible,
 so inside save menu one can type "f" to call "write-file",
 while inside delete menu "f" will call "delete-file".
+
 
 | key | functions              | example                         |
 |-----|------------------------|---------------------------------|
@@ -175,7 +184,7 @@ while inside delete menu "f" will call "delete-file".
 | n   |                        |                                 |
 | o   | other, inversed        | other-window, save-some-buffers |
 | p   | macro, package, eval   | kmacro-end-or-call-macro        |
-| q   | ======NO ============  |                                 |
+| q   | ====== NOT BINDED ====================================== |
 | r   | recent, register, mark | point-to-register               |
 | s   | string, save           |                                 |
 | t   | tag                    |                                 |
