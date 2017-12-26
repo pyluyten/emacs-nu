@@ -90,10 +90,16 @@ You can also install git repo but then you're a big boy and do not need
 instructions, do you?
 
 
-_NO KEYMAP : JUST BIND MENUS TO CONTROL-C._
+_NO KEYMAP : JUST BIND MENUS
 
     (require 'nu-mode)
-    (nu-fill-mode-map-with-nu-menus)
+    (nu-initialize)
+	(nu-populate-prompters)
+	
+  Then bind the key or sequence you want to nu-menu-map, like
+
+    (global-set-key (kbd "<menu>") 'nu-prompt-for-menus)
+    (global-set-key (kbd "C-c") 'nu-prompt-for-menus)
 
 _NU-MODE_
 

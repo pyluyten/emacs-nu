@@ -25,7 +25,7 @@
 (require 'evil)
 (require 'iso-transl)
 
-(defmacro nu-mode-dkey (keymap letter immediate def menu)
+(defmacro nu-mode-dkey (keymap letter immediate def)
   "define-key modifier+letter to invoke def on keymap
 
 modifier is nu-immediate-key if immediate is t,
@@ -36,47 +36,50 @@ TODO : in case of menu, the associated -map needs to be lookup."
     `(progn
        (define-key ,keymap (kbd (concat
 			       (if ,immediate nu-immediate-key
-				              nu-menu-key) "-" ,letter)) ',def)
-       (unless ,immediate
-         (if ,menu
-	     (define-key nu-menu-map ,letter ',def)))))
+				              nu-menu-key) "-" ,letter)) ',def)))
 
-(defun nu-fill-mode-map-with-nu-menus ()
-  "Make Control+c <key> call the associated nu menu.
+(defun nu-populate-menu-map ()
+  "Fill nu menu map. Then a key has to be bound to nu menu map.
 
-This func is not called by nu-mode nor nu-state.
-This is designed to be used in vanilla Emacs, or ErgoEmacs."
+This may allow where-is to know where to find functions."
+
+   (define-key nu-menu-map "a" 'nu-a-map)
+   (define-key nu-menu-map "b" 'nu-bold-map)
+   (define-key nu-menu-map "f" 'nu-find-map)
+   (define-key nu-menu-map "g" 'nu-goto-map)
+   (define-key nu-menu-map "h" 'help-map)
+   (define-key nu-menu-map "n" 'nu-new-map)
+   (define-key nu-menu-map "o" 'nu-open-map)
+   (define-key nu-menu-map "p" 'nu-print-map)
+   (define-key nu-menu-map "q" 'nu-quit-map)
+   (define-key nu-menu-map "r" 'nu-replace-map)
+   (define-key nu-menu-map "s" 'nu-save-map)
+   (define-key nu-menu-map "v" 'nu-insert-map)
+   (define-key nu-menu-map "w" 'nu-window-map)
+   (define-key nu-menu-map "x" 'nu-delete-map))
+
+(defun nu-populate-prompters ()
+  "Fill prompters map."
+
+   (define-key nu-menu-map "a" 'nu-a-prompt)
+   (define-key nu-menu-map "b" 'nu-bold-prompt)
+   (define-key nu-menu-map "f" 'nu-find-prompt)
+   (define-key nu-menu-map "g" 'nu-goto-prompt)
+   (define-key nu-menu-map "h" 'help-map)
+   (define-key nu-menu-map "n" 'nu-new-prompt)
+   (define-key nu-menu-map "o" 'nu-open-prompt)
+   (define-key nu-menu-map "p" 'nu-print-prompt)
+   (define-key nu-menu-map "q" 'nu-quit-prompt)
+   (define-key nu-menu-map "r" 'nu-replace-prompt)
+   (define-key nu-menu-map "s" 'nu-save-prompt)
+   (define-key nu-menu-map "v" 'nu-insert-prompt)
+   (define-key nu-menu-map "w" 'nu-window-prompt)
+   (define-key nu-menu-map "x" 'nu-delete-prompt))
+
+(defun nu-prompt-for-menus ()
+  "Prompt for nu menu map."
   (interactive)
-
-  (nu-populate-print)
-  (nu-populate-quit)
-  (nu-populate-delete)
-  (nu-populate-bold-map)
-  (nu-populate-insert-map)
-  (nu-populate-save-map)
-  (nu-populate-new-map)
-  (nu-populate-a-map)
-  (nu-populate-open-map)
-  (nu-populate-goto-map)
-  (nu-populate-find-map)
-  (nu-populate-replace)
-
-  (global-set-key (kbd "C-c a") 'nu-a-prompt)
-  (global-set-key (kbd "C-c b") 'nu-bold-prompt)
-  (global-set-key (kbd "C-c c") 'nu-copy-prompt)
-  (global-set-key (kbd "C-c d") 'nu-do-prompt)
-  (global-set-key (kbd "C-c f") 'nu-find-prompt)
-  (global-set-key (kbd "C-c g") 'nu-goto-prompt)
-  (global-set-key (kbd "C-c n") 'nu-new-prompt)
-  (global-set-key (kbd "C-c o") 'nu-open-prompt)
-  (global-set-key (kbd "C-c p") 'nu-print-prompt)
-  (global-set-key (kbd "C-c q") 'nu-quit-prompt)
-  (global-set-key (kbd "C-c r") 'nu-replace-prompt)
-  (global-set-key (kbd "C-c s") 'nu-replace-prompt)
-  (global-set-key (kbd "C-c v") 'nu-save-prompt)
-  (global-set-key (kbd "C-c w") 'nu-window-prompt)
-  (global-set-key (kbd "C-c x") 'nu-delete-prompt)
-  (global-set-key (kbd "C-c z") 'undo-tree-visualize))
+  (nu-prompt-for-keymap nu-menu-map))
 
 (defun nu-restore-default-keymap ()
   "Populate nu keymap with defaults."
@@ -85,6 +88,8 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
    ; <menu> is not a modifier. We need a map
    ;; so features like which-key still work fine
    (define-key evil-insert-state-map (kbd "<menu>") nu-menu-map)
+   (nu-populate-menu-map)
+
    (define-key evil-insert-state-map (kbd "²") evil-insert-state-map)
    (define-key evil-insert-state-map (kbd "<escape>") 'keyboard-escape-quit)
 
@@ -96,20 +101,18 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
        (nu-setup-vi-paddle)
        (nu-setup-classic-paddle))
 
-   (define-key nu-menu-map (kbd "a") 'nu-a-map)
-   (nu-mode-dkey evil-insert-state-map "a" t evil-visual-line nil)
-   (nu-mode-dkey evil-insert-state-map "a" nil nu-a-prompt nil)
+   (nu-mode-dkey evil-insert-state-map "a" t evil-visual-line)
+   (nu-mode-dkey evil-insert-state-map "a" nil nu-a-prompt)
 
-   (nu-mode-dkey evil-insert-state-map "z" t undo-tree-undo nil)
-   (nu-mode-dkey evil-insert-state-map "z" nil undo-tree-visualize nil)
+   (nu-mode-dkey evil-insert-state-map "z" t undo-tree-undo)
+   (nu-mode-dkey evil-insert-state-map "z" nil undo-tree-visualize)
 
    (define-key evil-insert-state-map (kbd "M-e") 'evil-copy-from-below)
 
-   (define-key nu-menu-map (kbd "r") 'nu-replace-map)
-   (nu-mode-dkey evil-insert-state-map "r" t replace-regexp nil)
-   (nu-mode-dkey evil-insert-state-map "r" nil nu-replace-prompt nil)
+   (nu-mode-dkey evil-insert-state-map "r" t replace-regexp)
+   (nu-mode-dkey evil-insert-state-map "r" nil nu-replace-prompt)
 
-   (nu-mode-dkey  evil-insert-state-map "t" t split-window-right nil)
+   (nu-mode-dkey  evil-insert-state-map "t" t split-window-right)
 
    (define-key evil-insert-state-map (kbd "M-y") 'evil-copy-from-above)
    (define-key evil-insert-state-map (kbd "C-y") 'evil-execute-in-normal-state)
@@ -122,35 +125,29 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
    ;; o remains as is no matter cua or ergonomic.
    (define-key evil-insert-state-map (kbd "C-o") 'nu-open-prompt)
    (define-key evil-visual-state-map (kbd "C-o") 'nu-open-prompt)
-   (define-key nu-menu-map (kbd "o") 'nu-open-map)
    (define-key evil-insert-state-map (kbd "M-o") 'forward-word)
 
-   (nu-mode-dkey evil-insert-state-map "p" t universal-argument nil)
-   (define-key nu-menu-map (kbd "p") 'nu-print-map)
-   (nu-mode-dkey evil-insert-state-map "p" nil nu-print-prompt nil)
+   (nu-mode-dkey evil-insert-state-map "p" t universal-argument)
+   (nu-mode-dkey evil-insert-state-map "p" nil nu-print-prompt)
    (define-key universal-argument-map (kbd "M-p") 'universal-argument-more)
 
-   (nu-mode-dkey evil-insert-state-map "q" t keyboard-escape-quit nil)
-   (define-key nu-menu-map (kbd "q") 'nu-quit-map)
-   (nu-mode-dkey evil-insert-state-map "q" nil nu-quit-prompt nil)
+   (nu-mode-dkey evil-insert-state-map "q" t keyboard-escape-quit)
+   (nu-mode-dkey evil-insert-state-map "q" nil nu-quit-prompt)
 
-   (nu-mode-dkey evil-insert-state-map "s" t save-buffer nil)
-   (nu-mode-dkey evil-insert-state-map "s" nil nu-save-prompt nil)
-   (define-key nu-menu-map (kbd "s") 'nu-save-map)
+   (nu-mode-dkey evil-insert-state-map "s" t save-buffer)
+   (nu-mode-dkey evil-insert-state-map "s" nil nu-save-prompt)
 
    (define-key evil-insert-state-map (kbd "C-d") 'nu-M-x)
    (define-key evil-visual-state-map (kbd "C-d") 'nu-M-x)
    (define-key evil-insert-state-map (kbd "M-d") 'nu-do-prompt)
 
-   (nu-mode-dkey evil-insert-state-map "f" t nu-search nil)
-   (nu-mode-dkey evil-insert-state-map "f" nil nu-find-prompt nil)
-   (define-key nu-menu-map (kbd "f") 'nu-find-map)
+   (nu-mode-dkey evil-insert-state-map "f" t nu-search)
+   (nu-mode-dkey evil-insert-state-map "f" nil nu-find-prompt)
 
-   (nu-mode-dkey evil-insert-state-map "g" t ace-window nil)
-   (nu-mode-dkey evil-visual-state-map "g" t ace-window nil)
-   (nu-mode-dkey evil-emacs-state-map "g" t ace-window nil)
-   (nu-mode-dkey evil-insert-state-map "g" nil nu-goto-prompt nil)
-   (define-key nu-menu-map (kbd "g") 'nu-goto-map)
+   (nu-mode-dkey evil-insert-state-map "g" t ace-window)
+   (nu-mode-dkey evil-visual-state-map "g" t ace-window)
+   (nu-mode-dkey evil-emacs-state-map "g" t ace-window)
+   (nu-mode-dkey evil-insert-state-map "g" nil nu-goto-prompt)
 
    ; C-h is help-map. Keep this.
    ; but override some
@@ -160,7 +157,6 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
 
    ; SPC calls evil-insert-state-map. With which-key it's a CheatSheet.
    (define-key help-map (kbd "<SPC>") 'nu-cheat-sheet)
-   (define-key nu-menu-map (kbd "h") 'help-map)
 
    ; C-m stands for enter.
    (define-key evil-insert-state-map (kbd "M-m") 'newline-and-indent)
@@ -169,29 +165,25 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
    ;; wxcvbn
    ;;
 
-   (nu-mode-dkey evil-insert-state-map "w" t nu-quit-document nil)
-   (define-key nu-menu-map (kbd "w") 'nu-window-map)
-   (nu-mode-dkey evil-insert-state-map "w" nil nu-window-prompt nil)
+   (nu-mode-dkey evil-insert-state-map "w" t nu-quit-document)
+   (nu-mode-dkey evil-insert-state-map "w" nil nu-window-prompt)
  
-   (nu-mode-dkey evil-insert-state-map "x" nil nu-delete-prompt nil)
-   (nu-mode-dkey evil-insert-state-map "x" t evil-delete nil)
-   (nu-mode-dkey evil-normal-state-map "x" t evil-delete nil)
-   (define-key nu-menu-map (kbd "x") 'nu-delete-prompt)
+   (nu-mode-dkey evil-insert-state-map "x" nil nu-delete-prompt)
+   (nu-mode-dkey evil-insert-state-map "x" t evil-delete)
+   (nu-mode-dkey evil-normal-state-map "x" t evil-delete)
 
-   (nu-mode-dkey evil-insert-state-map "c" nil nu-copy-prompt nil)
-   (nu-mode-dkey evil-insert-state-map "c" t nu-copy-region-or-line nil)
-   (nu-mode-dkey evil-normal-state-map "c" t nu-copy-region-or-line nil)
+   (nu-mode-dkey evil-insert-state-map "c" nil nu-copy-prompt)
+   (nu-mode-dkey evil-insert-state-map "c" t nu-copy-region-or-line)
+   (nu-mode-dkey evil-normal-state-map "c" t nu-copy-region-or-line)
 
-   (nu-mode-dkey evil-insert-state-map "v" nil nu-insert-prompt nil)
-   (nu-mode-dkey evil-insert-state-map "v" t yank nil)
-   (define-key nu-menu-map (kbd "v") 'nu-insert-map)
+   (nu-mode-dkey evil-insert-state-map "v" nil nu-insert-prompt)
+   (nu-mode-dkey evil-insert-state-map "v" t yank)
 
-   (nu-mode-dkey evil-insert-state-map "b" t nu-bold nil)
-   (define-key nu-menu-map (kbd "b") 'nu-bold-map)
-   (nu-mode-dkey evil-insert-state-map "b" nil nu-bold-prompt nil)
+   (nu-mode-dkey evil-insert-state-map "b" t nu-bold)
+   (nu-mode-dkey evil-insert-state-map "b" nil nu-bold-prompt)
 
-   (nu-mode-dkey evil-insert-state-map "n" t nu-new-empty-buffer nil)
-   (nu-mode-dkey evil-insert-state-map "n" nil nu-new-prompt nil)
+   (nu-mode-dkey evil-insert-state-map "n" t nu-new-empty-buffer)
+   (nu-mode-dkey evil-insert-state-map "n" nil nu-new-prompt)
 
    ;;
    ;; ^ $ up down prior next spc backspace
@@ -207,6 +199,22 @@ This is designed to be used in vanilla Emacs, or ErgoEmacs."
 
    (define-key evil-insert-state-map (kbd "M-<SPC>") 'scroll-up)
    (define-key evil-insert-state-map (kbd "M-<backspace>") 'scroll-down))
+
+(defun nu-populate-all-menus ()
+"populate all menus"
+	(nu-populate-print)
+	(nu-populate-quit)
+	(nu-populate-delete)
+	(nu-populate-bold-map)
+	(nu-populate-insert-map)
+	(nu-populate-save-map)
+	(nu-populate-new-map)
+	(nu-populate-a-map)
+	(nu-populate-open-map)
+	(nu-populate-goto-map)
+	(nu-populate-find-map)
+	(nu-populate-replace)
+        (nu-populate-window))
 
 (defun nu-initialize ()
 "Initialize nu,
@@ -225,18 +233,7 @@ yeah like spacemacs."
 
         ; populate all prompts
 	; so all maps are defined
-	(nu-populate-print)
-	(nu-populate-quit)
-	(nu-populate-delete)
-	(nu-populate-bold-map)
-	(nu-populate-insert-map)
-	(nu-populate-save-map)
-	(nu-populate-new-map)
-	(nu-populate-a-map)
-	(nu-populate-open-map)
-	(nu-populate-goto-map)
-	(nu-populate-find-map)
-	(nu-populate-replace))
+        (nu-populate-all-menus))
 
 
   (defun nu-visual-block ()
