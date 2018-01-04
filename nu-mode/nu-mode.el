@@ -169,7 +169,7 @@ This may allow where-is to know where to find functions."
    (nu-mode-dkey evil-insert-state-map "w" nil nu-window-prompt)
  
    (nu-mode-dkey evil-insert-state-map "x" nil nu-delete-prompt)
-   (nu-mode-dkey evil-insert-state-map "x" t evil-delete)
+   (nu-mode-dkey evil-insert-state-map "x" t nu-cut-region-or-line)
    (nu-mode-dkey evil-normal-state-map "x" t evil-delete)
 
    (nu-mode-dkey evil-insert-state-map "c" nil nu-copy-prompt)
