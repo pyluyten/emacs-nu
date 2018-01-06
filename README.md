@@ -167,7 +167,7 @@ emacs nu tries to dedicated keys to these objects.
 When a function is to be mapped to a menu key,
 it is mapped to the dedicated key if possible.
 
-For example, a "file" command is binded to "f" when possible,
+For example, a "file" command is bound to "f" when possible,
 so inside save menu one can type "f" to call "write-file",
 while inside delete menu "f" will call "delete-file".
 
@@ -190,7 +190,7 @@ while inside delete menu "f" will call "delete-file".
 | n   |                        |                                 |
 | o   | other, inversed        | other-window, save-some-buffers |
 | p   | macro, package, eval   | kmacro-end-or-call-macro        |
-| q   | ====== NOT BINDED ====================================== |
+| q   | ====== NOT BOUND ====================================== |
 | r   | recent, register, mark | point-to-register               |
 | s   | string, save           |                                 |
 | t   | tag                    |                                 |
