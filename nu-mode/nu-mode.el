@@ -98,8 +98,8 @@ This may allow where-is to know where to find functions."
    ;; note the paddle is always Alt+keys.
    ;;
    (if nu-use-vi-paddle
-       (nu-setup-vi-paddle)
-       (nu-setup-classic-paddle))
+       (nu-setup-vi-paddle evil-insert-state-map)
+       (nu-setup-classic-paddle evil-insert-state-map))
 
    (nu-mode-dkey evil-insert-state-map "a" t evil-visual-line)
    (nu-mode-dkey evil-insert-state-map "a" nil nu-a-prompt)

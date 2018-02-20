@@ -32,18 +32,18 @@
 ;;
 ;;  both j / k / l also allow to delete
 
-(defun nu-push-paddle-to-keymap ()
-  ;(define-key evil-insert-state-map nu-kill-visual-line-key 'kill-visual-line)
-  ;(define-key evil-insert-state-map nu-del-backward-char-key 'delete-backward-char)
-  ;(define-key evil-insert-state-map nu-del-forward-char-key 'delete-forward-char))
+(defun nu-push-paddle-to-keymap (paddlekeymap)
+  (define-key paddlekeymap nu-kill-visual-line-key 'kill-visual-line)
+  (define-key paddlekeymap nu-del-backward-char-key 'delete-backward-char)
+  (define-key paddlekeymap nu-del-forward-char-key 'delete-forward-char)
 
-  (global-set-key (kbd (concat "M-" nu-previous-line-key)) 'previous-line)
-  (global-set-key (kbd (concat "M-" nu-backward-char-key)) 'backward-char)
-  (global-set-key (kbd (concat "M-" nu-next-line-key)) 'next-line)
-  (global-set-key (kbd (concat "M-" nu-forward-char-key)) 'forward-char)
-  (global-set-key (kbd (concat "M-" nu-back-to-indentation-key)) 'back-to-indentation))
+  (define-key paddlekeymap (kbd (concat "M-" nu-previous-line-key)) 'previous-line)
+  (define-key paddlekeymap (kbd (concat "M-" nu-backward-char-key)) 'backward-char)
+  (define-key paddlekeymap (kbd (concat "M-" nu-next-line-key)) 'next-line)
+  (define-key paddlekeymap (kbd (concat "M-" nu-forward-char-key)) 'forward-char)
+  (define-key paddlekeymap (kbd (concat "M-" nu-back-to-indentation-key)) 'back-to-indentation))
 
-(defun nu-setup-classic-paddle ()
+(defun nu-setup-classic-paddle (paddlekeymap)
  (setq nu-previous-line-key "i")
  (setq nu-backward-char-key "j")
  (setq nu-next-line-key "k")
@@ -54,7 +54,7 @@
  (setq nu-del-backward-char-key (kbd "C-j"))
  (setq nu-del-forward-char-key (kbd "C-l"))
 
- (nu-push-paddle-to-keymap))
+ (nu-push-paddle-to-keymap paddlekeymap))
 
 ;;
 ;; vi paddle
@@ -62,7 +62,7 @@
 ;; in vi paddle this is i (as in "info")
 ;;
 
-(defun nu-setup-vi-paddle ()
+(defun nu-setup-vi-paddle (paddlekeymap)
  (setq nu-previous-line-key "k")
  (setq nu-backward-char-key "h")
  (setq nu-next-line-key "j")
@@ -73,7 +73,7 @@
  (setq nu-del-backward-char-key (kbd "C-k"))
  (setq nu-del-forward-char-key (kbd "C-l"))
 
- (nu-push-paddle-to-keymap))
+ (nu-push-paddle-to-keymap paddlekeymap))
 
 
 ;; framework

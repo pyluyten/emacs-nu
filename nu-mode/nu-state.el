@@ -81,7 +81,7 @@ This includes the paddle."
    ;;
    ;; setup the paddle. see setup.el.
    ;;
-   (nu-setup-vi-paddle)
+   (nu-setup-vi-paddle (current-global-map))
 
    (global-set-key (kbd "M-a") 'evil-normal-state)
    (global-set-key (kbd "M-b") 'backward-word)
