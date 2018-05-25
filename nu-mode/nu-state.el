@@ -67,21 +67,9 @@
   ;; C-c
    (global-set-key (kbd "C-<SPC>") 'nu-trigger-mode-specific-map))
 
-
-
-(defun nu-state-set-alt-func ()
+(defun nu-state-set-alt-func-using-vi-keys ()
  "populate alt keys, with vi disposition, to invoke
-nu specific immediate funcs and menus.
-
-This includes the paddle."
-
-   ;; TODO : see if required here
-   (global-set-key (kbd "<menu>") nu-menu-map)
-
-   ;;
-   ;; setup the paddle. see setup.el.
-   ;;
-   (nu-setup-vi-paddle (current-global-map))
+nu specific immediate funcs and menus."
 
    (global-set-key (kbd "M-a") 'evil-normal-state)
    (global-set-key (kbd "M-b") 'backward-word)
@@ -107,7 +95,51 @@ This includes the paddle."
    (global-set-key (kbd "M-w") 'nu-quit-document) ; menu is space
    (global-set-key (kbd "M-x") 'nu-M-x)
    (global-set-key (kbd "M-y") 'nu-copy-region-or-line) ; menu is space
-   (global-set-key (kbd "M-z") 'nu-quit-prompt)
+   (global-set-key (kbd "M-z") 'nu-quit-prompt))
+
+
+(defun nu-state-set-alt-func-using-notepad-keys ()
+ "populate alt keys, with notepad disposition, to invoke
+nu specific immediate funcs and menus."
+
+   (global-set-key (kbd "M-a") 'evil-normal-state)
+   (global-set-key (kbd "M-b") 'nu-bold-prompt)
+   (global-set-key (kbd "M-c") 'nu-copy-region-or-line)
+   (global-set-key (kbd "M-d") 'nu-M-x)
+   (global-set-key (kbd "M-f") 'nu-find-prompt)
+   (global-set-key (kbd "M-g") 'ace-window) ; menu is rare => space g
+   (global-set-key (kbd "M-h") 'backward-char)
+   (global-set-key (kbd "M-i") 'nu-back-to-indentation)
+   (global-set-key (kbd "M-j") 'next-line)
+   (global-set-key (kbd "M-k") 'previous-line)
+   (global-set-key (kbd "M-l") 'forward-char)
+   (global-set-key (kbd "M-m") 'newline-and-indent)
+   (global-set-key (kbd "M-n") 'nu-new-prompt)
+   (global-set-key (kbd "M-o") 'nu-do-prompt) ; menu is space o
+   (global-set-key (kbd "M-p") 'nu-print-prompt)
+   (global-set-key (kbd "M-q") 'nu-quit-prompt)
+   (global-set-key (kbd "M-r") 'nu-replace-prompt)
+   (global-set-key (kbd "M-s") 'save-buffer) ; menu is rare. space s
+   (global-set-key (kbd "M-t") 'split-window-right)
+   (global-set-key (kbd "M-v") 'nu-insert-prompt)
+   (global-set-key (kbd "M-w") 'nu-quit-document) ; menu is space
+   (global-set-key (kbd "M-x") 'nu-delete-prompt)
+   (global-set-key (kbd "M-z") 'undo-tree-visualize))
+
+(defun nu-state-set-alt-func ()
+ "populate alt keys.
+
+This includes the paddle."
+
+   ;; TODO : see if required here
+   (global-set-key (kbd "<menu>") nu-menu-map)
+
+   ;;
+   ;; setup the paddle. see setup.el : setup h j k l i
+   ;;
+   (nu-setup-vi-paddle (current-global-map))
+
+   (nu-state-set-alt-func-using-vi-keys)
 
    (global-set-key (kbd "M-<SPC>") 'scroll-up)
    (global-set-key (kbd "M-<backspace>") 'scroll-down)

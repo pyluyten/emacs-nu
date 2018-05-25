@@ -1,6 +1,6 @@
-__OVERVIEW__
+# OVERVIEW
 
-_nu_ does not propose any shiny new feature in Emacs.
+**nu** does not propose any shiny new feature in Emacs.
 Rather, it merely changes Emacs interface. But do not worry it's minimal, lightweight, and have poneys.
 
 nu is about menus, but not GUI menus. Text. Yes, rather like spacemacs : "which-key" menu by default (but there are other available prompters : *Help* buffer, Helm or Ivy work, too)
@@ -37,15 +37,15 @@ PADDLE : the shortcuts to move cursor (up down left right).
 IMMEDIATE : an "immediate" binding is a key that directly triggers a command, like "yank"
                             as opposed to "yank menu", which contains several "insertion related" features (insert file; quoted insert and so on)
 
-__FLAVOURS__
+# FLAVOURS
 
 so, nu comes with several flavours.
 
-_Flavour 1 : just add nu menus to Emacs_
+## Flavour 1 : just add nu menus to Emacs
 
 Actually this flavour is just adding nu menus to your Emacs. It is nice if you want to keep Emacs keybindings or if you already rebind, for example with ErgoEmacs. Obviously the drawback is that if menus are too difficult to reach, they might lose their power.
 
-_Flavour 2 : Nu Mode is just a keybinding_
+## Flavour 2 : Nu Mode is just a keybinding
 
 It's a modern keybinding (c =copy, v=insert, x=cut, f=find)
 Everything is done in insert mode.
@@ -60,7 +60,7 @@ Technically nu mode is now based on evil. This allows not to reinvet few functio
 This includes selecting text (like vim selection mode), which is the only modal part of nu mode.
 This also includes a keybinding to run evil-delete, like vi "d" operator to delete any vi motion.
 
-_Flavour 3 : Nu State is based on evil_
+## Flavour 3 : Nu State is based on evil
 
 nu state is vim.
 Well, nu state does preserve vim keys but adds some alt keys (y=copy, p=paste, d=cut, f=find)
@@ -68,7 +68,7 @@ So, vim states (normal, insert, visual) are used. Command state is available but
 
 Some alt keys trigger immediate func (eg to switch windows without leaving home row), some trigger menus.
 
-_INSTALLATION_
+# INSTALLATION
 
 Common for just menus or nu-mode or nu-state
 Install package on melpa
@@ -90,7 +90,7 @@ You can also install git repo but then you're a big boy and do not need
 instructions, do you?
 
 
-_NO KEYMAP : JUST BIND MENUS
+## NO KEYMAP : JUST BIND MENUS
 
     (require 'nu-mode)
     (nu-initialize)
@@ -101,7 +101,7 @@ _NO KEYMAP : JUST BIND MENUS
     (global-set-key (kbd "<menu>") 'nu-prompt-for-menus)
     (global-set-key (kbd "C-c") 'nu-prompt-for-menus)
 
-_NU-MODE_
+## NU-MODE
 
 a global minor mode to push a keymap. Also add some hooks to help the user.
 
@@ -121,7 +121,7 @@ then use variables nu-immediate-key and nu-menu-key.
 
 nu-mode also has other customization, see below.
 
-_NU-STATE (evil)_
+## NU-STATE (evil)
 
 nu state preserves vi keys, but adds alt keys to invoke immediate funcs and some menus.
 for example in vi, d is delete.
@@ -130,14 +130,18 @@ with nu state, both in normal state and insert state, you can use altd for delet
      (require 'nu-state)
      (nu-state)
 
-Nu state cannot be customized yet (appart below)
+So in nu state, to invoke a prompt like _insert_ will leverage the usual vi key for _insert_, which is _p_. This should be good enough for a vimer. But you're a stupid mormon like me, right? so you can use : 
 
+    (require 'nu-state)
+    (nu-state-set-alt-func-using-notepad-keys)
 
-_COMMON CUSTOMIZATIONS_
+This one will set keys so you can have alt+v for insert menu, and more generally notepad like keys to invoke menus. Yeah so now we have a mix of vim notepad and emacs, and this is currently the keymap i'm using. it rocks because vi keys are easy enough for classic operations, then you leverage the usual vim visual mode which rocks, then you have alt+d for invoking function (M-x) which rocks because it's just here (yeah `space space` works, too) then finally for more difficult operations you have the menus with easy mnemonics. So you're a noob but still do black magic.
+
+## COMMON CUSTOMIZATIONS
 
 no matter if you use just menus, nu-mode, or nu-state, you have some common customizations.
 
-=Prompter=
+**Prompter**
 Default prompter is which-key
 
 You can refer to which-key to customize behaviour like, how long it takes for menu to appear.
@@ -149,7 +153,7 @@ Other prompter allow more features : "+" to trigger repeat menu , "-" or "1", "2
     (defalias 'nu-prompt-for-keymap 'nu-completion-prompt-for-keymap)
     (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
 
-=Completion framework=
+**Completion framework**
 
 Things should be ok if you just enable your ido / helm / ivy or whatever
 Anyway i'd recommend to tell nu about your usage
@@ -158,12 +162,12 @@ Anyway i'd recommend to tell nu about your usage
     (nu-set-helm)
 
 
-__MENU CONTENT GUIDELINE__
+# MENU CONTENT EXPLANATION
 
 Menus are like operators : *save*; *open*, *new*, ...
 Menus content are like objects : *buffer*, *file*, *frame*, ...
 
-emacs nu tries to dedicated keys to these objects.
+emacs nu tries to dedicate keys to these objects.
 When a function is to be mapped to a menu key,
 it is mapped to the dedicated key if possible.
 
