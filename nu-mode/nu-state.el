@@ -1,6 +1,6 @@
-;;; nu-mode.el --- Modern Emacs Keybinding
+;;; nu-state.el --- Modern Emacs Keybinding
 ;;; Emacs-Nu is an emacs mode which wants to makes Emacs easier.
-;;; Copyright (C) 2017 Pierre-Yves LUYTEN
+;;; Copyright (C) 2017 2018 Pierre-Yves LUYTEN
 ;;;  
 ;;; This program is free software; you can redistribute it and/or
 ;;; modify it under the terms of the GNU General Public License
@@ -61,7 +61,10 @@
   ;; push the vi keys to open menu;
   ;; use control+o to invoke this menu
   ;; do not shadown native i_C-o.
-   (define-key evil-normal-state-map (kbd "C-o") 'nu-open-prompt)
+ 
+  ; well before Control+o was open, but this breaks vi
+  ; anyway prompts are on space / alt
+  ; (define-key evil-normal-state-map (kbd "C-o") 'nu-open-prompt)
    (define-key evil-emacs-state-map (kbd "C-o") 'nu-open-prompt)
 
   ;; C-c
@@ -83,19 +86,19 @@ nu specific immediate funcs and menus."
    (global-set-key (kbd "M-j") 'next-line)
    (global-set-key (kbd "M-k") 'previous-line)
    (global-set-key (kbd "M-l") 'forward-char)
-   (global-set-key (kbd "M-m") 'newline-and-indent)
+   (global-set-key (kbd "M-m") 'save-buffer)
    (global-set-key (kbd "M-n") 'nu-new-prompt)
-   (global-set-key (kbd "M-o") 'nu-do-prompt)
+   (global-set-key (kbd "M-o") 'nu-open-prompt)
    (global-set-key (kbd "M-p") 'nu-insert-prompt)
    (global-set-key (kbd "M-q") 'nu-print-prompt)
    (global-set-key (kbd "M-r") 'nu-replace-prompt)
-   (global-set-key (kbd "M-s") 'save-buffer) ; menu is rare. space s
+   (global-set-key (kbd "M-s") 'nu-do-prompt)
    (global-set-key (kbd "M-t") 'split-window-right)
    (global-set-key (kbd "M-u") 'undo-tree-visualize)
-   (global-set-key (kbd "M-w") 'nu-quit-document) ; menu is space
+   (global-set-key (kbd "M-w") 'evil-forward-word-begin)
    (global-set-key (kbd "M-x") 'nu-M-x)
-   (global-set-key (kbd "M-y") 'nu-copy-region-or-line) ; menu is space
-   (global-set-key (kbd "M-z") 'nu-quit-prompt))
+   (global-set-key (kbd "M-y") 'nu-copy-prompt)
+   (global-set-key (kbd "M-z") 'nu-quit-document)) ; menu is space
 
 
 (defun nu-state-set-alt-func-using-notepad-keys ()
@@ -178,23 +181,25 @@ Enforces new buffers being insert state."
 
 
   ;; SPACE key
+  ;; TODO : space key should be custoomized
   (setq nu-evil-map (make-sparse-keymap))
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
-  (define-key nu-evil-map "b" 'nu-bold-prompt)
+  (define-key nu-evil-map "c" 'nu-bold-prompt)
   (define-key nu-evil-map "d" 'nu-delete-prompt)
-  (define-key nu-evil-map "e" 'nu-do-prompt)
   (define-key nu-evil-map "f" 'nu-find-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)
   (define-key nu-evil-map "h" 'help-map)
+  (define-key nu-evil-map "m" 'nu-save-prompt)
   (define-key nu-evil-map "n" 'nu-new-prompt)
   (define-key nu-evil-map "o" 'nu-open-prompt)
   (define-key nu-evil-map "p" 'nu-insert-prompt)
   (define-key nu-evil-map "q" 'nu-print-prompt)
   (define-key nu-evil-map "r" 'nu-replace-prompt)
-  (define-key nu-evil-map "s" 'nu-save-prompt)
+  (define-key nu-evil-map "s" 'nu-do-prompt)
+  (define-key nu-evil-map "u" 'undo-tree-visualize)
   (define-key nu-evil-map "w" 'nu-window-prompt)
   (define-key nu-evil-map "y" 'nu-copy-prompt)
-  (define-key nu-evil-map "u" 'undo-tree-visualize)
+  (define-key nu-evil-map "z" 'nu-quit-prompt)
   (define-key nu-evil-map (kbd "<SPC>") 'nu-M-x)
 
   ;;
