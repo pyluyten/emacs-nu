@@ -1,17 +1,25 @@
 ;;;
-;;; Slow Motion : evil adaptation to fit emacs keys
+;;; Slow Motion : evil adaptation to fit emacs environment
 ;;; so slow motion is inverse of https://github.com/emacs-evil/evil-collection
 
 ;;; Changes vs Evil are
 ;;; - keys are consistent w/ emacs keys (eg y to paste or f forward-char)
+;;; - use emacs native func rather than evil- when makes sense
 ;;; - insert state by default excepted fundamentals
-;;; - a custom nu menu based on operator->motion logic 
+;;; - a custom nu menu based on operator->motion logic
+;;;   (this allows to avoid Modifiers even for advanced func like
+;;;    the one usually found in C-x, despite C-x is still available)
 ;;; - 'alt' keys are an additional interface
+;;;   (this proved to be pretty efficient, and alt keys are consistent w/
+;;;    emacs meaning, and anyway original alt feature is no more needed
+;;;    here, and it is still possible not to use alt keys obviously)
 
-;;; see nu-state.el
+;;; see also nu-state.el
 ;;;
 
-;; TODO : maybe k pour delete, d pour x, x devient motion ou insert
+;; TODO
+;;; - x should probably M-x, and X do smthing funky like exec macro or exec prompt
+;;; - space should probably visual state
 
 (require 'nu-state)
 
