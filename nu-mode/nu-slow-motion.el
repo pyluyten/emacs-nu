@@ -295,10 +295,8 @@
              (nu-slow-motion-help-prompt))))
 
   ; default is insert mode, unless you edit text...
-  (setq evil-default-state 'insert)
-  (evil-set-initial-state 'emacs-lisp-mode 'normal)
-  (evil-set-initial-state 'fundamental-mode 'normal)
-  (evil-set-initial-state 'markdown-mode 'normal)
+  (setq evil-default-state 'insert
+      evil-normal-state-modes '(text-mode prog-mode fundamental-mode))
 
   (add-to-list 'evil-insert-state-modes 'Emacs-Lisp)
   (nu-slow-motion-set-keys-a-la-emacs)
