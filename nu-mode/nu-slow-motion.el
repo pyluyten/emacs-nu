@@ -131,15 +131,12 @@
    ;;(define-key evil-normal-state-map "zo" 'evil-open-fold)
    ;;(define-key evil-normal-state-map "zr" 'evil-open-folds)
 
-
-
    ;; MOTION STATE MAP ================================================
    ;; "0" is a special command when called first
    (define-key evil-motion-state-map "a" 'evil-first-non-blank)
    (define-key evil-motion-state-map "A" 'evil-backward-sentence-begin)
    (define-key evil-motion-state-map "b" 'evil-backward-char)
    (define-key evil-motion-state-map "B" 'evil-backward-word-begin)
-   ;(define-key evil-motion-state-map "B" 'evil-window-top)
    (define-key evil-motion-state-map "e" 'evil-end-of-line)
    (define-key evil-motion-state-map "E" 'evil-forward-sentence-begin)
    (define-key evil-motion-state-map "f" 'evil-forward-char)
