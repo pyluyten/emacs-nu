@@ -245,7 +245,7 @@
 
    ;;; Operator-Pending state
 
-   (define-key evil-operator-state-map "a" evil-outer-text-objects-map) ; TODO change this
+   (define-key evil-operator-state-map "o" evil-outer-text-objects-map)
    (define-key evil-operator-state-map "i" evil-inner-text-objects-map)
 
    ;; alt keys
