@@ -311,7 +311,7 @@
   (setq nu-evil-map (make-keymap))
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
   (define-key nu-evil-map "c" 'nu-bold-prompt)
-  (define-key nu-evil-map "d" 'nu-delete-prompt)
+  (define-key nu-evil-map "k" 'nu-delete-prompt)
   (define-key nu-evil-map "s" 'nu-find-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)
   (define-key nu-evil-map "h" 'help-map)
