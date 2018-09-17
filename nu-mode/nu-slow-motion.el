@@ -101,8 +101,9 @@
    (define-key evil-normal-state-map "t" nil)
    (define-key evil-normal-state-map "u" 'undo)
    (define-key evil-normal-state-map "U" 'undo-tree-visualize)
-   (define-key evil-normal-state-map "v" 'evil-scroll-up)
-   (define-key evil-normal-state-map "V" 'evil-scroll-down)
+   (define-key evil-normal-state-map "v" 'evil-visual-char)
+   (define-key evil-normal-state-map "V" 'evil-visual-line)
+   (define-key evil-normal-state-map "C-v" 'evil-visual-block)
    (define-key evil-normal-state-map "w" 'evil-yank)
    (define-key evil-normal-state-map "W" 'evil-yank-line)
    (define-key evil-normal-state-map "x" nu-evil-map)
@@ -111,9 +112,8 @@
    (define-key evil-normal-state-map "Y" 'evil-paste-before)
    (define-key evil-normal-state-map "z" 'evil-substitute)
    (define-key evil-normal-state-map "Z" 'evil-change-whole-line)
-   (define-key evil-normal-state-map (kbd "<SPC>") 'evil-visual-char)
-   (define-key evil-normal-state-map (kbd "S-<SPC>") 'evil-visual-line)
-   (define-key evil-normal-state-map (kbd "C-<SPC>") 'evil-visual-block)
+   (define-key evil-normal-state-map (kbd "<SPC>") 'evil-scroll-down)
+   (define-key evil-normal-state-map (kbd "<DEL>") 'evil-scroll-up)
    (define-key evil-normal-state-map "~" 'evil-invert-char)
    (define-key evil-normal-state-map "\"" 'evil-use-register)
    (define-key evil-normal-state-map "\C-n" 'evil-paste-pop-next)
@@ -245,7 +245,9 @@
      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
 
    ;;; Operator-Pending state
+   ;;; a is beg line. i remains available.
 
+   (define-key evil-operator-state-map "a" nil)
    (define-key evil-operator-state-map "o" evil-outer-text-objects-map)
    (define-key evil-operator-state-map "i" evil-inner-text-objects-map)
    (define-key evil-visual-state-map "o" evil-outer-text-objects-map)
