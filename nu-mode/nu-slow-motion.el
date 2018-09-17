@@ -17,11 +17,9 @@
 ;;; see also nu-state.el
 ;;;
 
-;; TODO
-;;; - x should probably M-x, and X do smthing funky like exec macro or exec prompt
-;;; - space should probably visual state
-;;;  - "a" is a motion for beg-of-line but still stands for "a" ("an" object)
-;;;   need a replacement for this...
+;; FIXME / TODO
+;; - k in visual mode does previous line
+;; - emacs-state does not have a menu
 
 (require 'nu-state)
 
@@ -225,15 +223,8 @@
    ;;(define-key evil-motion-state-map "z." "zz^")
    ;;(define-key evil-motion-state-map "zb" 'evil-scroll-line-to-bottom)
    ;;(define-key evil-motion-state-map "z-" "zb^")
-   ;;(define-key evil-motion-state-map "v" 'evil-visual-char)
-   ;;(define-key evil-motion-state-map "V" 'evil-visual-line)
-   ;;(define-key evil-motion-state-map "\C-v" 'evil-visual-block)
    ;;(define-key evil-motion-state-map "gv" 'evil-visual-restore)
    ;;(define-key evil-motion-state-map (kbd "C-^") 'evil-buffer)
-   ;;(define-key evil-motion-state-map [left] 'evil-backward-char)
-   ;;(define-key evil-motion-state-map [right] 'evil-forward-char)
-   ;;(define-key evil-motion-state-map [up] 'evil-previous-line)
-   ;;(define-key evil-motion-state-map [down] 'evil-next-line)
    ;;(define-key evil-motion-state-map "zl" 'evil-scroll-column-right)
    ;;(define-key evil-motion-state-map [?z right] "zl")
    ;;(define-key evil-motion-state-map "zh" 'evil-scroll-column-left)
