@@ -352,8 +352,6 @@
       evil-normal-state-modes '(text-mode prog-mode fundamental-mode))
 
   (add-to-list 'evil-insert-state-modes 'Emacs-Lisp)
-  (nu-slow-motion-set-keys-a-la-emacs)
-  (global-set-key "²" 'which-key-show-top-level)
 
   ;; SPACE key
   (setq nu-evil-map (make-keymap))
@@ -374,6 +372,10 @@
   (define-key nu-evil-map "w" 'nu-copy-prompt)
   (define-key nu-evil-map "z" 'nu-quit-prompt)
   (define-key nu-evil-map (kbd "<SPC>") 'nu-M-x)
+
+  ;; normal / motion / visual state
+  (nu-slow-motion-set-keys-a-la-emacs)
+  (global-set-key "²" 'which-key-show-top-level)
 
   ;; help map
    (define-key help-map "f" 'nu-describe-function)
