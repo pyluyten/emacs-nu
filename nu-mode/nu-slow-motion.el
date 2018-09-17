@@ -18,8 +18,8 @@
 ;;;
 
 ;; FIXME / TODO
-;; - k in visual mode does previous line
 ;; - emacs-state does not have a menu
+;; - integration has to be removed but then menus will miss
 
 (require 'nu-state)
 
@@ -101,7 +101,7 @@
    (define-key evil-normal-state-map "U" 'undo-tree-visualize)
    (define-key evil-normal-state-map "v" 'evil-visual-char)
    (define-key evil-normal-state-map "V" 'evil-visual-line)
-   (define-key evil-normal-state-map "C-v" 'evil-visual-block)
+   (define-key evil-normal-state-map "\C-v" 'evil-visual-block)
    (define-key evil-normal-state-map "w" 'evil-yank)
    (define-key evil-normal-state-map "W" 'evil-yank-line)
    (define-key evil-normal-state-map "x" nu-evil-map)
