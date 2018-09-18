@@ -85,18 +85,19 @@
    (define-key evil-normal-state-map "L" nil) ; motion
    (define-key evil-normal-state-map "m" 'point-to-register)
    (define-key evil-normal-state-map "M" 'kmacro-start-macro)
-   (define-key evil-normal-state-map "n" 'evil-next-line) ; TODO motion
+   (define-key evil-normal-state-map "n" nil) ; TODO motion
    (define-key evil-normal-state-map "o" 'evil-open-below)
    (define-key evil-normal-state-map "O" 'evil-open-above)
-   (define-key evil-normal-state-map "p" 'nil) ; motion
-   (define-key evil-normal-state-map "P" 'nil) ; motion
+   (define-key evil-normal-state-map "p" nil) ; motion
+   (define-key evil-normal-state-map "P" nil) ; motion
    (define-key evil-normal-state-map "q" 'evil-append)
    (define-key evil-normal-state-map "Q" 'evil-append-line)
    (define-key evil-normal-state-map "r" 'evil-replace)
    (define-key evil-normal-state-map "R" 'evil-search-previous)
    (define-key evil-normal-state-map "s" 'nu-search)
    (define-key evil-normal-state-map "S" 'evil-search-next)
-   (define-key evil-normal-state-map "t" nil)
+   (define-key evil-normal-state-map "t" nil) ; motion
+   (define-key evil-normal-state-map "T" nil) ; motion
    (define-key evil-normal-state-map "u" 'undo)
    (define-key evil-normal-state-map "U" 'undo-tree-visualize)
    (define-key evil-normal-state-map "v" 'evil-visual-char)
@@ -179,7 +180,7 @@
    (define-key evil-motion-state-map "{" 'evil-backward-paragraph)
    (define-key evil-motion-state-map "}" 'evil-forward-paragraph)
    (define-key evil-motion-state-map "#" 'evil-search-word-backward)
-;   (define-key evil-motion-state-map "x#" 'evil-search-unbounded-word-backward)
+   (define-key evil-motion-state-map "x#" 'evil-search-unbounded-word-backward)
    (define-key evil-motion-state-map "%" 'evil-jump-item)
    (define-key evil-motion-state-map "`" 'evil-goto-mark)
    (define-key evil-motion-state-map "'" 'evil-goto-mark-line)
@@ -286,6 +287,7 @@
 
 
    ;; alt keys
+   ;; TODO make menu outside of slowM
    (global-set-key (kbd "M-a") 'nu-new-prompt)
    (global-set-key (kbd "M-b") 'backward-char)
    (global-set-key (kbd "M-c") 'nu-bold-prompt)
@@ -345,7 +347,7 @@
 
   (add-to-list 'evil-insert-state-modes 'Emacs-Lisp)
 
-  ;; SPACE key
+  ;; SPACE key -- long term make this outside of slowM
   (setq nu-evil-map (make-keymap))
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
   (define-key nu-evil-map "c" 'nu-bold-prompt)
