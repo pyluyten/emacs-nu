@@ -17,9 +17,10 @@
 ;;; see also nu-state.el
 ;;;
 
-;; FIXME / TODO
-;; - emacs-state does not have a menu
-;; - integration has to be removed but then menus will miss
+
+(defvar nu-no-emacs-breakage t
+ "If true, do not customize modes, only handle nu-evil-menu.
+  nu-mode or nu-state do not define this variable.")
 
 (require 'nu-state)
 
@@ -334,9 +335,12 @@
 
   ;; which key mode + menus init
   (nu-initialize)
-  (setq nu-use-vi-paddle t)
   (defalias 'nu-prompt-for-keymap 'nu-which-key-prompt-for-keymap)
 
+  ;; no vi paddle
+  (setq nu-use-vi-paddle nil)
+
+  ;; show a warm welcome screen
   (when nu-show-welcome-screen
 	   (add-hook 'emacs-startup-hook '(lambda ()
              (nu-slow-motion-help-prompt))))

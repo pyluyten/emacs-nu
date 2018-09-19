@@ -82,7 +82,8 @@
 (defadvice nu-prepare-for-minibuffer (after nu-prepare-for-minibuffer-ivy-advice ())
   (nu-set-minibuffer-ivy))
 
-(ad-activate 'nu-prepare-for-minibuffer)
+(unless (boundp 'nu-no-emacs-breakage)
+        (ad-activate 'nu-prepare-for-minibuffer))
 
 ;; ivy read advice
 
@@ -97,6 +98,7 @@
 (defadvice ivy-read (before nu-prepare-for-ivy-read-advice ())
   (nu-prepare-for-ivy))
 
-(ad-activate 'ivy-read)
+(unless (boundp 'nu-no-emacs-breakage)
+        (ad-activate 'ivy-read))
 
 (provide 'nu-ivy)
