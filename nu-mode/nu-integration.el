@@ -59,17 +59,20 @@
 ;; Info
 ;;
 
-(define-key Info-mode-map (kbd "j") 'Info-help)
-(define-key Info-mode-map (kbd "h") Info-mode-map)
+(unless (boundp 'nu-no-emacs-breakage)
+        (progn
+             (define-key Info-mode-map (kbd "j") 'Info-help)
+             (define-key Info-mode-map (kbd "h") Info-mode-map)))
 
 ;;
 ;; autocomplete
 ;;
 
-(eval-after-load "auto-complete"
+(unless (boundp 'nu-no-emacs-breakage)
+ (eval-after-load "auto-complete"
   '(progn
      (define-key ac-completing-map nu-next-line-binding 'ac-next)
-     (define-key ac-completing-map nu-previous-line-binding 'ac-previous)))
+     (define-key ac-completing-map nu-previous-line-binding 'ac-previous))))
 
 
 ;;
@@ -77,9 +80,10 @@
 ;;
 
   ; the classical one!
-(eval-after-load "bookmark"
+(unless (boundp 'nu-no-emacs-breakage)
+ (eval-after-load "bookmark"
   '(progn
-    (define-key bookmark-bmenu-mode-map "h" bookmark-bmenu-mode-map)))
+    (define-key bookmark-bmenu-mode-map "h" bookmark-bmenu-mode-map))))
 
 ;;
 ;; c mode
@@ -108,8 +112,9 @@
 ;; company
 ;;
 
-(with-eval-after-load "company"
-  (define-key company-active-map "²" company-active-map))
+(unless (boundp 'nu-no-emacs-breakage)
+ (with-eval-after-load "company"
+  (define-key company-active-map "²" company-active-map)))
 
 
 ;;
@@ -135,7 +140,8 @@ Still, some keys here help."
   (define-key dired-mode-map  (kbd "C-c") 'nu-copy-prompt)
   (nu-make-overriding-map dired-mode-map nil))
 
-  (add-hook 'dired-mode-hook       'nu-prepare-for-dired)
+(unless (boundp 'nu-no-emacs-breakage)
+  (add-hook 'dired-mode-hook       'nu-prepare-for-dired))
 
 ;;
 ;; emacs lisp mode
@@ -219,7 +225,8 @@ Still, some keys here help."
 			  '("C-o" "C-y" "M-g" "M-n" "M-p" "M-s")
 			  nil))
 
-(add-hook 'ibuffer-hook 'nu-prepare-for-ibuffer)
+(unless (boundp 'nu-no-emacs-breakage)
+        (add-hook 'ibuffer-hook 'nu-prepare-for-ibuffer))
 
 ;;
 ;; isearch
@@ -252,8 +259,10 @@ Still, some keys here help."
   (lv-delete-window))
 
 
-(add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
-(add-hook 'isearch-mode-end-hook 'nu-isearch-exit)
+(unless (boundp 'nu-no-emacs-breakage)
+  (progn
+       (add-hook 'isearch-mode-hook     'nu-prepare-for-isearch)
+       (add-hook 'isearch-mode-end-hook 'nu-isearch-exit)))
 
 
 ;; lisp interaction mode
@@ -307,8 +316,10 @@ Minibuffer should use same keys are fundamental mode."
   ;(setcdr (assoc 'nu-mode minor-mode-map-alist) nu-keymap))
   )
 
-(add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
-(add-hook 'minibuffer-exit-hook  'nu-minibuffer-exit t)
+(unless (boundp 'nu-no-emacs-breakage)
+  (progn
+      (add-hook 'minibuffer-setup-hook 'nu-prepare-for-minibuffer t)
+      (add-hook 'minibuffer-exit-hook  'nu-minibuffer-exit t)))
 
 ;;
 ;; mark
@@ -339,8 +350,9 @@ Minibuffer should use same keys are fundamental mode."
 ;; proced
 ;;
 
-(add-hook 'proced-mode-hook '(lambda ()
-				(define-key proced-mode-map "h" proced-mode-map)))
+(unless (boundp 'nu-no-emacs-breakage)
+        (add-hook 'proced-mode-hook '(lambda ()
+	   (define-key proced-mode-map "h" proced-mode-map))))
 
 
 ;;
@@ -367,13 +379,15 @@ thus we only trick C-c."
 (defadvice term-line-mode (after nu-prepare-for-term-line-advice ())
   (nu-prepare-for-term-line))
 
-(ad-activate 'term-line-mode)
+(unless (boundp 'nu-no-emacs-breakage)
+        (ad-activate 'term-line-mode))
 
 
 (defadvice term-char-mode (after nu-prepare-for-term-char-advice ())
   (nu-prepare-for-term-raw))
 
-(ad-activate 'term-char-mode)
+(unless (boundp 'nu-no-emacs-breakage)
+        (ad-activate 'term-char-mode))
 
 
 
@@ -383,7 +397,9 @@ thus we only trick C-c."
 Always start at char mode."
   (nu-prepare-for-term-raw))
 
-(add-hook 'term-mode-hook        'nu-prepare-for-term)
+
+(unless (boundp 'nu-no-emacs-breakage)
+        (add-hook 'term-mode-hook 'nu-prepare-for-term))
 
 ;;
 ;; texinfo
@@ -401,8 +417,9 @@ Always start at char mode."
 ;;
 ;; undo-tree
 ;;
-
-(eval-after-load "undo-tree"
+  
+(unless (boundp 'nu-no-emacs-breakage)
+  (eval-after-load "undo-tree"
   '(progn
      (define-key undo-tree-visualizer-mode-map nu-back-to-indentation-key undo-tree-visualizer-mode-map)
 
@@ -412,7 +429,7 @@ Always start at char mode."
      (define-key undo-tree-visualizer-mode-map nu-forward-char-key 'undo-tree-visualize-switch-branch-right)
 
      (define-key undo-tree-visualizer-mode-map (kbd "M-q")   'undo-tree-visualizer-abort)
-     (define-key undo-tree-map (kbd "C-x") nil)))
+     (define-key undo-tree-map (kbd "C-x") nil))))
 
 
 (provide 'nu-integration)
