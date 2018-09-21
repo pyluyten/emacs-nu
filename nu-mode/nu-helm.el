@@ -70,7 +70,8 @@
 (defadvice nu-prepare-for-minibuffer (after nu-prepare-for-minibuffer-helm-advice ())
   (nu-set-minibuffer-helm))
 
-(ad-activate 'nu-prepare-for-minibuffer)
+(unless (boundp 'nu-no-emacs-breakage)
+        (ad-activate 'nu-prepare-for-minibuffer))
 
 ;;
 ;; menus override
