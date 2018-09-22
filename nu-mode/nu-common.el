@@ -32,6 +32,7 @@
 (require 'nu-menus) ; open-keymap, replace-keymap,...
 (require 'nu-commands) ; not emacs native commands
 (require 'nu-integration) ; how to use other modes
+(require 'nu-markdown)
 
 
 (provide 'nu-common)
