@@ -197,7 +197,7 @@ Enforces new buffers being insert state."
   (define-key nu-evil-map "r" 'nu-replace-prompt)
   (define-key nu-evil-map "s" 'nu-do-prompt)
   (define-key nu-evil-map "u" 'undo-tree-visualize)
-  (define-key nu-evil-map "w" 'nu-window-prompt)
+  (define-key nu-evil-map "w" 'nu-display-prompt)
   (define-key nu-evil-map "y" 'nu-copy-prompt)
   (define-key nu-evil-map "z" 'nu-quit-prompt)
   (define-key nu-evil-map (kbd "<SPC>") 'nu-M-x)

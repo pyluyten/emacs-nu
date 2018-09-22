@@ -49,33 +49,33 @@ As in nu-keymap, the user owns the punctation.")
 
 
 
-(defun nu-populate-window ()
-   (nu-define-prefix 'nu-window-map)
-   (define-key nu-window-map "c" 'minimize-window)
+(defun nu-populate-display ()
+   (nu-define-prefix 'nu-display-map)
+   (define-key nu-display-map "c" 'minimize-window)
 
-   (define-key nu-window-map "d" 'scroll-other-window-down)
-   (define-key nu-window-map "u" 'scroll-left)
-   (define-key nu-window-map "s" 'scroll-other-window)
-   (define-key nu-window-map "o" 'scroll-right)
-   (define-key nu-window-map "r" 'recenter-top-bottom)
+   (define-key nu-display-map "d" 'scroll-other-window-down)
+   (define-key nu-display-map "u" 'scroll-left)
+   (define-key nu-display-map "s" 'scroll-other-window)
+   (define-key nu-display-map "o" 'scroll-right)
+   (define-key nu-display-map "r" 'recenter-top-bottom)
 
-   (define-key nu-window-map "f" 'transpose-frame)
+   (define-key nu-display-map "f" 'transpose-frame)
 
-   (define-key nu-window-map "i" 'enlarge-window)
-   (define-key nu-window-map "l" 'enlarge-window-horizontally)
+   (define-key nu-display-map "i" 'enlarge-window)
+   (define-key nu-display-map "l" 'enlarge-window-horizontally)
 
-   (define-key nu-window-map "k" 'shrink-window)
-   (define-key nu-window-map "j" 'shrink-window-horizontally)
-   (define-key nu-window-map "t" 'quit-window)
-   (define-key nu-window-map "x" 'nu-close-document))
+   (define-key nu-display-map "k" 'shrink-window)
+   (define-key nu-display-map "j" 'shrink-window-horizontally)
+   (define-key nu-display-map "t" 'quit-window)
+   (define-key nu-display-map "x" 'nu-close-document))
 
 
-(defun nu-window-prompt ()
+(defun nu-display-prompt ()
   (interactive)
   (setq nu-major-mode major-mode)
-  (nu-populate-window)
+  (nu-populate-display)
   (run-hooks 'nu-populate-hook)
-  (nu-prompt-for-keymap nu-window-map))
+  (nu-prompt-for-keymap nu-display-map))
 
 
 (defun nu-populate-print ()
@@ -599,7 +599,7 @@ both navigate, access to essential prompts, and control the terminal."
   (define-key nu-term-map (kbd "o") 'nu-open-prompt)
   (define-key nu-term-map (kbd "p") 'nu-print-prompt)
   (define-key nu-term-map (kbd "q") 'nu-quit-prompt)
-  (define-key nu-term-map (kbd "w") 'nu-window-prompt)
+  (define-key nu-term-map (kbd "w") 'nu-display-prompt)
   (define-key nu-term-map (kbd "C-c") 'term-interrupt-subjob)
   (define-key nu-term-map (kbd "C-<SPC>") 'term-pager-toggle)
 

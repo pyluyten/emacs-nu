@@ -260,7 +260,7 @@ This function ensures no error can occur inside the process..."
    (or
     (eq last-repeatable-command 'nu-delete-prompt)
     (eq last-repeatable-command 'nu-replace-prompt)
-    (eq last-repeatable-command 'nu-window-prompt)
+    (eq last-repeatable-command 'nu-display-prompt)
     (eq last-repeatable-command 'nu-open-prompt)
     (eq last-repeatable-command 'nu-a-prompt)
     (eq last-repeatable-command 'nu-find-prompt)

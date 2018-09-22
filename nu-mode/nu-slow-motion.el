@@ -366,7 +366,7 @@
   (define-key nu-evil-map "q" 'nu-print-prompt)
   (define-key nu-evil-map "r" 'nu-replace-prompt)
   (define-key nu-evil-map "u" 'undo-tree-visualize)
-  (define-key nu-evil-map "x" 'nu-window-prompt)
+  (define-key nu-evil-map "x" 'nu-display-prompt)
   (define-key nu-evil-map "w" 'nu-copy-prompt)
   (define-key nu-evil-map "z" 'nu-quit-prompt)
   (define-key nu-evil-map (kbd "<SPC>") 'nu-M-x)
