@@ -30,7 +30,7 @@
 (define-key evil-normal-state-map "x" 'nu-delete-prompt)
 (define-key evil-normal-state-map "c" 'nu-copy-prompt)
 (define-key evil-normal-state-map "v" 'nu-insert-prompt)
-(define-key evil-normal-state-map "b" 'nu-bold-prompt)
+(define-key evil-normal-state-map "b" 'nu-change-prompt)
 (define-key evil-normal-state-map "n" 'nu-new-prompt)
 (define-key evil-normal-state-map "$" 'end-of-line)
 

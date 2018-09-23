@@ -75,7 +75,7 @@ By default it is Control.")
 (defvar nu-find-map (make-sparse-keymap) "Nu Find, Grep Keymap")
 (defvar nu-copy-map (make-sparse-keymap) "Nu Copy Keymap")
 (defvar nu-tab-map (make-sparse-keymap) "Nu Tab Keymap")
-(defvar nu-bold-map (make-sparse-keymap) "Nu Bold, Comment, Indent Keymap")
+(defvar nu-change-map (make-sparse-keymap) "Nu Bold, Comment, Indent Keymap")
 
 
 

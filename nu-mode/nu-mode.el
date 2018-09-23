@@ -44,7 +44,7 @@ TODO : in case of menu, the associated -map needs to be lookup."
 This may allow where-is to know where to find functions."
 
    (define-key nu-menu-map "a" 'nu-a-map)
-   (define-key nu-menu-map "b" 'nu-bold-map)
+   (define-key nu-menu-map "b" 'nu-change-map)
    (define-key nu-menu-map "f" 'nu-find-map)
    (define-key nu-menu-map "g" 'nu-goto-map)
    (define-key nu-menu-map "h" 'help-map)
@@ -62,7 +62,7 @@ This may allow where-is to know where to find functions."
   "Fill prompters map."
 
    (define-key nu-menu-map "a" 'nu-a-prompt)
-   (define-key nu-menu-map "b" 'nu-bold-prompt)
+   (define-key nu-menu-map "b" 'nu-change-prompt)
    (define-key nu-menu-map "f" 'nu-find-prompt)
    (define-key nu-menu-map "g" 'nu-goto-prompt)
    (define-key nu-menu-map "h" 'help-map)
@@ -180,7 +180,7 @@ This may allow where-is to know where to find functions."
    (nu-mode-dkey evil-insert-state-map "v" t yank)
 
    (nu-mode-dkey evil-insert-state-map "b" t nu-bold)
-   (nu-mode-dkey evil-insert-state-map "b" nil nu-bold-prompt)
+   (nu-mode-dkey evil-insert-state-map "b" nil nu-change-prompt)
 
    (nu-mode-dkey evil-insert-state-map "n" t nu-new-empty-buffer)
    (nu-mode-dkey evil-insert-state-map "n" nil nu-new-prompt)
@@ -205,7 +205,7 @@ This may allow where-is to know where to find functions."
 	(nu-populate-print)
 	(nu-populate-quit)
 	(nu-populate-delete)
-	(nu-populate-bold-map)
+	(nu-populate-change-map)
 	(nu-populate-insert-map)
 	(nu-populate-save-map)
 	(nu-populate-new-map)

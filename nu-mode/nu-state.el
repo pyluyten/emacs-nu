@@ -76,7 +76,7 @@ nu specific immediate funcs and menus."
 
    (global-set-key (kbd "M-a") 'evil-normal-state)
    (global-set-key (kbd "M-b") 'backward-word)
-   (global-set-key (kbd "M-c") 'nu-bold-prompt)
+   (global-set-key (kbd "M-c") 'nu-change-prompt)
    (global-set-key (kbd "M-d") 'nu-delete-prompt)
    (global-set-key (kbd "M-e") 'forward-word)
    (global-set-key (kbd "M-f") 'nu-find-prompt)
@@ -106,7 +106,7 @@ nu specific immediate funcs and menus."
 nu specific immediate funcs and menus."
 
    (global-set-key (kbd "M-a") 'evil-normal-state)
-   (global-set-key (kbd "M-b") 'nu-bold-prompt)
+   (global-set-key (kbd "M-b") 'nu-change-prompt)
    (global-set-key (kbd "M-c") 'nu-copy-region-or-line)
    (global-set-key (kbd "M-d") 'nu-M-x)
    (global-set-key (kbd "M-f") 'nu-find-prompt)
@@ -184,7 +184,7 @@ Enforces new buffers being insert state."
   ;; TODO : space key should be custoomized
   (setq nu-evil-map (make-sparse-keymap))
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
-  (define-key nu-evil-map "c" 'nu-bold-prompt)
+  (define-key nu-evil-map "c" 'nu-change-prompt)
   (define-key nu-evil-map "d" 'nu-delete-prompt)
   (define-key nu-evil-map "f" 'nu-find-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)

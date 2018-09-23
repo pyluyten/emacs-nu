@@ -45,10 +45,10 @@
           (define-key nu-replace-map (kbd "T") 'org-table-sort-lines)
 	  
           ;; BOLD
-          (define-key nu-bold-map (kbd "J") 'org-shiftleft)
-          (define-key nu-bold-map (kbd "K") 'org-shiftdown)
-          (define-key nu-bold-map (kbd "L") 'org-shiftright)
-          (define-key nu-bold-map (kbd "I") 'org-shiftup)
+          (define-key nu-change-map (kbd "J") 'org-shiftleft)
+          (define-key nu-change-map (kbd "K") 'org-shiftdown)
+          (define-key nu-change-map (kbd "L") 'org-shiftright)
+          (define-key nu-change-map (kbd "I") 'org-shiftup)
 
           ;; PRINT
           (define-key nu-print-map (kbd "l") 'pcomplete)

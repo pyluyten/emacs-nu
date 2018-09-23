@@ -28,16 +28,16 @@
    	(progn
 
          ;; BOLD MAP
-         (define-key nu-bold-map (kbd "B") 'markdown-blockquote-region)
-         (define-key nu-bold-map (kbd "D") 'markdown-demote)
-         (define-key nu-bold-map (kbd "I") 'markdown-indent-region)
-         (define-key nu-bold-map (kbd "L") 'markdown-move-down)
-         (define-key nu-bold-map (kbd "M") 'markdown-move-up)
-         (define-key nu-bold-map (kbd "O") 'markdown-outdent-region)
-         (define-key nu-bold-map (kbd "P") 'markdown-pre-region)
-         (define-key nu-bold-map (kbd "R") 'markdown-promote)
-         (define-key nu-bold-map (kbd "S") 'markdown-table-sort-lines)
-         (define-key nu-bold-map (kbd "T") 'markdown-table-transpose)
+         (define-key nu-change-map (kbd "B") 'markdown-blockquote-region)
+         (define-key nu-change-map (kbd "D") 'markdown-demote)
+         (define-key nu-change-map (kbd "I") 'markdown-indent-region)
+         (define-key nu-change-map (kbd "L") 'markdown-move-down)
+         (define-key nu-change-map (kbd "M") 'markdown-move-up)
+         (define-key nu-change-map (kbd "O") 'markdown-outdent-region)
+         (define-key nu-change-map (kbd "P") 'markdown-pre-region)
+         (define-key nu-change-map (kbd "R") 'markdown-promote)
+         (define-key nu-change-map (kbd "S") 'markdown-table-sort-lines)
+         (define-key nu-change-map (kbd "T") 'markdown-table-transpose)
 	 
 	 ;; PRINT MAP
          (define-key nu-print-map (kbd "I") 'ispell-complete-word)

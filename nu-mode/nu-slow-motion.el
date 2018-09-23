@@ -291,7 +291,7 @@
    ;; TODO make menu outside of slowM
    (global-set-key (kbd "M-a") 'nu-new-prompt)
    (global-set-key (kbd "M-b") 'backward-char)
-   (global-set-key (kbd "M-c") 'nu-bold-prompt)
+   (global-set-key (kbd "M-c") 'nu-change-prompt)
    (global-set-key (kbd "M-k") 'nu-delete-prompt)
    (global-set-key (kbd "M-e") 'newline-and-indent)
    (global-set-key (kbd "M-f") 'forward-char)
@@ -354,7 +354,7 @@
   ;; SPACE key -- long term make this outside of slowM
   (setq nu-evil-map (make-keymap))
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
-  (define-key nu-evil-map "c" 'nu-bold-prompt)
+  (define-key nu-evil-map "c" 'nu-change-prompt)
   (define-key nu-evil-map "k" 'nu-delete-prompt)
   (define-key nu-evil-map "s" 'nu-find-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)
