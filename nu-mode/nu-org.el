@@ -1,6 +1,6 @@
-;;; nu-mode.el --- Modern Emacs Keybinding
+;;; nu-org.el --- Modern Emacs Keybinding
 ;;; Emacs-Nu is an emacs mode which wants to makes Emacs easier.kk
-;;; Copyright (C) 2017 Pierre-Yves LUYTEN
+;;; Copyright (C) 2018 Pierre-Yves LUYTEN
 ;;;  
 ;;; This program is free software; you can redistribute it and/or
 ;;; modify it under the terms of the GNU General Public License
@@ -22,87 +22,66 @@
 
 ;; http://orgmode.org/tmp/worg/org-configs/org-hooks.html
 
+;; FIXME -org-mode as a minor mode is not handled.
+
 
 (defun nu-prepare-org-mode ()
-  ;; nu bold needs to check advice
 
+  ;; FIXME NO DEFADVICE
    (defadvice nu-set-bold-f (after nu-set-bold-f-for-org ())
      (if (eq major-mode 'org-mode)
 	 (defalias 'nu-bold-function 'org-emphasize)))
    (ad-activate 'nu-set-bold-f)
 
-
-  ;; advice menus to make them useful.
-
-   (defadvice nu-populate-replace (after nu-populate-replace-for-org ())
+   (add-hook 'nu-populate-hook '(lambda ()
      (if (eq nu-major-mode 'org-mode)
-	 (progn
+   	(progn
+
+	  ;; REPLACE
           (define-key nu-replace-map (kbd "C-j") 'org-metaleft)
           (define-key nu-replace-map (kbd "C-l") 'org-metaright)
           (define-key nu-replace-map (kbd "C-u") 'org-metaup)
           (define-key nu-replace-map (kbd "C-o") 'org-metadown)
-
-          (define-key nu-replace-map (kbd "T") 'org-table-sort-lines))))
-   (ad-activate 'nu-populate-replace)
-
-   (defadvice nu-populate-bold-map (after nu-populate-bold-for-org ())
-     (if (eq nu-major-mode 'org-mode)
-	 (progn
+          (define-key nu-replace-map (kbd "T") 'org-table-sort-lines)
+	  
+          ;; BOLD
           (define-key nu-bold-map (kbd "J") 'org-shiftleft)
           (define-key nu-bold-map (kbd "K") 'org-shiftdown)
           (define-key nu-bold-map (kbd "L") 'org-shiftright)
-          (define-key nu-bold-map (kbd "I") 'org-shiftup))))
-   (ad-activate 'nu-populate-bold-map)
+          (define-key nu-bold-map (kbd "I") 'org-shiftup)
 
-  (defadvice nu-populate-print (after nu-populate-print-for-org ())
-     (if (eq nu-major-mode 'org-mode)
-	 (progn
-          (define-key nu-print-map (kbd "l") 'pcomplete))))
-   (ad-activate 'nu-populate-print)
+          ;; PRINT
+          (define-key nu-print-map (kbd "l") 'pcomplete)
 
-  (defadvice nu-populate-delete (after nu-populate-delete-for-org ())
-     (if (eq nu-major-mode 'org-mode)
-	 (progn
-	   (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
-           (define-key nu-delete-map (kbd "r") 'org-table-kill-row)
-           (define-key nu-delete-map (kbd "*") 'org-cut-special)
-           (define-key nu-delete-map (kbd "M-k") 'org-cut-subtree))))
-   (ad-activate 'nu-populate-delete)
+	  ;; DELETE
+	  (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
+          (define-key nu-delete-map (kbd "r") 'org-table-kill-row)
+          (define-key nu-delete-map (kbd "*") 'org-cut-special)
+          (define-key nu-delete-map (kbd "M-k") 'org-cut-subtree)
 
-  (defadvice nu-populate-insert-map (after nu-populate-insert-for-org ())
-        (if (eq major-mode 'org-mode)
-          (progn
-            (define-key nu-insert-map (kbd "L") 'org-insert-link)
-            (define-key nu-insert-map (kbd "H") 'org-table-insert-hline)
-            (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
-            (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
-            (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
-            (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
-            (define-key nu-insert-map (kbd "m") 'org-time-stamp)
-            (define-key nu-insert-map (kbd "d") 'org-deadline)
-            (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading))))
-   (ad-activate 'nu-populate-insert-map)
+	  ;; INSERT
+          (define-key nu-insert-map (kbd "L") 'org-insert-link)
+          (define-key nu-insert-map (kbd "H") 'org-table-insert-hline)
+          (define-key nu-insert-map (kbd "o") 'org-table-insert-column)
+          (define-key nu-insert-map (kbd "O") 'org-table-insert-row)
+          (define-key nu-insert-map (kbd "M-s") 'org-paste-subtree)
+          (define-key nu-insert-map (kbd "M-o") 'org-paste-special)
+          (define-key nu-insert-map (kbd "m") 'org-time-stamp)
+          (define-key nu-insert-map (kbd "d") 'org-deadline)
+          (define-key nu-insert-map (kbd "t") 'org-insert-todo-heading)
 
-  (defadvice nu-populate-save-map (after nu-populate-save-for-org ())
-    (if (eq nu-major-mode 'org-mode)
-      (progn
-        (define-key nu-save-map (kbd "o") 'org-refile)
-        (define-key nu-save-map (kbd "M-o") 'org-save-all-org-buffers))))  
-   (ad-activate 'nu-populate-save-map)
+	  ;; SAVE
+          (define-key nu-save-map (kbd "o") 'org-refile)
+          (define-key nu-save-map (kbd "M-o") 'org-save-all-org-buffers)
 
-  (defadvice nu-populate-open-map (after nu-populate-open-for-org ())
-       (if (eq nu-major-mode 'org-mode)
-    (define-key nu-open-map (kbd "L") 'org-open-at-point)))
-   (ad-activate 'nu-populate-open-map)
+	  ;; OPEN
+          (define-key nu-open-map (kbd "L") 'org-open-at-point)
 
-  (defadvice nu-populate-goto-map (after nu-populate-goto-for-org ())
-       (if (eq nu-major-mode 'org-mode)
-       (progn
-         (define-key nu-goto-map (kbd "I") 'org-backward-heading-same-level)
-         (define-key nu-goto-map (kbd "K") 'org-forward-heading-same-level)
-         (define-key nu-goto-map (kbd "J") 'org-backward-element)
-         (define-key nu-goto-map (kbd "L") 'org-forward-element))))
-   (ad-activate 'nu-populate-goto-map))
+	  ;; GOTO
+          (define-key nu-goto-map (kbd "I") 'org-backward-heading-same-level)
+          (define-key nu-goto-map (kbd "K") 'org-forward-heading-same-level)
+          (define-key nu-goto-map (kbd "J") 'org-backward-element)
+          (define-key nu-goto-map (kbd "L") 'org-forward-element))))))
 
 ;; add hook
 (add-hook 'org-mode-hook 'nu-prepare-org-mode)
