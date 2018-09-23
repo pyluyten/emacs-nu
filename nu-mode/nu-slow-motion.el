@@ -139,7 +139,7 @@
 
    ;; MOTION STATE MAP ================================================
    ;; "0" is a special command when called first
-   (define-key evil-motion-state-map "a" 'evil-first-non-blank)
+   (define-key evil-motion-state-map "a" 'evil-beginning-of-line)
    (define-key evil-motion-state-map "A" 'evil-backward-sentence-begin)
    (define-key evil-motion-state-map "b" 'evil-backward-char)
    (define-key evil-motion-state-map "B" 'evil-backward-word-begin)
