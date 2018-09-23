@@ -365,6 +365,7 @@
   (define-key nu-evil-map "y" 'nu-insert-prompt)
   (define-key nu-evil-map "q" 'nu-print-prompt)
   (define-key nu-evil-map "r" 'nu-replace-prompt)
+  (define-key nu-evil-map "s" 'nu-switch-prompt)
   (define-key nu-evil-map "u" 'undo-tree-visualize)
   (define-key nu-evil-map "x" 'nu-display-prompt)
   (define-key nu-evil-map "w" 'nu-copy-prompt)

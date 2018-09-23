@@ -48,6 +48,19 @@ As in nu-keymap, the user owns the punctation.")
 
 
 
+(defun nu-populate-switch ()
+   (nu-define-prefix 'nu-switch-map)
+   (define-key nu-switch-map "c" 'customize)
+   (define-key nu-switch-map "s" 'subword-mode))
+
+(defun nu-switch-prompt ()
+  (interactive)
+  (setq nu-major-mode major-mode)
+  (nu-populate-switch)
+  (run-hooks 'nu-populate-hook)
+  (nu-prompt-for-keymap nu-switch-map))
+
+
 (defun nu-populate-display ()
    (nu-define-prefix 'nu-display-map)
 
@@ -76,7 +89,6 @@ As in nu-keymap, the user owns the punctation.")
   (nu-define-prefix 'nu-print-map)
 
   (define-key nu-print-map "b" 'print-buffer)
-  (define-key nu-print-map "c" 'subword-mode)
   (define-key nu-print-map "d" 'pwd)
   (define-key nu-print-map "f" 'find-grep)
   (define-key nu-print-map "g" 'grep)

@@ -62,6 +62,7 @@ By default it is Control.")
 (defvar nu-visual-map (make-sparse-keymap) "Nu Selection Keymap")
 
 (defvar nu-quit-map (make-sparse-keymap) "Nu Quit Keymap")
+(defvar nu-switch-map (make-sparse-keymap) "Nu Switch Keymap")
 (defvar nu-print-map (make-sparse-keymap) "Nu Print, Eval Keymap")
 (defvar nu-delete-map (make-sparse-keymap) "Nu Kill Keymap")
 (defvar nu-insert-map (make-sparse-keymap) "Nu Insert Keymap")

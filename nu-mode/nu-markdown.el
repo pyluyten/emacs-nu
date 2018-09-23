@@ -30,6 +30,7 @@
          ;; BOLD MAP
          (define-key nu-change-map (kbd "B") 'markdown-blockquote-region)
          (define-key nu-change-map (kbd "D") 'markdown-demote)
+         (define-key nu-change-map (kbd "C") 'markdown-toggle-gfm-checkbox)
          (define-key nu-change-map (kbd "I") 'markdown-indent-region)
          (define-key nu-change-map (kbd "L") 'markdown-move-down)
          (define-key nu-change-map (kbd "M") 'markdown-move-up)
@@ -99,14 +100,13 @@
 	 (define-key nu-display-map (kbd "B") 'markdown-narrow-to-block)
 	 (define-key nu-display-map (kbd "S") 'markdown-narrow-to-subtree)
 
-  ;; SWITCHES
-  ;; C-c C-c l	markdown-live-preview-mode
-  ;; C-c C-x C-e	markdown-toggle-math
-  ;; C-c C-x C-f	markdown-toggle-fontify-code-blocks-natively
-  ;; C-c C-x TAB	markdown-toggle-inline-images
-  ;; C-c C-x C-l	markdown-toggle-url-hiding
-  ;; C-c C-x RET	markdown-toggle-markup-hiding
-  ;; C-c C-x C-x	markdown-toggle-gfm-checkbox
+          ;; SWITCHES
+          (define-key nu-switch-map (kbd "L") 'markdown-live-preview-mode)
+          (define-key nu-switch-map (kbd "I") 'markdown-toggle-inline-images)
+          (define-key nu-switch-map (kbd "F") 'markdown-toggle-fontify-code-blocks-natively)
+          (define-key nu-switch-map (kbd "M") 'markdown-toggle-markup-hiding)
+          (define-key nu-switch-map (kbd "T") 'markdown-toggle-math)
+          (define-key nu-switch-map (kbd "U") 'markdown-toggle-url-hiding)
 
   ;; MARK
   ;; C-c C-M-h	markdown-mark-subtree
