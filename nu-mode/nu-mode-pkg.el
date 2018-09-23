@@ -1,6 +1,6 @@
 (define-package
   "nu-mode"
-  "0.8.1"
+  "0.8.4"
   "Modern Emacs Prompts Based Keybinding."
   '((undo-tree "0.6.5")
     (ace-window "0")
