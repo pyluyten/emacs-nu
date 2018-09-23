@@ -17,7 +17,6 @@
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
 
 (require 'nu-prompters)
-(require 'hydra)
 
 (defun nu-lv-prompt-for-keymap (keymap &optional describe)
  "Describe a keymap, ask for a key, run the func.

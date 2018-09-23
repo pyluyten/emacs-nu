@@ -24,7 +24,6 @@
 (require 'nu-vars)
 (require 'windmove)
 (require 'nu-prompters)
-(require 'hydra)
 
 (defvar nu-populate-hook nil
   "Hook running *after* a menu is populated.
