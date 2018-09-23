@@ -22,9 +22,12 @@
 
 (defun nu-prepare-markdown-mode ()
 
-   (defadvice nu-populate-bold (after nu-populate-change-for-markdown ())
+
+   (add-hook 'nu-populate-hook '(lambda ()
      (if (eq nu-major-mode 'markdown-mode)
-      (progn
+   	(progn
+
+         ;; BOLD MAP
          (define-key nu-bold-map (kbd "B") 'markdown-blockquote-region)
          (define-key nu-bold-map (kbd "D") 'markdown-demote)
          (define-key nu-bold-map (kbd "I") 'markdown-indent-region)
@@ -34,14 +37,9 @@
          (define-key nu-bold-map (kbd "P") 'markdown-pre-region)
          (define-key nu-bold-map (kbd "R") 'markdown-promote)
          (define-key nu-bold-map (kbd "S") 'markdown-table-sort-lines)
-         (define-key nu-bold-map (kbd "T") 'markdown-table-transpose))))
-
-   (ad-activate 'nu-populate-bold)
-
-
-   (defadvice nu-populate-print (after nu-populate-print-for-markdown ())
-    (if (eq nu-major-mode 'markdown-mode)
-      (progn
+         (define-key nu-bold-map (kbd "T") 'markdown-table-transpose)
+	 
+	 ;; PRINT MAP
          (define-key nu-print-map (kbd "I") 'ispell-complete-word)
          (define-key nu-print-map (kbd "C") 'markdown-check-refs)
          (define-key nu-print-map (kbd "D") 'markdown-cleanup-list-numbers)
@@ -54,78 +52,52 @@
          (define-key nu-print-map (kbd "O") 'markdown-other-window)
          (define-key nu-print-map (kbd "P") 'markdown-preview)
          (define-key nu-print-map (kbd "T") 'markdown-table-convert-region)
-         (define-key nu-print-map (kbd "U") 'markdown-unused-refs))))
-   (ad-activate 'nu-populate-print)
+         (define-key nu-print-map (kbd "U") 'markdown-unused-refs)
 
-   (defadvice nu-populate-delete (after nu-populate-delete-for-markdown ())
-      (if (eq nu-major-mode 'markdown-mode)
-    	 (progn
-	   (define-key nu-delete-map (kbd "K") 'markdown-kill-thing-at-point)
-	   (define-key nu-delete-map (kbd "T") 'markdown-table-delete-column)
-	   (define-key nu-delete-map (kbd "R") 'markdown-table-delete-row))))
-   (ad-activate 'nu-populate-delete)
-          
-   (defadvice nu-populate-insert-map (after nu-populate-insert-for-markdown ())
-     (if (eq nu-major-mode 'markdown-mode)
-	 (progn
-          (define-key nu-insert-map (kbd "A") 'markdown-insert-blockquote)
-          (define-key nu-insert-map (kbd "B") 'markdown-insert-bold)
-          (define-key nu-insert-map (kbd "C") 'markdown-insert-code)
-          (define-key nu-insert-map (kbd "D") 'markdown-insert-footnote)
-          (define-key nu-insert-map (kbd "E") 'markdown-insert-gfm-code-block)
-          (define-key nu-insert-map (kbd "F") 'markdown-insert-gfm-checkbox)
-          (define-key nu-insert-map (kbd "1") 'markdown-insert-header-atx-1)
-          (define-key nu-insert-map (kbd "2") 'markdown-insert-header-atx-2)
-          (define-key nu-insert-map (kbd "3") 'markdown-insert-header-atx-3)
-          (define-key nu-insert-map (kbd "4") 'markdown-insert-header-atx-4)
-          (define-key nu-insert-map (kbd "5") 'markdown-insert-header-atx-5)
-          (define-key nu-insert-map (kbd "6") 'markdown-insert-header-atx-6)
-          (define-key nu-insert-map (kbd "G") 'markdown-insert-header-dwim)
-          (define-key nu-insert-map (kbd "H") 'markdown-insert-header-setext-1)
-          (define-key nu-insert-map (kbd "I") 'markdown-insert-header-setext-2)
-          (define-key nu-insert-map (kbd "J") 'markdown-insert-header-setext-dwim)
-          (define-key nu-insert-map (kbd "K") 'markdown-insert-hr)
-          (define-key nu-insert-map (kbd "L") 'markdown-insert-image)
-          (define-key nu-insert-map (kbd "M") 'markdown-insert-italic)
-          (define-key nu-insert-map (kbd "N") 'markdown-insert-kbd)
-          (define-key nu-insert-map (kbd "O") 'markdown-insert-link)
-          (define-key nu-insert-map (kbd "P") 'markdown-insert-list-item)
-          (define-key nu-insert-map (kbd "Q") 'markdown-insert-pre)
-          (define-key nu-insert-map (kbd "S") 'markdown-insert-strike-through)
-          (define-key nu-insert-map (kbd "U") 'markdown-insert-uri)
-          (define-key nu-insert-map (kbd "W") 'markdown-insert-wiki-link)
-          (define-key nu-insert-map (kbd "W") 'markdown-insert-wiki-link)
-          (define-key nu-insert-map (kbd "W") 'markdown-insert-wiki-link)
-          (define-key nu-insert-map (kbd "X") 'markdown-table-insert-row)
-          (define-key nu-insert-map (kbd "Y") 'markdown-table-insert-column))))
-   (ad-activate 'nu-populate-insert-map)
+         ;; DELETE MAP
+         (define-key nu-delete-map (kbd "K") 'markdown-kill-thing-at-point)
+   	 (define-key nu-delete-map (kbd "T") 'markdown-table-delete-column)
+   	 (define-key nu-delete-map (kbd "R") 'markdown-table-delete-row)
+	 
+         ;; INSERT MAP
+         (define-key nu-insert-map (kbd "A") 'markdown-insert-blockquote)
+         (define-key nu-insert-map (kbd "B") 'markdown-insert-bold)
+         (define-key nu-insert-map (kbd "C") 'markdown-insert-code)
+         (define-key nu-insert-map (kbd "D") 'markdown-insert-footnote)
+         (define-key nu-insert-map (kbd "E") 'markdown-insert-gfm-code-block)
+         (define-key nu-insert-map (kbd "F") 'markdown-insert-gfm-checkbox)
+         (define-key nu-insert-map (kbd "1") 'markdown-insert-header-atx-1)
+         (define-key nu-insert-map (kbd "2") 'markdown-insert-header-atx-2)
+         (define-key nu-insert-map (kbd "3") 'markdown-insert-header-atx-3)
+         (define-key nu-insert-map (kbd "4") 'markdown-insert-header-atx-4)
+         (define-key nu-insert-map (kbd "5") 'markdown-insert-header-atx-5)
+         (define-key nu-insert-map (kbd "6") 'markdown-insert-header-atx-6)
+         (define-key nu-insert-map (kbd "G") 'markdown-insert-header-dwim)
+         (define-key nu-insert-map (kbd "H") 'markdown-insert-header-setext-1)
+         (define-key nu-insert-map (kbd "I") 'markdown-insert-header-setext-2)
+         (define-key nu-insert-map (kbd "J") 'markdown-insert-header-setext-dwim)
+         (define-key nu-insert-map (kbd "K") 'markdown-insert-hr)
+         (define-key nu-insert-map (kbd "L") 'markdown-insert-image)
+         (define-key nu-insert-map (kbd "M") 'markdown-insert-italic)
+         (define-key nu-insert-map (kbd "N") 'markdown-insert-kbd)
+         (define-key nu-insert-map (kbd "O") 'markdown-insert-link)
+         (define-key nu-insert-map (kbd "P") 'markdown-insert-list-item)
+         (define-key nu-insert-map (kbd "Q") 'markdown-insert-pre)
+         (define-key nu-insert-map (kbd "S") 'markdown-insert-strike-through)
+         (define-key nu-insert-map (kbd "U") 'markdown-insert-uri)
+         (define-key nu-insert-map (kbd "W") 'markdown-insert-wiki-link)
+         (define-key nu-insert-map (kbd "W") 'markdown-insert-wiki-link)
+         (define-key nu-insert-map (kbd "W") 'markdown-insert-wiki-link)
+         (define-key nu-insert-map (kbd "X") 'markdown-table-insert-row)
+         (define-key nu-insert-map (kbd "Y") 'markdown-table-insert-column)
 
-   (defadvice nu-populate-open-map (after nu-populate-open-for-markdown())
-     (if (eq nu-major-mode 'markdown-mode)
-       (progn
-          (define-key nu-open-map (kbd "E") 'markdown-edit-code-block)
-          (define-key nu-open-map (kbd "O") 'markdown-open))))
-   (ad-activate 'nu-populate-open-map)
-          
-   (defadvice nu-populate-goto-map (after nu-populate-goto-for-markdown ())
-     (if (eq nu-major-mode 'markdown-mode)
-       (progn
-         (define-key nu-goto-map (kbd "B") 'markdown-backward-block)
-         (define-key nu-goto-map (kbd "D") 'markdown-do)
-         (define-key nu-goto-map (kbd "F") 'markdown-follow-thing-at-point)
-         (define-key nu-goto-map (kbd "G") 'markdown-forward-block)
-         (define-key nu-goto-map (kbd "N") 'markdown-next-link)
-         (define-key nu-goto-map (kbd "R") 'markdown-outline-next)
-         (define-key nu-goto-map (kbd "O") 'markdown-outline-next-same-level)
-         (define-key nu-goto-map (kbd "S") 'markdown-outline-previous)
-         (define-key nu-goto-map (kbd "Q") 'markdown-outline-previous-same-level)
-         (define-key nu-goto-map (kbd "T") 'markdown-outline-up)
-         (define-key nu-goto-map (kbd "U") 'markdown-previous-link))))
-   (ad-activate 'nu-populate-goto-map))
-          
-  ;; DISPLAY PROMPT
-  ;; C-x n b		markdown-narrow-to-block
-  ;; C-x n s		markdown-narrow-to-subtree
+         ;; OPEN MAP
+         (define-key nu-open-map (kbd "E") 'markdown-edit-code-block)
+         (define-key nu-open-map (kbd "O") 'markdown-open)
+
+         ;; DISPLAY PROMPT
+	 (define-key nu-display-map (kbd "B") 'markdown-narrow-to-block)
+	 (define-key nu-display-map (kbd "S") 'markdown-narrow-to-subtree)
 
   ;; SWITCHES
   ;; C-c C-c l	markdown-live-preview-mode
@@ -139,6 +111,19 @@
   ;; MARK
   ;; C-c C-M-h	markdown-mark-subtree
   ;; C-c M-h		markdown-mark-block
+
+         ;; GOTO MAP
+         (define-key nu-goto-map (kbd "B") 'markdown-backward-block)
+         (define-key nu-goto-map (kbd "D") 'markdown-do)
+         (define-key nu-goto-map (kbd "F") 'markdown-follow-thing-at-point)
+         (define-key nu-goto-map (kbd "G") 'markdown-forward-block)
+         (define-key nu-goto-map (kbd "N") 'markdown-next-link)
+         (define-key nu-goto-map (kbd "R") 'markdown-outline-next)
+         (define-key nu-goto-map (kbd "O") 'markdown-outline-next-same-level)
+         (define-key nu-goto-map (kbd "S") 'markdown-outline-previous)
+         (define-key nu-goto-map (kbd "Q") 'markdown-outline-previous-same-level)
+         (define-key nu-goto-map (kbd "T") 'markdown-outline-up)
+         (define-key nu-goto-map (kbd "U") 'markdown-previous-link))))))
 
 ;; add hook
 (add-hook 'markdown-mode-hook 'nu-prepare-markdown-mode)
