@@ -1,6 +1,6 @@
 ;;; nu-markdown.el --- Modern Emacs Keybinding
 ;;; Emacs-Nu is an emacs mode which wants to makes Emacs easier.
-;;; Copyright (C) 2017 Pierre-Yves LUYTEN
+;;; Copyright (C) 2018 Pierre-Yves LUYTEN
 ;;;  
 ;;; This program is free software; you can redistribute it and/or
 ;;; modify it under the terms of the GNU General Public License
