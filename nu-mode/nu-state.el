@@ -77,7 +77,7 @@ nu specific immediate funcs and menus."
    (global-set-key (kbd "M-a") 'evil-normal-state)
    (global-set-key (kbd "M-b") 'backward-word)
    (global-set-key (kbd "M-c") 'nu-change-prompt)
-   (global-set-key (kbd "M-d") 'nu-delete-prompt)
+   (global-set-key (kbd "M-d") 'nu-kill-prompt)
    (global-set-key (kbd "M-e") 'forward-word)
    (global-set-key (kbd "M-f") 'nu-find-prompt)
    (global-set-key (kbd "M-g") 'ace-window) ; menu is rare => space g
@@ -126,7 +126,7 @@ nu specific immediate funcs and menus."
    (global-set-key (kbd "M-t") 'split-window-right)
    (global-set-key (kbd "M-v") 'nu-insert-prompt)
    (global-set-key (kbd "M-w") 'nu-quit-document) ; menu is space
-   (global-set-key (kbd "M-x") 'nu-delete-prompt)
+   (global-set-key (kbd "M-x") 'nu-kill-prompt)
    (global-set-key (kbd "M-z") 'undo-tree-visualize))
 
 (defun nu-state-set-alt-func ()
@@ -185,7 +185,7 @@ Enforces new buffers being insert state."
   (setq nu-evil-map (make-sparse-keymap))
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
   (define-key nu-evil-map "c" 'nu-change-prompt)
-  (define-key nu-evil-map "d" 'nu-delete-prompt)
+  (define-key nu-evil-map "d" 'nu-kill-prompt)
   (define-key nu-evil-map "f" 'nu-find-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)
   (define-key nu-evil-map "h" 'help-map)

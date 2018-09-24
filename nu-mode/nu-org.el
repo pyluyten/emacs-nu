@@ -54,10 +54,10 @@
           (define-key nu-print-map (kbd "l") 'pcomplete)
 
 	  ;; DELETE
-	  (define-key nu-delete-map (kbd "!") 'org-table-delete-column)
-          (define-key nu-delete-map (kbd "r") 'org-table-kill-row)
-          (define-key nu-delete-map (kbd "*") 'org-cut-special)
-          (define-key nu-delete-map (kbd "M-k") 'org-cut-subtree)
+	  (define-key nu-kill-map (kbd "!") 'org-table-delete-column)
+          (define-key nu-kill-map (kbd "r") 'org-table-kill-row)
+          (define-key nu-kill-map (kbd "*") 'org-cut-special)
+          (define-key nu-kill-map (kbd "M-k") 'org-cut-subtree)
 
 	  ;; INSERT
           (define-key nu-insert-map (kbd "L") 'org-insert-link)

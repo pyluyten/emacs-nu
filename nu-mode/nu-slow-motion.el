@@ -292,7 +292,7 @@
    (global-set-key (kbd "M-a") 'nu-new-prompt)
    (global-set-key (kbd "M-b") 'backward-char)
    (global-set-key (kbd "M-c") 'nu-change-prompt)
-   (global-set-key (kbd "M-k") 'nu-delete-prompt)
+   (global-set-key (kbd "M-k") 'nu-kill-prompt)
    (global-set-key (kbd "M-e") 'newline-and-indent)
    (global-set-key (kbd "M-f") 'forward-char)
    (global-set-key (kbd "M-g") 'ace-window) ; menu is rare => space g
@@ -355,7 +355,7 @@
   (setq nu-evil-map (make-keymap))
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
   (define-key nu-evil-map "c" 'nu-change-prompt)
-  (define-key nu-evil-map "k" 'nu-delete-prompt)
+  (define-key nu-evil-map "k" 'nu-kill-prompt)
   (define-key nu-evil-map "s" 'nu-find-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)
   (define-key nu-evil-map "h" 'help-map)

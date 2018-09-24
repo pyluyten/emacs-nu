@@ -258,7 +258,7 @@ This function ensures no error can occur inside the process..."
 (defadvice repeat (before nu-repeat-last-prompt ())
   (if
    (or
-    (eq last-repeatable-command 'nu-delete-prompt)
+    (eq last-repeatable-command 'nu-kill-prompt)
     (eq last-repeatable-command 'nu-replace-prompt)
     (eq last-repeatable-command 'nu-display-prompt)
     (eq last-repeatable-command 'nu-open-prompt)

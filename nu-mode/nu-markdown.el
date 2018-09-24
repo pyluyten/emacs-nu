@@ -56,9 +56,9 @@
          (define-key nu-print-map (kbd "U") 'markdown-unused-refs)
 
          ;; DELETE MAP
-         (define-key nu-delete-map (kbd "K") 'markdown-kill-thing-at-point)
-   	 (define-key nu-delete-map (kbd "T") 'markdown-table-delete-column)
-   	 (define-key nu-delete-map (kbd "R") 'markdown-table-delete-row)
+         (define-key nu-kill-map (kbd "K") 'markdown-kill-thing-at-point)
+   	 (define-key nu-kill-map (kbd "T") 'markdown-table-delete-column)
+   	 (define-key nu-kill-map (kbd "R") 'markdown-table-delete-row)
 	 
          ;; INSERT MAP
          (define-key nu-insert-map (kbd "A") 'markdown-insert-blockquote)

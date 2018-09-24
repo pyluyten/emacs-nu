@@ -135,34 +135,34 @@ As in nu-keymap, the user owns the punctation.")
 	(run-hooks 'nu-populate-hook)
         (nu-prompt-for-keymap nu-quit-map))))
 
-(defun nu-populate-delete ()
-  "Populate nu-delete-map."
-  (nu-define-prefix 'nu-delete-map)
+(defun nu-populate-kill ()
+  "Populate nu-kill-map."
+  (nu-define-prefix 'nu-kill-map)
 
-  (define-key nu-delete-map "a" 'bookmark-delete)
-  (define-key nu-delete-map "b" 'kill-buffer)
-  (define-key nu-delete-map "h" 'delete-horizontal-space)
-  (define-key nu-delete-map "i" 'fixup-whitespace)
-  (define-key nu-delete-map "l" 'delete-marching-line)
-  (define-key nu-delete-map "k" 'delete-blank-lines)
-  (define-key nu-delete-map "t" 'delete-trailing-whitespace)
-  (define-key nu-delete-map "u" 'flush-lines)
-  (define-key nu-delete-map "x" 'kill-sexp)
-  (define-key nu-delete-map "y" 'nu-delete-all)
+  (define-key nu-kill-map "a" 'bookmark-delete)
+  (define-key nu-kill-map "b" 'kill-buffer)
+  (define-key nu-kill-map "h" 'delete-horizontal-space)
+  (define-key nu-kill-map "i" 'fixup-whitespace)
+  (define-key nu-kill-map "l" 'delete-marching-line)
+  (define-key nu-kill-map "k" 'delete-blank-lines)
+  (define-key nu-kill-map "t" 'delete-trailing-whitespace)
+  (define-key nu-kill-map "u" 'flush-lines)
+  (define-key nu-kill-map "x" 'kill-sexp)
+  (define-key nu-kill-map "y" 'nu-delete-all)
 
   (if mark-active
-    (define-key nu-delete-map (kbd "<RET>") 'kill-region)))
+    (define-key nu-kill-map (kbd "<RET>") 'kill-region)))
 
-(defun nu-delete-prompt ()
+(defun nu-kill-prompt ()
   (interactive)
   (setq nu-major-mode major-mode)
-  (nu-populate-delete)
+  (nu-populate-kill)
   (run-hooks 'nu-populate-hook)
 
-  (define-key nu-delete-map "f" 'delete-file)
-  (define-key nu-delete-map "o" 'delete-other-windows)
-  (define-key nu-delete-map "w" 'delete-window)
-  (nu-prompt-for-keymap nu-delete-map))
+  (define-key nu-kill-map "f" 'delete-file)
+  (define-key nu-kill-map "o" 'delete-other-windows)
+  (define-key nu-kill-map "w" 'delete-window)
+  (nu-prompt-for-keymap nu-kill-map))
 
 
 (defun nu-populate-change-map ()
@@ -600,7 +600,7 @@ both navigate, access to essential prompts, and control the terminal."
   ; term prompt -> nu prompt -> func
   ; so whenever it might be avoided it should.
   (define-key nu-term-map (kbd "c") 'nu-copy-region-or-line)
-  (define-key nu-term-map (kbd "d") 'nu-delete-prompt)
+  (define-key nu-term-map (kbd "d") 'nu-kill-prompt)
   (define-key nu-term-map (kbd "g") 'nu-goto-prompt)
   (define-key nu-term-map (kbd "h") 'nu-help-prompt)
   (define-key nu-term-map (kbd "n") 'nu-new-prompt)

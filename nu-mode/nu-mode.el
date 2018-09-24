@@ -56,7 +56,7 @@ This may allow where-is to know where to find functions."
    (define-key nu-menu-map "s" 'nu-save-map)
    (define-key nu-menu-map "v" 'nu-insert-map)
    (define-key nu-menu-map "w" 'nu-display-map)
-   (define-key nu-menu-map "x" 'nu-delete-map))
+   (define-key nu-menu-map "x" 'nu-kill-map))
 
 (defun nu-populate-prompters ()
   "Fill prompters map."
@@ -74,7 +74,7 @@ This may allow where-is to know where to find functions."
    (define-key nu-menu-map "s" 'nu-save-prompt)
    (define-key nu-menu-map "v" 'nu-insert-prompt)
    (define-key nu-menu-map "w" 'nu-display-prompt)
-   (define-key nu-menu-map "x" 'nu-delete-prompt))
+   (define-key nu-menu-map "x" 'nu-kill-prompt))
 
 (defun nu-prompt-for-menus ()
   "Prompt for nu menu map."
@@ -168,7 +168,7 @@ This may allow where-is to know where to find functions."
    (nu-mode-dkey evil-insert-state-map "w" t nu-quit-document)
    (nu-mode-dkey evil-insert-state-map "w" nil nu-display-prompt)
  
-   (nu-mode-dkey evil-insert-state-map "x" nil nu-delete-prompt)
+   (nu-mode-dkey evil-insert-state-map "x" nil nu-kill-prompt)
    (nu-mode-dkey evil-insert-state-map "x" t nu-cut-region-or-line)
    (nu-mode-dkey evil-normal-state-map "x" t evil-delete)
 
@@ -204,7 +204,7 @@ This may allow where-is to know where to find functions."
 "populate all menus"
 	(nu-populate-print)
 	(nu-populate-quit)
-	(nu-populate-delete)
+	(nu-populate-kill)
 	(nu-populate-change-map)
 	(nu-populate-insert-map)
 	(nu-populate-save-map)
