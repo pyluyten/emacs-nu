@@ -43,7 +43,7 @@ TODO : in case of menu, the associated -map needs to be lookup."
 
 This may allow where-is to know where to find functions."
 
-   (define-key nu-menu-map "a" 'nu-a-map)
+   (define-key nu-menu-map "a" 'nu-mark-map)
    (define-key nu-menu-map "b" 'nu-change-map)
    (define-key nu-menu-map "f" 'nu-find-map)
    (define-key nu-menu-map "g" 'nu-goto-map)
@@ -61,7 +61,7 @@ This may allow where-is to know where to find functions."
 (defun nu-populate-prompters ()
   "Fill prompters map."
 
-   (define-key nu-menu-map "a" 'nu-a-prompt)
+   (define-key nu-menu-map "a" 'nu-mark-prompt)
    (define-key nu-menu-map "b" 'nu-change-prompt)
    (define-key nu-menu-map "f" 'nu-find-prompt)
    (define-key nu-menu-map "g" 'nu-goto-prompt)
@@ -102,7 +102,7 @@ This may allow where-is to know where to find functions."
        (nu-setup-classic-paddle evil-insert-state-map))
 
    (nu-mode-dkey evil-insert-state-map "a" t evil-visual-line)
-   (nu-mode-dkey evil-insert-state-map "a" nil nu-a-prompt)
+   (nu-mode-dkey evil-insert-state-map "a" nil nu-mark-prompt)
 
    (nu-mode-dkey evil-insert-state-map "z" t undo-tree-undo)
    (nu-mode-dkey evil-insert-state-map "z" nil undo-tree-visualize)
@@ -209,7 +209,7 @@ This may allow where-is to know where to find functions."
 	(nu-populate-insert-map)
 	(nu-populate-save-map)
 	(nu-populate-new-map)
-	(nu-populate-a-map)
+	(nu-populate-mark-map)
 	(nu-populate-open-map)
 	(nu-populate-goto-map)
 	(nu-populate-find-map)
@@ -268,10 +268,10 @@ Technically this function activates evil-mode, but not vi bindings."
        (define-key nu-open-map "o" 'evil-jump-backward)
 
        ;; reset!
-       (nu-define-prefix 'nu-a-map)
-       (define-key nu-a-map (kbd "r") 'nu-visual-block)
-       (define-key nu-a-map (kbd "l") 'evil-visual-line)
-       (define-key nu-a-map (kbd "k") 'evil-visual-char)))))
+       (nu-define-prefix 'nu-mark-map)
+       (define-key nu-mark-map (kbd "r") 'nu-visual-block)
+       (define-key nu-mark-map (kbd "l") 'evil-visual-line)
+       (define-key nu-mark-map (kbd "k") 'evil-visual-char)))))
 
 
 (provide 'nu-mode)

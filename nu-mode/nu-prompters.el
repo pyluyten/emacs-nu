@@ -262,7 +262,7 @@ This function ensures no error can occur inside the process..."
     (eq last-repeatable-command 'nu-replace-prompt)
     (eq last-repeatable-command 'nu-display-prompt)
     (eq last-repeatable-command 'nu-open-prompt)
-    (eq last-repeatable-command 'nu-a-prompt)
+    (eq last-repeatable-command 'nu-mark-prompt)
     (eq last-repeatable-command 'nu-find-prompt)
     (eq last-repeatable-command 'nu-help-prompt)
     (eq last-repeatable-command 'nu-new-prompt)

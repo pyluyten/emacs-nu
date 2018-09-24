@@ -212,10 +212,10 @@ Enforces new buffers being insert state."
        (define-key nu-open-map "o" 'evil-jump-backward)
 
        ;; reset!
-       (nu-define-prefix 'nu-a-map)
-       (define-key nu-a-map (kbd "r") 'evil-visual-block)
-       (define-key nu-a-map (kbd "l") 'evil-visual-line)
-       (define-key nu-a-map (kbd "k") 'evil-visual-char))))
+       (nu-define-prefix 'nu-mark-map)
+       (define-key nu-mark-map (kbd "r") 'evil-visual-block)
+       (define-key nu-mark-map (kbd "l") 'evil-visual-line)
+       (define-key nu-mark-map (kbd "k") 'evil-visual-char))))
 
   ;; finally trigger evil-mode
   (evil-mode))

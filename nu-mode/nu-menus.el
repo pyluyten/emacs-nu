@@ -314,25 +314,25 @@ As in nu-keymap, the user owns the punctation.")
 
 ; nu a map is used in nu-mode
 ; it is not used in evil backend
-(defun nu-populate-a-map ()
-  (nu-define-prefix 'nu-a-map)
+(defun nu-populate-mark-map ()
+  (nu-define-prefix 'nu-mark-map)
 
-  (define-key nu-a-map (kbd "y") 'nu-mark-whole-buffer)
-  (define-key nu-a-map (kbd "s") 'nu-mark-sexp)
-  (define-key nu-a-map (kbd "g") 'nu-mark-paragraph)
-  (define-key nu-a-map (kbd "p") 'nu-mark-page)
-  (define-key nu-a-map (kbd "d") 'nu-mark-defun)
-  (define-key nu-a-map (kbd "i") 'nu-set-mark)
-  (define-key nu-a-map (kbd "r") 'nu-set-rectangle-mark))
+  (define-key nu-mark-map (kbd "y") 'nu-mark-whole-buffer)
+  (define-key nu-mark-map (kbd "s") 'nu-mark-sexp)
+  (define-key nu-mark-map (kbd "g") 'nu-mark-paragraph)
+  (define-key nu-mark-map (kbd "p") 'nu-mark-page)
+  (define-key nu-mark-map (kbd "d") 'nu-mark-defun)
+  (define-key nu-mark-map (kbd "i") 'nu-set-mark)
+  (define-key nu-mark-map (kbd "r") 'nu-set-rectangle-mark))
 
-(defun nu-a-prompt ()
-  "Triggers nu-a-map"
+(defun nu-mark-prompt ()
+  "Triggers nu-mark-map"
   (interactive)
   (setq nu-major-mode major-mode)
-  (nu-populate-a-map)
+  (nu-populate-mark-map)
   (run-hooks 'nu-populate-hook)
-  (define-key nu-a-map (kbd "f") 'cd)
-  (nu-prompt-for-keymap nu-a-map))
+  (define-key nu-mark-map (kbd "f") 'cd)
+  (nu-prompt-for-keymap nu-mark-map))
 
 
 (defun nu-populate-open-map ()
