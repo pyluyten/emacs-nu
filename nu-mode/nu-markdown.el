@@ -108,9 +108,9 @@
           (define-key nu-switch-map (kbd "T") 'markdown-toggle-math)
           (define-key nu-switch-map (kbd "U") 'markdown-toggle-url-hiding)
 
-  ;; MARK
-  ;; C-c C-M-h	markdown-mark-subtree
-  ;; C-c M-h		markdown-mark-block
+          ;; MARK
+	  (define-key nu-mark-map (kbd "B") 'markdown-mark-block)
+	  (define-key nu-mark-map (kbd "F") 'markdown-mark-subtree)
 
          ;; GOTO MAP
          (define-key nu-goto-map (kbd "B") 'markdown-backward-block)
