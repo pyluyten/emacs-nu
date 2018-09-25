@@ -180,35 +180,6 @@ If region is selected, use this as a search string."
  (previous-buffer)
  (call-interactively 'goto-line))
 
-(defun nu-mark-whole-buffer ()
-  (interactive)
-  (run-with-timer 0.01 nil 'mark-whole-buffer))
-
-(defun nu-mark-defun ()
-  (interactive)
-  (run-with-timer 0.01 nil 'mark-defun))
-
-(defun nu-mark-sexp ()
-  (interactive)
-  (run-with-timer 0.01 nil 'mark-sexp))
-
-(defun nu-mark-paragraph ()
-  (interactive)
-  (run-with-timer 0.01 nil 'mark-paragraph))
-
-(defun nu-mark-page ()
-  (interactive)
-  (run-with-timer 0.01 nil 'mark-page))
-
-(defun nu-set-mark ()
-  (interactive)
-  (push-mark-command nil))
-
-(defun nu-set-rectangle-mark ()
-  (interactive)
-  (run-with-timer 0.01 nil 'rectangle-mark-mode))
-
-
 (defun nu-new-tab ()
 "Open a new tab. Show ibuffer."
   (interactive)
