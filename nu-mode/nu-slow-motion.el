@@ -354,21 +354,22 @@
   ;; SPACE key -- long term make this outside of slowM
   (setq nu-evil-map (make-keymap))
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
+  (define-key nu-evil-map "a" 'nu-mark-prompt)
   (define-key nu-evil-map "c" 'nu-change-prompt)
-  (define-key nu-evil-map "k" 'nu-kill-prompt)
-  (define-key nu-evil-map "s" 'nu-find-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)
   (define-key nu-evil-map "h" 'help-map)
+  (define-key nu-evil-map "i" 'nu-switch-prompt)
+  (define-key nu-evil-map "k" 'nu-kill-prompt)
   (define-key nu-evil-map "m" 'nu-save-prompt)
   (define-key nu-evil-map "n" 'nu-new-prompt)
   (define-key nu-evil-map "o" 'nu-open-prompt)
-  (define-key nu-evil-map "y" 'nu-insert-prompt)
   (define-key nu-evil-map "q" 'nu-print-prompt)
   (define-key nu-evil-map "r" 'nu-replace-prompt)
-  (define-key nu-evil-map "i" 'nu-switch-prompt)
+  (define-key nu-evil-map "s" 'nu-find-prompt)
   (define-key nu-evil-map "u" 'undo-tree-visualize)
-  (define-key nu-evil-map "x" 'nu-display-prompt)
   (define-key nu-evil-map "w" 'nu-copy-prompt)
+  (define-key nu-evil-map "x" 'nu-display-prompt)
+  (define-key nu-evil-map "y" 'nu-insert-prompt)
   (define-key nu-evil-map "z" 'nu-quit-prompt)
   (define-key nu-evil-map (kbd "<SPC>") 'nu-M-x)
 
@@ -387,14 +388,10 @@
   (add-hook 'nu-populate-hook '(lambda ()
     (progn
 
-       ;; inserted inside open menu
-       (define-key nu-open-map "o" 'evil-jump-backward)
+       ;; TODO : fix mark-map
 
-       ;; reset!
-       (nu-define-prefix 'nu-mark-map)
-       (define-key nu-mark-map (kbd "r") 'evil-visual-block)
-       (define-key nu-mark-map (kbd "l") 'evil-visual-line)
-       (define-key nu-mark-map (kbd "k") 'evil-visual-char))))
+       ;; inserted inside open menu
+       (define-key nu-open-map "o" 'evil-jump-backward))))
 
   ;; finally trigger evil-mode
   (evil-mode))
