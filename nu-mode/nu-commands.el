@@ -173,7 +173,6 @@ If region is selected, use this as a search string."
         (call-interactively 'isearch-backward-regexp)
         (isearch-yank-string (buffer-substring-no-properties (region-beginning) (region-end))))
     (isearch-backward-regexp)))
-(defun nu-find-previous-mark () (interactive) (cua-set-mark 1))
 
 (defun nu-goto-line-previousbuffer ()
  (interactive)

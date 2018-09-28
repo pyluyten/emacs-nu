@@ -382,8 +382,17 @@ As in nu-keymap, the user owns the punctation.")
   (nu-define-prefix 'nu-goto-map)
 
   (define-key nu-open-map "a" 'bookmark-jump)
+  (define-key nu-goto-map "c" 'goto-char)
+  (define-key nu-goto-map "d" 'previous-error)
+  (define-key nu-goto-map "e" 'next-error)
+  (define-key nu-goto-map "i" 'backward-list)
   (define-key nu-goto-map "l" 'forward-list)
-  (define-key nu-goto-map "i" 'backward-list))
+  (define-key nu-goto-map "m" 'org-mark-ring-goto)
+  (define-key nu-goto-map "n" 'avy-goto-line)
+  (define-key nu-goto-map "o" 'other-window)
+  (define-key nu-goto-map "r" 'jump-to-register)
+  (define-key nu-goto-map "w" 'ace-window)
+  (define-key nu-goto-map "v" 'view-register))
 
 (defun nu-goto-prompt ()
 "Offer to goto wherever wished."
@@ -391,25 +400,6 @@ As in nu-keymap, the user owns the punctation.")
   (setq nu-major-mode major-mode)
   (nu-populate-goto-map)
   (run-hooks 'nu-populate-hook)
-
-  ;
-  ; common keys
-  ;
-
-  (define-key nu-goto-map "E" 'previous-error)
-  (define-key nu-goto-map "M" 'org-mark-ring-goto)
-  (define-key nu-goto-map "a" 'forward-page)
-  (define-key nu-goto-map "c" 'backward-page)
-  (define-key nu-goto-map "e" 'next-error)
-  (define-key nu-goto-map "g" 'goto-line)
-  (define-key nu-goto-map "k" 'avy-goto-line)
-  (define-key nu-goto-map "m" 'nu-find-previous-mark)
-  (define-key nu-goto-map "o" 'end-of-buffer)
-  (define-key nu-goto-map "r" 'jump-to-register)
-  (define-key nu-goto-map "t" 'goto-char)
-  (define-key nu-goto-map "u" 'beginning-of-buffer)
-  (define-key nu-goto-map "v" 'view-register)
-  (define-key nu-goto-map "w" 'ace-window)
   (nu-prompt-for-keymap nu-goto-map))
 
 
