@@ -33,10 +33,14 @@
 ;;      M-a org-backward-sentence
 ;;      M-e org-forward-sentence
 ;;      M-h org-mark-element
-;;      M { org backward elements
+;;      M { org backward element
 ;;      M } org forward element
 ;;
-;;      2nd, some emacs func are remapped, but evil funcs are not the same
+;;      2nd, some func are too context dependant
+;;           and do not make much sense in a menu
+;;           org-kill-note-or-show-branches
+;;
+;;      3rd, some emacs func are remapped, but evil funcs are not the same
 ;;           maybe it's the same, if user wants something he does something.
 ;;           it's not nu-menu scope to rebind normal keys
 
@@ -75,74 +79,128 @@
    	(progn
 
           ;; CHANGE
+          (define-key nu-change-map (kbd "B") 'org-babel-demarcate-block)
           (define-key nu-change-map (kbd "D") 'org-decrease-number-at-point)
           (define-key nu-change-map (kbd "J") 'org-shiftleft)
           (define-key nu-change-map (kbd "K") 'org-shiftdown)
           (define-key nu-change-map (kbd "L") 'org-shiftright)
           (define-key nu-change-map (kbd "I") 'org-shiftup)
+          (define-key nu-change-map (kbd "T") 'org-todo)
+          (define-key nu-change-map (kbd "C") 'org-toggle-checkbox)
+          (define-key nu-change-map (kbd "U") 'org-dblock-update)
+          (define-key nu-change-map (kbd "E") 'org-emphasize)
+          (define-key nu-change-map (kbd "S") 'org-list-make-subtree)
 
           ;; COPY
           (define-key nu-copy-map (kbd "O") 'org-copy)
           (define-key nu-copy-map (kbd "S") 'org-copy-special)
-          (define-key nu-copy-map (kbd "S") 'org-copy-visible)
+          (define-key nu-copy-map (kbd "V") 'org-copy-visible)
 
 	  ;; DELETE
 	  (define-key nu-kill-map (kbd "C") 'org-table-delete-column)
           (define-key nu-kill-map (kbd "R") 'org-table-kill-row)
           (define-key nu-kill-map (kbd "S") 'org-cut-special)
           (define-key nu-kill-map (kbd "T") 'org-cut-subtree)
+          (define-key nu-kill-map (kbd "B") 'org-babel-remove-result-one-or-many)
+
+	  ;; DISPLAY
+	  (define-key nu-display-map (kbd "S") 'org-sparse-tree)
+	  (define-key nu-display-map (kbd "C") 'org-clock-display)
 
 	  ;; GOTO
           (define-key nu-goto-map (kbd "I") 'org-backward-heading-same-level)
           (define-key nu-goto-map (kbd "K") 'org-forward-heading-same-level)
           (define-key nu-goto-map (kbd "J") 'org-backward-element)
           (define-key nu-goto-map (kbd "L") 'org-forward-element)
+          (define-key nu-goto-map (kbd "H") 'org-babel-goto-src-block-head)
+          (define-key nu-goto-map (kbd "B") 'org-babel-next-src-block)
+          (define-key nu-goto-map (kbd "P") 'org-babel-previous-src-block)
+          (define-key nu-goto-map (kbd "R") 'org-babel-goto-named-result)
+          (define-key nu-goto-map (kbd "N") 'org-babel-goto-named-src-block)
+          (define-key nu-goto-map (kbd "O") 'org-goto)
+          (define-key nu-goto-map (kbd "C") 'org-goto-calendar)
+          (define-key nu-mark-map (kbd "M") 'org-mark-ring-goto)
 
 	  ;; INSERT
-          (define-key nu-insert-map (kbd "L") 'org-insert-link)
           (define-key nu-insert-map (kbd "A") 'org-attach)
-          (define-key nu-insert-map (kbd "H") 'org-table-insert-hline)
+          (define-key nu-insert-map (kbd "B") 'org-babel-insert-header-arg)
           (define-key nu-insert-map (kbd "C") 'org-table-insert-column)
+          (define-key nu-insert-map (kbd "E") 'org-date-from-calendar)
+          (define-key nu-insert-map (kbd "D") 'org-deadline)
+          (define-key nu-insert-map (kbd "H") 'org-table-insert-hline)
+          (define-key nu-insert-map (kbd "L") 'org-insert-link)
+          (define-key nu-insert-map (kbd "M") 'org-time-stamp)
+          (define-key nu-insert-map (kbd "P") 'org-paste-special)
           (define-key nu-insert-map (kbd "R") 'org-table-insert-row)
           (define-key nu-insert-map (kbd "S") 'org-paste-subtree)
-          (define-key nu-insert-map (kbd "P") 'org-paste-special)
-          (define-key nu-insert-map (kbd "M") 'org-time-stamp)
-          (define-key nu-insert-map (kbd "D") 'org-deadline)
           (define-key nu-insert-map (kbd "T") 'org-insert-todo-heading)
+          (define-key nu-insert-map (kbd "O") 'org-insert-all-links)
+          (define-key nu-insert-map (kbd "W") 'org-insert-drawer)
 
           ;; MARK
-          (define-key nu-mark-map ("S") 'outline-mark-subtree)
-          (define-key nu-mark-map ("U") 'outline-mark-subtree-up)
-          (define-key nu-mark-map ("D") 'outline-mark-subtree-down)
+          (define-key nu-mark-map (kbd "S") 'org-mark-subtree)
+          (define-key nu-mark-map (kbd "U") 'outline-mark-subtree-up)
+          (define-key nu-mark-map (kbd "D") 'outline-mark-subtree-down)
+          (define-key nu-mark-map (kbd "B") 'org-babel-mark-block)
+          (define-key nu-mark-map (kbd "E") 'org-mark-element)
 
           ;; NEW
           (define-key nu-new-map (kbd "N") 'org-add-note)
+          (define-key nu-new-map (kbd "S") 'org-match-sparse-tree)
 
 	  ;; OPEN
-          (define-key nu-open-map (kbd "A") 'org-cycle-agenda-files)
+	  ;; note A is already org-agenda, but implemented in nu-menus.el
+          (define-key nu-open-map (kbd "G") 'org-cycle-agenda-files)
+          (define-key nu-open-map (kbd "B") 'org-babel-describe-bindings)
           (define-key nu-open-map (kbd "C") 'org-cycle)
           (define-key nu-open-map (kbd "L") 'org-open-at-point)
+          (define-key nu-open-map (kbd "S") 'org-babel-open-src-block-result)
 
           ;; PRINT EVAL
           (define-key nu-print-map (kbd "L") 'pcomplete)
-          (define-key nu-print-map (kbd "S") 'org-bacel-check-src-block)
+          (define-key nu-print-map (kbd "O") 'org-babel-load-in-session)
+          (define-key nu-print-map (kbd "B") 'org-bacel-execute-buffer)
+          (define-key nu-print-map (kbd "M") 'org-bacel-execute-maybe)
+          (define-key nu-print-map (kbd "S") 'org-babel-execute-subtree)
+          (define-key nu-print-map (kbd "C") 'org-bacel-check-src-block)
+          (define-key nu-print-map (kbd "X") 'org-bacel-execute-src-block)
+          (define-key nu-print-map (kbd "K") 'org-babel-do-key-sequence-in-edit-buffer)
+          (define-key nu-print-map (kbd "T") 'org-evaluate-time-range)
 
           ;; QUIT ARCHIVE
           (define-key nu-quit-map (kbd "S") 'org-archive-subtree)
           (define-key nu-quit-map (kbd "D") 'org-archive-subtree-default)
           (define-key nu-quit-map (kbd "B") 'org-archive-to-archive-sibling)
+          (define-key nu-quit-map (kbd "C") 'org-clock-cancel)
 
 	  ;; REPLACE
           (define-key nu-replace-map (kbd "B") 'org-metaleft)
           (define-key nu-replace-map (kbd "F") 'org-metaright)
-          (define-key nu-replace-map (kbd "P") 'org-metaup)
           (define-key nu-replace-map (kbd "N") 'org-metadown)
+          (define-key nu-replace-map (kbd "P") 'org-metaup)
+          (define-key nu-replace-map (kbd "S") 'org-sort)
           (define-key nu-replace-map (kbd "T") 'org-table-sort-lines)
+          (define-key nu-replace-map (kbd "L") 'org-table-blank-field)
+          (define-key nu-replace-map (kbd "P") 'org-transpose-element)
 
 	  ;; SAVE
           (define-key nu-save-map (kbd "O") 'org-refile)
           (define-key nu-save-map (kbd "A") 'org-save-all-org-buffers)
-	  (define-key nu-save-map (kbd "G") 'org-agenda-file-to-front))))))
+	  (define-key nu-save-map (kbd "G") 'org-agenda-file-to-front)
+          (define-key nu-save-map (kbd "M") 'org-mark-ring-push)
+          (define-key nu-save-map (kbd "M") 'org-babel-lob-ingest)
+
+          ;; SWITCH
+          (define-key nu-switch-map (kbd "A") 'org-toggle-archive-tag)
+          (define-key nu-switch-map (kbd "D") 'org-toggle-comment)
+          (define-key nu-switch-map (kbd "F") 'org-toggle-fixed-width)
+          (define-key nu-switch-map (kbd "G") 'org-agenda-set-restriction-lock)
+          (define-key nu-switch-map (kbd "I") 'org-toggle-inline-images)
+          (define-key nu-switch-map (kbd "L") 'org-toggle-latex-fragment)
+          (define-key nu-switch-map (kbd "O") 'org-toggle-ordered-property)
+          (define-key nu-switch-map (kbd "P") 'org-toggle-pretty-entities)
+          (define-key nu-switch-map (kbd "T") 'org-toggle-tags-groups)
+          (define-key nu-switch-map (kbd "U") 'org-toggle-time-stamp-overlays))))))
 
 ;; add hook
 (add-hook 'org-mode-hook 'nu-prepare-org-mode)
