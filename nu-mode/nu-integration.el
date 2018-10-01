@@ -200,14 +200,16 @@ Still, some keys here help."
 ;; help
 ;;
 
+(defun nu-populate-for-help ()
+  (if (eq nu-major-mode 'help-mode)
+     (progn
+        (define-key nu-goto-map "N" 'forward-button)
+        (define-key nu-goto-map "P" 'backward-button)
+        (define-key nu-goto-map "S" 'push-button)
+        (define-key nu-goto-map "B" 'help-go-back))))
+
 (add-hook 'help-mode-hook '(lambda ()
-  (add-hook 'nu-populate-hook '(lambda ()
-    (if (eq nu-major-mode 'help-mode)
-	(progn
-          (define-key nu-goto-map "L" 'forward-button)
-          (define-key nu-goto-map "J" 'backward-button)
-          (define-key nu-goto-map "o" 'push-button)
-          (define-key nu-goto-map "u" 'help-go-back)))))))
+  (add-hook 'nu-populate-hook 'nu-populate-for-help)))
 
 ;;
 ;; ibuffer
