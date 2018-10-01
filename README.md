@@ -167,14 +167,36 @@ Anyway i'd recommend to tell nu about your usage
 Menus are like operators : *save*; *open*, *new*, ...
 Menus content are like objects : *buffer*, *file*, *frame*, ...
 
-emacs nu tries to dedicate keys to these objects.
-When a function is to be mapped to a menu key,
-it is mapped to the dedicated key if possible.
-
 For example, a "file" command is bound to "f" when possible,
 so inside save menu one can type "f" to call "write-file",
 while inside delete menu "f" will call "delete-file".
 
+## Menu verbs
+
+in order to have many funcs we need many operators. Currently 13 + help-map
+so it is useful to have a good description of operators to knwow where to find funcs.
+
+
+| verb    | fullname          | description                                                                          |
+|---------|-------------------|--------------------------------------------------------------------------------------|
+| change  | bold-change       | change an existing item, not a string replacement : emphasize, promote, face, toggle |
+| copy    |                   | copy any element  (file buffer...)                                                   |
+| delete  | kill-delete       | kill buffer, string, file, lines.                                                    |
+| display | display-narrow    | outline, shrink, hide, ...                                                           |
+| goto    |                   | goto next link, list item, error, other-win, register. But otherwise use "open"      |
+| insert  |                   | insert file, register, command                                                       |
+| mark    |                   | mark                                                                                 |
+| new     |                   | create buffer, file, macro, mail, frame, win                                         |
+| print   | print-eval        | print, export, compile, eval                                                         |
+| quit    | quit-archive      | but for undo use undo-tree                                                           |
+| replace | replace-transpose | replace string, transpose (string frame)                                             |
+| save    |                   | save, refile, push to list                                                           |
+| switch  | setting           | toggle a settings, customize. (but toggle a box is "change")                         |
+
+
+## Menu objects
+
+any of these verbs acts on an object.
 
 | key | functions              | example                         |
 |-----|------------------------|---------------------------------|
