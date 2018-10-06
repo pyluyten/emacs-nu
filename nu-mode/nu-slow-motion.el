@@ -289,29 +289,25 @@
 
    ;; alt keys
    ;; TODO make menu outside of slowM
-   (global-set-key (kbd "M-a") 'nu-new-prompt)
-   (global-set-key (kbd "M-b") 'backward-char)
-   (global-set-key (kbd "M-c") 'nu-change-prompt)
-   (global-set-key (kbd "M-k") 'nu-kill-prompt)
-   (global-set-key (kbd "M-e") 'newline-and-indent)
-   (global-set-key (kbd "M-f") 'forward-char)
+   (global-set-key (kbd "M-f") 'save-buffer) ; menu is rare. space s
    (global-set-key (kbd "M-g") 'ace-window) ; menu is rare => space g
-   (global-set-key (kbd "M-i") 'nu-back-to-indentation)
-   (global-set-key (kbd "M-m") 'save-buffer) ; menu is rare. space s
-   (global-set-key (kbd "M-n") 'next-line)
-   (global-set-key (kbd "M-o") 'nu-do-prompt) ; menu is space o
-   (global-set-key (kbd "M-p") 'previous-line)
-   (global-set-key (kbd "M-q") 'nu-print-prompt)
+   (global-set-key (kbd "M-k") 'nu-kill-prompt)
+   (global-set-key (kbd "M-m") 'nu-mark-prompt)
+   (global-set-key (kbd "M-n") 'nu-new-prompt)
+   (global-set-key (kbd "M-p") 'nu-print-prompt)
+   (global-set-key (kbd "M-q") 'nu-quit-prompt)
    (global-set-key (kbd "M-r") 'nu-replace-prompt)
    (global-set-key (kbd "M-s") 'nu-find-prompt)
-   (global-set-key (kbd "M-t") 'split-window-right)
    (global-set-key (kbd "M-u") 'undo-tree-visualize)
-   (global-set-key (kbd "M-v") 'nu-quit-prompt)
-   (global-set-key (kbd "M-w") 'nu-copy-region-or-line)
-   (global-set-key (kbd "M-x") 'nu-M-x)
+   (global-set-key (kbd "M-x") 'nu-change-prompt)
    (global-set-key (kbd "M-y") 'nu-insert-prompt)
-   (global-set-key (kbd "M-z") 'nu-quit-document) ; menu is space
 
+   (global-set-key (kbd "M-x") 'nu-M-x)
+   (global-set-key (kbd "M-w") 'nu-copy-region-or-line)
+   (global-set-key (kbd "M-t") 'split-window-right)
+   (global-set-key (kbd "M-o") 'nu-do-prompt) ; menu is space o
+   (global-set-key (kbd "M-i") 'nu-back-to-indentation)
+   (global-set-key (kbd "M-e") 'newline-and-indent)
 
    ;; visual line mode
    (define-key evil-visual-state-map "M" 'evil-append)
@@ -354,23 +350,23 @@
   ;; SPACE key -- long term make this outside of slowM
   (setq nu-evil-map (make-keymap))
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
-  (define-key nu-evil-map "a" 'nu-mark-prompt)
-  (define-key nu-evil-map "c" 'nu-change-prompt)
+  (define-key nu-evil-map "c" 'nu-copy-prompt)
+  (define-key nu-evil-map "d" 'nu-display-prompt)
+  (define-key nu-evil-map "f" 'nu-save-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)
-  (define-key nu-evil-map "h" 'help-map)
-  (define-key nu-evil-map "i" 'nu-switch-prompt)
+  (define-key nu-evil-map "h" help-map)
   (define-key nu-evil-map "k" 'nu-kill-prompt)
-  (define-key nu-evil-map "m" 'nu-save-prompt)
+  (define-key nu-evil-map "m" 'nu-mark-prompt)
   (define-key nu-evil-map "n" 'nu-new-prompt)
   (define-key nu-evil-map "o" 'nu-open-prompt)
-  (define-key nu-evil-map "q" 'nu-print-prompt)
+  (define-key nu-evil-map "p" 'nu-print-prompt)
+  (define-key nu-evil-map "q" 'nu-quit-prompt)
   (define-key nu-evil-map "r" 'nu-replace-prompt)
   (define-key nu-evil-map "s" 'nu-find-prompt)
+  (define-key nu-evil-map "t" 'nu-switch-prompt)
   (define-key nu-evil-map "u" 'undo-tree-visualize)
-  (define-key nu-evil-map "w" 'nu-copy-prompt)
-  (define-key nu-evil-map "x" 'nu-display-prompt)
+  (define-key nu-evil-map "x" 'nu-change-prompt)
   (define-key nu-evil-map "y" 'nu-insert-prompt)
-  (define-key nu-evil-map "z" 'nu-quit-prompt)
   (define-key nu-evil-map (kbd "<SPC>") 'nu-M-x)
 
   ;; normal / motion / visual state
