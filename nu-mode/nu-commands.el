@@ -96,6 +96,21 @@
 
 
 
+
+;; Commands for menu
+;; i sent a request to include this func in bookmark.el to the maintainer ;; ( 2018.10.09)
+
+(defun bookmark-jump-other-frame (bookmark)
+  "Jump to BOOKMARK in another frame.  See `bookmark-jump' for more."
+  (interactive
+   (list (bookmark-completing-read "Jump to bookmark (in another frame)"
+                                   bookmark-current-bookmark)))
+  (bookmark-jump bookmark 'view-buffer-other-frame))
+
+
+
+
+
 (defun nu-no-goal-column () (interactive) (setq goal-column nil) (message "No goal column"))
 (defun nu-join-with-following-line () (interactive) (join-line 1))
 (defun nu-rot-reg-or-toggle-rot () (interactive) (if mark-active (rot13-region) (toggle-rot13-mode)))
@@ -111,9 +126,6 @@
 (defun nu-texi2pdf ()
  (interactive)
  (async-shell-command (format "texi2pdf %s" buffer-file-name)))
-
-
-
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
