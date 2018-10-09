@@ -208,7 +208,13 @@ Other prompter allow more features : "+" to trigger repeat menu , "-" or "1", "2
 
 ## add a mode
 
-First make a list of all funcs a mode offers. Do not use describe-mode because some funcs may not be mapped. Instead you can use for example ivy : run counsel-M-x, then input the mode prefix (org-), then type `C-c C-o` to run *ivy-occur*, then save the list. Here you are. Now you just have to define a func to add to relevant nu keymaps the relevant funcs. 
+First make a list of all funcs a mode offers. Do not use only describe-mode because some funcs may not be mapped. Instead you can use for example ivy : run counsel-M-x, then input the mode prefix (org-), then type `C-c C-o` to run *ivy-occur*, then save the list. Here you are. 
+
+You might use `nu-check-candidates-for-menu` func to tell you what candidates you already added to menu or not.
 
 `describe-mode` is still useful to note which funcs are actually a simple remap. You may not want to bind these to menu. Keep these documented so it is feasible to check all funcs are handled.
 
+
+## add a prompter
+
+Default prompter is which-key, so it is not really a prompter, just a quick help. Other prompters are nu-ivy-prompt-for-keymap, nu-helm-prompt-for-keymap, or nu-lv-prompt-for-keymap (requires hydra).
