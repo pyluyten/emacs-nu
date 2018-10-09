@@ -1,6 +1,6 @@
-;;; nu-mode.el --- Modern Emacs Keybinding
+;;; nu-commands.el --- Modern Emacs Keybinding
 ;;; Emacs-Nu is an emacs mode which wants to makes Emacs easier.kk
-;;; Copyright (C) 2017 Pierre-Yves LUYTEN
+;;; Copyright (C) 2018 Pierre-Yves LUYTEN
 ;;;  
 ;;; This program is free software; you can redistribute it and/or
 ;;; modify it under the terms of the GNU General Public License
@@ -15,13 +15,86 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with this program; if not, write to the Free Software
 ;;; Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA
-					;
 
-; sometimes even simple interactive command need to be defined here
-; this is because describe-keymap need some definition
-; lambda function appear as ?
+
+;; FIXME
+;; this files contains a lot of commands
+;; this should be reviewed
+
 
 (require 'nu-vars)
+
+(defun nu-check-candidates-for-menu ()
+;; this func does analyse if nu-menu implementation is complete
+;; open a file
+;; row 1 : contain the PATH to nu file (eg nu-markdown.el nu-org.el ...)
+;;         this file is the reference detailing which func are already
+;;         included in nu menu
+;; further rows :
+;; - [ ] markdown-do
+;; - [ ] markdown-promote
+;; 
+;; nu-check-for-candidates-for-menu will toggle row when func is found
+;; in nu file provided in row 1.
+;; if func is not found, it will let checkbox not toggled.
+;; then sort-lines is used to emphasize which func remain to integrate in
+;; nu menu.
+;; 
+ (interactive)
+ (let ((not-last-line t)
+       (nu-limit 0)
+       (nu-file nil)
+       (nu-func nil)
+       (found-func nil))
+
+   ;; loop start
+   (goto-char 1)
+   (while (and not-last-line (< nu-limit 366))
+     
+     (setq nu-limit (+ nu-limit 1)
+	   nu-func nil
+	   found-func nil)
+  
+     ;; if first line, note nu file
+     (if (eq nu-file nil)
+         (setq nu-file (buffer-substring-no-properties 
+                          (line-beginning-position)
+                          (line-end-position)))
+          
+         ;; else, check the func
+         ;; 1st we grab the func name
+         (progn
+  	  (end-of-line)
+  	  (ignore-errors (search-backward " "))
+          (setq nu-func (buffer-substring-no-properties
+                        (+ 1 (point))
+  	                (line-end-position)))
+ 
+          ;; so 2nd we look for this func in nu file
+          (with-temp-buffer
+            (insert-file-contents nu-file nil nil nil t)
+	    (goto-char 1)
+	    (setq found-func (search-forward nu-func nil t)))
+
+          ;; 3rd we amend the current row
+	  (unless (eq nu-func nil)
+            (progn
+	       (beginning-of-line)
+	       (delete-region (point) (line-end-position))
+	       (if (not (eq found-func nil))
+	         (insert "- [X] ")
+                 (insert "- [ ] "))
+	       (insert nu-func)))))
+
+     ;; loop : next line
+     (setq not-last-line (= 0 (forward-line 1))))
+
+     ;; loop is over. sort lines.
+     (beginning-of-buffer)
+     (forward-line 1)
+     (sort-lines nil (point) (buffer-end 1))))
+
+
 
 (defun nu-no-goal-column () (interactive) (setq goal-column nil) (message "No goal column"))
 (defun nu-join-with-following-line () (interactive) (join-line 1))
