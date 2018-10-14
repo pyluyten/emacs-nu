@@ -164,6 +164,8 @@ Still, some keys here help."
           (define-key nu-change-map "I" 'indent-pp-sexp)
           (define-key nu-change-map "D" 'indent-sexp)
           (define-key nu-change-map "P" 'prog-indent-sexp)
+          (define-key nu-print-map "C" 'emacs-lisp-byte-compile)
+          (define-key nu-print-map "L" 'emacs-lisp-byte-compile-and-load)
           (define-key nu-print-map "N" 'completion-at-point)
           (define-key nu-print-map "x" 'eval-last-sexp)
           (define-key nu-print-map "B" 'eval-buffer)
@@ -284,6 +286,8 @@ Still, some keys here help."
    (add-hook 'nu-populate-hook '(lambda ()
      (if (eq nu-major-mode 'lisp-interaction-mode)
 	  (progn
+            (define-key nu-print-map "C" 'emacs-lisp-byte-compile)
+            (define-key nu-print-map "L" 'emacs-lisp-byte-compile-and-load)
             (define-key nu-change-map (kbd "R") 'comment-or-uncomment-region)
             (define-key nu-change-map (kbd "C") 'comment-dwim)
             (define-key nu-change-map (kbd "N") 'comment-indent-new-line)
