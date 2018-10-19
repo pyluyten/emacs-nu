@@ -84,15 +84,15 @@
    (define-key evil-normal-state-map "K" 'evil-delete-line)
    (define-key evil-normal-state-map "l" nil) ; motion
    (define-key evil-normal-state-map "L" nil) ; motion
-   (define-key evil-normal-state-map "m" 'point-to-register)
-   (define-key evil-normal-state-map "M" 'kmacro-start-macro)
+   (define-key evil-normal-state-map "m" 'evil-append)
+   (define-key evil-normal-state-map "M" 'evil-append-line)
    (define-key evil-normal-state-map "n" nil) ; TODO motion
    (define-key evil-normal-state-map "o" 'evil-open-below)
    (define-key evil-normal-state-map "O" 'evil-open-above)
    (define-key evil-normal-state-map "p" nil) ; motion
    (define-key evil-normal-state-map "P" nil) ; motion
-   (define-key evil-normal-state-map "q" 'evil-append)
-   (define-key evil-normal-state-map "Q" 'evil-append-line)
+   (define-key evil-normal-state-map "q" 'point-to-register)
+   (define-key evil-normal-state-map "Q" 'evil-window-middle)
    (define-key evil-normal-state-map "r" 'evil-replace)
    (define-key evil-normal-state-map "R" 'evil-search-previous)
    (define-key evil-normal-state-map "s" 'nu-search)
@@ -126,7 +126,7 @@
    (define-key evil-normal-state-map "<" 'evil-shift-left)
    (define-key evil-normal-state-map "=" 'evil-indent)
    (define-key evil-normal-state-map ">" 'evil-shift-right)
-   (define-key evil-normal-state-map "@" 'evil-execute-macro)
+   (define-key evil-normal-state-map "@" 'kmacro-start-macro)
    (define-key evil-normal-state-map "$" 'kmacro-end-or-call-macro)
    (define-key evil-normal-state-map "/" 'evil-replace-state)
    ;;(define-key evil-normal-state-map "z=" 'ispell-word)
