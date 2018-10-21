@@ -96,10 +96,12 @@
    (ad-activate 'nu-set-bold-f)
    
    (add-hook 'nu-populate-hook '(lambda ()
-     (message "testing if c mode")
      (if (eq nu-major-mode 'c-mode)
 	(progn
-	  (message "prepareing for c mode")
+	  (define-key nu-move-map "f" 'end-of-defun)
+	  (define-key nu-move-map "F" 'beginning-of-defun)
+
+	  (define-key nu-mark-map "F" 'mark-defun)
           (define-key nu-replace-map "Y" 'c-set-style)))
           (define-key nu-change-map "R" 'comment-or-uncomment-region)
           (define-key nu-change-map "C" 'comment-dwim)
@@ -156,6 +158,10 @@ Still, some keys here help."
    (add-hook 'nu-populate-hook '(lambda ()
      (if (eq nu-major-mode 'emacs-lisp-mode)
 	(progn
+	  (define-key nu-move-map "f" 'end-of-defun)
+	  (define-key nu-move-map "F" 'beginning-of-defun)
+
+	  (define-key nu-mark-map "F" 'mark-defun)
           (define-key nu-kill-map "A" 'backward-delete-char-untabify)
           (define-key nu-change-map "R" 'comment-or-uncomment-region)
           (define-key nu-change-map "C" 'comment-dwim)
@@ -286,6 +292,11 @@ Still, some keys here help."
    (add-hook 'nu-populate-hook '(lambda ()
      (if (eq nu-major-mode 'lisp-interaction-mode)
 	  (progn
+	    (define-key nu-move-map "f" 'end-of-defun)
+	    (define-key nu-move-map "F" 'beginning-of-defun)
+
+	    (define-key nu-mark-map "F" 'mark-defun)
+
             (define-key nu-print-map "C" 'emacs-lisp-byte-compile)
             (define-key nu-print-map "L" 'emacs-lisp-byte-compile-and-load)
             (define-key nu-change-map (kbd "R") 'comment-or-uncomment-region)
