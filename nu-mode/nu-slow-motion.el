@@ -352,6 +352,7 @@
   (define-key evil-normal-state-map (kbd "<SPC>") nu-evil-map)
   (define-key nu-evil-map "c" 'nu-copy-prompt)
   (define-key nu-evil-map "d" 'nu-display-prompt)
+  (define-key nu-evil-map "e" 'nu-move-prompt)
   (define-key nu-evil-map "f" 'nu-save-prompt)
   (define-key nu-evil-map "g" 'nu-goto-prompt)
   (define-key nu-evil-map "h" help-map)

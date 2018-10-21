@@ -46,6 +46,15 @@ or Ctrl as prefix.
 As in nu-keymap, the user owns the punctation.")
 
 
+;; move-to is specific. This menu comes empty
+;; only modes are to fill-in move-to-map
+
+(defun nu-move-prompt ()
+  (interactive)
+  (setq nu-major-mode major-mode)
+  (nu-define-prefix 'nu-move-map)
+  (run-hooks 'nu-populate-hook)
+  (nu-prompt-for-keymap nu-move-map))
 
 
 (defun nu-populate-switch ()

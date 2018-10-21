@@ -6,7 +6,16 @@
 - The keybindings (flavours)
   This part of nu deals with keys. It is possible to use of of them without the menu but other imply the menu to be used.
 
-## The menu ##
+nu-mode is in Melpa. So it's the usual deal.
+
+    (require 'package)
+
+    (add-to-list 'package-archives
+    '("melpa" . "https://melpa.org/packages") t)
+
+(or look at https://melpa.org)
+
+# The menu #
 
 I dislike `Control+x` because many keybindings are difficult both to memorize and to type. Also it is not merged with `Alt+g` (**goto-map**) or `Control+c` (**mode specific map**). I rather prefer a global menu. `Spacemacs` uses a similar menu, except it is grouped by theme and might contain less modes specific items.
 
@@ -36,9 +45,10 @@ so it is useful to have a good description of operators to knwow where to find f
 | switch  | setting   | nu-switch-map  | toggle a settings, customize. (but toggle a box is "change")                                |
 
 
+
 ### Menu objects ###
 
-any of these verbs acts on an object.
+any of these verbs acts on an object. Whenever possible, an object is to be bound to its usal key.
 
 | key | functions              | example                         |
 |-----|------------------------|---------------------------------|
@@ -69,15 +79,55 @@ any of these verbs acts on an object.
 | y   | all                    |                                 |
 | z   | command                | term                            |
 
+### Menus for major and minor modes ###
+
+emacs modes offer lot of funcs. sometimes not every func in bound to a key. but in nu emacs i tend to bind everything, to the usual menus. So if a mode allows to kill something, it will be bound in kill-delete prompt, altogether with usual funcs like delete-blank lines, delete-window and so on.
+
+Convention is still work in progress : usual funcs use lower case keys, modes use uppercase keys. Usually punctations is available for minor modes.
+
+Moving might be very specific to a mode. So while nu offers a common "goto" menu dedicated to going to, either a different place to the buffer, or somewhere like a specific char or specific line, there is a specific "move-to" menu which is only used by modes. So all keys in this specific menu are dedicated to current modes. I expect this menu to contain only moves inside the current buffer, while other functions should leverage goto-menu (or open-menu if appropriate).
+
+MOVE-TO menu uses its own "objects" conventions in below table plus "modifiers": 
+- k "lower case key" to go forward / down
+- K "upper case key" to go backward / up
+- "g" is a prefix to amend the key so
+  - g + k is end (moving forward)
+  - g + K is beginning (moving backward)
+  
+The convention is respected only if objects applies to this mode.
+
+| move-to menu key | move-to menu object                              |
+|------------------|--------------------------------------------------|
+| a                | page                                             |
+| b                | block                                            |
+| e                | heading                                          |
+| f                | <reference> (1)                                  |
+| h                | paragraph                                        |
+| l                | list                                             |
+| n                | link (inside the buffer, otherwise use goto-map) |
+| o                | outline                                          |
+| r                | <reference> (2)                                  |
+| t                | note                                             |
+| y                | hierarchy                                        |
+
 ## FLAVOURS ##
 
 so, nu comes with several flavours.
 
 ### No Flavour : just add nu menus to Emacs ###
 
-Actually this flavour is just adding nu menus to your Emacs. It is nice if you want to keep Emacs keybindings or if you already rebind, for example with ErgoEmacs. Obviously the drawback is that if menus are too difficult to reach, they might lose their power.
+Just adding nu menus to your Emacs is nice to keep Emacs keybindings or if you already use some keybinding, for example with ErgoEmacs. Obviously the drawback is that if menus are too difficult to reach, they might lose their power.
 
-### vim flaour : Nu State is based on evil ###
+    (require 'nu-mode)
+    (nu-initialize)
+	(nu-populate-prompters)
+	
+Then bind the key or sequence you want to nu-menu-map, like
+
+    (global-set-key (kbd "<menu>") 'nu-prompt-for-menus)
+    (global-set-key (kbd "C-c") 'nu-prompt-for-menus)
+
+### vim flavour : Nu State is based on evil ###
 
 nu state is vim. It is simply integration of nu-menu into evil.
 Well, nu state does preserve vim keys but adds some alt keys (y=copy, p=paste, d=cut, f=find)
@@ -85,14 +135,29 @@ So, vim states (normal, insert, visual) are used. Command state is available but
 
 Some alt keys trigger immediate func (eg to switch windows without leaving home row), some trigger submenus.
 
+     (require 'nu-state)
+     (nu-state)
+ 
+ 
 ### slowMotion flavour : an Emacs respectful modal keybinding ###
 
 slowm is modal and based on evil. It basically binds evil funcs to other keys, in order to respect emacs conventions like `a` for beginning-of-line or `k` to kill. slowm makes sense on itself but may also be used together with nu menu.
 
+    (require 'nu-slow-motion)
+    (nu-slow-motion)
+
+Other modes than text are Emacs state. From a text bufffer you will use menu to switch buffer or do anyting. From another mode than text (mail, dired...) you may either stick to `C-x o` other-window, or bind nu leader menu to C-c, or replace C-x with nu leader menu. Or you may rely on `global-set-key` to assign keys but not break keybindings.
+
+    (define-key evil-emacs-state-map (kbd "C-c m") 'nu-slowm-leader-prompt)
+	(global-set-key (kbd "M-g") 'other-window)
+
 ### notepad Flavour : Nu Mode keybinding ###
 
 It's a modern keybinding (c =copy, v=insert, x=cut, f=find)
-Everything is done in insert mode.
+Everything is done in insert mode. There are
+- immediate keys : do something like save of find
+- menus keys : access the save-archive menu or find menu
+
 Hands remain most of time in home row because of alt keys.
 Paddle is like evil (hjkl) or invesed T-like (jkil).
 Default is to have alt keys do "immediate" funcs
@@ -100,47 +165,8 @@ So, menus , which are generally not necessary, are invoked using Control key lik
 nu mode also allows to have alt keys do menus, and control do immediate func.
 This is compabilble with today's conventions (conrol+c copy, control+v find and so on)
 
-Technically nu mode is now based on evil. This allows not to reinvet few functions.
-This includes selecting text (like vim selection mode), which is the only modal part of nu mode.
+Technically nu mode is based on evil. This includes selecting text (like vim selection mode), which is the only modal part of nu mode.
 This also includes a keybinding to run evil-delete, like vi "d" operator to delete any vi motion.
-
-
-# INSTALLATION
-
-Common for just menus or nu-mode or nu-state
-Install package on melpa
-
-Nu-mode is in Melpa. So it's the usual deal.
-(or look at https://melpa.org)
-
-    (require 'package)
-
-    (add-to-list 'package-archives
-    '("melpa" . "https://melpa.org/packages") t)
- 
-
-
-Then, M-x package-list-packages, then search for nu-mode.
-Finally add this to your init.el.
-
-You can also install git repo but then you're a big boy and do not need
-instructions, do you?
-
-
-## NO KEYMAP : JUST BIND MENUS
-
-    (require 'nu-mode)
-    (nu-initialize)
-	(nu-populate-prompters)
-	
-  Then bind the key or sequence you want to nu-menu-map, like
-
-    (global-set-key (kbd "<menu>") 'nu-prompt-for-menus)
-    (global-set-key (kbd "C-c") 'nu-prompt-for-menus)
-
-## NU-MODE
-
-a global minor mode to push a keymap. Also add some hooks to help the user.
 
     (require 'nu-mode)
     (nu-mode)
@@ -156,25 +182,7 @@ then use variables nu-immediate-key and nu-menu-key.
            nu-use-vi-paddle t)
      (nu-mode)
 
-nu-mode also has other customization, see below.
-
-## NU-STATE (evil)
-
-nu state preserves vi keys, but adds alt keys to invoke immediate funcs and some menus.
-for example in vi, d is delete.
-with nu state, both in normal state and insert state, you can use altd for delete menu.
-
-     (require 'nu-state)
-     (nu-state)
-
-So in nu state, to invoke a prompt like _insert_ will leverage the usual vi key for _insert_, which is _p_. This should be good enough for a vimer. But you're a stupid mormon like me, right? so you can use : 
-
-    (require 'nu-state)
-    (nu-state-set-alt-func-using-notepad-keys)
-
-This one will set keys so you can have alt+v for insert menu, and more generally notepad like keys to invoke menus. Yeah so now we have a mix of vim notepad and emacs, and this is currently the keymap i'm using. it rocks because vi keys are easy enough for classic operations, then you leverage the usual vim visual mode which rocks, then you have alt+d for invoking function (M-x) which rocks because it's just here (yeah `space space` works, too) then finally for more difficult operations you have the menus with easy mnemonics. So you're a noob but still do black magic.
-
-# COMMON CUSTOMIZATIONS
+# CUSTOMIZING AND EXTENDING
 
 no matter if you use just menus, nu-mode, or nu-state, you have some common customizations.
 
@@ -204,9 +212,9 @@ Other prompter allow more features : "+" to trigger repeat menu , "-" or "1", "2
     (defalias 'nu-prompt-for-keymap 'nu-buffer-prompt-for-keymap)
 
 
-# Extend nu
+## Extend nu
 
-## add a mode
+### add a mode
 
 First make a list of all funcs a mode offers. Do not use only describe-mode because some funcs may not be mapped. Instead you can use for example ivy : run counsel-M-x, then input the mode prefix (org-), then type `C-c C-o` to run *ivy-occur*, then save the list. Here you are. 
 
@@ -215,6 +223,6 @@ You might use `nu-check-candidates-for-menu` func to tell you what candidates yo
 `describe-mode` is still useful to note which funcs are actually a simple remap. You may not want to bind these to menu. Keep these documented so it is feasible to check all funcs are handled.
 
 
-## add a prompter
+### add a prompter
 
 Default prompter is which-key, so it is not really a prompter, just a quick help. Other prompters are nu-ivy-prompt-for-keymap, nu-helm-prompt-for-keymap, or nu-lv-prompt-for-keymap (requires hydra).
