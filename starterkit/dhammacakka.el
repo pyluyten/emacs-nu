@@ -42,7 +42,6 @@
 ; ~~~~
 ; ~~~~ Display
 
-  (global-linum-mode 1) ;; line number
   (column-number-mode t) ;; column number
   (global-visual-line-mode 1) ; wrap line
 
@@ -70,7 +69,6 @@
   (defalias 'yes-or-no-p 'y-or-n-p)
 
 
-; we're in 2014
   (require 'recentf)
   (recentf-mode 1)
 
@@ -90,15 +88,6 @@
     (fundamental-mode)))
 
 (add-hook 'find-file-hooks 'dhamma-big-files)
-
-; ~~~~
-; ~~~~ Friends
-
-  (require 'package)
-  (add-to-list 'package-archives
-   '("melpa" . "http://melpa.milkbox.net/packages/") t)
-  (add-to-list 'package-archives
-   '("marmalade" . "http://marmalade-repo.org/packages/") t)
 
 
 (provide 'dhammacakka)
