@@ -45,7 +45,10 @@ This may allow where-is to know where to find functions."
 
    (define-key nu-menu-map "a" 'nu-mark-map)
    (define-key nu-menu-map "b" 'nu-change-map)
-   (define-key nu-menu-map "f" 'nu-find-map)
+   (define-key nu-menu-map "b" 'nu-change-map)
+   (define-key nu-menu-map "c" 'nu-copy-prompt)
+   (define-key nu-menu-map "d" 'nu-display-map)
+   (define-key nu-menu-map "f" 'nu-find-prompt)
    (define-key nu-menu-map "g" 'nu-goto-map)
    (define-key nu-menu-map "h" 'help-map)
    (define-key nu-menu-map "n" 'nu-new-map)
@@ -55,8 +58,8 @@ This may allow where-is to know where to find functions."
    (define-key nu-menu-map "r" 'nu-replace-map)
    (define-key nu-menu-map "s" 'nu-save-map)
    (define-key nu-menu-map "v" 'nu-insert-map)
-   (define-key nu-menu-map "w" 'nu-display-map)
-   (define-key nu-menu-map "x" 'nu-kill-map))
+   (define-key nu-menu-map "x" 'nu-kill-map)
+   (define-key nu-menu-map "z" 'undo-tree-visualize))
 
 (defun nu-populate-prompters ()
   "Fill prompters map."
