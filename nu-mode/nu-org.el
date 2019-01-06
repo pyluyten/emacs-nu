@@ -43,6 +43,8 @@
 ;;      3rd, some emacs func are remapped, but evil funcs are not the same
 ;;           maybe it's the same, if user wants something he does something.
 ;;           it's not nu-menu scope to rebind normal keys
+;;
+;;
 
 ;; <remap> <backward-paragraph>			org-backward-paragraph
 ;; <remap> <comment-dwim>			org-comment-dwim
@@ -65,6 +67,18 @@
 ;; <remap> <show-children>			org-show-children
 ;; <remap> <transpose-words>			org-transpose-words
 
+;; # minor mode
+;; orgtbl-mode
+
+;; # not interactive
+;; org-tbl-menu
+;; 
+
+;; # obsolete
+;; org-activate-angle-links
+;; org-activate-plain-links
+;; org-capture-import-remember-templates
+
 (defun nu-prepare-org-mode-internal ()
   ;; CHANGE
   (define-key nu-change-map (kbd "A") 'org-clock-in-last)
@@ -85,12 +99,15 @@
   (define-key nu-change-map (kbd "T") 'org-todo)
   (define-key nu-change-map (kbd "U") 'org-dblock-update)
   (define-key nu-change-map (kbd "X") 'org-ctrl-c-ctrl-c)
+  (define-key nu-change-map (kbd "M") 'org-convert-to-odd-levels)
+  (define-key nu-change-map (kbd "N") 'org-convert-to-oddeven-levels)
 
   ;; COPY
   (define-key nu-copy-map (kbd "O") 'org-copy)
   (define-key nu-copy-map (kbd "S") 'org-copy-special)
   (define-key nu-copy-map (kbd "V") 'org-copy-visible)
   (define-key nu-copy-map (kbd "T") 'org-clone-subtree-with-time-shift)
+  (define-key nu-copy-map (kbd "R") 'org-copy-subtree)
 
   ;; DELETE
   (define-key nu-kill-map (kbd "C") 'org-table-delete-column)
@@ -102,6 +119,7 @@
 
   ;; DISPLAY
   (define-key nu-display-map (kbd "S") 'org-sparse-tree)
+  (define-key nu-display-map (kbd "C") 'org-content)
   (define-key nu-display-map (kbd "C") 'org-clock-display)
   (define-key nu-display-map (kbd "T") 'org-table-edit-field)
   (define-key nu-display-map (kbd "O") 'org-columns)
@@ -112,6 +130,7 @@
   (define-key nu-goto-map (kbd "C") 'org-goto-calendar)
   (define-key nu-goto-map (kbd "D") 'org-down-element)
   (define-key nu-mark-map (kbd "E") 'org-next-block)
+  (define-key nu-mark-map (kbd "F") 'org-up-element)
   (define-key nu-goto-map (kbd "H") 'org-babel-goto-src-block-head)
   (define-key nu-goto-map (kbd "I") 'org-backward-heading-same-level)
   (define-key nu-goto-map (kbd "J") 'org-backward-element)
@@ -151,6 +170,7 @@
   (define-key nu-mark-map (kbd "E") 'org-mark-element)
 
   ;; NEW
+  (define-key nu-new-map (kbd "C") 'org-capture)
   (define-key nu-new-map (kbd "N") 'org-add-note)
   (define-key nu-new-map (kbd "S") 'org-match-sparse-tree)
 
@@ -174,6 +194,9 @@
   (define-key nu-print-map (kbd "K") 'org-babel-do-key-sequence-in-edit-buffer)
   (define-key nu-print-map (kbd "T") 'org-evaluate-time-range)
   (define-key nu-print-map (kbd "A") 'org-table-eval-formula)
+  (define-key nu-print-map (kbd "D") 'org-update-all-dblocks)
+  (define-key nu-print-map (kbd "E") 'org-update-checkbox-count)
+  (define-key nu-print-map (kbd "F") 'org-update-dblock)
 
   ;; QUIT ARCHIVE
   (define-key nu-quit-map (kbd "A") 'org-archive-subtree)
@@ -200,6 +223,7 @@
   (define-key nu-save-map (kbd "M") 'org-babel-lob-ingest)
   (define-key nu-save-map (kbd "T") 'org-babel-tangle)
   (define-key nu-save-map (kbd "F") 'org-babel-tangle-file)
+  (define-key nu-save-map (kbd "B") 'org-advertized-archive-subtree)
 
   ;; SWITCH
   (define-key nu-switch-map (kbd "A") 'org-toggle-archive-tag)
