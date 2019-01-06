@@ -110,8 +110,8 @@
    (define-key evil-normal-state-map "X" 'nu-M-x)
    (define-key evil-normal-state-map "y" 'evil-paste-after)
    (define-key evil-normal-state-map "Y" 'evil-paste-before)
-   (define-key evil-normal-state-map "z" 'evil-substitute)
-   (define-key evil-normal-state-map "Z" 'evil-change-whole-line)
+;   (define-key evil-normal-state-map "z" 'evil-substitute)         ;; evil-substitute est non mappé!
+;   (define-key evil-normal-state-map "Z" 'evil-change-whole-line)  ;; evil-change-whole-line est non mappé!
    (define-key evil-normal-state-map (kbd "<SPC>") 'evil-scroll-down)
    (define-key evil-normal-state-map (kbd "<DEL>") 'evil-scroll-up)
    (define-key evil-normal-state-map "~" 'evil-invert-char)
@@ -129,13 +129,13 @@
    (define-key evil-normal-state-map "@" 'kmacro-start-macro)
    (define-key evil-normal-state-map "$" 'kmacro-end-or-call-macro)
    (define-key evil-normal-state-map "/" 'evil-replace-state)
-   ;;(define-key evil-normal-state-map "z=" 'ispell-word)
-   ;;(define-key evil-normal-state-map "zO" 'evil-open-fold-rec)
-   ;;(define-key evil-normal-state-map "za" 'evil-toggle-fold)
-   ;;(define-key evil-normal-state-map "zc" 'evil-close-fold)
-   ;;(define-key evil-normal-state-map "zm" 'evil-close-folds)
-   ;;(define-key evil-normal-state-map "zo" 'evil-open-fold)
-   ;;(define-key evil-normal-state-map "zr" 'evil-open-folds)
+   (define-key evil-normal-state-map "z=" 'ispell-word)
+   (define-key evil-normal-state-map "zO" 'evil-open-fold-rec)
+   (define-key evil-normal-state-map "za" 'evil-toggle-fold)
+   (define-key evil-normal-state-map "zc" 'evil-close-fold)
+   (define-key evil-normal-state-map "zm" 'evil-close-folds)
+   (define-key evil-normal-state-map "zo" 'evil-open-fold)
+   (define-key evil-normal-state-map "zr" 'evil-open-folds)
 
    ;; MOTION STATE MAP ================================================
    ;; "0" is a special command when called first
@@ -219,20 +219,20 @@
    ;; TODO: z RET has an advanced form taking an count before the RET
    ;; but this requires again a special state with a single command
    ;; bound to RET
-   ;;(define-key evil-motion-state-map (vconcat "z" [return]) "zt^")
-   ;;(define-key evil-motion-state-map (kbd "z RET") (vconcat "z" [return]))
-   ;;(define-key evil-motion-state-map "zz" 'evil-scroll-line-to-center)
-   ;;(define-key evil-motion-state-map "z." "zz^")
-   ;;(define-key evil-motion-state-map "zb" 'evil-scroll-line-to-bottom)
-   ;;(define-key evil-motion-state-map "z-" "zb^")
-   ;;(define-key evil-motion-state-map "gv" 'evil-visual-restore)
-   ;;(define-key evil-motion-state-map (kbd "C-^") 'evil-buffer)
-   ;;(define-key evil-motion-state-map "zl" 'evil-scroll-column-right)
-   ;;(define-key evil-motion-state-map [?z right] "zl")
-   ;;(define-key evil-motion-state-map "zh" 'evil-scroll-column-left)
-   ;;(define-key evil-motion-state-map [?z left] "zh")
-   ;;(define-key evil-motion-state-map "zL" 'evil-scroll-right)
-   ;;(define-key evil-motion-state-map "zH" 'evil-scroll-left)
+   (define-key evil-motion-state-map (vconcat "z" [return]) "zt^")
+   (define-key evil-motion-state-map (kbd "z RET") (vconcat "z" [return]))
+   (define-key evil-motion-state-map "zz" 'evil-scroll-line-to-center)
+   (define-key evil-motion-state-map "z." "zz^")
+   (define-key evil-motion-state-map "zb" 'evil-scroll-line-to-bottom)
+   (define-key evil-motion-state-map "z-" "zb^")
+   (define-key evil-motion-state-map "gv" 'evil-visual-restore)
+   (define-key evil-motion-state-map (kbd "C-^") 'evil-buffer)
+   (define-key evil-motion-state-map "zl" 'evil-scroll-column-right)
+   (define-key evil-motion-state-map [?z right] "zl")
+   (define-key evil-motion-state-map "zh" 'evil-scroll-column-left)
+   (define-key evil-motion-state-map [?z left] "zh")
+   (define-key evil-motion-state-map "zL" 'evil-scroll-right)
+   (define-key evil-motion-state-map "zH" 'evil-scroll-left)
    (define-key evil-motion-state-map
      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
 
@@ -242,7 +242,6 @@
    (define-key evil-operator-state-map "a" nil)
    (define-key evil-operator-state-map "o" evil-outer-text-objects-map)
    (define-key evil-operator-state-map "i" evil-inner-text-objects-map)
-   (define-key evil-visual-state-map "o" evil-outer-text-objects-map)
 
    ;; text objects
    (define-key evil-outer-text-objects-map "f" 'evil-a-word)
@@ -310,21 +309,22 @@
    (global-set-key (kbd "M-e") 'newline-and-indent)
 
    ;; visual line mode
+   (define-key evil-visual-state-map "a" nil) ; motion beg line
+   (define-key evil-visual-state-map "A" nil) ; motion beg sentence
    (define-key evil-visual-state-map "M" 'evil-append)
    (define-key evil-visual-state-map "I" 'evil-insert)
-   (define-key evil-visual-state-map "o" 'exchange-point-and-mark)
-   (define-key evil-visual-state-map "O" 'evil-visual-exchange-corners)
+   (define-key evil-visual-state-map "m" 'exchange-point-and-mark)
+   (define-key evil-visual-state-map "C-m" 'evil-visual-exchange-corners)
    (define-key evil-visual-state-map "R" 'evil-change)
    (define-key evil-visual-state-map "u" 'evil-downcase)
    (define-key evil-visual-state-map "U" 'evil-upcase)
    (define-key evil-visual-state-map "z=" 'ispell-word)
-   (define-key evil-visual-state-map "a" evil-outer-text-objects-map)
+   (define-key evil-visual-state-map "o" evil-outer-text-objects-map)
    (define-key evil-visual-state-map "i" evil-inner-text-objects-map)
    (define-key evil-visual-state-map (kbd "<insert>") 'undefined)
    (define-key evil-visual-state-map (kbd "<insertchar>") 'undefined)
    (define-key evil-visual-state-map [remap evil-repeat] 'undefined)
    (define-key evil-visual-state-map [escape] 'evil-exit-visual-state))
-
 
 (defun nu-slow-motion ()
 "setup evil to fit emacs, then activates evil"
