@@ -104,8 +104,9 @@ This may allow where-is to know where to find functions."
        (nu-setup-vi-paddle evil-insert-state-map)
        (nu-setup-classic-paddle evil-insert-state-map))
 
-   (nu-mode-dkey evil-insert-state-map "a" t evil-visual-line)
-   (nu-mode-dkey evil-insert-state-map "a" nil nu-mark-prompt)
+   (nu-mode-dkey evil-insert-state-map "a" t evil-visual-char)
+   ;(nu-mode-dkey evil-insert-state-map "a" nil nu-mark-prompt)
+   (nu-mode-dkey evil-insert-state-map "a" nil nil)
 
    (nu-mode-dkey evil-insert-state-map "z" t undo-tree-undo)
    (nu-mode-dkey evil-insert-state-map "z" nil undo-tree-visualize)
@@ -126,8 +127,8 @@ This may allow where-is to know where to find functions."
    (define-key universal-argument-map (kbd "C-u") 'backward-kill-word)
 
    ;; o remains as is no matter cua or ergonomic.
-   (define-key evil-insert-state-map (kbd "C-o") 'nu-open-prompt)
-   (define-key evil-visual-state-map (kbd "C-o") 'nu-open-prompt)
+   (define-key evil-insert-state-map (kbd "C-o") nu-menu-map)
+   (define-key evil-visual-state-map (kbd "C-o") nu-menu-map)
    (define-key evil-insert-state-map (kbd "M-o") 'forward-word)
 
    (nu-mode-dkey evil-insert-state-map "p" t universal-argument)
