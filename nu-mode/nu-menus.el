@@ -151,18 +151,20 @@ As in nu-keymap, the user owns the punctation.")
 
   (define-key nu-kill-map "a" 'bookmark-delete)
   (define-key nu-kill-map "b" 'kill-buffer)
+  (define-key nu-kill-map "e" 'ace-delete-window)
+  (define-key nu-kill-map "f" 'delete-file)
+  (define-key nu-kill-map "g" 'crux-delete-file-and-buffer)
   (define-key nu-kill-map "h" 'delete-horizontal-space)
   (define-key nu-kill-map "i" 'fixup-whitespace)
   (define-key nu-kill-map "j" 'delete-duplicate-lines)
-  (define-key nu-kill-map "l" 'delete-marching-line)
   (define-key nu-kill-map "k" 'delete-blank-lines)
+  (define-key nu-kill-map "l" 'delete-marching-line)
+  (define-key nu-kill-map "o" 'delete-other-windows)
   (define-key nu-kill-map "t" 'delete-trailing-whitespace)
   (define-key nu-kill-map "u" 'flush-lines)
+  (define-key nu-kill-map "w" 'delete-window)
   (define-key nu-kill-map "x" 'kill-sexp)
-  (define-key nu-kill-map "y" 'nu-delete-all)
-
-  (if mark-active
-    (define-key nu-kill-map (kbd "<RET>") 'kill-region)))
+  (define-key nu-kill-map "y" 'nu-delete-all))
 
 (defun nu-kill-prompt ()
   (interactive)
@@ -170,9 +172,6 @@ As in nu-keymap, the user owns the punctation.")
   (nu-populate-kill)
   (run-hooks 'nu-populate-hook)
 
-  (define-key nu-kill-map "f" 'delete-file)
-  (define-key nu-kill-map "o" 'delete-other-windows)
-  (define-key nu-kill-map "w" 'delete-window)
   (nu-prompt-for-keymap nu-kill-map))
 
 
