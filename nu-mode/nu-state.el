@@ -1,6 +1,6 @@
 ;;; nu-state.el --- Modern Emacs Keybinding
 ;;; Emacs-Nu is an emacs mode which wants to makes Emacs easier.
-;;; Copyright (C) 2017 2018 Pierre-Yves LUYTEN
+;;; Copyright (C) 2017 2018 2019 Pierre-Yves LUYTEN
 ;;;  
 ;;; This program is free software; you can redistribute it and/or
 ;;; modify it under the terms of the GNU General Public License
@@ -29,6 +29,14 @@
 
 (require 'evil)
 (require 'nu-mode)
+
+;; i did not find :Ex in evil
+;; so, adding here atm
+(defun Explore ()
+  (interactive)
+   (dired default-directory))
+(defalias 'Ex 'Explore)
+
 
 (defun nu-state-help-prompt ()
   (interactive)
