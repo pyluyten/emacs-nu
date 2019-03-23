@@ -29,33 +29,29 @@
 
 
 
-; ~~~~
-; ~~~~ Lighter startup
 ; See als http://ergoemacs.org/emacs/emacs_make_modern.html
 
 (setq
         inhibit-splash-screen t
         inhibit-startup-message t)
 
-  (setq vc-handled-backends nil)
+(setq vc-handled-backends nil)
 
 ; ~~~~
 ; ~~~~ Display
 
-  (column-number-mode t) ;; column number
-  (global-visual-line-mode 1) ; wrap line
+(column-number-mode t) ;; column number
+(global-visual-line-mode 1) ; wrap line
 
-  (setq frame-title-format '("%b")) ; lighter title
+(setq frame-title-format '("%b")) ; lighter title
 
+; GUI
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 
-; GUI-friendly, not GUIlty.
-
-  (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-  (if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-  ;(if (fboundp 'menu-bar-mode) (menu-bar-mode -1))
-
- (setq x-select-enable-clipboard t
-       x-select-enable-primary t)
+(setq x-select-enable-clipboard t
+      x-select-enable-primary t)
 
 
 ; ~~~~
@@ -68,9 +64,10 @@
 
   (defalias 'yes-or-no-p 'y-or-n-p)
 
-
   (require 'recentf)
   (recentf-mode 1)
+
+(setq visible-bell 1)
 
 
 ; a sentence has a single dot, sorry
