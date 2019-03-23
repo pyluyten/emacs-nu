@@ -5,7 +5,7 @@
 ;;; Changes vs Evil are
 ;;; - keys are consistent w/ emacs keys (eg y to paste or f forward-char)
 ;;; - use emacs native func rather than evil- when makes sense
-;;; - insert state by default excepted fundamentals
+;;; - emacs-state by default except fundamental mode
 ;;; - a custom nu menu based on operator->motion logic
 ;;;   (this allows to avoid Modifiers even for advanced func like
 ;;;    the one usually found in C-x, despite C-x is still available)
@@ -52,13 +52,16 @@
 
    (define-key evil-emacs-state-map (kbd "C-o") 'nu-open-prompt)
 
-   (define-key evil-normal-state-map "a" nil) ; motion
-   (define-key evil-normal-state-map "A" nil) ; motion
+   (define-key evil-normal-state-map "a" 'evil-append)
+   (define-key evil-normal-state-map "A" 'evil-append-line)
    (define-key evil-normal-state-map "b" nil) ; motion
+   (define-key evil-normal-state-map "B" nil) ; motion
    (define-key evil-normal-state-map "c" 'evil-change)
    (define-key evil-normal-state-map "C" 'evil-change-line)
    (define-key evil-normal-state-map "d" 'evil-delete-char)
    (define-key evil-normal-state-map "D" 'evil-delete-backward-char)
+   (define-key evil-normal-state-map "e" nil) ; motion
+   (define-key evil-normal-state-map "E" 'point-to-register)
    (define-key evil-normal-state-map "g" nil)
    (define-key evil-normal-state-map "g&" 'evil-ex-repeat-global-substitute)
    (define-key evil-normal-state-map "g8" 'what-cursor-position)
@@ -74,44 +77,50 @@
    (define-key evil-normal-state-map "gw" 'evil-fill)
    (define-key evil-normal-state-map "gx" 'browse-url-at-point)
    (define-key evil-normal-state-map "g~" 'evil-invert-case)
-   (define-key evil-normal-state-map "h" nil) ; motion
-   (define-key evil-normal-state-map "H" help-map)
+   (define-key evil-normal-state-map "h" help-map) ; motion
+   (define-key evil-normal-state-map "H" 'manual-entry)
    (define-key evil-normal-state-map "i" 'evil-insert)
    (define-key evil-normal-state-map "I" 'evil-insert-line)
    (define-key evil-normal-state-map "j" nil) ; motion
    (define-key evil-normal-state-map "J" 'evil-join)
    (define-key evil-normal-state-map "k" 'evil-delete)
    (define-key evil-normal-state-map "K" 'evil-delete-line)
-   (define-key evil-normal-state-map "l" nil) ; motion
-   (define-key evil-normal-state-map "L" nil) ; motion
-   (define-key evil-normal-state-map "m" 'evil-append)
-   (define-key evil-normal-state-map "M" 'evil-append-line)
-   (define-key evil-normal-state-map "n" nil) ; TODO motion
+   (define-key evil-normal-state-map "l" 'recenter-top-bottom)
+   (define-key evil-normal-state-map "L" nil)
+   (define-key evil-normal-state-map "m" 'evil-visual-state)
+   (define-key evil-normal-state-map "M" 'evil-visual-line)
+   (define-key evil-normal-state-map (kbd "C-m") 'evil-visual-block)
+   (define-key evil-normal-state-map "n" nil) ; motion
+   (define-key evil-normal-state-map "N" nil) ; motion
    (define-key evil-normal-state-map "o" 'evil-open-below)
    (define-key evil-normal-state-map "O" 'evil-open-above)
    (define-key evil-normal-state-map "p" nil) ; motion
    (define-key evil-normal-state-map "P" nil) ; motion
-   (define-key evil-normal-state-map "q" 'point-to-register)
-   (define-key evil-normal-state-map "Q" 'evil-window-middle)
+   (define-key evil-normal-state-map "q" 'nu-search)
+   (define-key evil-normal-state-map "Q" 'delete-window)
    (define-key evil-normal-state-map "r" 'evil-replace)
-   (define-key evil-normal-state-map "R" 'evil-search-previous)
-   (define-key evil-normal-state-map "s" 'nu-search)
-   (define-key evil-normal-state-map "S" 'evil-search-next)
+   (define-key evil-normal-state-map "R" 'evil-replace-state)
+   (define-key evil-normal-state-map "s" 'evil-substitute)
+   (define-key evil-normal-state-map "S" 'evil-change-whole-line)
    (define-key evil-normal-state-map "t" nil) ; motion
    (define-key evil-normal-state-map "T" nil) ; motion
    (define-key evil-normal-state-map "u" 'undo)
    (define-key evil-normal-state-map "U" 'undo-tree-visualize)
-   (define-key evil-normal-state-map "v" 'evil-visual-char)
-   (define-key evil-normal-state-map "V" 'evil-visual-line)
-   (define-key evil-normal-state-map "\C-v" 'evil-visual-block)
+   (define-key evil-normal-state-map "v" 'scroll-other-window)
+   (define-key evil-normal-state-map "V" 'scroll-other-window-down)
    (define-key evil-normal-state-map "w" 'evil-yank)
    (define-key evil-normal-state-map "W" 'evil-yank-line)
    (define-key evil-normal-state-map "x" nu-evil-map)
    (define-key evil-normal-state-map "X" 'nu-M-x)
    (define-key evil-normal-state-map "y" 'evil-paste-after)
    (define-key evil-normal-state-map "Y" 'evil-paste-before)
-;   (define-key evil-normal-state-map "z" 'evil-substitute)         ;; evil-substitute est non mappé!
-;   (define-key evil-normal-state-map "Z" 'evil-change-whole-line)  ;; evil-change-whole-line est non mappé!
+   (define-key evil-normal-state-map "z=" 'ispell-word)
+   (define-key evil-normal-state-map "zO" 'evil-open-fold-rec)
+   (define-key evil-normal-state-map "za" 'evil-toggle-fold)
+   (define-key evil-normal-state-map "zc" 'evil-close-fold)
+   (define-key evil-normal-state-map "zm" 'evil-close-folds)
+   (define-key evil-normal-state-map "zo" 'evil-open-fold)
+   (define-key evil-normal-state-map "zr" 'evil-open-folds)
    (define-key evil-normal-state-map (kbd "<SPC>") 'evil-scroll-down)
    (define-key evil-normal-state-map (kbd "<DEL>") 'evil-scroll-up)
    (define-key evil-normal-state-map "~" 'evil-invert-char)
@@ -126,27 +135,25 @@
    (define-key evil-normal-state-map "<" 'evil-shift-left)
    (define-key evil-normal-state-map "=" 'evil-indent)
    (define-key evil-normal-state-map ">" 'evil-shift-right)
-   (define-key evil-normal-state-map "@" 'kmacro-start-macro)
-   (define-key evil-normal-state-map "$" 'kmacro-end-or-call-macro)
-   (define-key evil-normal-state-map "/" 'evil-replace-state)
-   (define-key evil-normal-state-map "z=" 'ispell-word)
-   (define-key evil-normal-state-map "zO" 'evil-open-fold-rec)
-   (define-key evil-normal-state-map "za" 'evil-toggle-fold)
-   (define-key evil-normal-state-map "zc" 'evil-close-fold)
-   (define-key evil-normal-state-map "zm" 'evil-close-folds)
-   (define-key evil-normal-state-map "zo" 'evil-open-fold)
-   (define-key evil-normal-state-map "zr" 'evil-open-folds)
+   (define-key evil-normal-state-map "@" 'kmacro-end-or-call-macro)
+   (define-key evil-normal-state-map "$" nil)
+   (define-key evil-normal-state-map "/" 'kmacro-start-macro)
 
    ;; MOTION STATE MAP ================================================
    ;; "0" is a special command when called first
-   (define-key evil-motion-state-map "a" 'evil-beginning-of-line)
-   (define-key evil-motion-state-map "A" 'evil-backward-sentence-begin)
+   (define-key evil-motion-state-map "0" 'evil-beginning-of-line)
+   (define-key evil-motion-state-map "$" 'evil-end-of-line)
+   (define-key evil-motion-state-map "(" 'evil-backward-sentence-begin)
+   (define-key evil-motion-state-map ")" 'evil-end-of-line)
    (define-key evil-motion-state-map "b" 'evil-backward-char)
    (define-key evil-motion-state-map "B" 'evil-backward-word-begin)
-   (define-key evil-motion-state-map "e" 'evil-end-of-line)
-   (define-key evil-motion-state-map "E" 'evil-forward-sentence-begin)
+   (define-key evil-motion-state-map "\C-b" 'evil-backward-WORD-begin)
+   (define-key evil-motion-state-map "e" 'evil-forward-word-end)
+   (define-key evil-motion-state-map "E" nil)
+   (define-key evil-motion-state-map "\C-e" 'evil-forward-WORD-end)
    (define-key evil-motion-state-map "f" 'evil-forward-char)
    (define-key evil-motion-state-map "F" 'evil-forward-word-begin)
+   (define-key evil-motion-state-map "\C-f" 'evil-forward-WORD-begin)
    (define-key evil-motion-state-map "g" nil)
    (define-key evil-motion-state-map "gd" 'evil-goto-definition)
    (define-key evil-motion-state-map "ge" 'evil-backward-word-end)
@@ -161,23 +168,18 @@
    (define-key evil-motion-state-map "g$" 'evil-end-of-visual-line)
    (define-key evil-motion-state-map "g\C-]" 'evil-jump-to-tag)
    (define-key evil-motion-state-map "g*" 'evil-search-unbounded-word-forward)
-   (define-key evil-motion-state-map "h" 'evil-backward-WORD-begin)
-   (define-key evil-motion-state-map "j" 'evil-forward-WORD-begin)
+   (define-key evil-motion-state-map "j" 'evil-jump-to-tag)
    (define-key evil-motion-state-map "k" nil)
-   (define-key evil-motion-state-map "l" 'evil-forward-word-end)
-   (define-key evil-motion-state-map "L" 'evil-forward-WORD-end)
-   ;(define-key evil-motion-state-map "M" 'evil-window-middle)
    (define-key evil-motion-state-map "n" 'evil-next-line)
-   (define-key evil-motion-state-map "N" 'evil-window-bottom)
+   (define-key evil-motion-state-map "N" 'evil-find-char)
    (define-key evil-motion-state-map "p" 'evil-previous-line)
-   ;(define-key evil-motion-state-map "P" 'evil-lookup)
-   (define-key evil-motion-state-map "P" 'evil-window-top)
+   (define-key evil-motion-state-map "P" 'evil-find-char-backward)
    (define-key evil-motion-state-map "t" 'evil-find-char-to)
    (define-key evil-motion-state-map "T" 'evil-find-char-to-backward)
    (define-key evil-motion-state-map "w" 'evil-yank)
    (define-key evil-motion-state-map "W" 'evil-yank-line)
-   (define-key evil-motion-state-map ")" 'evil-find-char)
-   (define-key evil-motion-state-map "(" 'evil-find-char-backward)
+   (define-key evil-motion-state-map ")" 'evil-forward-sentence-begin)
+   (define-key evil-motion-state-map "(" 'evil-backward-sentence-begin)
    (define-key evil-motion-state-map "{" 'evil-backward-paragraph)
    (define-key evil-motion-state-map "}" 'evil-forward-paragraph)
    (define-key evil-motion-state-map "#" 'evil-search-word-backward)
@@ -206,10 +208,7 @@
    (define-key evil-motion-state-map "\C-w" 'evil-window-map)
    (define-key evil-motion-state-map (kbd "C-6") 'evil-switch-to-windows-last-buffer)
    (define-key evil-motion-state-map "\C-]" 'evil-jump-to-tag)
-   (define-key evil-motion-state-map (kbd "C-b") 'evil-scroll-page-up)
    (define-key evil-motion-state-map (kbd "C-d") 'evil-scroll-down)
-   (define-key evil-motion-state-map (kbd "C-e") 'evil-scroll-line-down)
-   (define-key evil-motion-state-map (kbd "C-f") 'evil-scroll-page-down)
    (define-key evil-motion-state-map (kbd "C-o") 'evil-jump-backward)
    (define-key evil-motion-state-map (kbd "C-y") 'evil-scroll-line-up)
    (define-key evil-motion-state-map "\\" 'evil-execute-in-emacs-state)
@@ -237,15 +236,14 @@
      (read-kbd-macro evil-toggle-key) 'evil-emacs-state)
 
    ;;; Operator-Pending state
-   ;;; a is beg line. i remains available.
+   ;;; as in vanilla vim
 
-   (define-key evil-operator-state-map "a" nil)
-   (define-key evil-operator-state-map "o" evil-outer-text-objects-map)
+   (define-key evil-operator-state-map "a" evil-outer-text-objects-map)
    (define-key evil-operator-state-map "i" evil-inner-text-objects-map)
 
    ;; text objects
    (define-key evil-outer-text-objects-map "f" 'evil-a-word)
-   (define-key evil-outer-text-objects-map "j" 'evil-a-WORD)
+   (define-key evil-outer-text-objects-map "F" 'evil-a-WORD)
    (define-key evil-outer-text-objects-map "s" 'evil-a-sentence)
    (define-key evil-outer-text-objects-map "p" 'evil-a-paragraph)
    (define-key evil-outer-text-objects-map "b" 'evil-a-paren)
@@ -264,7 +262,7 @@
    (define-key evil-outer-text-objects-map "t" 'evil-a-tag)
    (define-key evil-outer-text-objects-map "o" 'evil-a-symbol)
    (define-key evil-inner-text-objects-map "f" 'evil-inner-word)
-   (define-key evil-inner-text-objects-map "j" 'evil-inner-WORD)
+   (define-key evil-inner-text-objects-map "F" 'evil-inner-WORD)
    (define-key evil-inner-text-objects-map "s" 'evil-inner-sentence)
    (define-key evil-inner-text-objects-map "p" 'evil-inner-paragraph)
    (define-key evil-inner-text-objects-map "b" 'evil-inner-paren)
@@ -284,7 +282,6 @@
    (define-key evil-inner-text-objects-map "o" 'evil-inner-symbol)
    (define-key evil-motion-state-map "gn" 'evil-next-match)
    (define-key evil-motion-state-map "gN" 'evil-previous-match)
-
 
    ;; alt keys
    ;; TODO make menu outside of slowM
@@ -309,22 +306,40 @@
    (global-set-key (kbd "M-e") 'newline-and-indent)
 
    ;; visual line mode
-   (define-key evil-visual-state-map "a" nil) ; motion beg line
+   (define-key evil-visual-state-map "a" evil-outer-text-objects-map)
    (define-key evil-visual-state-map "A" nil) ; motion beg sentence
-   (define-key evil-visual-state-map "M" 'evil-append)
+   (define-key evil-visual-state-map "i" evil-inner-text-objects-map)
    (define-key evil-visual-state-map "I" 'evil-insert)
    (define-key evil-visual-state-map "m" 'exchange-point-and-mark)
+   (define-key evil-visual-state-map "M" 'evil-append)
    (define-key evil-visual-state-map "C-m" 'evil-visual-exchange-corners)
    (define-key evil-visual-state-map "R" 'evil-change)
    (define-key evil-visual-state-map "u" 'evil-downcase)
    (define-key evil-visual-state-map "U" 'evil-upcase)
    (define-key evil-visual-state-map "z=" 'ispell-word)
-   (define-key evil-visual-state-map "o" evil-outer-text-objects-map)
-   (define-key evil-visual-state-map "i" evil-inner-text-objects-map)
    (define-key evil-visual-state-map (kbd "<insert>") 'undefined)
    (define-key evil-visual-state-map (kbd "<insertchar>") 'undefined)
    (define-key evil-visual-state-map [remap evil-repeat] 'undefined)
    (define-key evil-visual-state-map [escape] 'evil-exit-visual-state))
+
+(defun nu-whitelist ()
+"Assign Emacs as default state, then normal state
+for prog mode or markdown.
+Does not work well at all."
+  (setq evil-default-state 'emacs
+      evil-normal-state-modes '(prog-mode markdown-mode org-mode)
+      evil-motion-state-modes nil))
+
+(defun nu-blacklist ()
+"Assign Emacs as default state, then normal-state for : 
+fundamental mode.
+Add a black list to avoid normal on some specific fundamental mode."
+  (setq 
+      evil-default-state 'emacs
+      evil-emacs-state '(todotxt-mode)
+      evil-normal-state-modes '(text-mode prog-mode fundamental-mode)
+      evil-motion-state-modes nil))
+
 
 (defun nu-slow-motion ()
 "setup evil to fit emacs, then activates evil"
@@ -341,11 +356,7 @@
 	   (add-hook 'emacs-startup-hook '(lambda ()
              (nu-slow-motion-help-prompt))))
 
-  ; default is insert mode, unless you edit text...
-  (setq evil-default-state 'insert
-      evil-normal-state-modes '(text-mode prog-mode fundamental-mode))
-
-  (add-to-list 'evil-insert-state-modes 'Emacs-Lisp)
+  (nu-blacklist)
 
   ;; SPACE key -- long term make this outside of slowM
   (setq nu-evil-map (make-keymap))
