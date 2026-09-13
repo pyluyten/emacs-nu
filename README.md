@@ -1,3 +1,6 @@
+This project is no longer actively maintained or updated. It remains available here as-is for anyone who finds it useful or wishes to fork it.
+
+
 # OVERVIEW
 
 `nu` is an Emacs package which does not add features, but focus on interface, like `ErgoEmacs`, or `Hydra`. There are two parts of nu :
