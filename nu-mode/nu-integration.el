@@ -59,7 +59,7 @@
 ;; Info
 ;;
 
-(unless (boundp 'nu-no-emacs-breakage)
+(with-eval-after-load 'info
         (progn
              (define-key Info-mode-map (kbd "j") 'Info-help)
              (define-key Info-mode-map (kbd "h") Info-mode-map)))
